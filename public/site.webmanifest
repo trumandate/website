@@ -1,0 +1,21 @@
+{
+  "name": "TruMandate",
+  "short_name": "TruMandate",
+  "description": "Portfolio governance and strategy execution, traced from mandate to outcome.",
+  "start_url": "/en/",
+  "display": "browser",
+  "background_color": "#04241E",
+  "theme_color": "#0B4A3D",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}

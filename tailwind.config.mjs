@@ -141,7 +141,19 @@ export default {
 
       opacity: {
         dim: "0.25", // spec §5, the closing-CTA composition
-        rest: "0.40", // chain link copy before activation
+        // P9 gate (user-approved 2026-08-17, resolving the P8 spec-vs-spec
+        // conflict logged in known-issues.md/QA-REPORT.md): raised from
+        // 0.40 (spec §7's literal "40%") to the smallest two-decimal value
+        // that clears WCAG AA (4.5:1) for BOTH chain-link text roles against
+        // `ink`, computed with real alpha compositing (contrast does not
+        // scale linearly with opacity) — text-body is the binding
+        // constraint at 4.43:1 at 0.56 and 4.51:1 at 0.57; text-paper clears
+        // well before that (5.68:1 at 0.57). Verified with a fresh Lighthouse
+        // accessibility audit on /en/ and /ar/ post-change: 100 on both
+        // (was 96). See QA-REPORT.md §4/§6 for the 0.40 measurements this
+        // supersedes, and BUILD_FLAGS.md's decisions log for the full
+        // before/after.
+        rest: "0.57", // chain link copy before activation
         veil: "0.72", // header ground
       },
 

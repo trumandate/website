@@ -34,16 +34,18 @@ interface Props {
 const { lang }: Props = Astro.props;
 const t = useTranslations(lang);
 
-// The one wired-in mailto (BUILD_FLAGS default, `hello@trumandate.com`,
-// placeholder — TODO.md). `contact.emailNote` is plain translated prose in
-// both languages with the address embedded verbatim in Latin script
-// (matching the brand-name rule: TruMandate itself stays Latin in Arabic
-// copy too), so this only turns that literal substring into a real
-// `mailto:` link rather than hand-authoring a second, HTML-bearing string
-// per language.
+// The one wired-in mailto. Was the BUILD_FLAGS default placeholder
+// (`hello@trumandate.com`) through P7; replaced at P9 with the real address
+// (`trumandate@intertecsys.com`, user decision 2026-08-17 — see
+// BUILD_FLAGS.md's decisions log) — TODO.md's placeholder item is closed.
+// `contact.emailNote` is plain translated prose in both languages with the
+// address embedded verbatim in Latin script (matching the brand-name rule:
+// TruMandate itself stays Latin in Arabic copy too), so this only turns
+// that literal substring into a real `mailto:` link rather than
+// hand-authoring a second, HTML-bearing string per language.
 const emailNoteHtml = t("contact.emailNote").replace(
-  "hello@trumandate.com",
-  '<a href="mailto:hello@trumandate.com" class="text-paper underline underline-offset-4 hover:text-accent">hello@trumandate.com</a>',
+  "trumandate@intertecsys.com",
+  '<a href="mailto:trumandate@intertecsys.com" class="text-paper underline underline-offset-4 hover:text-accent">trumandate@intertecsys.com</a>',
 );
 ---
 

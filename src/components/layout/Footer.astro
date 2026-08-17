@@ -1,8 +1,24 @@
 ---
 // Footer.astro — bilingual-ready, English-only for now. Copy is verbatim
-// from the content brief's Global section. The Intertec Systems and ISO 27001
-// marks (spec §5A) are placeholder SVGs supplied later (P9); nothing here
-// invents them early.
+// from the content brief's Global section.
+//
+// Spec §5A asks for an Intertec Systems logo SVG here. For the bulk of this
+// build no asset existed (only assets/logo.png — the TruMandate mark
+// reference — and the product deck lived in assets/), so this stayed
+// no-asset/no-placeholder-graphic: the footer's plain-text company credit
+// (t("footer.company")) IS the attribution, not a stand-in for a logo that
+// hadn't arrived. Piyush supplied the real file, assets/intertec-logo.svg,
+// as P9 was closing out — too late in that pass to vectorize it in here and
+// re-verify in the same run. Status: IN PROGRESS, not missing — wiring it
+// into this footer (same "author from the reference file as tokens/inline
+// SVG, the source file itself never ships" treatment the TruMandate mark
+// got) is the next step, tracked in TODO.md's P9 section.
+//
+// The ISO 27001 mark spec §5A also lists is not here by a different,
+// permanent reason: see SovereigntyBand.astro's own comment — Intertec
+// Systems holds company-level certifications, the TruMandate product does
+// not, and this build does not display a mark it would not be honestly
+// "held" by.
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
 

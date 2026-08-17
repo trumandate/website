@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="TruMandate">
+  <!-- The mark: three rounded bars, two token greens, flat fills, on a
+       rounded light tile (BUILD_FLAGS.md decision log). Identical geometry
+       to Header.astro's inline SVG and public/og/*.png's brand lockup — the
+       one mark, authored once from tailwind.config.mjs's tokens, re-drawn
+       everywhere it appears rather than screenshotted from assets/logo.png
+       (reference-only, never ships; see BUILD_FLAGS.md). -->
+  <rect width="100" height="100" rx="24" fill="#F1F5F3"/>
+  <rect x="24" y="24" width="54" height="12" rx="6" fill="#0B4A3D"/>
+  <rect x="24" y="44" width="38" height="12" rx="6" fill="#19C39B"/>
+  <rect x="24" y="64" width="22" height="12" rx="6" fill="#19C39B"/>
+</svg>

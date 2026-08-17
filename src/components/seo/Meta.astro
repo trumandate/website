@@ -1,0 +1,77 @@
+---
+// Meta.astro — P9. Canonical URL, hreflang alternates (en/ar/x-default),
+// Open Graph, and Twitter card tags. One shared component so every route
+// gets the same tag set from the same computation, rather than ten pages
+// each hand-assembling URLs (BUILD_FLAGS: "keep one shared component").
+//
+// `path` is the route SUFFIX after the /{lang}/ prefix — "/" for the home
+// page, "/strategy" | "/execution" | "/benefits" | "/contact" for the rest —
+// exactly the same suffix shape i18n/utils.ts's `pairedRoutes` already uses,
+// since all ten routes are paired (P6-AR/P7 completed that). hreflang and
+// the language-alternate OG tag both need "the same page in the other
+// language," which is well-defined only because that pairing already holds
+// for every route.
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+  path: string;
+  title: string;
+  description: string;
+  ogImageAlt: string;
+}
+
+const { lang, path, title, description, ogImageAlt } = Astro.props;
+
+// astro.config.mjs sets `site: "https://trumandate.com"`; reading it back
+// through Astro.site (rather than a second hardcoded literal here) means
+// there is exactly one place the domain is spelled, per CLAUDE.md's "no
+// value outside its one source" discipline applied to config as well as
+// colour tokens.
+const base = Astro.site ?? new URL("https://trumandate.com/");
+
+function urlFor(targetLang: Language): string {
+  const suffix = path === "/" ? "/" : `${path}/`;
+  return new URL(`${targetLang}${suffix}`, base).href;
+}
+
+const canonical = urlFor(lang);
+const alternateEn = urlFor("en");
+const alternateAr = urlFor("ar");
+
+const ogImage = new URL(`/og/og-${lang}.png`, base).href;
+
+// BCP-47-ish locale tags for og:locale. The two markets named in CLAUDE.md
+// (UAE, KSA) both use Arabic; ar_AE is the primary Arabic locale tag with
+// ar_SA offered as a second alternate on Arabic pages, so a KSA reader's
+// share preview isn't told their own region is "the alternate" of a UAE one.
+const OG_LOCALE: Record<Language, string> = { en: "en_US", ar: "ar_AE" };
+const locale = OG_LOCALE[lang];
+const localeAlternates =
+  lang === "en" ? ["ar_AE", "ar_SA"] : ["en_US", "ar_SA"];
+---
+
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="en" href={alternateEn} />
+<link rel="alternate" hreflang="ar" href={alternateAr} />
+<link rel="alternate" hreflang="x-default" href={alternateEn} />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={ogImageAlt} />
+<meta property="og:locale" content={locale} />
+{localeAlternates.map((alt) => (
+  <meta property="og:locale:alternate" content={alt} />
+))}
+<meta property="og:site_name" content="TruMandate" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={ogImageAlt} />

@@ -9,14 +9,17 @@
 // already established for /strategy, /execution and /benefits.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ContactPage from "../../components/contact/ContactPage.astro";
+import { useTranslations } from "../../i18n/utils";
 
 const lang = "en" as const;
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
-  title="Request a walkthrough — TruMandate"
-  description="See TruMandate against your own portfolio, not a demo dataset. Send a few details and we will schedule a walkthrough."
+  path="/contact"
+  title={t("meta.contact.title")}
+  description={t("meta.contact.description")}
 >
   <ContactPage lang={lang} />
 </BaseLayout>

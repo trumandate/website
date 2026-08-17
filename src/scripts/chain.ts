@@ -85,7 +85,9 @@ whenMotionSafe(() => {
   // ---- node activation: independent one-shot triggers, not part of the
   // scrub (PLAN.md §3 is explicit these are separate: "cheap, independent,
   // and it means a slow scrub never leaves text half-legible"). The rest
-  // state (muted dot, 40%-opacity caption) is applied imperatively, in JS
+  // state (muted dot, 57%-opacity caption — raised from spec §7's literal
+  // 40% at P9 to clear WCAG AA, tailwind.config.mjs's `opacity.rest`) is
+  // applied imperatively, in JS
   // only, right here — the served HTML/CSS default is the ACTIVE state, so
   // reduced motion and a JS failure both show the finished chain, and only
   // once motion is confirmed safe does a node ever dim before its trigger

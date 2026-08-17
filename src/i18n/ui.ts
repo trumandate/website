@@ -196,7 +196,7 @@ export const ui: UiDictionary = {
       eyebrow: "Next step",
       heading: "See it against your own plan.",
       sub: "Send this and we will run a walkthrough on a portfolio shaped like yours, not a demo dataset.",
-      emailNote: "Prefer email? Write to hello@trumandate.com.",
+      emailNote: "Prefer email? Write to trumandate@intertecsys.com.",
       nameLabel: "Name",
       orgLabel: "Organisation",
       emailLabel: "Work email",
@@ -216,9 +216,26 @@ export const ui: UiDictionary = {
         "We will be in touch to schedule the walkthrough on your own portfolio.",
       errorHeading: "Something went wrong.",
       errorBody:
-        "The request was not sent. Try again, or write to hello@trumandate.com directly.",
+        "The request was not sent. Try again, or write to trumandate@intertecsys.com directly.",
       sovereigntyEyebrow: "Deployment and data sovereignty",
       sovereigntyBody: "Sovereign on-premise or cloud",
+    },
+    meta: {
+      // Moved verbatim from src/pages/en/index.astro's BaseLayout props
+      // (P2) — same title/description, one home now.
+      home: {
+        title: "TruMandate — Every mandate, traced to the outcome it promised.",
+        description:
+          "TruMandate holds strategy, KPIs, initiatives and benefits in one record, so the office that sets direction can see what that direction produced.",
+      },
+      // Moved verbatim from src/pages/en/contact.astro's BaseLayout props (P7).
+      contact: {
+        title: "Request a walkthrough — TruMandate",
+        description:
+          "See TruMandate against your own portfolio, not a demo dataset. Send a few details and we will schedule a walkthrough.",
+      },
+      ogImageAlt:
+        "TruMandate wordmark and the traceability chain motif on a jade ground.",
     },
   },
   ar: {
@@ -425,7 +442,7 @@ export const ui: UiDictionary = {
       eyebrow: "الخطوة التالية",
       heading: "شاهدها على خطتك أنت.",
       sub: "أرسل النموذج وسنقدّم عرضاً على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
-      emailNote: "تفضّل البريد الإلكتروني؟ راسلنا على hello@trumandate.com.",
+      emailNote: "تفضّل البريد الإلكتروني؟ راسلنا على trumandate@intertecsys.com.",
       nameLabel: "الاسم",
       orgLabel: "الجهة",
       emailLabel: "البريد المؤسسي",
@@ -444,9 +461,25 @@ export const ui: UiDictionary = {
       successBody: "سنتواصل معك لتحديد موعد العرض على محفظتك الخاصة.",
       errorHeading: "حدث خطأ ما.",
       errorBody:
-        "لم يُرسَل الطلب. حاول مرة أخرى، أو راسلنا مباشرة على hello@trumandate.com.",
+        "لم يُرسَل الطلب. حاول مرة أخرى، أو راسلنا مباشرة على trumandate@intertecsys.com.",
       sovereigntyEyebrow: "النشر وسيادة البيانات",
       sovereigntyBody: "استضافة سيادية داخلية أو سحابية",
+    },
+    meta: {
+      // Moved verbatim from src/pages/ar/index.astro's BaseLayout props (P5).
+      home: {
+        title: "TruMandate — كل تكليف، متتبَّع حتى الأثر الذي وُعد به.",
+        description:
+          "يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد، ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.",
+      },
+      // Moved verbatim from src/pages/ar/contact.astro's BaseLayout props (P7).
+      contact: {
+        title: "اطلب عرضاً توضيحياً — TruMandate",
+        description:
+          "شاهد TruMandate على محفظتك أنت، لا على بيانات تجريبية. أرسل بضعة تفاصيل وسنحدد موعداً للعرض.",
+      },
+      ogImageAlt:
+        "شعار TruMandate وخط سلسلة التتبّع على خلفية خضراء داكنة.",
     },
   },
 };

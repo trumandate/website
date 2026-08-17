@@ -206,10 +206,12 @@ export interface UiStrings {
     eyebrow: string;
     heading: string;
     sub: string;
-    /** Wires the placeholder contact email (BUILD_FLAGS default,
-     * `hello@trumandate.com`) into the page per P7's own build list — not a
-     * brief line, kept to one plain sentence rather than invented marketing
-     * copy. */
+    /** Wires the contact email into the page per P7's own build list — not
+     * a brief line, kept to one plain sentence rather than invented
+     * marketing copy. Was the BUILD_FLAGS placeholder
+     * (`hello@trumandate.com`) through P7; the real address
+     * (`trumandate@intertecsys.com`) replaced it at P9 (user decision,
+     * BUILD_FLAGS.md). */
     emailNote: string;
     nameLabel: string;
     orgLabel: string;
@@ -249,6 +251,31 @@ export interface UiStrings {
     /** Content brief §6's Fit-section chip, verbatim — reused here as the
      * band's one sourced line of substance. */
     sovereigntyBody: string;
+  };
+  /**
+   * P9 — SEO metadata for the two routes that don't already carry their own
+   * `<title>`/description (the three product pages keep theirs in
+   * `components/product/copy.ts`'s `documentTitle`/`documentDescription`,
+   * next to the rest of that page's copy — see that file's own doc comment
+   * for why product copy isn't in this table). `home` and `contact` move
+   * here from what was, through P7, a literal string written inline in each
+   * `src/pages/{en,ar}/{index,contact}.astro` frontmatter — same text,
+   * single source now. `ogImageAlt` is shared across every route in a given
+   * language, since all ten routes point at the same one-per-language OG
+   * image (spec §5A).
+   */
+  meta: {
+    home: {
+      title: string;
+      description: string;
+    };
+    contact: {
+      title: string;
+      description: string;
+    };
+    /** og:image / twitter:image alt text — describes the actual image
+     * (wordmark + chain motif on jade), not a restatement of the page title. */
+    ogImageAlt: string;
   };
 }
 

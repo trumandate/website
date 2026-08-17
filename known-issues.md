@@ -609,3 +609,70 @@ at 375/768/1440 on all 10 routes. LCP well inside spec §9's 2.0s budget
 everywhere — worst figure 466ms (`/ar/benefits`, Slow 4G + 4× CPU, 23% of
 budget); CLS 0.00 on every route, every run. Full numbers, the WebKit
 detail, and every manual-check result: `QA-REPORT.md`.
+
+---
+
+## P9
+
+**The P8 chain-link rest-state contrast finding (accessibility 96 on `/en/`
+and `/ar/`) is resolved, not merely re-measured.** `opacity.rest`
+(tailwind.config.mjs) raised from 0.40 to 0.57 (user-approved gate,
+BUILD_FLAGS.md's decisions log has the full computation). Re-ran Lighthouse
+on the built `/en/` and `/ar/`: **accessibility 100 on both.** Confirmed
+programmatically, not just by the score: `getComputedStyle` on a live
+`.opacity-rest` node reads `opacity: 0.57` on the built page. The P8 section
+above is left unedited as the historical record of the conflict; this entry
+is the resolution.
+
+**Lighthouse SEO jumped from 63 (every route, P8) to 100, unprompted by any
+score-chasing — it is a side effect of building what spec §5A/CLAUDE.md's
+P9 scope actually asked for.** P8 flagged SEO as "outside spec §9's tracked
+budget, not investigated." This pass added canonical URLs, hreflang
+alternates, meta descriptions sourced from `i18n/ui.ts` and `product/copy.ts`
+rather than left absent, and the OG image set with real dimensions/alt —
+exactly the gaps a 63 score reflects. Verified via `lighthouse_audit`
+(chrome-devtools MCP, mobile) on both `/en/` and `/ar/`: accessibility,
+best-practices, SEO and agentic-browsing all 100 on both.
+
+**Favicon 404 confirmed dead.** Every prior prompt's session recorded the
+same single `/favicon.svg` 404 (cached by the browser for the rest of that
+session, so it only ever appeared once). This pass: a hard reload
+(`ignoreCache: true`) on `/en/` re-requests `favicon.svg` fresh — 200, zero
+console messages. `favicon.ico` also checked directly — 200. `apple-touch-
+icon.png` and `site.webmanifest` both load 200 as part of the same `<head>`.
+
+**`<head>` grew (P9 adds canonical/hreflang/OG/Twitter/favicon/manifest tags
+to every route); LCP did not move meaningfully.** `dist/en/index.html` grew
+43,452 → 48,160 bytes (10,859 bytes gzipped, +~977 vs. P4's 9,882) — all of
+it text-based `<meta>`/`<link>` tags, no new blocking request. A quick
+unthrottled trace (chrome-devtools MCP, `/en/`, production build on port
+4323) measured LCP 140ms, CLS 0.00, 100% render delay, LCP element still the
+hero `<h1>` — consistent with every prior session's figures and nowhere
+near spec §9's 2.0s budget. Not a substitute for a fresh throttled
+(Slow 4G + 4× CPU) pass on an idle machine, which remains owed from P6
+onward (host-load contamination, that section) — this is a sanity check
+that the larger head didn't regress anything, not a full re-verification.
+
+**Standing greps re-run clean on the final build.** Physical-direction grep:
+zero real hits (same pre-existing comment-prose matches as every prior
+section, plus new ones in the three product fragments' own RTL-reasoning
+comments — inspected individually, all prose, zero live utility classes).
+Hex-outside-config grep (`src/` only — see BUILD_FLAGS.md's P9 decisions log
+for why `site.webmanifest`'s and `BaseLayout.astro`'s theme-color are outside
+that boundary by necessity, not oversight): zero hits. Banned-marketing-word
+grep against the built English HTML surfaced one false positive worth
+recording — `\bcomplete\b` (unanchored) matches inside `autocomplete="..."`
+attributes on `/en/contact`; the same grep with proper word boundaries
+(`\bcomplete\b`, which does NOT match inside `autocomplete` since there's no
+boundary between "auto" and "complete") returns zero real hits, matching
+every prior session. A future contributor re-running this grep should use
+word boundaries, not a bare substring match, for exactly this reason.
+`mailto:` link confirmed rewired to `trumandate@intertecsys.com` on both
+`/en/contact` and `/ar/contact` in the built HTML; zero remaining live
+references to the old `hello@trumandate.com` placeholder (two references
+that do remain are inside source comments describing the change itself, not
+served copy).
+
+**`npm run build`** (11 pages, including the new `/sitemap.xml` endpoint)
+**and `npm run check`** (64 files, up from 62 — `Meta.astro` and the
+`tailwind.config.mjs` import in `BaseLayout.astro`) **both clean.**

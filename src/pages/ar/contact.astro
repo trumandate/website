@@ -6,14 +6,17 @@
 // i18n/types.ts's `contact` doc comment and i18n/ui.ts's `ar.contact` block.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ContactPage from "../../components/contact/ContactPage.astro";
+import { useTranslations } from "../../i18n/utils";
 
 const lang = "ar" as const;
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
-  title="اطلب عرضاً توضيحياً — TruMandate"
-  description="شاهد TruMandate على محفظتك أنت، لا على بيانات تجريبية. أرسل بضعة تفاصيل وسنحدد موعداً للعرض."
+  path="/contact"
+  title={t("meta.contact.title")}
+  description={t("meta.contact.description")}
 >
   <ContactPage lang={lang} />
 </BaseLayout>

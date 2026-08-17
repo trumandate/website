@@ -4,18 +4,40 @@
 // own <html> attributes or font links.
 import "../styles/global.css";
 import { directionFor, type Language } from "../i18n/types";
+import { useTranslations } from "../i18n/utils";
 import SkipLink from "../components/layout/SkipLink.astro";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
+import Meta from "../components/seo/Meta.astro";
+// CLAUDE.md: "no hex value outside tailwind.config.mjs." <meta name="theme-color">
+// needs a literal colour string (there is no Tailwind-class equivalent for a
+// browser-chrome tint), so the value is imported from the config at build
+// time rather than re-typed as a second hex literal in this file.
+import tailwindConfig from "../../tailwind.config.mjs";
 
 interface Props {
   lang: Language;
   title: string;
-  description?: string;
+  description: string;
+  /** Route suffix after the /{lang}/ prefix: "/" for the home page,
+   * "/strategy" | "/execution" | "/benefits" | "/contact" otherwise — the
+   * same shape i18n/utils.ts's `pairedRoutes` already uses. Drives the
+   * canonical URL, hreflang alternates and og:url in Meta.astro (P9). */
+  path: string;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, path } = Astro.props;
 const dir = directionFor[lang];
+const t = useTranslations(lang);
+// Tailwind's own `Config` type allows `theme.colors` to be either a plain
+// object or a function of PluginUtils (for themes that compute colours),
+// so TypeScript can't narrow it from the JSDoc-typed import alone. This
+// project's config (tailwind.config.mjs) always writes a plain object —
+// asserting that actual, known shape here is narrower and more honest than
+// reaching for `any`.
+const themeColor = (
+  tailwindConfig as { theme: { colors: Record<string, string> } }
+).theme.colors.jade;
 
 // PLAN.md §1: no locale loads all five font files.
 // /en preloads sans-latin-300/600 + mono-latin-500.
@@ -43,8 +65,27 @@ const fontPreloads =
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={description} />
+    <Meta
+      lang={lang}
+      path={path}
+      title={title}
+      description={description}
+      ogImageAlt={t("meta.ogImageAlt")}
+    />
+
+    <!-- Favicon set (P9, spec §5A): the SVG mark is the primary icon in
+         browsers that support it; favicon.ico (16/32/48, one file) is the
+         fallback for the rest. apple-touch-icon covers iOS/iPadOS home-screen
+         bookmarks specifically — Apple never reads favicon.svg or the
+         manifest for that icon. theme-color tints mobile browser chrome
+         (Android Chrome address bar, iOS Safari status bar) with the same
+         `jade` raised-surface token the manifest uses, not a new value. -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content={themeColor} />
     {
       fontPreloads.map((href) => (
         <link

@@ -22,29 +22,50 @@ Deferred work. Nothing here lives only in a spec, in BUILD_FLAGS.md, or in chat.
   fixed header at 94.625px (chrome-devtools MCP, both 375 and 1440 widths —
   it doesn't vary with viewport), added a `header` spacing token (6.5rem /
   104px, tailwind.config.mjs) and swapped `<main>`'s `pt-20` for `pt-header`.
-- **Favicon set not supplied.** `BaseLayout.astro` links `/favicon.svg`
-  (currently 404s in dev). Spec §5A lists `favicon.svg`, `favicon.ico`,
-  `apple-touch-icon.png` (180×180) and `site.webmanifest` as required raster
-  assets, built at P9 from the re-authored logo mark.
-- **OG images not supplied.** `og/og-en.png`, `og/og-ar.png` (1200×630),
-  built from the design system per spec §5A. P9.
-- **Vendor SVGs are placeholders.** `public/vendor/intertec-systems.svg` and
-  `iso-27001.svg` — Piyush supplies the Intertec Systems mark; ISO 27001 (or
-  equivalent) is contact-page only. Neither exists yet.
-- **Contact email is a placeholder.** `hello@trumandate.com`, per
-  BUILD_FLAGS default. Not wired into any page yet (contact page is P7).
+- ~~**Favicon set not supplied.**~~ Resolved at P9: `favicon.svg` (the
+  three-bar mark, reused from `Header.astro`'s own geometry), `favicon.ico`
+  (16/32/48, hand-rolled PNG-embedded ICO container), `apple-touch-icon.png`
+  (180×180) and `site.webmanifest` all built and wired into
+  `BaseLayout.astro`'s `<head>`. The 404 is confirmed dead (chrome-devtools
+  MCP, hard reload, zero console messages, `favicon.svg`/`favicon.ico` both
+  200).
+- ~~**OG images not supplied.**~~ Resolved at P9: `public/og/og-en.png` and
+  `og-ar.png`, 1200×630, generated from the design system (wordmark + chain
+  motif on jade, spec §5A) via a scratchpad script using the project's own
+  `sharp`. Wired into every route's `<head>` (`components/seo/Meta.astro`)
+  with absolute URLs, dimensions and alt text.
+- ~~**Vendor SVGs are placeholders.**~~ Closed at P9 for the certification
+  mark (deliberately omitted — see BUILD_FLAGS.md's P9 decisions log:
+  Intertec Systems holds certifications at company level, the product does
+  not). The Intertec Systems logo item is **in progress**, not missing:
+  Piyush supplied the real file as this prompt was closing out
+  (`assets/intertec-logo.svg`, 200×140), too late in this pass to vectorize
+  into `Footer.astro` and re-verify in the same run — see this file's P9
+  section below for the one remaining step. Both draft placeholder files
+  this build had added (`public/vendor/*.svg`) were removed rather than left
+  as "coming soon" stand-ins.
+- ~~**Contact email is a placeholder.**~~ Resolved at P9: replaced with the
+  real address, `trumandate@intertecsys.com` (BUILD_FLAGS' `hello@trumandate.com`
+  default is gone from every live string), wired into `i18n/ui.ts` and
+  `ContactPage.astro`'s `mailto:` link, both languages.
 - **Formspree endpoint is a placeholder.** `.env`'s
-  `PUBLIC_FORMSPREE_ENDPOINT` is a fake URL. Replace before the contact form
-  (P7) goes live.
-- **`site.webmanifest` not built.** Depends on the favicon set above (P9).
+  `PUBLIC_FORMSPREE_ENDPOINT` is a fake URL. Still open at handoff — the one
+  item on this list that needs a real external service Claude Code cannot
+  supply. Exact replacement steps: MORNING-REPORT.md's launch checklist.
+- ~~**`site.webmanifest` not built.**~~ Resolved at P9, alongside the favicon
+  set above.
 - **Lenis not added.** PLAN.md §1 lists `src/scripts/lenis.ts`, but smooth
   scroll is motion-prompt work (P3/P4), not shared-component scaffolding.
   Evaluate then, per BUILD_FLAGS: "remove it rather than patch it if it
   fights ScrollTrigger on iOS."
-- **`sitemap.xml.ts` not built.** Needs the full route list to exist first
-  (P2–P7 build the routes); write it once they do, before P9's SEO pass.
-- **`robots.txt` currently disallows all crawling** (noindex-for-build-
-  duration). Flip it at launch per README-BUILD.md §6 step 6.
+- ~~**`sitemap.xml.ts` not built.**~~ Resolved at P9: hand-written static
+  endpoint, ten `<url>` entries (five routes × two languages), each carrying
+  all three hreflang alternates. Confirmed in the built `dist/sitemap.xml`.
+- ~~**`robots.txt` currently disallows all crawling**~~ (noindex-for-build-
+  duration). Resolved at P9 (user decision): flipped to `Allow: /` plus a
+  `Sitemap:` reference — this build is treated as launch-ready now, so
+  README-BUILD.md §6 step 6 is executed in this same pass rather than left
+  for a separate launch day.
 
 ## Carried from PLAN.md §4 (ambiguities flagged at P0, not yet re-confirmed)
 
@@ -332,20 +353,14 @@ and will be addressed as the pages that touch them get built (P2 onward).
   a real `mailto:` link under the lede on `/contact`, both languages
   (`contact.emailNote`, `ContactPage.astro`). Still the placeholder address —
   replace it at launch alongside the Formspree endpoint above.
-- **The deployment-and-data-sovereignty band ships with two verbatim lines,
-  not the three `trumandate-product-pages.md` describes**
-  (`SovereigntyBand.astro`). Only two sourced lines exist anywhere in the
-  brief or the product-pages doc: the fourth "what you want to see" option
-  ("Deployment and data sovereignty") as the band's frame, and the Fit-section
-  chip ("Sovereign on-premise or cloud") as its one line of substance. No
-  third line is invented to round the count out — per this build's own
-  instruction, that gap is logged here rather than papered over with
-  Claude-Code-written marketing copy. Spec §5A's own candidate for a third
-  element — "any held certification marks (ISO 27001 and similar)... contact
-  page only" — is exactly this objection's natural complement, but
-  `public/vendor/iso-27001.svg` doesn't exist yet (carried from P1's vendor-SVG
-  TODO item below). Revisit the band once either real copy or that asset
-  exists.
+- ~~**The deployment-and-data-sovereignty band ships with two verbatim lines,
+  not the three `trumandate-product-pages.md` describes**~~ Closed at P9
+  (user-approved 2026-08-17): the two-line shape ships as final, not pending
+  a third line. Spec §5A's own candidate third element — a certification
+  mark — is also closed, deliberately omitted rather than added: Intertec
+  Systems holds certifications at company level, the product does not, and
+  spec §5A's own word for this asset is "held". See BUILD_FLAGS.md's P9
+  decisions log and `SovereigntyBand.astro`'s own comment.
 - **"What you want to see" is built as four radio buttons, not the select
   element the brief's own prototype (`docs/trumandate-home.html`) used.** The
   content brief just says "options" without naming a control type. Radios
@@ -402,19 +417,17 @@ and will be addressed as the pages that touch them get built (P2 onward).
 
 ## From P8 (full verification pass)
 
-- **Home page chain-link rest-state contrast is a genuine spec-vs-spec
-  conflict, not fixed this pass.** Spec §7 states motion #1's rest state as
-  an exact number — "each node's caption lifts from 40% to full opacity" —
-  and at that value `text-paper`/`text-body` on `ink` measure 3.49:1 /
-  2.92:1, below spec §9's 4.5:1 AA-normal floor (Lighthouse accessibility 96
-  on `/en/` and `/ar/`, 100 on every other route). CLAUDE.md requires
-  stopping and surfacing a spec conflict rather than silently picking a
-  side, so this needs a design decision: raise `opacity.rest` (tailwind.config.mjs)
-  to roughly 0.49–0.50 (clears both text roles, breaks the literal "40%" in
-  spec §7), amend spec §7's number instead, or accept the transient
-  pre-scroll state as a stated exception (reduced-motion and JS-failure
-  readers never see it; a motion-safe reader only sees it briefly, on nodes
-  not yet scrolled to). Full numbers in QA-REPORT.md §4/§6.
+- ~~**Home page chain-link rest-state contrast is a genuine spec-vs-spec
+  conflict, not fixed this pass.**~~ Resolved at P9 (user-approved gate,
+  2026-08-17): `opacity.rest` (tailwind.config.mjs) raised from spec §7's
+  literal 0.40 to 0.57 — the smallest two-decimal value clearing 4.5:1 for
+  BOTH `text-paper` and `text-body` over `ink`, computed with real alpha
+  compositing (`text-body` is the binding constraint: 4.51:1 at 0.57 vs.
+  4.43:1 at 0.56). Lighthouse accessibility re-verified 100 on both `/en/`
+  and `/ar/` (was 96). Full before/after in BUILD_FLAGS.md's P9 decisions
+  log and known-issues.md's P9 section; the original conflict and its
+  measurements remain on record in QA-REPORT.md §4/§6 and this file's P8
+  section unchanged, as the history of why the value moved.
 - **`<main id="main">` has no `tabindex="-1"`.** The skip link still works
   correctly in Chromium (confirmed by reading `document.activeElement`
   after `Tab`+`Enter`+`Tab`: focus lands on the first element inside
@@ -422,4 +435,46 @@ and will be addressed as the pages that touch them get built (P2 onward).
   navigation-focus fallback rather than a spec-guaranteed target. Adding
   `tabindex="-1"` to `<main>` in `BaseLayout.astro` would make the same
   behaviour hold by contract rather than by browser-specific fallback, and
-  costs nothing (WCAG technique G1). Not verified in WebKit this pass.
+  costs nothing (WCAG technique G1). Not verified in WebKit this pass. Still
+  open at P9 — not in this prompt's stated build list, left rather than
+  gold-plated in.
+
+## From P9 (SEO, OG images, favicons, contrast fix, launch decisions)
+
+- **Intertec Systems logo — in progress, not missing.** Piyush supplied the
+  real file as this prompt was closing out: `assets/intertec-logo.svg`
+  (200×140 viewBox, 9.1 KB). One step remains, deliberately not done in this
+  same pass so it gets its own build-and-verify cycle rather than a rushed
+  last-minute edit: wire it into `Footer.astro`'s brand-credit line (matching
+  the same "author from the reference file as tokens/inline SVG, the source
+  file itself never ships" treatment `assets/logo.png` got for the
+  TruMandate mark — spec §5A's no-photography/no-raster-outside-the-asset-
+  list invariant applies here too), then re-run the standing greps
+  (physical-direction, hex-outside-config) and a contrast check on whatever
+  ground it sits against. No placeholder graphic ships in the meantime
+  (BUILD_FLAGS.md's P9 decisions log) — the footer's existing plain-text
+  company credit remains the real attribution until the swap lands.
+- **`seo/JsonLd.astro` was never built.** PLAN.md §1's file tree plans an
+  Organization + SoftwareApplication structured-data component; this
+  prompt's explicit build list didn't include it, so it stayed out of scope
+  rather than being added unrequested in the final prompt. Optional future
+  work — full reasoning in BUILD_FLAGS.md's P9 decisions log.
+- **A native-reader Arabic pass is still owed** on the home page, the three
+  product pages and `/contact` — carried from P5/P6-AR/P7, unaffected by
+  this prompt (P9 touched no page copy). Full vocabulary-review notes:
+  COPY-REVIEW.md.
+- **WebKit-specific verification of `/contact` and the three product pages
+  is still owed** — carried from P4–P7; every session's Playwright MCP so
+  far has been Chromium-bound. The home page's pinned/scrubbed section and
+  its RTL mirror were both verified in real WebKit at P8 with no defect
+  found; the remaining four routes (both languages) have no pin/scrub, so
+  the historical Safari risk is lower, but unverified.
+- **A clean throttled (Slow 4G + 4× CPU) LCP re-measure on an idle machine
+  is still owed**, carried from P6 onward (see that section's host-load
+  contamination note). P9 only added `<head>` bytes (meta/OG/hreflang tags,
+  all text, no new blocking requests) and re-ran a quick unthrottled sanity
+  check on `/en/` — LCP 140ms, CLS 0.00, confirming no regression from the
+  larger `<head>` — not a substitute for the heavier profile.
+- **The Formspree endpoint remains the one placeholder Claude Code cannot
+  close.** Exact replacement steps are in MORNING-REPORT.md's launch
+  checklist rather than repeated here.

@@ -6,7 +6,8 @@
 // fully-resolved end state. `scripts/chain.ts` (motion #1) finds each node
 // via `[data-chain-node]`, reads its name off `data-chain-name`, and — only
 // once motion is confirmed safe — swaps the dot to the muted "rest" classes
-// and the copy to `opacity-rest` (0.40, tailwind.config.mjs) before wiring
+// and the copy to `opacity-rest` (0.57 as of P9 — raised from spec §7's
+// literal 0.40 to clear WCAG AA; tailwind.config.mjs) before wiring
 // the one-shot ScrollTrigger (firing at 78% of viewport height, PLAN.md §3)
 // that swaps them back. Node activation is deliberately not part of the
 // rail's scrub timeline — it is its own independent trigger per link.
