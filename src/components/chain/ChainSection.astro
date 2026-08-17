@@ -1,0 +1,98 @@
+---
+// ChainSection.astro — the traceability chain, content brief §3, PLAN.md
+// §3's "one pinned section, one scrubbed timeline". Motion #1 (the chain
+// draw) is wired by `scripts/chain.ts`, scoped to `[data-chain-track]`
+// below: the rail's `scaleY` scrub, the per-link one-shot activation
+// triggers, and the sticky marker's live count/name — see that file's own
+// header comment for the full contract. The section's served markup is
+// still the finished, correct end-state (accent nodes, solid accent rail,
+// full-opacity copy), so a reduced-motion reader or a JS failure sees
+// exactly the same page.
+//
+// Self-contained (unlike Hero/FailureModes): this is the one section named
+// "...Section" in PLAN.md's tree, and it owns its own <Section id="chain">
+// wrapper, including the two-column grid and the marker/link split.
+import Section from "../layout/Section.astro";
+import Spine from "../home/Spine.astro";
+import Eyebrow from "../type/Eyebrow.astro";
+import Heading from "../type/Heading.astro";
+import Lede from "../type/Lede.astro";
+import ChainMarker from "./ChainMarker.astro";
+import ChainLink from "./ChainLink.astro";
+import StageGateQueue from "../fragments/StageGateQueue.astro";
+import Reveal from "../ui/Reveal.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+const links: Array<{ name: string; body: string; hasFragment?: boolean }> = [
+  {
+    name: t("home.chain.objectiveName"),
+    body: t("home.chain.objectiveBody"),
+  },
+  {
+    name: t("home.chain.kpiName"),
+    body: t("home.chain.kpiBody"),
+  },
+  {
+    name: t("home.chain.initiativeName"),
+    body: t("home.chain.initiativeBody"),
+  },
+  {
+    name: t("home.chain.milestoneName"),
+    body: t("home.chain.milestoneBody"),
+    // Milestone (English) / المعلم (Arabic) is the anchor for the one
+    // chain-attached fragment (spec §5) — matched by index, not by the
+    // (now-localised) name string, since the string itself changes per
+    // language.
+    hasFragment: true,
+  },
+  {
+    name: t("home.chain.benefitName"),
+    body: t("home.chain.benefitBody"),
+  },
+];
+---
+
+<Section id="chain">
+  <Reveal>
+    <Eyebrow>{t("home.chain.eyebrow")}</Eyebrow>
+    <Heading as="h2" class="mt-4 max-w-measure">
+      {t("home.chain.heading")}
+    </Heading>
+    <Lede class="mt-6">
+      {t("home.chain.sub")}
+    </Lede>
+  </Reveal>
+
+  <div class="mt-12 grid grid-cols-1 gap-gutter lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <ChainMarker count="01 / 05" activeName={links[0].name} />
+    </div>
+
+    <div class="relative lg:col-span-8" data-chain-track>
+      <Spine variant="filled" />
+      <div class="ps-rail flex flex-col gap-12">
+        {
+          links.map((link) =>
+            link.hasFragment ? (
+              <ChainLink name={link.name} body={link.body}>
+                <StageGateQueue lang={lang} />
+              </ChainLink>
+            ) : (
+              <ChainLink name={link.name} body={link.body} />
+            ),
+          )
+        }
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script src="../../scripts/chain.ts"></script>

@@ -1,0 +1,194 @@
+---
+// CommandCentreDim.astro — the closing CTA's dimmed Command Centre
+// composition (spec §5, content brief §4's layout re-authored, its four
+// numbered callouts dropped per the P0-gate decision in BUILD_FLAGS.md).
+//
+// Single-hue by construction: every fill and stroke below is `jade-lift` or
+// `hairline` — no `accent`, `amber`, or `red` appears anywhere in this file.
+// PLAN.md §3's correction to the literal spec reading: applying 25% opacity
+// to a composition that DOES contain RAG colours leaves the coloured dots
+// as bright specks while the near-black cards disappear, handing back
+// exactly the data this composition is supposed to withhold. Single-hue
+// first, then `opacity-dim` on the group, is what actually delivers
+// "legible as a shape, unreadable as data."
+//
+// No <text> anywhere: this sidesteps two problems at once — Arabic text
+// overflow in a fixed-width panel (PLAN.md §4 ambiguity 22, unsolved by the
+// prototype) never arises, and "unreadable as data" is true by construction
+// rather than by squinting at dimmed labels. Geometry only: rects and
+// strokes standing in for the top bar, the sidebar's four phase groups, the
+// three metric cards, the initiative table, the AI panel, and the benefit
+// strip — proportions taken from the prototype's 900×520 (PLAN.md §4
+// ambiguity 22), re-authored at a wider aspect so the composition reads as
+// "a wide board" at full bleed, per PLAN.md §3.
+//
+// The gap between the table/AI-panel row and the benefit strip (y 402–480)
+// is deliberately empty — nothing is drawn there. That hole is where
+// ClosingCta.astro overlays the CTA text, per spec §5's own suggestion:
+// designing the hole is the only way to get AA contrast without a scrim,
+// and a scrim would be a card by another name.
+//
+// `aria-hidden`, not `role="img"` (PLAN.md §3's accessibility section): an
+// honest `aria-label` for this composition would read the withheld Command
+// Centre layout aloud, handing away the one thing the home page holds back.
+// It is decorative by intent.
+//
+// RTL (P5): no lang prop needed — this fragment carries zero `<text>`
+// (see above), so unlike StageGateQueue.astro a whole-group mirror is
+// legitimate here (build task's own instruction: "CommandCentreDim has
+// zero <text>, so a group mirror IS legitimate there if needed"). A plain
+// CSS `scaleX(-1)` on the svg under `[dir="rtl"]` flips the sidebar to the
+// inline-end edge and every card/table/strip along with it, with no risk of
+// mirroring glyphs backwards because there are none to mirror. The
+// block-direction fade mask below is applied to the *wrapping* div, not the
+// svg, so the horizontal flip doesn't touch it.
+---
+
+<div class="command-centre-dim relative w-full">
+  <svg viewBox="0 0 1600 640" class="block w-full" aria-hidden="true" focusable="false">
+    <g class="opacity-dim">
+      <!-- top bar -->
+      <rect x="0" y="0" width="1600" height="44" class="fill-jade-lift"></rect>
+
+      <!-- sidebar, four phase groups -->
+      <rect x="0" y="44" width="220" height="596" class="fill-jade-lift"></rect>
+      {
+        [76, 150, 250, 340].map((groupY) => (
+          <>
+            <rect x="30" y={groupY} width="160" height="10" rx="2" class="fill-hairline" />
+            <rect x="30" y={groupY + 18} width="140" height="6" rx="2" class="fill-hairline" />
+            <rect x="30" y={groupY + 32} width="120" height="6" rx="2" class="fill-hairline" />
+          </>
+        ))
+      }
+
+      <!-- three metric cards -->
+      {
+        [260, 660, 1060].map((cardX) => (
+          <>
+            <rect
+              x={cardX}
+              y="68"
+              width="380"
+              height="110"
+              rx="4"
+              class="fill-jade-lift stroke-hairline"
+              stroke-width="1"
+            />
+            <rect x={cardX + 24} y="140" width={332} height="8" rx="2" class="fill-hairline" />
+          </>
+        ))
+      }
+
+      <!-- initiative table -->
+      <rect
+        x="260"
+        y="202"
+        width="760"
+        height="200"
+        rx="4"
+        class="fill-jade-lift stroke-hairline"
+        stroke-width="1"
+      ></rect>
+      {
+        [0, 1, 2, 3, 4].map((row) => (
+          <>
+            <line
+              x1="284"
+              y1={242 + row * 32}
+              x2="996"
+              y2={242 + row * 32}
+              class="stroke-hairline"
+              stroke-width="1"
+            />
+            <rect
+              x="700"
+              y={228 + row * 32}
+              width={90 + ((row * 37) % 130)}
+              height="6"
+              rx="2"
+              class="fill-hairline"
+            />
+          </>
+        ))
+      }
+
+      <!-- AI panel -->
+      <rect
+        x="1040"
+        y="202"
+        width="300"
+        height="200"
+        rx="4"
+        class="fill-jade-lift stroke-hairline"
+        stroke-width="1"
+      ></rect>
+      <rect x="1064" y="228" width="140" height="8" rx="2" class="fill-hairline"></rect>
+      <rect x="1064" y="252" width="200" height="6" rx="2" class="fill-hairline"></rect>
+      <rect x="1064" y="270" width="170" height="6" rx="2" class="fill-hairline"></rect>
+      <rect x="1064" y="356" width="70" height="20" rx="2" class="stroke-hairline" fill="none" stroke-width="1"></rect>
+      <rect x="1148" y="356" width="70" height="20" rx="2" class="stroke-hairline" fill="none" stroke-width="1"></rect>
+
+      <!-- empty band, y 402–480: intentionally bare — the CTA text sits here -->
+
+      <!-- benefit strip -->
+      <rect
+        x="260"
+        y="480"
+        width="1100"
+        height="116"
+        rx="4"
+        class="fill-jade-lift stroke-hairline"
+        stroke-width="1"
+      ></rect>
+      <polyline
+        points="292,566 400,548 508,554 616,528 724,534 832,510 940,516 1048,494 1156,500 1264,478"
+        fill="none"
+        class="stroke-hairline"
+        stroke-width="2"
+      ></polyline>
+      <polyline
+        points="1264,478 1320,470"
+        fill="none"
+        class="stroke-hairline"
+        stroke-width="2"
+        stroke-dasharray="4 5"
+      ></polyline>
+      <line
+        x1="1264"
+        y1="486"
+        x2="1264"
+        y2="590"
+        class="stroke-hairline"
+        stroke-width="1"
+        stroke-dasharray="2 4"
+      ></line>
+    </g>
+  </svg>
+</div>
+
+<style>
+  /* Fades the composition's block edges into the page ground (spec §5: "a
+     mask that fades to the page ground"). Vertical only — top/bottom are
+     unaffected by RTL, so this needs no direction-guarded variant. */
+  .command-centre-dim {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 14%,
+      black 86%,
+      transparent
+    );
+  }
+
+  /* :global() around the ancestor selector: found alongside the identical
+     SuggestionCard.astro bug at P5 — without it, Astro's scoped-style
+     processor hashes `[dir="rtl"]` too, producing
+     `[data-astro-cid-xxxxx][dir=rtl] ...`, which can never match because
+     `dir="rtl"` lives on `<html>`, outside this component's scope. See
+     SuggestionCard.astro's own comment and known-issues.md for the full
+     explanation — same root cause, fixed the same way. */
+  :global([dir="rtl"]) .command-centre-dim svg {
+    transform: scaleX(-1);
+  }
+</style>

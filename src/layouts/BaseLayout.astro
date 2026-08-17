@@ -1,0 +1,74 @@
+---
+// BaseLayout.astro — html lang/dir, head, per-locale font preload, skip
+// link, header, footer, slot. Every page composes this; no page sets its
+// own <html> attributes or font links.
+import "../styles/global.css";
+import { directionFor, type Language } from "../i18n/types";
+import SkipLink from "../components/layout/SkipLink.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+
+interface Props {
+  lang: Language;
+  title: string;
+  description?: string;
+}
+
+const { lang, title, description } = Astro.props;
+const dir = directionFor[lang];
+
+// PLAN.md §1: no locale loads all five font files.
+// /en preloads sans-latin-300/600 + mono-latin-500.
+// /ar preloads sans-arabic-300/600 + sans-latin-300/600 (TruMandate stays
+// Latin script, KPI values stay Western digits) and never preloads Plex Mono
+// — spec §3 swaps that role to Plex Sans 600 in Arabic.
+const fontPreloads =
+  lang === "ar"
+    ? [
+        "/fonts/plex-sans-arabic-arabic-300.woff2",
+        "/fonts/plex-sans-arabic-arabic-600.woff2",
+        "/fonts/plex-sans-arabic-latin-300.woff2",
+        "/fonts/plex-sans-arabic-latin-600.woff2",
+      ]
+    : [
+        "/fonts/plex-sans-arabic-latin-300.woff2",
+        "/fonts/plex-sans-arabic-latin-600.woff2",
+        "/fonts/plex-mono-latin-500.woff2",
+      ];
+---
+
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {
+      fontPreloads.map((href) => (
+        <link
+          rel="preload"
+          href={href}
+          as="font"
+          type="font/woff2"
+          crossorigin
+        />
+      ))
+    }
+  </head>
+  <body>
+    <SkipLink lang={lang} />
+    <Header lang={lang} />
+    <!-- pt-header clears the fixed header's rendered height. Measured at P2
+         (TODO.md's "header height offset is an estimate" item, now resolved):
+         the header renders at 94.625px at both 375 and 1440 widths (chrome
+         devtools MCP, getBoundingClientRect), so `header` (104px,
+         tailwind.config.mjs) replaces the earlier pt-20 (80px) guess, which
+         left the top ~14.6px of Hero.astro's content under the fixed header. -->
+    <main id="main" class="pt-header">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

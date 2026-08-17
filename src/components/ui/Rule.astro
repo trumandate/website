@@ -1,0 +1,19 @@
+---
+// Rule.astro — the hairline, solid or dashed (spec §3: "sections separate
+// with hairline rules, not cards"). A block-direction (horizontal) divider;
+// unrelated to Spine.astro, which is the inline-start vertical rail.
+interface Props {
+  dashed?: boolean;
+  class?: string;
+}
+
+const { dashed = false, class: className }: Props = Astro.props;
+---
+
+<hr
+  class:list={[
+    "m-0 border-0 border-t border-hairline",
+    dashed ? "border-dashed" : "border-solid",
+    className,
+  ]}
+/>

@@ -1,0 +1,24 @@
+---
+// Footer.astro — bilingual-ready, English-only for now. Copy is verbatim
+// from the content brief's Global section. The Intertec Systems and ISO 27001
+// marks (spec §5A) are placeholder SVGs supplied later (P9); nothing here
+// invents them early.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<footer class="border-t border-hairline">
+  <div
+    class="mx-auto flex max-w-content flex-col items-start gap-2 px-gutter py-section-tight text-small text-muted lg:flex-row lg:items-center lg:justify-between"
+  >
+    <p>{t("footer.company")}</p>
+    <p>{t("footer.site")}</p>
+  </div>
+</footer>

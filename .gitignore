@@ -1,0 +1,30 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# env
+.env
+.env.production
+
+# logs
+npm-debug.log*
+
+# editor / OS
+.DS_Store
+Thumbs.db
+
+# Astro / TS
+*.tsbuildinfo
+
+# local tooling — .mcp.json holds an API key, never commit it
+.mcp.json
+.playwright-mcp/
+
+# reference material (product deck, logo raster) — not site source
+assets/
+
+# regenerable QA artifacts
+screenshots/

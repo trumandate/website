@@ -1,0 +1,38 @@
+---
+// Handoff.astro — part 5 of the shared product-page skeleton: "one sentence
+// naming what the demo shows that this page did not, then the CTA. This is
+// where the withheld item is explicitly promised."
+//
+// The sentence is passed in rather than composed here, because it is the one
+// piece of copy on each page that has to name that page's own withheld item
+// from the curiosity ledger — the cascade editor and weighting on
+// `/strategy`, the gate workflow and approval routing on `/execution`, the
+// benefit register and attribution logic on `/benefits`. Everywhere else on
+// the page those items must not appear at all.
+//
+// Only the primary CTA. Spec/PLAN.md §4 item 17 notes the secondary CTA
+// ("See the chain") has no target off the home page — there is no chain
+// section on a product page to anchor to — so it is not rendered here, and
+// the handoff sentence is left as the single thing competing with the button
+// for attention.
+import Lede from "../type/Lede.astro";
+import Button from "../ui/Button.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+  sentence: string;
+}
+
+const { lang, sentence }: Props = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div>
+  <Lede>{sentence}</Lede>
+
+  <div class="mt-8">
+    <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
+  </div>
+</div>

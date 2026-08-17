@@ -1,0 +1,50 @@
+---
+// ChainLink.astro — one link's node, heading and body. PLAN.md §3: nodes are
+// 13px circles centred 46px back from the content edge; the markup's served
+// state (what a reduced-motion reader or a JS-failure reader gets) is an
+// accent fill with an accent ring and full-opacity copy — the chain's
+// fully-resolved end state. `scripts/chain.ts` (motion #1) finds each node
+// via `[data-chain-node]`, reads its name off `data-chain-name`, and — only
+// once motion is confirmed safe — swaps the dot to the muted "rest" classes
+// and the copy to `opacity-rest` (0.40, tailwind.config.mjs) before wiring
+// the one-shot ScrollTrigger (firing at 78% of viewport height, PLAN.md §3)
+// that swaps them back. Node activation is deliberately not part of the
+// rail's scrub timeline — it is its own independent trigger per link.
+//
+// `start-[-0.5rem]` — see Hero.astro's comment: this wrapper is a direct
+// child of ChainSection's `ps-rail` list, so the same `rail - node-inset =
+// 0.5rem` correction applies.
+//
+// `ps-2` on the heading only: the dot's inline-end edge otherwise sits
+// roughly 1.5px into the text column at this offset, which reads as the dot
+// kissing the heading's first letter. The paragraph below isn't adjacent to
+// the dot (it sits a full line lower), so it doesn't need the same nudge.
+interface Props {
+  name: string;
+  body: string;
+}
+
+const { name, body }: Props = Astro.props;
+const hasFragment = Astro.slots.has("default");
+---
+
+<div class="relative" data-chain-node data-chain-name={name}>
+  <span
+    aria-hidden="true"
+    data-chain-dot
+    class="absolute start-[-0.5rem] top-1 size-node -translate-x-1/2 rounded-full bg-accent ring-2 ring-accent ring-offset-2 ring-offset-ink transition-colors duration-state ease-standard"
+  ></span>
+  <div data-chain-copy>
+    <h3 class="ps-2 font-sans text-h3 font-semi tracking-heading text-paper">
+      {name}
+    </h3>
+    <p class="mt-2 max-w-measure text-body font-light text-body">{body}</p>
+  </div>
+  {
+    hasFragment && (
+      <div class="mt-6">
+        <slot />
+      </div>
+    )
+  }
+</div>

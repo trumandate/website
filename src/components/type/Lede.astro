@@ -1,0 +1,16 @@
+---
+// Lede.astro — the body role (spec §3) set at the lede size step, capped to
+// the measure width so a paragraph never runs the full 1180px column.
+interface Props {
+  as?: "p" | "div";
+  class?: string;
+}
+
+const { as: Tag = "p", class: className }: Props = Astro.props;
+---
+
+<Tag
+  class:list={["max-w-measure text-lede font-light text-body", className]}
+>
+  <slot />
+</Tag>

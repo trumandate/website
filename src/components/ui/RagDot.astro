@@ -1,0 +1,39 @@
+---
+// RagDot.astro — a 9px status dot plus a visually-hidden status word (WCAG
+// 1.4.1: colour alone never carries the status, spec §9 / PLAN.md §4 item
+// 18). `status` picks the fill from one place; the announced word is
+// bilingual (i18n/ui.ts's `ragStatus`, P5) so a red dot can never exist
+// without the correct-language word "off track" beside it in the
+// accessibility tree.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  status: "on-track" | "at-risk" | "off-track";
+  lang: Language;
+  class?: string;
+}
+
+const { status, lang, class: className }: Props = Astro.props;
+const t = useTranslations(lang);
+
+const fills: Record<Props["status"], string> = {
+  "on-track": "bg-accent",
+  "at-risk": "bg-amber",
+  "off-track": "bg-red",
+};
+
+const words: Record<Props["status"], string> = {
+  "on-track": t("ragStatus.onTrack"),
+  "at-risk": t("ragStatus.atRisk"),
+  "off-track": t("ragStatus.offTrack"),
+};
+---
+
+<span class:list={["inline-flex items-center", className]}>
+  <span
+    aria-hidden="true"
+    class:list={["inline-block size-rag-dot rounded-full", fills[status]]}
+  ></span>
+  <span class="visually-hidden">{words[status]}</span>
+</span>

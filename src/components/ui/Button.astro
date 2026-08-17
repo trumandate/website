@@ -1,0 +1,51 @@
+---
+// Button.astro — the one shared button component, primary + ghost variants
+// in a single file (PLAN.md §1; BUILD_FLAGS "keep one shared component
+// rather than a variant"). Deferred from P1 to P2 (TODO.md); first used by
+// Hero's two CTAs, and Header's inline-styled CTA is swapped to use it here
+// so button styling lives in exactly one place.
+//
+// Primary hovers by inverting — bg-accent/text-ink becomes
+// bg-transparent/text-accent with an accent outline — rather than a
+// brightness nudge. Costs no new colour token (PLAN.md §2: "no accent hover
+// token... reads as a deliberate state change rather than a brightness
+// nudge"). Ghost is the same idea at rest: a hairline outline rather than a
+// filled surface, so two CTAs never compete for attention.
+interface Props {
+  variant?: "primary" | "ghost";
+  href?: string;
+  type?: "button" | "submit";
+  class?: string;
+}
+
+const {
+  variant = "primary",
+  href,
+  type = "button",
+  class: className,
+}: Props = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center rounded-control px-4 py-2 text-small font-semi transition-colors duration-state ease-standard";
+
+const variants: Record<NonNullable<Props["variant"]>, string> = {
+  primary:
+    "bg-accent text-ink hover:bg-transparent hover:text-accent hover:outline hover:outline-hair hover:outline-accent",
+  ghost:
+    "bg-transparent text-paper outline outline-hair outline-hairline hover:text-accent hover:outline-accent",
+};
+
+const classes = [base, variants[variant], className].filter(Boolean).join(" ");
+---
+
+{
+  href ? (
+    <a href={href} class={classes}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+    </button>
+  )
+}

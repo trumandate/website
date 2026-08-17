@@ -1,0 +1,163 @@
+---
+// SuggestionCard.astro — the AI moment's card, content brief §5 verbatim.
+// Real DOM/CSS, not inline SVG: PLAN.md's component tree keeps this in
+// `components/ai/`, separate from `components/fragments/` — it is not
+// counted toward the home page's two-fragment product-surface budget (spec
+// §5), which stays exactly {stage gate queue, dimmed Command Centre}. Real
+// interactive controls (Accept/Modify/Reject) also have no business being
+// baked into a raster/vector image.
+//
+// Ground jade, hairline border on three edges, a 2px accent rule on the
+// inline-start edge only — a marker, not a frame (PLAN.md §3): a fully
+// teal-outlined box would read as a promotional callout.
+//
+// Accept is outlined, not filled, matching the real UI where Accept has no
+// default action (spec §5's fidelity rule, non-negotiable). Buttons are
+// real <button> elements with no handlers — inert on purpose, so this never
+// becomes a fake product demo.
+//
+// Motion #4 (aiCard.ts): the card enters on a 16px translateY, then the
+// confidence bar fills. `class="reveal"` reuses Reveal.astro's own CSS end
+// state (opacity 1, translateY 0) as this card's resting state too — the
+// `data-ai-card` hook (not `data-reveal`) is what aiCard.ts actually
+// targets, with its own offset/duration/sequencing, so the two mechanisms
+// share a end-state class without colliding at runtime.
+//
+// The bar's fill div keeps its finished CSS width (the `confidence` prop as a
+// percentage, 77% by default, unconditional) and
+// is scaled from 0 with `transform: scaleX()` (CLAUDE.md's transforms-only
+// rule; BUILD_FLAGS' binding decision — "bar fill as scaleX") rather than
+// animating `width` — growing a 77%-wide box from a 0 scaleX at its
+// inline-start edge reads identically to a fill animating 0 → 77%. The
+// scoped style below pins `transform-origin` to the inline-start edge and
+// mirrors it for `/ar` via `[dir="rtl"]`, the same override pattern
+// global.css already uses for line-height/tracking — Tailwind's own
+// `origin-*` utilities are physical-only (`origin-left`/`origin-right`),
+// so they're not used here.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+// P6: the four content strings and the confidence value became optional
+// props so the three product pages can reuse this one component for their own
+// AI moment instead of a per-page variant (BUILD_FLAGS' "keep one shared
+// component rather than creating a variant"). Every prop defaults to the home
+// page's content, so `<SuggestionCard lang={lang} />` behaves exactly as it
+// did at P4/P5 in both languages — the home page's call site is unchanged.
+//
+// Accept/Modify/Reject stay on `i18n/ui.ts` and are NOT overridable: they are
+// the product's own control labels, identical wherever this card appears, and
+// spec §4 is explicit that the pattern repeating is the point.
+interface Props {
+  lang: Language;
+  badge?: string;
+  confidenceLabel?: string;
+  /** 0–1. Drives the bar's own width; must agree with the number written into
+   * `confidenceLabel`, which is the value a reader actually sees. */
+  confidence?: number;
+  title?: string;
+  detail?: string;
+  log?: string;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+const badge = Astro.props.badge ?? t("home.ai.badge");
+const confidenceLabel = Astro.props.confidenceLabel ?? t("home.ai.confidence");
+const confidence = Astro.props.confidence ?? 0.77;
+const title = Astro.props.title ?? t("home.ai.title");
+const detail = Astro.props.detail ?? t("home.ai.detail");
+const log = Astro.props.log ?? t("home.ai.log");
+
+// The bar's finished CSS width. aiCard.ts scales it from 0 at the
+// inline-start edge, so this stays the unconditional served end state (a
+// reduced-motion or JS-disabled reader sees the bar already at its value).
+const barWidth = `width: ${Math.round(confidence * 100)}%`;
+---
+
+<div
+  class="reveal relative rounded-control border-y border-e border-s-marker border-hairline border-s-accent bg-jade p-6"
+  data-ai-card
+>
+  <div class="flex items-baseline justify-between gap-4">
+    <span
+      class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted"
+    >
+      {badge}
+    </span>
+    <span
+      class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted"
+    >
+      {confidenceLabel}
+    </span>
+  </div>
+
+  <div class="relative mt-4 h-px w-full bg-hairline">
+    <div
+      data-ai-bar
+      class="confidence-fill absolute inset-y-0 start-0 h-px bg-accent"
+      style={barWidth}
+    >
+    </div>
+  </div>
+
+  <h3 class="mt-5 font-sans text-h3 font-semi tracking-heading text-paper">
+    {title}
+  </h3>
+  <p class="mt-3 text-body font-light text-body">
+    {detail}
+  </p>
+
+  <div class="mt-6 flex flex-wrap gap-3">
+    <button
+      type="button"
+      class="rounded-control border border-accent px-3 py-1.5 text-small font-semi text-accent transition-colors duration-state ease-standard hover:bg-accent hover:text-ink"
+    >
+      {t("home.ai.accept")}
+    </button>
+    <button
+      type="button"
+      class="rounded-control border border-hairline px-3 py-1.5 text-small font-semi text-paper transition-colors duration-state ease-standard hover:border-muted"
+    >
+      {t("home.ai.modify")}
+    </button>
+    <button
+      type="button"
+      class="rounded-control border border-hairline px-3 py-1.5 text-small font-semi text-paper transition-colors duration-state ease-standard hover:border-muted"
+    >
+      {t("home.ai.reject")}
+    </button>
+  </div>
+
+  <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">
+    {log}
+  </p>
+</div>
+
+<style>
+  /* Motion #4's transform-origin, kept out of the markup because Tailwind's
+     origin-* utilities are physical (origin-left/origin-right) and this is
+     horizontal motion — spec §8: "Horizontal motion mirrors under RTL." */
+  .confidence-fill {
+    transform-origin: 0% 50%;
+  }
+
+  /* Found on /ar (P5): this rule silently never applied since it was first
+     written at P4. Astro's scoped-style processor appends the component's
+     scope-hash attribute to EVERY compound selector segment, including
+     ancestor selectors that reference elements outside this component —
+     the compiled CSS was
+     `[data-astro-cid-xxxxx][dir=rtl] .confidence-fill[data-astro-cid-xxxxx]`,
+     which can never match, because `dir="rtl"` lives on `<html>`, an
+     element this component never renders and which therefore never carries
+     its scope hash. `:global()` around the ancestor half tells the scoping
+     processor not to hash that segment, producing the plain
+     `[dir=rtl] .confidence-fill[data-astro-cid-xxxxx]` the rule always
+     needed. Logged in known-issues.md — the /en page was unaffected only
+     because its unscoped default (0% 50%) already happened to be correct. */
+  :global([dir="rtl"]) .confidence-fill {
+    transform-origin: 100% 50%;
+  }
+</style>
+
+<script src="../../scripts/aiCard.ts"></script>

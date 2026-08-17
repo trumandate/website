@@ -1,0 +1,88 @@
+---
+// Header.astro — fixed, hairline appears after 12px of scroll (motion #6,
+// spec §7). Bilingual-ready (reads strings and direction from `lang`), but
+// only /en exists as a real route until P5.
+//
+// The mark: re-authored from assets/logo.png as inline SVG, tokens only —
+// three rounded bars, descending width, top bar in the darker token green,
+// the lower two in the brighter accent green, on a light rounded tile. The
+// PNG (and assets/TruMandate_Product_deck_2pager.pptx) are reference-only
+// and never ship.
+//
+// The wordmark is two-tone per the product deck's brand direction, expressed
+// in tokens rather than the deck's own hexes: "Tru" in `accent`, "Mandate"
+// in the heading colour for this (dark) surface, `paper`. The primary CTA
+// uses the shared Button.astro (built at P2, TODO.md).
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+import Nav from "./Nav.astro";
+import LangToggle from "./LangToggle.astro";
+import Button from "../ui/Button.astro";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<header data-header class="fixed inset-x-0 top-0 z-header bg-ink/veil">
+  <div
+    class="mx-auto flex max-w-content items-center justify-between gap-gutter px-gutter py-4"
+  >
+    <a
+      href={`/${lang}/`}
+      class="flex items-center gap-3"
+      aria-label={t("brand.name")}
+    >
+      <svg viewBox="0 0 100 100" class="h-8 w-8" role="img" aria-hidden="true">
+        <rect width="100" height="100" rx="24" class="fill-paper"></rect>
+        <rect x="24" y="24" width="54" height="12" rx="6" class="fill-jade"
+        ></rect>
+        <rect x="24" y="44" width="38" height="12" rx="6" class="fill-accent"
+        ></rect>
+        <rect x="24" y="64" width="22" height="12" rx="6" class="fill-accent"
+        ></rect>
+      </svg>
+      <span class="font-sans text-h3 font-semi tracking-brand">
+        <span class="text-accent">Tru</span><span class="text-paper"
+          >Mandate</span
+        >
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-gutter lg:flex">
+      <Nav lang={lang} />
+    </div>
+
+    <div class="flex items-center gap-6">
+      <LangToggle lang={lang} />
+      <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
+    </div>
+  </div>
+</header>
+
+<style>
+  [data-header] {
+    position: fixed;
+  }
+
+  [data-header]::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    block-size: 1px;
+    background-color: theme("colors.hairline");
+    opacity: 0;
+    transition: opacity theme("transitionDuration.header")
+      theme("transitionTimingFunction.standard");
+  }
+
+  [data-header].is-scrolled::after {
+    opacity: 1;
+  }
+</style>
+
+<script src="../../scripts/header.ts"></script>

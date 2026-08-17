@@ -1,0 +1,25 @@
+---
+// Reveal.astro — motion #2, and the ONLY reveal wrapper (PLAN.md §1).
+//
+// The reduced-motion contract lives here once:
+//   - `.reveal` (global.css) IS the end state: opacity 1, transform none.
+//     That class is present unconditionally — a JS failure or
+//     prefers-reduced-motion leaves the element exactly here.
+//   - reveal.ts (via motion.ts's whenMotionSafe gate) runs `gsap.from()`
+//     FROM an offset back to whatever this element's real styles already
+//     are. No timeline is ever created under reduced motion.
+// The two halves must not drift apart: CLAUDE.md — "End state lives in CSS,
+// GSAP animates from an offset."
+interface Props {
+  as?: "div" | "span";
+  class?: string;
+}
+
+const { as: Tag = "div", class: className }: Props = Astro.props;
+---
+
+<Tag data-reveal class:list={["reveal", className]}>
+  <slot />
+</Tag>
+
+<script src="../../scripts/reveal.ts"></script>

@@ -1,0 +1,69 @@
+---
+// /en/strategy — "Strategy and KPIs" (P6). Expands one link of the home
+// page's traceability chain: Objective → KPI. The one question it answers:
+// how does a national mandate become a number someone owns?
+//
+// Structure is not this file's to choose — ProductPage.astro owns the shared
+// five-part skeleton and all three product pages compose it identically
+// (trumandate-product-pages.md: "Every product page uses this order. No page
+// invents a new structure."). This file supplies exactly two things: the copy
+// object and the one fragment.
+//
+// Curiosity ledger for this route:
+//   Reveals  — one KPI card, fully readable (KpiCard.astro).
+//   Withholds — the cascade editor and how weighting works.
+// The withheld pair appears nowhere on this page except inside `handoff`,
+// which is the sentence whose whole job is to promise it. Not in the
+// argument, not in the fragment, not in the fragment's aria-label, not in the
+// AI card.
+//
+// English only. Arabic lands after Piyush approves the copy in COPY-REVIEW.md
+// (BUILD_FLAGS' copy-authority clause); until then LangToggle sends a reader
+// on this route to the Arabic home page rather than a 404 — see
+// i18n/utils.ts's `altUrl`.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductPage from "../../components/product/ProductPage.astro";
+import KpiCard from "../../components/fragments/KpiCard.astro";
+import type { ProductPageCopy } from "../../components/product/copy";
+
+const lang = "en" as const;
+
+const copy: ProductPageCopy = {
+  eyebrow: "Objective → KPI",
+  headline: "A mandate is not a plan until someone owns a number.",
+  argument: [
+    "Most strategy offices can produce the objective tree. It gets built during the planning cycle, it is signed off by people senior enough to make it stick, and it is usually good work. Ask the same office which initiative moves which objective, and by how much, and the answer arrives three days later as a spreadsheet somebody assembled by hand — if it arrives at all. The tree was never the hard part. Holding it against what is actually being delivered is.",
+    "The break happens at the KPI, and it is an organisational problem before it is a technical one. Objectives are written by the people who set direction. KPIs are defined by the people who have to report, months later, against a template that came from somewhere else. The two groups work to different calendars, use different words for the same measure, and nobody's job description includes reconciling them. So the objective tree and the measurement framework drift apart quietly, and neither side finds out until someone asks a question that needs both at once.",
+    "TruMandate makes the KPI the join rather than a downstream artefact. A KPI record carries a baseline, a target, a named owner and a live actual, and it is attached upward to the objective it serves and downward to the initiatives funded to move it. Rescope an initiative and the KPI it feeds is already the place the consequence shows, because the link is part of the record rather than a note in a document somebody has to remember to update. Which initiative moves a given number becomes a lookup instead of an investigation.",
+    "The baseline is the part that is usually missing, and the platform will not accept a KPI without one. A measure with a target and no starting point can tell you where the number sits but not whether it moved, which is how a portfolio ends up reporting green against something nobody has improved. Requiring the baseline at definition time is a small piece of friction that irritates people in the first week and pays for itself the first time a minister asks what has changed since the plan was published. An opinion cannot survive that question. A baseline can.",
+  ],
+  captionLead:
+    "One KPI record as the platform stores it: baseline, target, live actual, and the last six periods.",
+  captionSecond:
+    "The status dot is derived from the movement between them. Nobody types it in.",
+  ai: {
+    eyebrow: "AI in the platform",
+    heading: "Two KPIs, one benefit, counted twice.",
+    body: "The model compares measure definitions and initiative links rather than KPI names, so it finds duplication that a tidy naming convention hides — two objectives, two reporting lines, one underlying benefit counted twice. It states what it found, how sure it is, and what it would do about it. Nothing reaches the record until a person chooses, and the choice is stored with their name and the time they made it. The suggestion is evidence for a decision, not the decision.",
+    badge: "AI watch",
+    confidenceLabel: "confidence 0.81",
+    confidence: 0.81,
+    title: "Two KPIs counting the same benefit",
+    detail:
+      "Objective 2.1 and Objective 4.3. Evidence: identical source measure and an overlapping initiative set. Suggested action: merge, or mark one as a contributing measure.",
+    log: "Decision logged · h.alsuwaidi · 11:07",
+  },
+  handoff:
+    "The demo starts where this page stops: the cascade being built in front of you, a national framework document in at the top and weighted objectives out at the bottom, in about ten minutes.",
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title="Strategy and KPIs — TruMandate"
+  description="How a mandate becomes a number someone owns: objectives joined to KPIs that carry a baseline, a target, an owner and a live actual."
+>
+  <ProductPage lang={lang} copy={copy}>
+    <KpiCard slot="fragment" />
+  </ProductPage>
+</BaseLayout>

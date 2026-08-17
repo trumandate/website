@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Noindex for the duration of the build. At launch (README-BUILD.md §6, step 6):
+# remove the Disallow, add "Sitemap: https://trumandate.com/sitemap.xml".

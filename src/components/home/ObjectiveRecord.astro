@@ -1,0 +1,134 @@
+---
+// ObjectiveRecord.astro — the hero data panel, content brief §1. Rendered as
+// page typography on hairline rules, not product chrome (PLAN.md §3, the
+// binding P0-gate decision that keeps the home page at two product surfaces
+// rather than three): no card, no border, no surface/surface-deep fill.
+//
+// Two of the six motions live here:
+//   - Motion #5, the counter. "Benefit to date" is the sanctioned running
+//     total (PLAN.md §3) — a proxy object tweens 0 → 41 (counter.ts) and
+//     writes `AED {n}M` back into this element's own text on every frame.
+//     `tabular-nums` plus a reserved `min-width` (sized to the finished
+//     "41" at this font) keep the digit count changing from "0" to "41"
+//     from ever reflowing the row around it, per CLAUDE.md's one exception
+//     to "transforms and opacity only".
+//   - The sparkline's "drawn on scroll" brief language has no transform
+//     equivalent (PLAN.md §4 ambiguity 7) and is downgraded to a fade — which
+//     is motion #2, not a seventh animation, so it's just another <Reveal>
+//     instance around the one element, per this build's own instruction to
+//     reuse the existing pattern rather than invent a parallel one.
+import RagDot from "../ui/RagDot.astro";
+import Datum from "../type/Datum.astro";
+import Reveal from "../ui/Reveal.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+const rows: Array<{
+  label: string;
+  value: string;
+  status?: "on-track" | "at-risk";
+  counter?: { to: number; prefix: string; suffix: string };
+}> = [
+  { label: t("home.hero.row1Label"), value: t("home.hero.row1Value") },
+  {
+    label: t("home.hero.row2Label"),
+    value: t("home.hero.row2Value"),
+    status: "on-track",
+  },
+  {
+    label: t("home.hero.row3Label"),
+    value: t("home.hero.row3Value"),
+    status: "at-risk",
+  },
+  {
+    label: t("home.hero.row4Label"),
+    value: t("home.hero.row4Value"),
+    counter: {
+      to: 41,
+      prefix: t("home.hero.row4Prefix"),
+      suffix: t("home.hero.row4Suffix"),
+    },
+  },
+];
+
+// Eleven points, trending upward with small realistic dips — not a smoothed
+// idealisation. y decreases as x increases (SVG y grows downward).
+const sparklinePath =
+  "M0,46 L22,40 L44,42 L66,32 L88,34 L110,24 L132,26 L154,16 L176,18 L198,10 L220,6";
+---
+
+<div class="max-w-measure">
+  <Datum as="div" tone="muted">
+    {t("home.hero.panelLabel")}
+  </Datum>
+
+  <dl class="mt-4">
+    {
+      rows.map((row) => (
+        <div class="flex items-center justify-between border-t border-hairline py-3">
+          <dt>
+            <Datum as="span" tone="muted">
+              {row.label}
+            </Datum>
+          </dt>
+          <dd class="flex items-center gap-2">
+            {row.status && <RagDot status={row.status} lang={lang} />}
+            {row.counter ? (
+              <Datum
+                as="span"
+                tone="paper"
+                dir="ltr"
+                class="min-w-[5ch] tabular-nums"
+                data-counter
+                data-counter-to={row.counter.to}
+                data-counter-prefix={row.counter.prefix}
+                data-counter-suffix={row.counter.suffix}
+              >
+                {row.value}
+              </Datum>
+            ) : (
+              // dir="ltr" isolates the value from the row's own text
+              // direction (found on /ar: "68 / 75" was rendering visually
+              // reversed as "75 / 68" — a Unicode bidi artefact, not a
+              // markup bug, since the DOM order was already correct.
+              // Western-digit KPI values, spec §8, need an explicit LTR
+              // bidi isolate wherever they sit inside RTL flow; harmless
+              // and unnecessary-but-safe on values like "v3"/"14"/"AED 41M"
+              // that were never at risk).
+              <Datum as="span" tone="paper" dir="ltr">
+                {row.value}
+              </Datum>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <Reveal as="div" class="mt-6">
+    <svg
+      viewBox="0 0 220 56"
+      class="w-full max-w-[220px]"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d={sparklinePath}
+        fill="none"
+        class="stroke-accent"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></path>
+    </svg>
+  </Reveal>
+</div>
+
+<script src="../../scripts/counter.ts"></script>

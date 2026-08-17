@@ -1,0 +1,66 @@
+---
+// ClosingCta.astro — the closing CTA, content brief §4's heading/sub/
+// eyebrow only (its four numbered callouts dropped, BUILD_FLAGS decisions
+// log). The one section that breaks the 1180px column: full-bleed is what
+// lets the page imply scale for the only time, and it solves the
+// composition's horizontal crop for free (spec §5) since the viewport
+// itself clips anything wider than it.
+//
+// The CTA text stays inline-start-aligned inside its own max-w-content
+// column, like every other section on the page — `corePlugins.textAlign`
+// is switched off (tailwind.config.mjs) and only `.text-start`/`.text-end`
+// are re-provided (global.css), a deliberate omission of `.text-center`
+// that this build respects rather than works around.
+//
+// No motion in this section (PLAN.md §3, §7's inventory has no "background
+// composition animates" entry) — this is the one place the page should stop
+// moving before asking for the demo request, so this file has no script tag
+// even once later prompts add motion elsewhere.
+//
+// The caption ("The whole board, in forty minutes.", spec §5's own line)
+// sits BELOW the composition as a caption, separate from the CTA text block
+// that overlays the composition's empty band — two distinct placements per
+// PLAN.md §3.
+import CommandCentreDim from "../fragments/CommandCentreDim.astro";
+import Eyebrow from "../type/Eyebrow.astro";
+import Heading from "../type/Heading.astro";
+import Lede from "../type/Lede.astro";
+import Button from "../ui/Button.astro";
+import Reveal from "../ui/Reveal.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="relative w-full bg-ink">
+  <CommandCentreDim />
+
+  <div class="absolute inset-inline-0 top-[66%] -translate-y-1/2">
+    <div class="mx-auto max-w-content px-gutter">
+      <Reveal as="div" class="max-w-measure-tight">
+        <Eyebrow>{t("home.closingCta.eyebrow")}</Eyebrow>
+        <Heading as="h2" class="mt-4">
+          {t("home.closingCta.heading")}
+        </Heading>
+        <Lede class="mt-4">
+          {t("home.closingCta.sub")}
+        </Lede>
+        <div class="mt-8">
+          <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</div>
+
+<div class="mx-auto mt-8 max-w-content px-gutter">
+  <p class="font-mono text-datum font-data tracking-datum text-muted">
+    {t("home.closingCta.caption")}
+  </p>
+</div>

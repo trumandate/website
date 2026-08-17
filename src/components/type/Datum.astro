@@ -1,0 +1,42 @@
+---
+// Datum.astro — mono data label (spec §3's "data and eyebrow" role), used
+// for values on hairline rules: KPI figures, counters, log timestamps,
+// confidence scores. `tone` picks the colour without inventing a new token.
+//
+// `...rest` forwards anything else through to the rendered tag — in
+// particular the `data-counter*` hooks motion #5 (counter.ts) needs on this
+// component's "Benefit to date" instance (ObjectiveRecord.astro). Kept as a
+// generic passthrough rather than naming counter-specific props here, so
+// this stays the one shared value component rather than growing a
+// counter-aware variant.
+interface Props {
+  as?: "span" | "div";
+  tone?: "muted" | "paper" | "accent";
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const {
+  as: Tag = "span",
+  tone = "paper",
+  class: className,
+  ...rest
+}: Props = Astro.props;
+
+const tones = {
+  muted: "text-muted",
+  paper: "text-paper",
+  accent: "text-accent",
+};
+---
+
+<Tag
+  class:list={[
+    "font-mono text-datum font-data tracking-datum",
+    tones[tone],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,62 @@
+---
+// FailureModes.astro — "the problem", content brief §2. Three named
+// categories, not a sequence (the brief is explicit), so each is identified
+// by a mono label rather than a number — spec §3 bans the three-column
+// icon-on-top card grid; this is that layout with the card and icon
+// removed, which PLAN.md argues is the layout §3 actually asks for.
+//
+// The spine runs behind this section as a dashed hairline with no nodes:
+// this section is about the chain not existing yet.
+import Spine from "./Spine.astro";
+import Eyebrow from "../type/Eyebrow.astro";
+import Heading from "../type/Heading.astro";
+import Rule from "../ui/Rule.astro";
+import Reveal from "../ui/Reveal.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+const modes = [
+  {
+    label: t("home.problem.planningLabel"),
+    body: t("home.problem.planningBody"),
+  },
+  {
+    label: t("home.problem.executionLabel"),
+    body: t("home.problem.executionBody"),
+  },
+  {
+    label: t("home.problem.reportingLabel"),
+    body: t("home.problem.reportingBody"),
+  },
+];
+---
+
+<div class="relative">
+  <Spine variant="dashed" />
+
+  <Reveal as="div" class="ps-rail">
+    <Eyebrow>{t("home.problem.eyebrow")}</Eyebrow>
+    <Heading as="h2" class="mt-4 max-w-measure">
+      {t("home.problem.heading")}
+    </Heading>
+
+    <div class="mt-12 grid grid-cols-1 gap-gutter lg:grid-cols-3">
+      {
+        modes.map((mode) => (
+          <div>
+            <Rule />
+            <Eyebrow class="mt-6">{mode.label}</Eyebrow>
+            <p class="mt-3 text-body font-light text-body">{mode.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Reveal>
+</div>

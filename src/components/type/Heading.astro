@@ -1,0 +1,22 @@
+---
+// Heading.astro — section headings, spec §3's display role (600) at the h2
+// or h3 size step. Distinct from Display.astro, which is the hero's larger
+// display-size role only.
+interface Props {
+  as?: "h2" | "h3";
+  class?: string;
+}
+
+const { as: Tag = "h2", class: className }: Props = Astro.props;
+
+const sizes = {
+  h2: "text-h2 tracking-heading",
+  h3: "text-h3 tracking-heading",
+};
+---
+
+<Tag
+  class:list={["font-sans font-semi text-paper", sizes[Tag], className]}
+>
+  <slot />
+</Tag>

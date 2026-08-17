@@ -1,0 +1,33 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<a
+  href="#main"
+  class="visually-hidden fixed top-4 start-4 z-skip rounded-control bg-accent px-gutter py-2 font-semi text-ink"
+>
+  {t("skipLink.label")}
+</a>
+
+<style>
+  /* focus:not-visually-hidden isn't a real Tailwind variant — the visible
+     state is written out explicitly instead of inventing a plugin. */
+  a.visually-hidden:focus {
+    position: fixed;
+    inline-size: auto;
+    block-size: auto;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+    margin: 0;
+  }
+</style>

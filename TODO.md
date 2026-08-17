@@ -1,0 +1,256 @@
+# TODO.md — TruMandate site
+
+Deferred work. Nothing here lives only in a spec, in BUILD_FLAGS.md, or in chat.
+
+## From P1 (scaffold, tokens, shared components)
+
+- **`src/pages/index.astro` is a scaffold verification page, not the real
+  route.** PLAN.md §1 has `/` as a bare 302 to `/en/`. Replace this file with
+  that redirect once `src/pages/en/index.astro` exists (P2), and delete the
+  "P1 scaffold check" content.
+- **`Button.astro` (shared primary/ghost button) does not exist yet.** P1's
+  build list was tailwind config + Section + Reveal + header/footer only, so
+  `Header.astro`'s primary CTA is an inline-styled `<a>` rather than a shared
+  component. Build `Button.astro` at P2 and swap Header's CTA to use it.
+- **Arabic nav labels are provisional, not reviewed copy.** `src/i18n/ui.ts`
+  translates Strategy/Execution/Benefits as الاستراتيجية/التنفيذ/المنافع —
+  working translations of single governance nouns already used elsewhere in
+  the content brief, not yet run through the P6 Arabic review process that
+  `trumandate-product-pages.md` specifies for the three product pages. Confirm
+  or correct them when product-page Arabic is approved.
+- ~~**Header height offset is an estimate.**~~ Resolved at P2: measured the
+  fixed header at 94.625px (chrome-devtools MCP, both 375 and 1440 widths —
+  it doesn't vary with viewport), added a `header` spacing token (6.5rem /
+  104px, tailwind.config.mjs) and swapped `<main>`'s `pt-20` for `pt-header`.
+- **Favicon set not supplied.** `BaseLayout.astro` links `/favicon.svg`
+  (currently 404s in dev). Spec §5A lists `favicon.svg`, `favicon.ico`,
+  `apple-touch-icon.png` (180×180) and `site.webmanifest` as required raster
+  assets, built at P9 from the re-authored logo mark.
+- **OG images not supplied.** `og/og-en.png`, `og/og-ar.png` (1200×630),
+  built from the design system per spec §5A. P9.
+- **Vendor SVGs are placeholders.** `public/vendor/intertec-systems.svg` and
+  `iso-27001.svg` — Piyush supplies the Intertec Systems mark; ISO 27001 (or
+  equivalent) is contact-page only. Neither exists yet.
+- **Contact email is a placeholder.** `hello@trumandate.com`, per
+  BUILD_FLAGS default. Not wired into any page yet (contact page is P7).
+- **Formspree endpoint is a placeholder.** `.env`'s
+  `PUBLIC_FORMSPREE_ENDPOINT` is a fake URL. Replace before the contact form
+  (P7) goes live.
+- **`site.webmanifest` not built.** Depends on the favicon set above (P9).
+- **Lenis not added.** PLAN.md §1 lists `src/scripts/lenis.ts`, but smooth
+  scroll is motion-prompt work (P3/P4), not shared-component scaffolding.
+  Evaluate then, per BUILD_FLAGS: "remove it rather than patch it if it
+  fights ScrollTrigger on iOS."
+- **`sitemap.xml.ts` not built.** Needs the full route list to exist first
+  (P2–P7 build the routes); write it once they do, before P9's SEO pass.
+- **`robots.txt` currently disallows all crawling** (noindex-for-build-
+  duration). Flip it at launch per README-BUILD.md §6 step 6.
+
+## Carried from PLAN.md §4 (ambiguities flagged at P0, not yet re-confirmed)
+
+See PLAN.md §4 for the full list and reasoning; items 1–6 (structural) were
+already gated and resolved with Piyush before P1 — see BUILD_FLAGS.md's
+decisions log. Items 7–22 (motion re-expression, numeral rule contradiction,
+RAG colour-only status, fragment `aria-label` vs `role="img"`) remain open
+and will be addressed as the pages that touch them get built (P2 onward).
+
+## From P2 (home page, English, zero animation)
+
+- ~~**Chain motion (motion #1: pin + scrub + per-node one-shot triggers) is
+  not wired.**~~ Resolved at P3: `scripts/chain.ts` wires the rail's
+  `scaleY` scrub (transform-origin block-start, no manufactured scroll
+  distance), each link's one-shot activation trigger at "top 78%", and
+  `ChainMarker.astro`'s counter/name updating live off the same scrub
+  progress. Two pre-existing defects surfaced by actually scrolling the
+  built page (chrome-devtools MCP) rather than by static screenshot, both
+  fixed at P3 — see `BUILD_FLAGS.md`'s decisions log: (1) `motion.ts`'s
+  `whenMotionSafe` never ran `setup` for any visitor who had *not* asked for
+  reduced motion, a `gsap.matchMedia()` gotcha that affects every motion
+  script built on it, not just the chain; (2) `ChainMarker.astro`'s sticky
+  column had no room to stick (its immediate wrapper didn't stretch to the
+  grid row's height), so the "pin" never engaged at all pre-P3.
+- ~~**AI card arrival + confidence bar fill (motion #4) not wired.**~~
+  Resolved at P4: `scripts/aiCard.ts` runs a two-tween timeline off the
+  card's own once-only ScrollTrigger — a 16px/0.5s translateY+opacity
+  entrance, then the confidence-bar fill as `scaleX(0 → 1)` over 0.6s
+  (spec §7's own value) against the bar's already-77%-wide CSS box, per
+  CLAUDE.md's transforms-only rule. `SuggestionCard.astro` reuses
+  `Reveal.astro`'s `.reveal` CSS end-state class (not the `Reveal`
+  component/`data-reveal` hook itself, which would double-animate it) and
+  adds a scoped `[dir="rtl"]` override for the bar's transform-origin,
+  since Tailwind's `origin-*` utilities are physical-only.
+- ~~**Sparkline draw and the AED 41M counter (motion #5) not wired.**~~
+  Resolved at P4: the sparkline's "drawn on scroll" brief language is
+  downgraded to a fade (PLAN.md §4 ambiguity 7) — implemented as one more
+  `<Reveal>` instance around the SVG, reusing motion #2 rather than adding
+  a seventh animation. The counter (`scripts/counter.ts`) tweens a proxy
+  object 0 → 41 on first view and writes `AED {n}M` into the element's own
+  text each frame; `tabular-nums` plus a reserved `min-inline-size`
+  (`ObjectiveRecord.astro`) keep the "0" → "41" digit-count change from
+  reflowing the row.
+- **The AI section's spine-to-card connector is a simplified
+  approximation.** PLAN.md §3 describes the rail arriving at the suggestion
+  card's inline-start edge and stopping there. What's built: a vertical
+  rail spanning the two-column grid row's full (CSS-grid-stretched) height
+  plus a short horizontal tick at its foot — a reasonable gesture toward the
+  card rather than a precisely computed edge-to-edge weld. Revisit if a
+  design review wants exact pixel alignment.
+- ~~**Home-page body copy (hero, failure modes, chain, AI moment, closing
+  CTA) is not yet in `i18n/ui.ts`'s typed bilingual dictionary.**~~ Resolved
+  at P5: moved into `UiStrings.home` (`i18n/types.ts`/`ui.ts`), both
+  languages, and every home/chain/AI/fragment component now takes a `lang`
+  prop and reads its copy through `useTranslations` instead of hardcoding
+  English JSX. `src/pages/en/index.astro` was updated to pass `lang="en"`
+  through the same components rather than forking a parallel tree, per
+  PLAN.md §1's "keep one shared component" bias.
+- ~~**`StageGateQueue.astro` and `CommandCentreDim.astro` are LTR-only.**~~
+  Resolved at P5. `CommandCentreDim.astro` (no `<text>`) mirrors as a whole
+  group via `:global([dir="rtl"]) .command-centre-dim svg { transform:
+  scaleX(-1); }`. `StageGateQueue.astro` (has `<text>`) got a hand-authored
+  mirrored geometry: every x-coordinate is `360 - x` (rects additionally
+  subtract their own width), text-anchor flips from `start` to `end`, and
+  the fragment's own `direction: ltr` is pinned explicitly (see
+  known-issues.md — without it, the inherited `dir="rtl"` from `<html>`
+  flips what `text-anchor: start/end` even mean, breaking every
+  hand-computed coordinate).
+- **`ClosingCta.astro`'s CTA-overlay vertical position (`top-[66%]`) is an
+  eyeballed value**, not computed from `CommandCentreDim`'s empty-band
+  coordinates (viewBox y 402–480 of 640). Contrast holds regardless because
+  the composition is dimmed to 25% (verified via screenshot at P2), but a
+  design pass could tighten the alignment.
+
+## From P4 (motion items 2–6)
+
+- ~~**`StageGateQueue.astro`'s motion #3 wipe travels a fixed LTR direction**~~
+  Resolved at P5: `scripts/fragment.ts` reads `document.documentElement.dir`
+  once and animates `x: isRtl ? width : -width` instead of the fixed
+  `-width`, so the mask slides in from the opposite side under `/ar`,
+  uncovering from the fragment's (now-mirrored) inline-start edge outward,
+  matching StageGateQueue.astro's own mirrored geometry above.
+- **Motion #4's card-slide duration (0.5s) and motion #5's counter
+  duration (1.2s) are judgement calls, not spec values.** Spec §7 item 4
+  names only the confidence-bar's 0.6s; item 5 names no duration at all.
+  Tokenised in `tailwind.config.mjs` (`transitionDuration.card`,
+  `transitionDuration.counter`) with the reasoning inline, same treatment
+  as the P0 ease/rhythm judgement calls already logged in BUILD_FLAGS.md.
+- **Considered and rejected: a per-column stagger on the three failure-mode
+  reveals.** Multiple `<Reveal>` instances side by side in one `lg:grid-
+  cols-3` row cross the "top 85%" trigger at essentially the same scroll
+  position anyway, so a manual stagger would only have been visible on
+  narrow viewports where the columns stack — and spec §7's inventory has no
+  "staggered reveal" entry distinct from the plain section reveal. Built as
+  one `<Reveal>` around the whole section instead (matches Hero's and
+  ChainSection's pattern); flagged here rather than silently added as a
+  seventh animation.
+- ~~**LCP is still ~400ms over spec §9's 2.0s budget under Slow 4G + 4x
+  CPU**~~ Resolved in a later prompt: `astro.config.mjs`'s
+  `build.inlineStylesheets` set to `'always'` removes the global stylesheet
+  as a render-blocking network request (it was previously external and
+  render-blocking under Astro's default `'auto'` threshold, since the
+  project's one stylesheet sits above Vite's ~4KB auto-inline limit).
+  Measured on a clean production build served from `dist/` (port 4323):
+  Slow 4G + 4x CPU LCP 1,925–1,934ms → 1,137ms; Fast 4G LCP 607ms → 344ms;
+  CLS 0.00 throughout. Font preloads were also audited (3 Latin subsets on
+  `/en/`, no Arabic subset, `font-display: swap` confirmed) and left
+  unchanged — full detail and the one forward-looking trade-off (every
+  route now ships its own inline copy of the stylesheet rather than
+  sharing one cached external file) in known-issues.md's P4 section and
+  BUILD_FLAGS.md's decisions log.
+- **No WebKit-specific verification of the P4 motions.** The Playwright MCP
+  available this session runs Chromium only; spec §10's WebKit pass
+  (pinned-section divergence) is still owed. Carried from known-issues.md.
+
+## From P5 (Arabic home page, RTL)
+
+- **Arabic nav labels are still provisional** (carried from P1 — see that
+  item above). Not re-confirmed at P5; the home page doesn't touch the nav
+  strings themselves, only the routes they now genuinely point to.
+- **`StageGateQueue.astro`'s invented copy** (owner name, gate numbers, due
+  date — none of it sourced from the content brief) **now has an Arabic
+  version written per BUILD_FLAGS' "written, not machine-translated" rule,
+  not reviewed copy in the P6 sense.** Same caveat as the provisional nav
+  labels: fine to ship, worth a copy pass alongside the product pages.
+- **No WebKit-specific verification of the P5 RTL work.** Same constraint
+  as the P4 item above (Playwright MCP this session is Chromium-only).
+  Spec §10's WebKit pass still owes both the pinned-section and the RTL
+  mirror a real Safari check — Safari has historically had more bidi/logical-
+  property bugs than Chromium, so this is a real gap, not a formality.
+- **The Command Centre's dimmed composition is dimmed enough that its
+  mirror is hard to eyeball-verify by casual inspection.** Confirmed
+  correct programmatically (`getComputedStyle(svg).transform ===
+  "matrix(-1, 0, 0, 1, 0, 0)"` under `/ar`) and visually at full brightness
+  during development, but a future contributor changing this file should
+  re-check the computed transform directly rather than trusting a glance at
+  the 25%-opacity result.
+
+## From P6 (the three product pages, English only)
+
+- **Arabic for `/strategy`, `/execution` and `/benefits` does not exist and
+  must not be written until Piyush approves `COPY-REVIEW.md`.** This is the
+  prompt's and `trumandate-product-pages.md`'s explicit instruction, not an
+  oversight. When approved: move each page's `ProductPageCopy` object out of
+  its frontmatter into a new `UiStrings.product` branch (`i18n/types.ts` +
+  `ui.ts`), write the Arabic per BUILD_FLAGS' "written, not
+  machine-translated" rule, create `src/pages/ar/{strategy,execution,
+  benefits}.astro` passing `lang="ar"` to the same `ProductPage.astro`, and
+  add `"/strategy"`, `"/execution"`, `"/benefits"` to `pairedRoutes` in
+  `i18n/utils.ts` so LangToggle stops falling back to the Arabic home page.
+- **The three new fragments are LTR-only.** `KpiCard.astro`,
+  `InitiativeRows.astro` and `BenefitCurve.astro` all carry `<text>`, so each
+  needs a hand-mirrored geometry the way `StageGateQueue.astro` got one at P5
+  (every x becomes `W - x`, rects additionally subtracting their own width,
+  `text-anchor` flipped) — a blanket CSS `scaleX(-1)` would render the glyphs
+  backwards. Not written yet because no `/ar/` counterpart exists to exercise
+  it. All three DO already pin `direction: ltr` in their scoped style, so the
+  hand-computed `text-anchor` coordinates keep their physical meaning if the
+  files are ever rendered under `dir="rtl"` before the mirror is authored
+  (known-issues.md, P5, explains why that pin is necessary).
+- **The three fragments are specifications, not transcriptions.** Spec §5's
+  fidelity rule says that where the real Echelons UI exists the SVG is
+  authored against a screenshot of it, and where it does not, "the fragment is
+  a specification the UI must be built toward, not licence for marketing to
+  invent a nicer product". No screenshot of the real KPI card, portfolio list
+  or benefit curve was available this session, so all three were authored from
+  the field lists in `trumandate-product-pages.md` and spec §5. Each needs a
+  side-by-side check against the actual product before launch — flagged for
+  the reviewer in COPY-REVIEW.md too.
+- **Fragment type is small at 375px.** The three fragments are `w-full
+  max-w-[560px]` over a 460-unit viewBox, so at a 375 viewport their 10–11px
+  user-space labels render at roughly 7–8px. That is the same band
+  `StageGateQueue.astro` already sits in (its 9px labels at ~0.95 scale), and
+  the trade is deliberate: a wider native viewBox would render closer to 1:1
+  on desktop but would shrink these labels further on the viewport most
+  readers use. Revisit only if a design review finds them genuinely
+  unreadable on a real handset — the fix would be a mobile-simplified
+  fragment variant, which costs a second geometry per fragment.
+- **The product fragments crop at their own frame edge, not the section
+  edge.** `trumandate-product-pages.md` asks that "every fragment crops at the
+  section edge so the composition visibly continues". As built, the crop is
+  authored into each viewBox and the SVG is capped at 560px, so on a 1440
+  viewport the cut lands inside the 1180px column rather than at its edge.
+  This matches `StageGateQueue.astro`'s accepted P2 pattern and reads as
+  "continues" regardless; a design pass wanting the literal section-edge crop
+  would need either a full-bleed fragment section or a CSS
+  fade-to-page-ground mask applied consistently to all four fragments,
+  including the home one.
+- **No WebKit pass on the three new routes.** Same constraint carried from
+  P4/P5: the Playwright MCP in this session is Chromium-bound. These pages
+  have no pin and no scrub, so the historical Safari divergence risk is much
+  lower than the home page's, but the fragment wipe (an SVG `<mask>` moved by
+  `transform`) is worth a real Safari check.
+- **`Handoff.astro` renders only the primary CTA.** PLAN.md §4 item 17 flags
+  that the secondary CTA ("See the chain") has no target off the home page —
+  there is no chain section on a product page to anchor to. Decide at the QA
+  pass whether these routes should carry a secondary CTA at all (e.g. back to
+  the home chain) or stay single-CTA.
+- **A clean throttled LCP re-measure is owed on an idle machine.** The
+  Slow 4G + 4x CPU numbers taken this session are contaminated by ~92% host
+  CPU load from unrelated processes — the untouched home page measured
+  3,391 ms against the 1,137 ms recorded for it in known-issues.md, so the
+  absolute figures are not comparable to the P4 baseline. Full detail and the
+  same-session control numbers in known-issues.md's P6 section.
+- **The header's "Request a walkthrough" CTA wraps to two lines** at both 375
+  and 1440 (measured 63px tall against a 23.3px line-height). Pre-existing in
+  `Header.astro` and reproduced on the untouched home page, so not introduced
+  by P6, but it is visible in all six P6 screenshots and wants a
+  `whitespace-nowrap` or a shorter header label. Logged in known-issues.md.

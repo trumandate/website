@@ -1,0 +1,63 @@
+---
+// ChainMarker.astro — the sticky inline-start column: mono counter + active
+// link name. `aria-hidden` (PLAN.md §3): every word here also appears in the
+// scrolling column, so it would only duplicate content for assistive tech.
+// `position: sticky` is plain CSS — it needs no JavaScript, so it works
+// exactly the same whether or not the page's script bundle loads. Dropped
+// entirely below `lg` (PLAN.md: a pinned column with a paragraph in it is a
+// bad experience on a 375px screen, and the budget is a maximum not a
+// quota).
+//
+// `h-full` on this wrapper: ChainSection's grid stretches the `lg:col-span-4`
+// parent to the row's full height (the taller sibling column, ~800px), but a
+// plain block child only ever shrinks to its own content height unless told
+// otherwise — a sticky element only has room to "stick" within its own
+// *immediate* parent's box, not a grandparent's, so without `h-full` here the
+// marker's containing box was exactly as tall as the marker itself and the
+// sticky positioning had zero slack to move within, silently behaving as
+// ordinary static flow. Found at P3 by actually scrolling through the
+// section (chrome-devtools MCP) rather than a static screenshot.
+//
+// The counter and name shown are the chain's resting/first state (01 / 05,
+// Objective) — also exactly what a reduced-motion reader or a JS-failure
+// reader keeps seeing, since this whole column is `aria-hidden` decoration.
+// `scripts/chain.ts` (motion #1) updates `[data-chain-count]` /
+// `[data-chain-name]`'s text on every scrub tick, keyed off the same scroll
+// progress that fills the rail, so the marker always names whichever link
+// the rail has reached. The pin itself is this element's own `sticky`
+// (below) — plain CSS, no ScrollTrigger `pin` involved, so it can never hold
+// the scroll longer than its containing grid cell's natural height and it
+// keeps working even if the JS bundle fails.
+//
+// `dir="ltr"` on the count paragraph (P5): found on /ar — "01 / 05" was
+// rendering visually reversed ("05 / 01") under `dir="rtl"` ancestry, a
+// Unicode bidi artefact (two Western-digit runs joined by a bare "/" with
+// no strong-direction anchor between them) rather than a markup bug. The
+// attribute stays on the element permanently, so `chain.ts`'s runtime
+// `textContent` updates on scroll stay isolated too, not just the served
+// first-paint value.
+interface Props {
+  count: string;
+  activeName: string;
+}
+
+const { count, activeName }: Props = Astro.props;
+---
+
+<div aria-hidden="true" class="hidden h-full lg:block" data-chain-marker>
+  <div class="sticky top-header">
+    <p
+      data-chain-count
+      dir="ltr"
+      class="font-mono text-datum font-data tracking-datum text-muted"
+    >
+      {count}
+    </p>
+    <h3
+      data-chain-name
+      class="mt-2 font-sans text-h3 font-semi tracking-heading text-paper"
+    >
+      {activeName}
+    </h3>
+  </div>
+</div>

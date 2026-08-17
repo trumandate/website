@@ -1,0 +1,67 @@
+---
+// /en/execution — "Execution and governance" (P6). Expands one link of the
+// home page's traceability chain: Initiative → Milestone. The one question it
+// answers: how does delivery reality reach the office that funded it?
+//
+// Structure belongs to ProductPage.astro; this file supplies the copy object
+// and the one fragment, exactly like the other two product pages.
+//
+// Curiosity ledger for this route:
+//   Reveals  — three initiative rows, cropped (InitiativeRows.astro).
+//   Withholds — the gate workflow and the approval routing.
+// Stage gates are named as a thing that exists, because
+// trumandate-product-pages.md's own "argument to land" for this page requires
+// it ("every stage gate decision assigned to a named person with a date").
+// What is withheld is the mechanism: no page copy, no fragment element and no
+// aria-label describes how a decision is routed, who it goes to next, or what
+// the workflow does with it. The only sentence that names a gate decision at
+// all is `handoff`, whose job is to promise it.
+//
+// English only; Arabic follows copy approval. See strategy.astro's header for
+// the LangToggle behaviour on unpaired routes.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductPage from "../../components/product/ProductPage.astro";
+import InitiativeRows from "../../components/fragments/InitiativeRows.astro";
+import type { ProductPageCopy } from "../../components/product/copy";
+
+const lang = "en" as const;
+
+const copy: ProductPageCopy = {
+  eyebrow: "Initiative → Milestone",
+  headline: "Delivery data that never reaches the funder is just paperwork.",
+  argument: [
+    "Project tools are good at managing projects. They are also structurally incapable of rolling up to a mandate, because the mandate does not exist inside them. A schedule knows its own tasks, its own dependencies and its own critical path. It does not know which objective bought it, what that objective promised in return, or which other initiative is competing for the same three people. None of that is a defect in the tool. It is a question the tool was never asked.",
+    "So the roll-up becomes a monthly human exercise. Someone requests status from every delivery lead. Someone else retypes the replies into a template. On the way through, each number is rounded gently toward the answer its author would rather give, because the person typing it is also the person who will be asked about it. By the time the pack reaches the steering committee it is both stale and negotiated, and the committee makes funding decisions on it anyway, because it is the only version that exists.",
+    "TruMandate holds initiatives against the objective that funded them. Every milestone carries a baseline date and an actual date, so slip is a subtraction rather than a judgement call, and it shows up on the day it happens instead of at the end of the reporting month. Every stage gate decision is recorded against a named person with a date, and it stays attached to the record after that person has moved on. Because the roll-up is a query rather than a collection exercise, the steering pack stops being assembled — it was never disassembled in the first place.",
+    "What changes in practice is the meeting. A committee that trusts the numbers spends its hour on the initiatives in trouble instead of spending it confirming that the rest are broadly fine. And when a number is wrong, it is wrong in a way that leads back to a record, a date and a person who can be asked about it, which is a different class of problem from a number nobody can source. Governance is mostly the ability to ask that second question and get an answer the same day.",
+  ],
+  captionLead:
+    "Three initiatives as the portfolio view lists them, each against the objective that funded it.",
+  captionSecond:
+    "Progress is read from milestone baselines and actuals, so the red row needed no separate exception report.",
+  ai: {
+    eyebrow: "AI in the platform",
+    heading: "A dependency at risk that neither owner has raised.",
+    body: "This one comes out of two records no person had a reason to compare: a date that moved on one initiative, and a start condition on another that points at it. Different departments, different reporting lines, no shared meeting in anyone's calendar. The model reads the link and puts the risk in front of someone while there is still a week to act on it, with its evidence attached. A person decides whether it is real, and that decision becomes part of the record rather than a remark in a meeting.",
+    badge: "AI watch",
+    confidenceLabel: "confidence 0.74",
+    confidence: 0.74,
+    title: "Cross-department dependency at risk",
+    detail:
+      "Initiative 07 and Initiative 21, different departments. Evidence: gate 3 slipped on one, and the other's start condition references it. Suggested action: raise a cross-department dependency flag before the steering meeting.",
+    log: "Decision logged · m.alfarsi · 08:15",
+  },
+  handoff:
+    "The demo picks up from here: what happens when a gate is rejected, and how far the change propagates through dates, dependencies and owners before anyone sits down to re-plan.",
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title="Execution and governance — TruMandate"
+  description="How delivery reality reaches the office that funded it: initiatives held against the objective that paid for them, with baseline and actual on every milestone."
+>
+  <ProductPage lang={lang} copy={copy}>
+    <InitiativeRows slot="fragment" />
+  </ProductPage>
+</BaseLayout>

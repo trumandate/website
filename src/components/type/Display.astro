@@ -1,0 +1,21 @@
+---
+// Display.astro — the one display role (spec §3): 600, -0.02em Latin, 0
+// Arabic (handled by global.css's [dir=rtl] override). One instance per page,
+// and it is always that page's <h1>: the home page's hero headline, and (P6)
+// each product page's opening question. Section headings use Heading.astro.
+interface Props {
+  as?: "h1" | "h2";
+  class?: string;
+}
+
+const { as: Tag = "h1", class: className }: Props = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "font-sans font-display text-display font-semi tracking-display text-paper",
+    className,
+  ]}
+>
+  <slot />
+</Tag>

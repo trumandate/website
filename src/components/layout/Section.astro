@@ -1,0 +1,45 @@
+---
+// Section.astro — the only component that sets horizontal padding or
+// vertical rhythm (spec §3, CLAUDE.md). Every page composes sections; no
+// page carries a style attribute of its own.
+//
+// `mx-auto` and `px-gutter` are symmetric (equal on both inline edges), so
+// they are RTL-safe without being logical-property utilities themselves —
+// there is no direction-carrying value here for `[dir=rtl]` to get wrong.
+interface Props {
+  /** Rendered tag. Defaults to `section`; layout chrome (header/footer) uses
+   * something else via BaseLayout, not this component. */
+  as?: "section" | "div" | "main";
+  /** Tighter vertical rhythm for a section that follows another closely. */
+  tight?: boolean;
+  /** Full-bleed content still needs the vertical rhythm; only the inline
+   * max-width/padding are dropped. The closing CTA (spec §3, home) is the
+   * one section that breaks the 1180px column. */
+  bleed?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const {
+  as: Tag = "section",
+  tight = false,
+  bleed = false,
+  class: className,
+  id,
+}: Props = Astro.props;
+---
+
+<Tag
+  id={id}
+  class:list={["w-full", tight ? "py-section-tight" : "py-section", className]}
+>
+  {
+    bleed ? (
+      <slot />
+    ) : (
+      <div class="mx-auto max-w-content px-gutter">
+        <slot />
+      </div>
+    )
+  }
+</Tag>

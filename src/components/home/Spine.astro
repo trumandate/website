@@ -1,0 +1,42 @@
+---
+// Spine.astro — the rail, shared hero → chain → AI (PLAN.md §3, "the one
+// idea"). Renders only the vertical line; the caller supplies its own
+// `position: relative` ancestor and applies `ps-rail` to whichever content
+// needs to clear it, so every section's line sits in one shared coordinate
+// space (spec §8: `inset-inline-start`, mirrors under RTL for free).
+//
+// `variant="dashed"` is the problem section's broken segment: no nodes,
+// because that section is about the chain not existing (PLAN.md's own
+// self-critique: "the one accessory to remove if anything has to go").
+// `variant="filled"` is the chain's fully-resolved end state — solid accent,
+// untransformed (== `scaleY(1)`), which is exactly what a reduced-motion
+// reader or a JS failure sees. `scripts/chain.ts` (motion #1) selects this
+// element via `[data-chain-rail]` and runs `gsap.fromTo(rail, {scaleY: 0},
+// {scaleY: 1, scrollTrigger: {scrub: true, ...}})`: it never edits the served
+// markup's state, only tweens away from it and back. `origin-top` is a
+// physical value, not a logical one, on purpose — this is a block-axis
+// (vertical) transform and spec §8 is explicit that vertical motion does not
+// mirror under RTL, so "top" is direction-independent here.
+interface Props {
+  variant?: "hairline" | "dashed" | "filled";
+  class?: string;
+}
+
+const { variant = "hairline", class: className }: Props = Astro.props;
+
+const styles: Record<NonNullable<Props["variant"]>, string> = {
+  hairline: "w-px bg-hairline",
+  filled: "w-px origin-top bg-accent",
+  dashed: "border-s border-dashed border-hairline",
+};
+---
+
+<div
+  aria-hidden="true"
+  data-chain-rail={variant === "filled" ? true : undefined}
+  class:list={[
+    "pointer-events-none absolute start-node-inset top-0 bottom-0",
+    styles[variant],
+    className,
+  ]}
+></div>

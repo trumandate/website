@@ -1,0 +1,174 @@
+---
+// KpiCard.astro — /strategy's ONE fragment (curiosity ledger: "Reveals: one
+// KPI card, fully readable"). Hand-authored inline SVG from tokens, one screen
+// region, data anonymised — never the interface (spec §5's fidelity rule).
+//
+// Contents are exactly the six things the ledger enumerates and nothing more:
+// label, baseline, target, live actual, RAG dot, and a sparkline of the last
+// six periods. The owner row that the page's argument mentions a KPI carrying
+// is deliberately NOT drawn — the ledger's list is a specification, and a card
+// that grows an extra row per paragraph of copy is how a fragment becomes a
+// screenshot.
+//
+// WITHHELD, and absent from this file by design: the cascade editor and how
+// weighting works. No weight column, no parent-objective tree, no editor
+// chrome, and nothing about either in the aria-label. `/strategy`'s handoff
+// sentence is the only place on that page where they are named.
+//
+// The crop is authored into the viewBox: the neighbouring KPI card starts at
+// x=320 and runs to x=620, past the viewBox's own 460 edge, so the browser's
+// default SVG clipping cuts it roughly in half — the ledger's "cropped so the
+// neighbouring card is half visible at the frame edge", with no CSS overflow
+// trick and no second mask. Its title text is cut mid-glyph for the same
+// reason, which is what a real crop looks like.
+//
+// Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
+// for the full reasoning (rem resolves against the document root and ignores
+// the viewBox transform, decoupling the type from the shapes as the fragment
+// scales).
+//
+// RTL: this fragment carries <text>, so it needs a hand-mirrored geometry the
+// way StageGateQueue.astro has one — not a CSS scaleX, which would render the
+// glyphs backwards. That is not written yet because `/ar/strategy` does not
+// exist yet (English copy is approved first, per
+// trumandate-product-pages.md). `direction: ltr` is pinned in the scoped
+// style below regardless, so the hand-computed `text-anchor` coordinates keep
+// their physical meaning if this file is ever rendered under `dir="rtl"`
+// before the mirror is authored. Logged in TODO.md.
+interface Props {
+  class?: string;
+}
+
+const { class: className }: Props = Astro.props;
+
+const ariaLabel =
+  "KPI record. Digital service adoption, KPI 1.2.3. Baseline 42.0, target 75.0, live actual 61.4. Status: at risk. A sparkline of the last six periods rises across the card. A second KPI record is cropped at the frame edge.";
+---
+
+<svg
+  viewBox="0 0 460 236"
+  class:list={["kpi-card w-full max-w-[560px]", className]}
+  role="img"
+  aria-label={ariaLabel}
+  data-fragment
+>
+  <defs>
+    <mask
+      id="kpi-card-wipe-mask"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="460"
+      height="236"
+    >
+      <rect x="0" y="0" width="460" height="236" fill="black"></rect>
+      <rect
+        data-fragment-wipe
+        x="0"
+        y="0"
+        width="460"
+        height="236"
+        fill="white"></rect>
+    </mask>
+  </defs>
+
+  <g mask="url(#kpi-card-wipe-mask)">
+    <rect width="460" height="236" class="fill-surface-deep"></rect>
+
+    <!-- The KPI card itself, fully readable -->
+    <rect
+      x="8"
+      y="10"
+      width="300"
+      height="216"
+      rx="4"
+      class="fill-surface stroke-hairline"
+      stroke-width="1"></rect>
+
+    <text x="26" y="32" class="label fill-muted">KPI · 1.2.3</text>
+    <circle cx="282" cy="28" r="4.5" class="fill-amber"></circle>
+
+    <text x="26" y="57" class="name fill-paper">Digital service adoption</text>
+
+    <line x1="26" y1="74" x2="290" y2="74" class="stroke-hairline" stroke-width="1"
+    ></line>
+
+    <text x="26" y="97" class="label fill-muted">Baseline</text>
+    <text x="26" y="124" class="figure fill-paper">42.0</text>
+
+    <text x="114" y="97" class="label fill-muted">Target</text>
+    <text x="114" y="124" class="figure fill-paper">75.0</text>
+
+    <text x="202" y="97" class="label fill-muted">Actual</text>
+    <text x="202" y="124" class="figure fill-accent">61.4</text>
+
+    <line x1="26" y1="142" x2="290" y2="142" class="stroke-hairline" stroke-width="1"
+    ></line>
+
+    <text x="26" y="163" class="label fill-muted">Last 6 periods</text>
+
+    <polyline
+      points="26,212 78,204 130,207 182,192 234,184 286,174"
+      fill="none"
+      stroke-width="1.5"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      class="stroke-accent"></polyline>
+    <circle cx="286" cy="174" r="3" class="fill-accent"></circle>
+
+    <!-- The neighbouring card: starts in-frame, geometry runs past the
+         viewBox's edge and is clipped by it. -->
+    <rect
+      x="320"
+      y="10"
+      width="300"
+      height="216"
+      rx="4"
+      class="fill-surface stroke-hairline"
+      stroke-width="1"></rect>
+
+    <text x="338" y="32" class="label fill-muted">KPI · 1.2.4</text>
+    <text x="338" y="57" class="name fill-paper">Case processing time</text>
+    <line x1="338" y1="74" x2="460" y2="74" class="stroke-hairline" stroke-width="1"
+    ></line>
+    <text x="338" y="97" class="label fill-muted">Baseline</text>
+    <text x="338" y="124" class="figure fill-paper">38.0</text>
+  </g>
+</svg>
+
+<script src="../../scripts/fragment.ts"></script>
+
+<style>
+  /* Spec §3's three type roles, expressed in the fragment's own user-space
+     units. Same treatment as StageGateQueue.astro: addressed as local classes
+     rather than through the shared .font-mono/.text-datum utilities, because
+     those carry rem sizes that would not scale with the artwork. */
+  .label {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .name {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 14px;
+  }
+
+  .figure {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 22px;
+  }
+
+  /* See known-issues.md (P5): `direction` inherits into <text>, and
+     `text-anchor: start`/`end` are defined relative to it, so every
+     hand-computed coordinate in this file would change meaning under
+     html[dir="rtl"]. Pinned here so the geometry keeps the physical meaning
+     it was authored against. */
+  .kpi-card {
+    direction: ltr;
+  }
+</style>

@@ -1,0 +1,1887 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      TruMandate — Portfolio governance for the office that sets direction
+    </title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #04241e;
+        --jade: #0b4a3d;
+        --jade-lift: #0f5c4b;
+        --accent: #19c39b;
+        --amber: #f2b441;
+        --red: #e0574c;
+        --paper: #f1f5f3;
+        --muted: #9cb8ae;
+        --line: rgba(255, 255, 255, 0.1);
+        --sans:
+          "IBM Plex Sans Arabic", -apple-system, "Segoe UI", Tahoma, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+        --lh: 1.55;
+        --pad: clamp(20px, 5vw, 72px);
+        --maxw: 1180px;
+        --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      html[lang="ar"] {
+        --lh: 1.85;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--ink);
+        color: var(--paper);
+        font-family: var(--sans);
+        font-weight: 300;
+        line-height: var(--lh);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      p,
+      ul {
+        margin: 0;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      /* ---------- shared type roles ---------- */
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      html[lang="ar"] .eyebrow {
+        letter-spacing: 0;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 0.78rem;
+      }
+      .display {
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.08;
+        font-size: clamp(2.1rem, 5.4vw, 4.15rem);
+      }
+      html[lang="ar"] .display {
+        letter-spacing: 0;
+        line-height: 1.3;
+      }
+      .h2 {
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        line-height: 1.14;
+        font-size: clamp(1.7rem, 3.6vw, 2.85rem);
+      }
+      html[lang="ar"] .h2 {
+        letter-spacing: 0;
+        line-height: 1.4;
+      }
+      .lede {
+        font-size: clamp(1.02rem, 1.5vw, 1.24rem);
+        color: #cfe0da;
+        max-width: 56ch;
+      }
+      .small {
+        font-size: 0.94rem;
+        color: var(--muted);
+        max-width: 52ch;
+      }
+      .datum {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      html[lang="ar"] .datum {
+        font-family: var(--sans);
+        letter-spacing: 0;
+        text-transform: none;
+        font-size: 0.82rem;
+      }
+
+      .wrap {
+        max-width: var(--maxw);
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      section {
+        position: relative;
+        padding-block: clamp(72px, 11vh, 132px);
+      }
+
+      /* ---------- scroll progress ---------- */
+      .prog {
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline: 0;
+        height: 2px;
+        background: transparent;
+        z-index: 60;
+      }
+      .prog i {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+        transform-origin: left center;
+        transform: scaleX(var(--sp, 0));
+      }
+      html[dir="rtl"] .prog i {
+        transform-origin: right center;
+      }
+
+      /* ---------- nav ---------- */
+      header {
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline: 0;
+        z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(4, 36, 30, 0.72);
+        border-block-end: 1px solid transparent;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      header.stuck {
+        border-block-end-color: var(--line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, 3vw, 34px);
+        height: 66px;
+      }
+      .brand {
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        font-size: 1.06rem;
+      }
+      .brand span {
+        color: var(--accent);
+      }
+      .nav ul {
+        display: flex;
+        gap: clamp(12px, 2.4vw, 26px);
+        margin-inline-start: auto;
+        font-size: 0.9rem;
+        color: #c6dad3;
+      }
+      .nav ul a:hover {
+        color: var(--accent);
+      }
+      .langbtn {
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
+        border: 1px solid var(--line);
+        background: none;
+        color: var(--paper);
+        padding: 7px 12px;
+        border-radius: 2px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .langbtn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      @media (max-width: 720px) {
+        .nav ul {
+          display: none;
+        }
+      }
+
+      /* ---------- reveal ---------- */
+      .rise {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.8s var(--ease),
+          transform 0.8s var(--ease);
+      }
+      .rise.in {
+        opacity: 1;
+        transform: none;
+      }
+      .rise.d1 {
+        transition-delay: 0.08s;
+      }
+      .rise.d2 {
+        transition-delay: 0.16s;
+      }
+      .rise.d3 {
+        transition-delay: 0.24s;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        padding-block-start: 120px;
+        overflow: hidden;
+      }
+      .hero .wrap {
+        width: 100%;
+      }
+      .hero .display {
+        max-width: 20ch;
+        margin-block: 22px 26px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: clamp(28px, 6vw, 72px);
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-block-start: 34px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 22px;
+        border-radius: 2px;
+        font-size: 0.94rem;
+        font-weight: 500;
+        border: 1px solid var(--accent);
+        background: var(--accent);
+        color: #04241e;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .btn:hover {
+        background: #22ddb0;
+      }
+      .btn.ghost {
+        background: none;
+        color: var(--paper);
+        border-color: var(--line);
+      }
+      .btn.ghost:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* hero card: origin of the chain */
+      .origin {
+        border: 1px solid var(--line);
+        background: linear-gradient(160deg, var(--jade), #083a30);
+        padding: 22px;
+        border-radius: 3px;
+        position: relative;
+      }
+      .origin .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-block: 12px;
+        border-block-start: 1px solid var(--line);
+      }
+      .origin .row:first-of-type {
+        border-block-start: 0;
+      }
+      .origin .val {
+        font-family: var(--mono);
+        font-size: 1.02rem;
+        font-weight: 500;
+      }
+      .rag {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        flex: 0 0 auto;
+        display: inline-block;
+      }
+      .rag.g {
+        background: var(--accent);
+        box-shadow: 0 0 0 0 rgba(25, 195, 155, 0.55);
+        animation: pulse 2.8s infinite;
+      }
+      .rag.a {
+        background: var(--amber);
+      }
+      .rag.r {
+        background: var(--red);
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(25, 195, 155, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 11px rgba(25, 195, 155, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(25, 195, 155, 0);
+        }
+      }
+      .spark {
+        width: 100%;
+        height: 38px;
+        display: block;
+        margin-block-start: 6px;
+      }
+      .spark path {
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 1.6;
+        stroke-dasharray: 220;
+        stroke-dashoffset: 220;
+        transition: stroke-dashoffset 1.6s var(--ease) 0.3s;
+      }
+      .in .spark path,
+      .origin.in .spark path {
+        stroke-dashoffset: 0;
+      }
+
+      /* ---------- gap section ---------- */
+      .gap-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(18px, 3vw, 34px);
+        margin-block-start: 46px;
+      }
+      @media (max-width: 860px) {
+        .gap-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .gap-item {
+        padding-block-start: 18px;
+        border-block-start: 1px solid var(--line);
+      }
+      .gap-item p {
+        margin-block-start: 10px;
+        font-size: 1rem;
+        color: #c6dad3;
+      }
+
+      /* ---------- signature: the chain ---------- */
+      .chain {
+        background: var(--jade);
+      }
+      .chain-head {
+        max-width: 46ch;
+        margin-block-end: clamp(34px, 6vw, 66px);
+      }
+      .chain-rail {
+        position: relative;
+        padding-inline-start: 54px;
+      }
+      html[dir="rtl"] .chain-rail {
+        padding-inline-start: 54px;
+      }
+      .rail {
+        position: absolute;
+        inset-block: 6px 6px;
+        inset-inline-start: 15px;
+        width: 1px;
+        background: var(--line);
+      }
+      .rail i {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        width: 100%;
+        height: calc(var(--cp, 0) * 100%);
+        background: linear-gradient(180deg, var(--accent), #8fe9d4);
+        display: block;
+      }
+      .link {
+        position: relative;
+        padding-block: clamp(20px, 3.4vw, 34px);
+      }
+      .link::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: -46px;
+        inset-block-start: calc(clamp(20px, 3.4vw, 34px) + 8px);
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--jade);
+        border: 1px solid var(--muted);
+        transition:
+          border-color 0.45s,
+          background 0.45s,
+          box-shadow 0.45s;
+      }
+      .link.on::before {
+        background: var(--accent);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 5px rgba(25, 195, 155, 0.16);
+      }
+      .link h3 {
+        font-size: clamp(1.22rem, 2.3vw, 1.7rem);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        opacity: 0.45;
+        transition: opacity 0.45s;
+      }
+      .link.on h3 {
+        opacity: 1;
+      }
+      .link p {
+        margin-block-start: 8px;
+        color: #b9d2ca;
+        font-size: 1rem;
+        max-width: 52ch;
+        opacity: 0.4;
+        transition: opacity 0.5s;
+      }
+      .link.on p {
+        opacity: 1;
+      }
+      .link .tag {
+        margin-block-start: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* ---------- product screen ---------- */
+      .screen-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 0.6fr;
+        gap: clamp(24px, 4vw, 52px);
+        align-items: start;
+        margin-block-start: 44px;
+      }
+      @media (max-width: 960px) {
+        .screen-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .frame {
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        overflow: hidden;
+        background: #021813;
+        box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.75);
+      }
+      .frame svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .callouts li {
+        display: flex;
+        gap: 13px;
+        padding-block: 14px;
+        border-block-start: 1px solid var(--line);
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.6s var(--ease),
+          transform 0.6s var(--ease);
+      }
+      .callouts.in li {
+        opacity: 1;
+        transform: none;
+      }
+      .callouts.in li:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      .callouts.in li:nth-child(3) {
+        transition-delay: 0.2s;
+      }
+      .callouts.in li:nth-child(4) {
+        transition-delay: 0.3s;
+      }
+      .dotnum {
+        flex: 0 0 auto;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        display: grid;
+        place-items: center;
+        margin-block-start: 2px;
+      }
+      .callouts p {
+        font-size: 0.95rem;
+        color: #c6dad3;
+      }
+
+      /* ---------- AI ---------- */
+      .ai-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(24px, 5vw, 64px);
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .ai-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ai-card {
+        border: 1px solid var(--line);
+        background: linear-gradient(160deg, #0a4438, #062b23);
+        border-radius: 3px;
+        padding: 22px;
+      }
+      .ai-card .hd {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .badge {
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        padding: 4px 8px;
+        border-radius: 2px;
+      }
+      html[lang="ar"] .badge {
+        font-family: var(--sans);
+        letter-spacing: 0;
+        font-size: 0.74rem;
+      }
+      .ai-card .big {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-block: 14px 4px;
+      }
+      .acts {
+        display: flex;
+        gap: 9px;
+        margin-block-start: 18px;
+        flex-wrap: wrap;
+      }
+      .acts button {
+        font-family: inherit;
+        font-size: 0.86rem;
+        padding: 9px 15px;
+        border-radius: 2px;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        background: none;
+        color: var(--paper);
+        transition:
+          0.2s border-color,
+          0.2s color;
+      }
+      .acts button:first-child {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .acts button:hover {
+        border-color: var(--paper);
+      }
+      .logline {
+        margin-block-start: 14px;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      html[lang="ar"] .logline {
+        font-family: var(--sans);
+        font-size: 0.82rem;
+      }
+
+      /* ---------- alignment chips ---------- */
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-block-start: 30px;
+      }
+      .chip {
+        border: 1px solid var(--line);
+        border-radius: 100px;
+        padding: 9px 16px;
+        font-size: 0.9rem;
+        color: #cfe0da;
+      }
+      .chip b {
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      /* ---------- modules ---------- */
+      .mods {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(14px, 2vw, 26px);
+        margin-block-start: 40px;
+      }
+      @media (max-width: 900px) {
+        .mods {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 520px) {
+        .mods {
+          grid-template-columns: 1fr;
+        }
+      }
+      .mod {
+        border-block-start: 1px solid var(--line);
+        padding-block-start: 16px;
+      }
+      .mod h4 {
+        margin: 0 0 12px;
+        font-size: 0.72rem;
+        font-family: var(--mono);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 500;
+      }
+      html[lang="ar"] .mod h4 {
+        font-family: var(--sans);
+        letter-spacing: 0;
+        font-size: 0.84rem;
+      }
+      .mod li {
+        font-size: 0.96rem;
+        color: #c6dad3;
+        padding-block: 5px;
+      }
+
+      /* ---------- form ---------- */
+      .contact {
+        background: var(--jade);
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-block-start: 32px;
+        max-width: 720px;
+      }
+      @media (max-width: 620px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .field.full {
+        grid-column: 1/-1;
+      }
+      label {
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+        font-size: 0.98rem;
+        color: var(--paper);
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 12px 13px;
+        transition: border-color 0.2s;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
+      textarea {
+        min-height: 104px;
+        resize: vertical;
+      }
+      select option {
+        background: var(--ink);
+      }
+      .hp {
+        position: absolute;
+        inset-inline-start: -9999px;
+      }
+      .formnote {
+        margin-block-start: 14px;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      footer {
+        border-block-start: 1px solid var(--line);
+        padding-block: 30px;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+      .foot {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: space-between;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .rise {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .callouts li {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .spark path {
+          stroke-dashoffset: 0;
+          transition: none;
+        }
+        .link h3,
+        .link p {
+          opacity: 1;
+        }
+        .link::before {
+          background: var(--accent);
+          border-color: var(--accent);
+        }
+        .rag.g {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="prog"><i></i></div>
+
+    <header id="hdr">
+      <div class="wrap nav">
+        <a class="brand" href="#top">Tru<span>Mandate</span></a>
+        <ul>
+          <li><a href="#chain" data-i18n="nav.trace"></a></li>
+          <li><a href="#screen" data-i18n="nav.platform"></a></li>
+          <li><a href="#ai" data-i18n="nav.ai"></a></li>
+          <li><a href="#contact" data-i18n="nav.contact"></a></li>
+        </ul>
+        <button class="langbtn" id="lang">العربية</button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow rise" data-i18n="hero.eyebrow"></p>
+            <h1 class="display rise d1" data-i18n="hero.h1"></h1>
+            <p class="lede rise d2" data-i18n="hero.lede"></p>
+            <div class="cta-row rise d3">
+              <a class="btn" href="#contact" data-i18n="cta.demo"></a>
+              <a class="btn ghost" href="#chain" data-i18n="cta.see"></a>
+            </div>
+          </div>
+          <div class="origin rise d2" id="origin">
+            <p class="datum" data-i18n="origin.label"></p>
+            <div class="row">
+              <span data-i18n="origin.obj"></span>
+              <span class="val">v3</span>
+            </div>
+            <div class="row">
+              <span data-i18n="origin.kpi"></span>
+              <span class="val">68 / 75 <span class="rag g"></span></span>
+            </div>
+            <div class="row">
+              <span data-i18n="origin.init"></span>
+              <span class="val">14 <span class="rag a"></span></span>
+            </div>
+            <div class="row">
+              <span data-i18n="origin.ben"></span>
+              <span class="val">AED 41M</span>
+            </div>
+            <svg
+              class="spark"
+              viewBox="0 0 260 38"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M0,30 L26,27 L52,29 L78,22 L104,24 L130,17 L156,19 L182,12 L208,14 L234,7 L260,5"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE GAP -->
+    <section>
+      <div class="wrap">
+        <p class="eyebrow rise" data-i18n="gap.eyebrow"></p>
+        <h2
+          class="h2 rise d1"
+          style="max-width: 24ch; margin-block-start: 16px"
+          data-i18n="gap.h2"
+        ></h2>
+        <div class="gap-grid">
+          <div class="gap-item rise">
+            <p class="datum" data-i18n="gap.l1"></p>
+            <p data-i18n="gap.p1"></p>
+          </div>
+          <div class="gap-item rise d1">
+            <p class="datum" data-i18n="gap.l2"></p>
+            <p data-i18n="gap.p2"></p>
+          </div>
+          <div class="gap-item rise d2">
+            <p class="datum" data-i18n="gap.l3"></p>
+            <p data-i18n="gap.p3"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNATURE: THE CHAIN -->
+    <section class="chain" id="chain">
+      <div class="wrap">
+        <div class="chain-head">
+          <p class="eyebrow rise" data-i18n="chain.eyebrow"></p>
+          <h2
+            class="h2 rise d1"
+            style="margin-block-start: 16px"
+            data-i18n="chain.h2"
+          ></h2>
+          <p
+            class="small rise d2"
+            style="margin-block-start: 14px"
+            data-i18n="chain.sub"
+          ></p>
+        </div>
+        <div class="chain-rail" id="rail">
+          <div class="rail" aria-hidden="true"><i></i></div>
+          <div class="link">
+            <h3 data-i18n="c1.t"></h3>
+            <p data-i18n="c1.p"></p>
+          </div>
+          <div class="link">
+            <h3 data-i18n="c2.t"></h3>
+            <p data-i18n="c2.p"></p>
+          </div>
+          <div class="link">
+            <h3 data-i18n="c3.t"></h3>
+            <p data-i18n="c3.p"></p>
+          </div>
+          <div class="link">
+            <h3 data-i18n="c4.t"></h3>
+            <p data-i18n="c4.p"></p>
+          </div>
+          <div class="link">
+            <h3 data-i18n="c5.t"></h3>
+            <p data-i18n="c5.p"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT SCREEN -->
+    <section id="screen">
+      <div class="wrap">
+        <p class="eyebrow rise" data-i18n="scr.eyebrow"></p>
+        <h2
+          class="h2 rise d1"
+          style="margin-block-start: 16px; max-width: 26ch"
+          data-i18n="scr.h2"
+        ></h2>
+        <p
+          class="lede rise d2"
+          style="margin-block-start: 14px"
+          data-i18n="scr.sub"
+        ></p>
+        <div class="screen-grid">
+          <div class="frame rise">
+            <svg
+              viewBox="0 0 900 520"
+              role="img"
+              aria-label="TruMandate Command Centre"
+            >
+              <rect width="900" height="520" fill="#021813" />
+              <!-- top bar -->
+              <rect x="0" y="0" width="900" height="44" fill="#0B4A3D" />
+              <text
+                x="20"
+                y="27"
+                fill="#F1F5F3"
+                font-family="IBM Plex Sans Arabic, sans-serif"
+                font-size="13"
+                font-weight="600"
+              >
+                TruMandate
+              </text>
+              <rect
+                x="120"
+                y="14"
+                width="150"
+                height="16"
+                rx="3"
+                fill="#0F5C4B"
+              />
+              <circle cx="866" cy="22" r="10" fill="#0F5C4B" />
+              <!-- sidebar -->
+              <rect x="0" y="44" width="176" height="476" fill="#06302733" />
+              <g
+                font-family="IBM Plex Sans Arabic, sans-serif"
+                font-size="10"
+                fill="#9CB8AE"
+              >
+                <text
+                  x="18"
+                  y="72"
+                  fill="#19C39B"
+                  font-size="8"
+                  letter-spacing="1.4"
+                >
+                  PLAN
+                </text>
+                <text x="18" y="94">Strategy &amp; KPIs</text>
+                <text x="18" y="114">Planning</text>
+                <text x="18" y="134">Innovation Portal</text>
+                <text
+                  x="18"
+                  y="164"
+                  fill="#19C39B"
+                  font-size="8"
+                  letter-spacing="1.4"
+                >
+                  DELIVER
+                </text>
+                <text x="18" y="186">Project Execution</text>
+                <text x="18" y="206">Resource &amp; Financial</text>
+                <text x="18" y="226">Benefits</text>
+                <text
+                  x="18"
+                  y="256"
+                  fill="#19C39B"
+                  font-size="8"
+                  letter-spacing="1.4"
+                >
+                  GOVERN
+                </text>
+                <text x="18" y="278">Governance</text>
+                <text x="18" y="298" fill="#F1F5F3">Command Centre</text>
+                <text
+                  x="18"
+                  y="328"
+                  fill="#19C39B"
+                  font-size="8"
+                  letter-spacing="1.4"
+                >
+                  ADMIN
+                </text>
+                <text x="18" y="350">Administration</text>
+              </g>
+              <rect x="0" y="288" width="3" height="16" fill="#19C39B" />
+              <!-- cards row -->
+              <g>
+                <rect
+                  x="200"
+                  y="68"
+                  width="210"
+                  height="96"
+                  rx="4"
+                  fill="#0A3B31"
+                  stroke="#ffffff14"
+                />
+                <text
+                  x="216"
+                  y="92"
+                  fill="#9CB8AE"
+                  font-family="IBM Plex Mono, monospace"
+                  font-size="8"
+                  letter-spacing="1.2"
+                >
+                  PORTFOLIO HEALTH
+                </text>
+                <text
+                  x="216"
+                  y="126"
+                  fill="#F1F5F3"
+                  font-family="IBM Plex Sans Arabic, sans-serif"
+                  font-size="26"
+                  font-weight="600"
+                >
+                  72%
+                </text>
+                <circle cx="380" cy="118" r="5" fill="#19C39B" />
+                <rect
+                  x="216"
+                  y="140"
+                  width="120"
+                  height="4"
+                  rx="2"
+                  fill="#ffffff1a"
+                />
+                <rect
+                  x="216"
+                  y="140"
+                  width="86"
+                  height="4"
+                  rx="2"
+                  fill="#19C39B"
+                />
+
+                <rect
+                  x="426"
+                  y="68"
+                  width="210"
+                  height="96"
+                  rx="4"
+                  fill="#0A3B31"
+                  stroke="#ffffff14"
+                />
+                <text
+                  x="442"
+                  y="92"
+                  fill="#9CB8AE"
+                  font-family="IBM Plex Mono, monospace"
+                  font-size="8"
+                  letter-spacing="1.2"
+                >
+                  KPI VS TARGET
+                </text>
+                <text
+                  x="442"
+                  y="126"
+                  fill="#F1F5F3"
+                  font-family="IBM Plex Sans Arabic, sans-serif"
+                  font-size="26"
+                  font-weight="600"
+                >
+                  68
+                </text>
+                <text
+                  x="486"
+                  y="126"
+                  fill="#9CB8AE"
+                  font-family="IBM Plex Mono, monospace"
+                  font-size="11"
+                >
+                  / 75
+                </text>
+                <circle cx="606" cy="118" r="5" fill="#F2B441" />
+                <path
+                  d="M442,152 L468,148 L494,150 L520,142 L546,145 L572,136 L598,131"
+                  fill="none"
+                  stroke="#19C39B"
+                  stroke-width="1.5"
+                />
+
+                <rect
+                  x="652"
+                  y="68"
+                  width="228"
+                  height="96"
+                  rx="4"
+                  fill="#0A3B31"
+                  stroke="#ffffff14"
+                />
+                <text
+                  x="668"
+                  y="92"
+                  fill="#9CB8AE"
+                  font-family="IBM Plex Mono, monospace"
+                  font-size="8"
+                  letter-spacing="1.2"
+                >
+                  DECISIONS PENDING
+                </text>
+                <text
+                  x="668"
+                  y="126"
+                  fill="#F1F5F3"
+                  font-family="IBM Plex Sans Arabic, sans-serif"
+                  font-size="26"
+                  font-weight="600"
+                >
+                  6
+                </text>
+                <g
+                  font-family="IBM Plex Sans Arabic, sans-serif"
+                  font-size="9"
+                  fill="#9CB8AE"
+                >
+                  <text x="700" y="120">stage gate · 2</text>
+                  <text x="700" y="134">change request · 3</text>
+                  <text x="700" y="148">benefit revision · 1</text>
+                </g>
+              </g>
+              <!-- initiative table -->
+              <rect
+                x="200"
+                y="184"
+                width="436"
+                height="230"
+                rx="4"
+                fill="#0A3B31"
+                stroke="#ffffff14"
+              />
+              <text
+                x="216"
+                y="208"
+                fill="#9CB8AE"
+                font-family="IBM Plex Mono, monospace"
+                font-size="8"
+                letter-spacing="1.2"
+              >
+                INITIATIVES BY OBJECTIVE
+              </text>
+              <g
+                font-family="IBM Plex Sans Arabic, sans-serif"
+                font-size="10"
+                fill="#C6DAD3"
+              >
+                <text x="216" y="236">Digital service consolidation</text>
+                <circle cx="608" cy="232" r="4" fill="#19C39B" />
+                <rect
+                  x="216"
+                  y="244"
+                  width="330"
+                  height="3"
+                  rx="1.5"
+                  fill="#ffffff14"
+                />
+                <rect
+                  x="216"
+                  y="244"
+                  width="248"
+                  height="3"
+                  rx="1.5"
+                  fill="#19C39B"
+                />
+                <text x="216" y="272">Unified customer record</text>
+                <circle cx="608" cy="268" r="4" fill="#F2B441" />
+                <rect
+                  x="216"
+                  y="280"
+                  width="330"
+                  height="3"
+                  rx="1.5"
+                  fill="#ffffff14"
+                />
+                <rect
+                  x="216"
+                  y="280"
+                  width="150"
+                  height="3"
+                  rx="1.5"
+                  fill="#F2B441"
+                />
+                <text x="216" y="308">Workforce capability uplift</text>
+                <circle cx="608" cy="304" r="4" fill="#19C39B" />
+                <rect
+                  x="216"
+                  y="316"
+                  width="330"
+                  height="3"
+                  rx="1.5"
+                  fill="#ffffff14"
+                />
+                <rect
+                  x="216"
+                  y="316"
+                  width="205"
+                  height="3"
+                  rx="1.5"
+                  fill="#19C39B"
+                />
+                <text x="216" y="344">Legacy decommission wave 2</text>
+                <circle cx="608" cy="340" r="4" fill="#E0574C" />
+                <rect
+                  x="216"
+                  y="352"
+                  width="330"
+                  height="3"
+                  rx="1.5"
+                  fill="#ffffff14"
+                />
+                <rect
+                  x="216"
+                  y="352"
+                  width="72"
+                  height="3"
+                  rx="1.5"
+                  fill="#E0574C"
+                />
+                <text x="216" y="380">Data governance foundation</text>
+                <circle cx="608" cy="376" r="4" fill="#19C39B" />
+                <rect
+                  x="216"
+                  y="388"
+                  width="330"
+                  height="3"
+                  rx="1.5"
+                  fill="#ffffff14"
+                />
+                <rect
+                  x="216"
+                  y="388"
+                  width="286"
+                  height="3"
+                  rx="1.5"
+                  fill="#19C39B"
+                />
+              </g>
+              <!-- AI panel -->
+              <rect
+                x="652"
+                y="184"
+                width="228"
+                height="230"
+                rx="4"
+                fill="#093A2F"
+                stroke="#19C39B44"
+              />
+              <rect
+                x="668"
+                y="200"
+                width="52"
+                height="14"
+                rx="2"
+                fill="none"
+                stroke="#19C39B"
+              />
+              <text
+                x="675"
+                y="210"
+                fill="#19C39B"
+                font-family="IBM Plex Mono, monospace"
+                font-size="7"
+                letter-spacing="1"
+              >
+                AI WATCH
+              </text>
+              <text
+                x="668"
+                y="238"
+                fill="#F1F5F3"
+                font-family="IBM Plex Sans Arabic, sans-serif"
+                font-size="11"
+                font-weight="600"
+              >
+                Slip predicted
+              </text>
+              <text
+                x="668"
+                y="256"
+                fill="#C6DAD3"
+                font-family="IBM Plex Sans Arabic, sans-serif"
+                font-size="9"
+              >
+                Legacy decommission · 12 days
+              </text>
+              <text
+                x="668"
+                y="274"
+                fill="#9CB8AE"
+                font-family="IBM Plex Mono, monospace"
+                font-size="8"
+              >
+                confidence 0.77
+              </text>
+              <rect x="668" y="290" width="196" height="1" fill="#ffffff14" />
+              <text
+                x="668"
+                y="312"
+                fill="#C6DAD3"
+                font-family="IBM Plex Sans Arabic, sans-serif"
+                font-size="9"
+              >
+                Suggested: re-sequence gate 4
+              </text>
+              <g font-family="IBM Plex Sans Arabic, sans-serif" font-size="9">
+                <rect
+                  x="668"
+                  y="326"
+                  width="56"
+                  height="22"
+                  rx="2"
+                  fill="none"
+                  stroke="#19C39B"
+                />
+                <text x="681" y="341" fill="#19C39B">Accept</text>
+                <rect
+                  x="730"
+                  y="326"
+                  width="56"
+                  height="22"
+                  rx="2"
+                  fill="none"
+                  stroke="#ffffff22"
+                />
+                <text x="744" y="341" fill="#C6DAD3">Modify</text>
+                <rect
+                  x="792"
+                  y="326"
+                  width="56"
+                  height="22"
+                  rx="2"
+                  fill="none"
+                  stroke="#ffffff22"
+                />
+                <text x="808" y="341" fill="#C6DAD3">Reject</text>
+              </g>
+              <text
+                x="668"
+                y="374"
+                fill="#9CB8AE"
+                font-family="IBM Plex Mono, monospace"
+                font-size="7.5"
+              >
+                logged · a.almarzooqi · 09:42
+              </text>
+              <!-- benefit strip -->
+              <rect
+                x="200"
+                y="434"
+                width="680"
+                height="62"
+                rx="4"
+                fill="#0A3B31"
+                stroke="#ffffff14"
+              />
+              <text
+                x="216"
+                y="456"
+                fill="#9CB8AE"
+                font-family="IBM Plex Mono, monospace"
+                font-size="8"
+                letter-spacing="1.2"
+              >
+                BENEFIT FORECAST VS ACTUAL
+              </text>
+              <path
+                d="M216,486 L296,480 L376,472 L456,466 L536,458"
+                fill="none"
+                stroke="#19C39B"
+                stroke-width="1.6"
+              />
+              <path
+                d="M536,458 L616,450 L696,440 L776,432 L856,424"
+                fill="none"
+                stroke="#19C39B"
+                stroke-width="1.6"
+                stroke-dasharray="4 4"
+                opacity=".7"
+              />
+              <line
+                x1="536"
+                y1="442"
+                x2="536"
+                y2="492"
+                stroke="#ffffff30"
+                stroke-dasharray="2 3"
+              />
+              <!-- callout dots -->
+              <g
+                font-family="IBM Plex Mono, monospace"
+                font-size="9"
+                font-weight="500"
+              >
+                <circle cx="392" cy="80" r="10" fill="#19C39B" />
+                <text x="389" y="84" fill="#04241E">1</text>
+                <circle cx="618" cy="80" r="10" fill="#19C39B" />
+                <text x="615" y="84" fill="#04241E">2</text>
+                <circle cx="862" cy="80" r="10" fill="#19C39B" />
+                <text x="859" y="84" fill="#04241E">3</text>
+                <circle cx="866" cy="196" r="10" fill="#19C39B" />
+                <text x="863" y="200" fill="#04241E">4</text>
+              </g>
+            </svg>
+          </div>
+          <ul class="callouts" id="callouts">
+            <li>
+              <span class="dotnum">1</span>
+              <p data-i18n="scr.c1"></p>
+            </li>
+            <li>
+              <span class="dotnum">2</span>
+              <p data-i18n="scr.c2"></p>
+            </li>
+            <li>
+              <span class="dotnum">3</span>
+              <p data-i18n="scr.c3"></p>
+            </li>
+            <li>
+              <span class="dotnum">4</span>
+              <p data-i18n="scr.c4"></p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI -->
+    <section id="ai">
+      <div class="wrap ai-grid">
+        <div>
+          <p class="eyebrow rise" data-i18n="ai.eyebrow"></p>
+          <h2
+            class="h2 rise d1"
+            style="margin-block-start: 16px"
+            data-i18n="ai.h2"
+          ></h2>
+          <p
+            class="lede rise d2"
+            style="margin-block-start: 16px"
+            data-i18n="ai.p"
+          ></p>
+        </div>
+        <div class="ai-card rise d1">
+          <div class="hd">
+            <span class="badge" data-i18n="ai.badge"></span>
+            <span class="datum" data-i18n="ai.conf"></span>
+          </div>
+          <p class="big" data-i18n="ai.title"></p>
+          <p class="small" data-i18n="ai.detail"></p>
+          <div class="acts">
+            <button type="button" data-i18n="ai.accept"></button>
+            <button type="button" data-i18n="ai.modify"></button>
+            <button type="button" data-i18n="ai.reject"></button>
+          </div>
+          <p class="logline" data-i18n="ai.log"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALIGNMENT + MODULES -->
+    <section>
+      <div class="wrap">
+        <p class="eyebrow rise" data-i18n="al.eyebrow"></p>
+        <h2
+          class="h2 rise d1"
+          style="margin-block-start: 16px; max-width: 24ch"
+          data-i18n="al.h2"
+        ></h2>
+        <div class="chips rise d2">
+          <span class="chip"><b>Vision 2030</b></span>
+          <span class="chip"><b>We the UAE 2031</b></span>
+          <span class="chip" data-i18n="al.chip3"></span>
+          <span class="chip" data-i18n="al.chip4"></span>
+        </div>
+        <div class="mods">
+          <div class="mod rise">
+            <h4 data-i18n="mod.plan"></h4>
+            <ul>
+              <li data-i18n="mod.strategy"></li>
+              <li data-i18n="mod.planning"></li>
+              <li data-i18n="mod.innovation"></li>
+            </ul>
+          </div>
+          <div class="mod rise d1">
+            <h4 data-i18n="mod.deliver"></h4>
+            <ul>
+              <li data-i18n="mod.execution"></li>
+              <li data-i18n="mod.resource"></li>
+              <li data-i18n="mod.benefits"></li>
+            </ul>
+          </div>
+          <div class="mod rise d2">
+            <h4 data-i18n="mod.govern"></h4>
+            <ul>
+              <li data-i18n="mod.governance"></li>
+              <li data-i18n="mod.centre"></li>
+            </ul>
+          </div>
+          <div class="mod rise d3">
+            <h4 data-i18n="mod.admin"></h4>
+            <ul>
+              <li data-i18n="mod.administration"></li>
+              <li data-i18n="mod.deployment"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <p class="eyebrow rise" data-i18n="ct.eyebrow"></p>
+        <h2
+          class="h2 rise d1"
+          style="margin-block-start: 16px; max-width: 22ch"
+          data-i18n="ct.h2"
+        ></h2>
+        <p
+          class="small rise d2"
+          style="margin-block-start: 14px"
+          data-i18n="ct.sub"
+        ></p>
+        <form
+          class="form-grid rise d2"
+          action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
+          method="POST"
+        >
+          <input
+            class="hp"
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <div class="field">
+            <label for="nm" data-i18n="ct.name"></label
+            ><input id="nm" name="name" required />
+          </div>
+          <div class="field">
+            <label for="org" data-i18n="ct.org"></label
+            ><input id="org" name="organisation" required />
+          </div>
+          <div class="field">
+            <label for="em" data-i18n="ct.email"></label
+            ><input id="em" name="email" type="email" required />
+          </div>
+          <div class="field">
+            <label for="int" data-i18n="ct.interest"></label>
+            <select id="int" name="interest">
+              <option data-i18n="ct.o1"></option>
+              <option data-i18n="ct.o2"></option>
+              <option data-i18n="ct.o3"></option>
+              <option data-i18n="ct.o4"></option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="msg" data-i18n="ct.msg"></label
+            ><textarea id="msg" name="message"></textarea>
+          </div>
+          <div class="field full">
+            <button class="btn" type="submit" data-i18n="cta.demo"></button>
+          </div>
+        </form>
+        <p class="formnote" data-i18n="ct.note"></p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap foot">
+        <span data-i18n="ft.org"></span>
+        <span>trumandate.com</span>
+      </div>
+    </footer>
+
+    <script>
+      const T = {
+        "nav.trace": ["Traceability", "التتبّع"],
+        "nav.platform": ["Platform", "المنصة"],
+        "nav.ai": ["AI", "الذكاء الاصطناعي"],
+        "nav.contact": ["Contact", "تواصل"],
+        "cta.demo": ["Request a walkthrough", "اطلب عرضاً توضيحياً"],
+        "cta.see": ["See the chain", "اطّلع على السلسلة"],
+
+        "hero.eyebrow": [
+          "Portfolio governance · Intertec Systems",
+          "حَوكمة المحافظ · إنترتك سيستمز",
+        ],
+        "hero.h1": [
+          "Every mandate, traced to the outcome it promised.",
+          "كل تكليف، متتبَّع حتى الأثر الذي وُعد به.",
+        ],
+        "hero.lede": [
+          "TruMandate holds strategy, KPIs, initiatives and benefits in one record, so the office that sets direction can see what that direction produced.",
+          "يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد، ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.",
+        ],
+        "origin.label": [
+          "Objective 1.2 · Digital government maturity",
+          "الهدف ١.٢ · نضج الحكومة الرقمية",
+        ],
+        "origin.obj": ["Published plan", "الخطة المعتمدة"],
+        "origin.kpi": ["Composite KPI", "المؤشر المركّب"],
+        "origin.init": ["Initiatives linked", "المبادرات المرتبطة"],
+        "origin.ben": ["Benefit to date", "المنفعة المحققة"],
+
+        "gap.eyebrow": ["The problem", "المشكلة"],
+        "gap.h2": [
+          "Strategy is written once. Then it disappears.",
+          "الاستراتيجية تُكتب مرة واحدة، ثم تختفي.",
+        ],
+        "gap.l1": ["Planning", "التخطيط"],
+        "gap.p1": [
+          "Objectives sit in documents. Nobody can say which initiative serves which objective, or who owns the number.",
+          "الأهداف تبقى في مستندات، ولا أحد يستطيع تحديد أي مبادرة تخدم أي هدف، ولا من يملك الرقم.",
+        ],
+        "gap.l2": ["Execution", "التنفيذ"],
+        "gap.p2": [
+          "Delivery data stays in project tools and never rolls up to the mandate that funded the work.",
+          "بيانات التنفيذ تبقى في أدوات المشاريع ولا تصعد إلى التكليف الذي مَوّل العمل.",
+        ],
+        "gap.l3": ["Reporting", "التقارير"],
+        "gap.p3": [
+          "The quarterly pack is assembled by hand, and it is already out of date on the day it is read.",
+          "التقرير الربعي يُجمَّع يدوياً، ويصبح قديماً في اليوم الذي يُقرأ فيه.",
+        ],
+
+        "chain.eyebrow": ["How it holds together", "كيف يترابط"],
+        "chain.h2": [
+          "One chain, from objective to benefit, with no missing link.",
+          "سلسلة واحدة من الهدف إلى المنفعة، دون حلقة مفقودة.",
+        ],
+        "chain.sub": [
+          "Scroll through the chain. Each link is a record in the platform, and each one carries the identity of the link above it.",
+          "تابع السلسلة بالتمرير. كل حلقة سجل في المنصة، وتحمل هوية الحلقة التي تسبقها.",
+        ],
+        "c1.t": ["Objective", "الهدف"],
+        "c1.p": [
+          "Versioned and published, with a named owner and an assigned weight in the plan.",
+          "مُصدَّر بنسخة معتمدة، له مالك محدَّد ووزن مُسند داخل الخطة.",
+        ],
+        "c2.t": ["KPI", "مؤشر الأداء"],
+        "c2.p": [
+          "A composite measure with baseline, target and live actual, so movement is a fact rather than a claim.",
+          "مقياس مركّب بخط أساس وهدف وقيمة فعلية حيّة، لتكون الحركة واقعاً لا ادعاءً.",
+        ],
+        "c3.t": ["Initiative", "المبادرة"],
+        "c3.p": [
+          "Funded, resourced and gated, and linked to the objective it exists to move.",
+          "مموّلة ومزوّدة بالموارد ومحكومة ببوابات، ومرتبطة بالهدف الذي وُجدت لتحريكه.",
+        ],
+        "c4.t": ["Milestone", "المعلم"],
+        "c4.p": [
+          "Baseline against actual, with a slip surfaced before the date passes, not after.",
+          "خط الأساس مقابل الفعلي، مع إظهار التأخير قبل انقضاء التاريخ لا بعده.",
+        ],
+        "c5.t": ["Benefit", "المنفعة"],
+        "c5.p": [
+          "Measured for 24 months after closure, against the exact KPI it promised to move.",
+          "تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر ذاته الذي وُعدت بتحسينه.",
+        ],
+
+        "scr.eyebrow": ["The Command Centre", "مركز القيادة"],
+        "scr.h2": [
+          "One screen the office runs the week on.",
+          "شاشة واحدة يُدار عليها الأسبوع.",
+        ],
+        "scr.sub": [
+          "Portfolio health rolled up from initiative level, KPI movement against target, and the decisions waiting on a person by name.",
+          "صحة المحفظة مجمَّعة من مستوى المبادرات، وحركة المؤشرات مقابل الهدف، والقرارات التي تنتظر شخصاً بالاسم.",
+        ],
+        "scr.c1": [
+          "Portfolio health, rolled up from initiative records rather than typed into a slide.",
+          "صحة المحفظة، مجمَّعة من سجلات المبادرات لا مكتوبة يدوياً في شريحة.",
+        ],
+        "scr.c2": [
+          "KPI read against target, with the trend that produced today's number.",
+          "المؤشر مقروء مقابل الهدف، مع الاتجاه الذي أنتج رقم اليوم.",
+        ],
+        "scr.c3": [
+          "Decisions queued by type, each one assigned to a named owner.",
+          "القرارات مصنَّفة بحسب نوعها، وكل منها مُسند إلى مالك محدَّد.",
+        ],
+        "scr.c4": [
+          "AI raises anomalies and forecasts. It never writes to the record on its own.",
+          "الذكاء الاصطناعي يرفع الحالات الشاذة والتوقعات، ولا يكتب في السجل من تلقاء نفسه.",
+        ],
+
+        "ai.eyebrow": ["AI in the platform", "الذكاء الاصطناعي في المنصة"],
+        "ai.h2": [
+          "AI proposes. A person decides.",
+          "الذكاء الاصطناعي يقترح، والإنسان يقرر.",
+        ],
+        "ai.p": [
+          "Every model output arrives as a suggestion carrying its confidence and its evidence, with three actions. Nothing reaches the record until someone accepts it, and the acceptance is stored with a name and a timestamp.",
+          "كل مخرَج للنموذج يصل كاقتراح يحمل درجة ثقته وأدلته، مع ثلاثة إجراءات. لا شيء يصل إلى السجل حتى يقبله شخص، ويُحفظ القبول باسمه ووقته.",
+        ],
+        "ai.badge": ["AI watch", "مراقبة ذكية"],
+        "ai.conf": ["confidence 0.77", "درجة الثقة ٠٫٧٧"],
+        "ai.title": [
+          "Milestone slip predicted: 12 days",
+          "تأخير متوقَّع في المعلم: ١٢ يوماً",
+        ],
+        "ai.detail": [
+          "Legacy decommission wave 2. Driver: two dependencies unresolved at gate 3. Suggested action: re-sequence gate 4.",
+          "الموجة الثانية لإيقاف الأنظمة القديمة. السبب: تبعيتان غير محلولتين عند البوابة ٣. الإجراء المقترح: إعادة ترتيب البوابة ٤.",
+        ],
+        "ai.accept": ["Accept", "قبول"],
+        "ai.modify": ["Modify", "تعديل"],
+        "ai.reject": ["Reject", "رفض"],
+        "ai.log": [
+          "Decision logged · a.almarzooqi · 09:42",
+          "القرار مسجَّل · a.almarzooqi · ٠٩:٤٢",
+        ],
+
+        "al.eyebrow": ["Fit", "الملاءمة"],
+        "al.h2": [
+          "Built for the mandate you actually carry.",
+          "مبنيّ للتكليف الذي تحمله فعلاً.",
+        ],
+        "al.chip3": [
+          "Arabic and English, both first class",
+          "العربية والإنجليزية، كلتاهما أساسية",
+        ],
+        "al.chip4": [
+          "Sovereign on-premise or cloud",
+          "استضافة سيادية داخلية أو سحابية",
+        ],
+        "mod.plan": ["Plan", "التخطيط"],
+        "mod.deliver": ["Deliver", "التنفيذ"],
+        "mod.govern": ["Govern", "الحَوكمة"],
+        "mod.admin": ["Administer", "الإدارة"],
+        "mod.strategy": ["Strategy & KPIs", "الاستراتيجية والمؤشرات"],
+        "mod.planning": ["Planning", "التخطيط"],
+        "mod.innovation": ["Innovation Portal", "بوابة الابتكار"],
+        "mod.execution": ["Project Execution", "تنفيذ المشاريع"],
+        "mod.resource": ["Resource & Financial", "الموارد والمالية"],
+        "mod.benefits": ["Benefits Realisation", "تحقيق المنافع"],
+        "mod.governance": ["Governance", "الحَوكمة"],
+        "mod.centre": ["Performance Command Centre", "مركز قيادة الأداء"],
+        "mod.administration": ["Administration", "الإدارة"],
+        "mod.deployment": ["Deployment profiles", "أنماط النشر"],
+
+        "ct.eyebrow": ["Next step", "الخطوة التالية"],
+        "ct.h2": ["See it against your own plan.", "شاهدها على خطتك أنت."],
+        "ct.sub": [
+          "Send this and we will run a walkthrough on a portfolio shaped like yours, not a demo dataset.",
+          "أرسل النموذج وسنقدّم عرضاً على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
+        ],
+        "ct.name": ["Name", "الاسم"],
+        "ct.org": ["Organisation", "الجهة"],
+        "ct.email": ["Work email", "البريد المؤسسي"],
+        "ct.interest": ["What you want to see", "ما ترغب في رؤيته"],
+        "ct.o1": ["Full platform walkthrough", "عرض كامل للمنصة"],
+        "ct.o2": ["Strategy and KPI cascade", "تدرّج الاستراتيجية والمؤشرات"],
+        "ct.o3": ["Benefits realisation", "تحقيق المنافع"],
+        "ct.o4": ["Deployment and data sovereignty", "النشر وسيادة البيانات"],
+        "ct.msg": ["Anything we should know", "أي معلومة تودّ إضافتها"],
+        "ct.note": [
+          "Prototype form. Replace the Formspree endpoint with your own before launch.",
+          "نموذج أولي. استبدل عنوان Formspree بعنوانك قبل الإطلاق.",
+        ],
+        "ft.org": ["Intertec Systems · Dubai", "إنترتك سيستمز · دبي"],
+      };
+
+      let lang = 0; // 0 = en, 1 = ar
+      const paint = () => {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const v = T[el.dataset.i18n];
+          if (v) el.textContent = v[lang];
+        });
+        const html = document.documentElement;
+        html.lang = lang ? "ar" : "en";
+        html.dir = lang ? "rtl" : "ltr";
+        document.getElementById("lang").textContent = lang
+          ? "English"
+          : "العربية";
+      };
+      document.getElementById("lang").addEventListener("click", () => {
+        lang = lang ? 0 : 1;
+        paint();
+      });
+      paint();
+
+      /* reveal on enter */
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
+      );
+      document
+        .querySelectorAll(".rise,.callouts")
+        .forEach((el) => io.observe(el));
+
+      /* single rAF loop: page progress + chain rail */
+      const rail = document.getElementById("rail");
+      const links = [...document.querySelectorAll(".link")];
+      const bar = document.querySelector(".prog");
+      let queued = false;
+      const frame = () => {
+        queued = false;
+        const doc = document.documentElement;
+        const sp =
+          doc.scrollTop / Math.max(1, doc.scrollHeight - doc.clientHeight);
+        bar.style.setProperty("--sp", sp.toFixed(4));
+
+        const r = rail.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const span = r.height + vh * 0.5;
+        let p = (vh * 0.75 - r.top) / span;
+        p = Math.min(1, Math.max(0, p));
+        rail.querySelector(".rail").style.setProperty("--cp", p.toFixed(4));
+        links.forEach((l, i) => {
+          const hit = l.getBoundingClientRect().top < vh * 0.78;
+          l.classList.toggle("on", hit);
+        });
+      };
+      addEventListener(
+        "scroll",
+        () => {
+          if (!queued) {
+            queued = true;
+            requestAnimationFrame(frame);
+          }
+        },
+        { passive: true },
+      );
+      addEventListener("resize", frame);
+      frame();
+
+      /* nav border once moved */
+      const hdr = document.getElementById("hdr");
+      addEventListener(
+        "scroll",
+        () => hdr.classList.toggle("stuck", scrollY > 12),
+        { passive: true },
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+---
+// Eyebrow.astro — mono uppercase label at 0.16em tracking (spec §3's "data
+// and eyebrow" role). Always `muted`: PLAN.md §2 flags `accent` on `jade` as
+// the tightest contrast pair on the site (4.6:1, no margin), so eyebrows
+// never sit in accent — muted stays the one eyebrow colour everywhere,
+// avoiding a token this build cannot make AAA.
+interface Props {
+  as?: "p" | "span";
+  class?: string;
+}
+
+const { as: Tag = "p", class: className }: Props = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted",
+    className,
+  ]}
+>
+  <slot />
+</Tag>

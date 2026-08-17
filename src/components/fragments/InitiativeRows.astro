@@ -1,0 +1,245 @@
+---
+// InitiativeRows.astro — /execution's ONE fragment (curiosity ledger:
+// "Reveals: three initiative rows, cropped"). Hand-authored inline SVG from
+// tokens, one screen region, data anonymised — never the interface (spec §5's
+// fidelity rule).
+//
+// WITHHELD, and absent from this file by design: the gate workflow and the
+// approval routing. There is no gate column, no decision queue, no approver
+// name, no next-step arrow and no routing state anywhere in this fragment or
+// its aria-label — which is also why each row's secondary line names the
+// objective that funded it rather than the gate it currently sits at.
+// `/execution`'s handoff sentence is the only place on that page where a gate
+// decision is named.
+//
+// The crop is vertical, not horizontal, because the ledger asks for "cropped
+// mid-list so the list clearly continues": the list container runs to y=290
+// and the viewBox stops at 206, so a fourth row is cut through its own text.
+// Three rows are fully readable, the fourth is visibly present and visibly
+// cut, and nothing draws a bottom edge that would let the eye read the list as
+// finished.
+//
+// One row is red (spec §5 / the ledger). RAG reaches the reader three ways, so
+// colour never carries it alone (WCAG 1.4.1, spec §9): the dot's fill, the
+// progress bar's fill, and the status word spelled out in the aria-label.
+//
+// Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
+// for the reasoning. RTL mirroring is not authored yet (no `/ar/execution`
+// until the English copy is approved); `direction: ltr` is pinned below so the
+// hand-computed coordinates keep their physical meaning either way. Logged in
+// TODO.md.
+interface Props {
+  class?: string;
+}
+
+const { class: className }: Props = Astro.props;
+
+const BAR_TRACK = 94;
+
+type Status = "on-track" | "at-risk" | "off-track";
+
+const statusFill: Record<Status, string> = {
+  "on-track": "fill-accent",
+  "at-risk": "fill-amber",
+  "off-track": "fill-red",
+};
+
+const statusWord: Record<Status, string> = {
+  "on-track": "on track",
+  "at-risk": "at risk",
+  "off-track": "off track",
+};
+
+const rows: {
+  name: string;
+  objective: string;
+  status: Status;
+  progress: number;
+}[] = [
+  {
+    name: "Unified service portal",
+    objective: "Objective 1.2",
+    status: "on-track",
+    progress: 74,
+  },
+  {
+    name: "Records digitisation",
+    objective: "Objective 1.2",
+    status: "at-risk",
+    progress: 41,
+  },
+  {
+    name: "Legacy decommission",
+    objective: "Objective 3.1",
+    status: "off-track",
+    progress: 18,
+  },
+  // The fourth row is the crop, not a fourth reveal: the viewBox cuts through
+  // it. Kept in the same array so its geometry cannot drift from the others'.
+  {
+    name: "Shared identity rollout",
+    objective: "Objective 2.4",
+    status: "on-track",
+    progress: 66,
+  },
+];
+
+const ROW_TOP = 54;
+const ROW_HEIGHT = 44;
+
+const ariaLabel = `Portfolio initiative list, cropped. ${rows
+  .slice(0, 3)
+  .map(
+    (row) =>
+      `${row.name}, ${row.objective}, ${statusWord[row.status]}, ${row.progress} per cent.`,
+  )
+  .join(" ")} A fourth row is cut off at the frame edge and the list continues past it.`;
+---
+
+<svg
+  viewBox="0 0 460 206"
+  class:list={["initiative-rows w-full max-w-[560px]", className]}
+  role="img"
+  aria-label={ariaLabel}
+  data-fragment
+>
+  <defs>
+    <mask
+      id="initiative-rows-wipe-mask"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="460"
+      height="206"
+    >
+      <rect x="0" y="0" width="460" height="206" fill="black"></rect>
+      <rect
+        data-fragment-wipe
+        x="0"
+        y="0"
+        width="460"
+        height="206"
+        fill="white"></rect>
+    </mask>
+  </defs>
+
+  <g mask="url(#initiative-rows-wipe-mask)">
+    <rect width="460" height="206" class="fill-surface-deep"></rect>
+
+    <!-- The list container. Height 290 against a 206 viewBox: the bottom edge
+         is never drawn, so the list reads as continuing. -->
+    <rect
+      x="8"
+      y="10"
+      width="444"
+      height="290"
+      rx="4"
+      class="fill-surface stroke-hairline"
+      stroke-width="1"></rect>
+
+    <text x="26" y="34" class="label fill-muted">Initiative</text>
+    <text x="232" y="34" class="label fill-muted">Status</text>
+    <text x="306" y="34" class="label fill-muted">Progress</text>
+
+    <line x1="26" y1="46" x2="434" y2="46" class="stroke-hairline" stroke-width="1"
+    ></line>
+
+    {
+      rows.map((row, index) => {
+        const top = ROW_TOP + index * ROW_HEIGHT;
+        return (
+          <>
+            <text x="26" y={top + 22} class="name fill-paper">
+              {row.name}
+            </text>
+            <text x="26" y={top + 38} class="ref fill-muted">
+              {row.objective}
+            </text>
+
+            <circle
+              cx="246"
+              cy={top + 22}
+              r="4.5"
+              class={statusFill[row.status]}
+            />
+
+            <rect
+              x="306"
+              y={top + 18}
+              width={BAR_TRACK}
+              height="4"
+              rx="2"
+              class="fill-hairline"
+            />
+            <rect
+              x="306"
+              y={top + 18}
+              width={(BAR_TRACK * row.progress) / 100}
+              height="4"
+              rx="2"
+              class={statusFill[row.status]}
+            />
+
+            <text
+              x="434"
+              y={top + 27}
+              text-anchor="end"
+              class="value fill-paper"
+            >
+              {row.progress}%
+            </text>
+
+            {index < rows.length - 1 && (
+              <line
+                x1="26"
+                y1={top + ROW_HEIGHT}
+                x2="434"
+                y2={top + ROW_HEIGHT}
+                class="stroke-hairline"
+                stroke-width="1"
+              />
+            )}
+          </>
+        );
+      })
+    }
+  </g>
+</svg>
+
+<script src="../../scripts/fragment.ts"></script>
+
+<style>
+  .label {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ref {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .name {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 14px;
+  }
+
+  .value {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 13px;
+  }
+
+  /* See known-issues.md (P5): `direction` inherits into <text> and redefines
+     what `text-anchor: start`/`end` mean, which would break the hand-computed
+     `text-anchor="end"` percentage column under html[dir="rtl"]. */
+  .initiative-rows {
+    direction: ltr;
+  }
+</style>

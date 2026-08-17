@@ -1,0 +1,32 @@
+---
+// ArgumentBlock.astro — part 2 of the shared product-page skeleton
+// (trumandate-product-pages.md): "three to four paragraphs, no bullets, no
+// cards. This is the page's substance and the reason a serious reader
+// stays."
+//
+// Deliberately has no heading of its own and no internal structure beyond
+// paragraph spacing. Every temptation to break this into labelled blocks,
+// pull-quotes or a two-column split is the same temptation the product-pages
+// doc rules out by naming the format exactly; a reader who wants scannable
+// bullets is not the reader this page is written for.
+//
+// Capped at `measure` (56ch, tailwind.config.mjs) rather than the 1180px
+// column, so the line length stays readable at 1440 — the same cap
+// Lede.astro applies.
+interface Props {
+  paragraphs: string[];
+  class?: string;
+}
+
+const { paragraphs, class: className }: Props = Astro.props;
+---
+
+<div class:list={["max-w-measure", className]}>
+  {
+    paragraphs.map((paragraph, index) => (
+      <p class:list={["text-body font-light text-body", index > 0 && "mt-6"]}>
+        {paragraph}
+      </p>
+    ))
+  }
+</div>

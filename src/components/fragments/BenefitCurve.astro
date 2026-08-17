@@ -1,0 +1,181 @@
+---
+// BenefitCurve.astro — /benefits' ONE fragment (curiosity ledger: "Reveals:
+// the forecast curve shape"). Hand-authored inline SVG from tokens, one screen
+// region, data anonymised — never the interface (spec §5's fidelity rule).
+//
+// WITHHELD, and absent from this file by design: the benefit register and the
+// attribution logic. There is no list of benefits, no business-case reference,
+// no contributing-initiative breakdown and no apportionment of the curve
+// across anything — one benefit, one axis, two lines. `/benefits`' handoff
+// sentence is the only place on that page where the register is named.
+//
+// What the ledger asks for, and what is drawn: the forecast solid to today and
+// dashed beyond it, the measurement window marked, and "no axis labels beyond
+// the minimum" — so there is no value axis, no time axis and no gridlines.
+// Four labels total: the record's own name, the measurement window, today, and
+// a two-item legend, because a curve with two lines on it and no legend is a
+// puzzle rather than a fragment.
+//
+// The second line is the actual. Spec §6 and the page's own argument both say
+// "forecast against actual", and divergence being visible without anyone
+// asking for it is the whole claim — a fragment showing only the forecast
+// would illustrate the opposite of what the page argues. Both lines coincide
+// until closure (x=214) and separate after it, which is the point: the actual
+// flattens in exactly the window where the delivery team no longer exists.
+//
+// The crop: the plot's card runs to x=508 against a 460 viewBox, and both the
+// dashed projection and the measurement-window band are cut by that edge, so
+// the composition reads as continuing to the inline-end rather than as a
+// finished chart that happens to stop.
+//
+// Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
+// for the reasoning. RTL mirroring is not authored yet (no `/ar/benefits`
+// until the English copy is approved); `direction: ltr` is pinned below.
+// Logged in TODO.md.
+interface Props {
+  class?: string;
+}
+
+const { class: className }: Props = Astro.props;
+
+const ariaLabel =
+  "Benefit curve, cropped. Benefit 4.2, annual operating saving. The actual is plotted as a solid line up to today; the forecast continues past it as a dashed projection. The measurement window is marked and runs 24 months from closure. The two lines coincide until closure, after which the forecast keeps rising and the actual flattens. The plot is cut off at the frame edge.";
+---
+
+<svg
+  viewBox="0 0 460 220"
+  class:list={["benefit-curve w-full max-w-[560px]", className]}
+  role="img"
+  aria-label={ariaLabel}
+  data-fragment
+>
+  <defs>
+    <mask
+      id="benefit-curve-wipe-mask"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="460"
+      height="220"
+    >
+      <rect x="0" y="0" width="460" height="220" fill="black"></rect>
+      <rect
+        data-fragment-wipe
+        x="0"
+        y="0"
+        width="460"
+        height="220"
+        fill="white"></rect>
+    </mask>
+  </defs>
+
+  <g mask="url(#benefit-curve-wipe-mask)">
+    <rect width="460" height="220" class="fill-surface-deep"></rect>
+
+    <!-- The plot's card. Width 500 against a 460 viewBox: the inline-end edge
+         is never drawn, so the plot reads as continuing. -->
+    <rect
+      x="8"
+      y="10"
+      width="500"
+      height="200"
+      rx="4"
+      class="fill-surface stroke-hairline"
+      stroke-width="1"></rect>
+
+    <text x="26" y="32" class="label fill-muted">
+      Benefit 4.2 · Annual operating saving
+    </text>
+
+    <!-- The measurement window: opens at closure (x=214) and is cut by the
+         frame edge, because it has not finished running. -->
+    <rect x="214" y="48" width="246" height="132" class="fill-hairline"></rect>
+    <line x1="214" y1="48" x2="214" y2="180" class="stroke-hairline" stroke-width="1"
+    ></line>
+    <text x="222" y="62" class="tick fill-muted">
+      Measurement window · 24 months
+    </text>
+
+    <!-- Today. Starts at y=72, below the measurement-window label's baseline
+         (62), so the marker does not strike through that label's text — found
+         by screenshotting the built fragment at 1440. -->
+    <line
+      x1="320"
+      y1="72"
+      x2="320"
+      y2="180"
+      stroke-dasharray="3 3"
+      stroke-width="1"
+      class="stroke-muted"></line>
+
+    <!-- The axis, and the only one -->
+    <line x1="26" y1="180" x2="460" y2="180" class="stroke-hairline" stroke-width="1"
+    ></line>
+
+    <!-- Forecast: solid to today -->
+    <path
+      d="M26 168 C90 164 150 148 214 134 S290 120 320 112"
+      fill="none"
+      stroke-width="1.5"
+      class="stroke-muted"></path>
+    <!-- Forecast: dashed projection beyond today, cut by the frame edge -->
+    <path
+      d="M320 112 C360 104 410 90 470 76"
+      fill="none"
+      stroke-width="1.5"
+      stroke-dasharray="5 4"
+      class="stroke-muted"></path>
+
+    <!-- Actual: coincides with the forecast to closure, then flattens -->
+    <path
+      d="M26 168 C90 164 150 148 214 134 C258 128 292 128 320 130"
+      fill="none"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      class="stroke-accent"></path>
+    <circle cx="320" cy="130" r="3" class="fill-accent"></circle>
+
+    <!-- Legend and the one time label -->
+    <line x1="26" y1="193" x2="44" y2="193" stroke-width="1.75" class="stroke-accent"
+    ></line>
+    <text x="50" y="197" class="tick fill-muted">Actual</text>
+
+    <line
+      x1="110"
+      y1="193"
+      x2="128"
+      y2="193"
+      stroke-width="1.5"
+      stroke-dasharray="5 4"
+      class="stroke-muted"></line>
+    <text x="134" y="197" class="tick fill-muted">Forecast</text>
+
+    <text x="320" y="197" text-anchor="middle" class="tick fill-muted">Today</text>
+  </g>
+</svg>
+
+<script src="../../scripts/fragment.ts"></script>
+
+<style>
+  .label {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tick {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* See known-issues.md (P5): `direction` inherits into <text> and redefines
+     what `text-anchor: middle`/`end` resolve against. */
+  .benefit-curve {
+    direction: ltr;
+  }
+</style>

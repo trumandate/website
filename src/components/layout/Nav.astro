@@ -1,0 +1,40 @@
+---
+// Nav.astro — Strategy / Execution / Benefits / Contact, mirroring the five
+// routes (BUILD_FLAGS decisions log, P0 gate). The content brief's
+// prototype-era nav ("Traceability / Platform / AI / Contact") is
+// deliberately not used: there is no "Platform" or "AI" route, and spec §1
+// is explicit that there is no single "AI" page.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const links = [
+  { href: `/${lang}/strategy`, label: t("nav.strategy") },
+  { href: `/${lang}/execution`, label: t("nav.execution") },
+  { href: `/${lang}/benefits`, label: t("nav.benefits") },
+  { href: `/${lang}/contact`, label: t("nav.contact") },
+];
+---
+
+<nav aria-label="Primary">
+  <ul class="flex items-center gap-gutter">
+    {
+      links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

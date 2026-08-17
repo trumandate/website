@@ -1,0 +1,23 @@
+---
+// src/pages/index.astro — bare redirect to /en/ (PLAN.md §1). Replaces the
+// P1 scaffold-verification harness now that /en/index.astro is real (TODO.md).
+//
+// `Astro.redirect()` throws `StaticRedirectNotAvailable` under
+// `output: "static"` (Astro's own docs: it needs `output: "server"` or
+// `"hybrid"`) — verified via context7 rather than assumed. The documented
+// static-site pattern is a meta-refresh page instead, which needs no
+// JavaScript and works with it disabled.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <link rel="canonical" href="/en/" />
+    <title>TruMandate</title>
+  </head>
+  <body>
+    <p><a href="/en/">Continue to TruMandate</a></p>
+  </body>
+</html>

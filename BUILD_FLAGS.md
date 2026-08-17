@@ -1,0 +1,241 @@
+# BUILD_FLAGS.md — TruMandate site
+
+Autonomous defaults for Claude Code. These resolve decisions without stopping.
+Anything not covered here and genuinely blocking: halt and ask. Anything not
+covered and not blocking: pick the option consistent with the spec, log it here
+under "Decisions taken", and continue.
+
+## Run posture
+
+- Run to the end of each prompt. Do not gate on step-by-step confirmation.
+- Halt only on genuine blockers: a missing credential, a spec contradiction that
+  changes structure, or a dependency that will not install.
+- Never halt to ask whether to keep going.
+
+## Defaults
+
+| Question        | Default                                                                 |
+| --------------- | ----------------------------------------------------------------------- |
+| Package manager | npm                                                                     |
+| Node            | LTS, pinned in `.nvmrc`                                                 |
+| Astro output    | `static`                                                                |
+| TypeScript      | strict                                                                  |
+| Formatting      | Prettier, default config, no debate                                     |
+| Component style | `.astro` components; no React unless a component needs state            |
+| GSAP plugins    | core, ScrollTrigger, SplitText only                                     |
+| Smooth scroll   | Lenis; remove it rather than patch it if it fights ScrollTrigger on iOS |
+| Fonts           | self-hosted subset woff2, `font-display: swap`                          |
+| Icons           | hand-authored inline SVG, no icon library                               |
+| Form endpoint   | env var `PUBLIC_FORMSPREE_ENDPOINT`, placeholder value                  |
+| Contact email   | placeholder `hello@trumandate.com`, logged to TODO.md                   |
+| Analytics       | none until launch                                                       |
+| Cookie banner   | none unless Cloudflare requires one                                     |
+| Image formats   | SVG for everything except the asset list in spec section 5A             |
+| Commit style    | conventional commits, one commit per prompt                             |
+| Branch          | `main`, no feature branches for this build                              |
+
+## Copy authority
+
+- English copy for the home page and contact page comes verbatim from
+  `trumandate-content-brief.md`. Do not rewrite it.
+- English copy for the three product pages is written by Claude Code against the
+  briefs in `trumandate-product-pages.md`, then reviewed in `COPY-REVIEW.md`.
+- Arabic for the product pages is produced only after English is approved.
+- Arabic is written, not machine-translated: keep the argument, not the sentence
+  structure.
+
+## Ambiguity resolution
+
+When the spec is silent, choose in this order:
+
+1. The option that removes something rather than adds it.
+2. The option that keeps one shared component rather than creating a variant.
+3. The option that shows less product rather than more.
+4. The option that costs fewer kilobytes.
+
+Log every such choice under "Decisions taken" below.
+
+## Decisions taken
+
+(Claude Code appends here. One line each: what was ambiguous, what was chosen, why.)
+
+- 2026-08-17 (P0 gate, user-approved): Content brief §4 Command Centre vs spec §5 — §4 read as source for the dimmed closing CTA composition only; four numbered callouts dropped.
+- 2026-08-17 (P0 gate, user-approved): Header nav — Strategy / Execution / Benefits / Contact, mirroring routes; brief's prototype-era nav labels discarded.
+- 2026-08-17 (P0 gate, user-approved): Eleven-module list dropped from home page — spec §6 map and product-pages doc outrank the brief here.
+- 2026-08-17 (P0 gate, user-approved): Home page ends at the dimmed Command Centre CTA; /contact owns the form; sovereignty band not on home.
+- 2026-08-17 (P0, planner): Hero data panel rendered as page typography on hairline rules, not product chrome, keeping home-page product surfaces at two per spec §5.
+- 2026-08-17 (P0, implied by the above): where BUILD_FLAGS' "home copy verbatim" clause conflicts with spec/product-pages, the CLAUDE.md authority order wins; BUILD_FLAGS ranks below the three docs.
+- 2026-08-17: wordmark treatment evaluated from assets/TruMandate_Product_deck_2pager.pptx — two-tone "Tru" (green) + "Mandate" (heading colour of the surface). Deck hexes (#A9D18E sage, Calibri) NOT imported; expressed as accent token + text token in IBM Plex Sans 600. Mark bars: two token greens, flat fills, no gradient. Deck is reference-only.
+- 2026-08-17: user supplied assets/logo.png (mark: three rounded bars, two greens, light tile). It is reference-only — the mark is re-authored as inline SVG from tokens (raster invariant); PNG never ships. Wordmark = SVG mark + "TruMandate" in type. Unblocks P9 favicon/OG.
+- 2026-08-17 (P0, planner; full reasoning in PLAN.md §4): rail draw as scaleY, clip-path wipe as translated SVG mask, bar fill as scaleX (transforms-only rule); sparkline draw downgraded to fade; count-up number is AED 41M; ease cubic-bezier(.22,.61,.36,1) and vertical rhythm taken from prototype; buttons reuse the 600 display weight; RAG dots carry visually-hidden status text; dimmed composition single-hue at 25% group opacity, aria-hidden; Command Centre geometry re-authored from tokens (prototype is 900×520, LTR-only, non-token colours).
+
+- 2026-08-17 (P1): `@astrojs/tailwind` dropped. Its peer range is `astro ^3.0.0 || ^4.0.0 || ^5.0.0`, and `npm audit` shows every Astro release through 7.0.9 carries multiple high-severity XSS advisories (GHSA-j687-52p2-xcff and others), patched only in 7.1.0+. Pinning to Astro 5.x to keep the integration would have shipped known-vulnerable code for a config-file convenience. Tailwind v3 needs no Astro-specific package — Vite (which Astro runs on) auto-loads a root `postcss.config.mjs`, so Tailwind is wired as a plain PostCSS plugin instead. This keeps the JS `tailwind.config.mjs` (with `corePlugins` disabling `space`/`float`/`clear`/`textAlign`) exactly as PLAN.md §2 specifies, while running on patched Astro 7.2.2. `npm audit` is clean (0 vulnerabilities) after this change plus `npm audit fix` for a transitive `sharp` bump.
+- 2026-08-17 (P1): TypeScript pinned to 5.9.3, not the published "latest" (7.0.2). `@astrojs/check`'s peer range is `^5.0.0 || ^6.0.0`; no stable 6.x was ever published (only betas/dev builds) before 7.0 shipped, so 5.9.3 is the newest release the type-checking toolchain actually supports.
+- 2026-08-17 (P1): Astro pinned to 7.2.2 (latest, patched) rather than an older LTS-feeling line, once the Tailwind-integration constraint was removed — "current APIs" per CLAUDE.md and no known vulnerabilities outstanding.
+- 2026-08-17 (P1): autoprefixer left out of the PostCSS pipeline — target is evergreen browsers on Cloudflare Pages, and the utilities in use (flex/grid/logical properties) don't need vendor prefixes. One fewer dependency, per the "remove rather than add" default.
+- 2026-08-17 (P3, bug fix): `src/scripts/motion.ts`'s `whenMotionSafe` registered a single `gsap.matchMedia()` condition (`reduceMotion`). GSAP's `matchMedia().add()` only invokes its callback if at least one *named* condition is currently true (`gsap-core.js` OR-s `mq.matches` across every listed key into an `active` flag and skips the callback if `active` stays falsy) — with only `reduceMotion` registered, that condition is false for the large majority of visitors, so `setup()` silently never ran for them. Found empirically at P3 wiring the chain draw: zero console errors, but the rail/nodes never left their served state. Fixed by also registering the complementary `"(prefers-reduced-motion: no-preference)"` condition, so one of the pair is true for effectively every visitor/browser and the callback reliably fires either way. This is shared infrastructure every motion script goes through (`reveal.ts` included), so the fix is in `motion.ts`, not duplicated per-script.
+- 2026-08-17 (P4): Lenis — decided NOT to add it. Spec §7's motion inventory
+  (items 2–6, built this prompt) contains nothing that requires smooth
+  scroll: two ScrollTriggers already exist (the P3 chain scrub/pin) and every
+  new motion here is either a one-shot reveal or a self-contained timeline,
+  none of which needs native scroll behaviour altered. Per the ambiguity-
+  resolution order, "the option that removes rather than adds" wins by
+  default absent a spec requirement, and BUILD_FLAGS' own Lenis row already
+  biases toward removing it if it fights ScrollTrigger on iOS — simplest to
+  never introduce that risk on a page that already has a pinned/scrubbed
+  section to protect. `src/scripts/lenis.ts` remains unbuilt; PLAN.md §1's
+  file-tree comment ("removed, not patched, if it fights iOS") is the
+  standing answer unless a later page's motion genuinely needs it.
+- 2026-08-17 (P4): Motion #4's card-arrival duration (0.5s) and motion #5's
+  counter duration (1.2s) added as named tokens
+  (`transitionDuration.card`/`transitionDuration.counter`,
+  tailwind.config.mjs) rather than bare magic numbers in the TS files —
+  spec §7 doesn't give either value (only the bar's own 0.6s and the four
+  other items' durations are named), so these are judgement calls, tokenised
+  per the "every duration is a token" discipline the rest of the config
+  already follows. Logged in TODO.md alongside the rest of P4's judgement
+  calls.
+- 2026-08-17 (P4): Motion #4's confidence-bar fill and motion #3's fragment
+  wipe both need a transform-origin/translate-direction pinned to the
+  inline-start edge, and Tailwind ships no logical `origin-start` utility
+  (only physical `origin-left`/`origin-right`, which CLAUDE.md's invariant
+  bans in spirit even where the literal grep wouldn't catch them). Resolved
+  by writing the physical value only inside a scoped `<style>` block with an
+  explicit `[dir="rtl"]` override — the same pattern global.css already uses
+  for line-height/letter-spacing — rather than putting a physical utility
+  class in markup.
+- 2026-08-17 (P3, bug fix): `ChainMarker.astro`'s sticky column never actually stuck — its immediate `<div data-chain-marker>` wrapper shrank to its own content height (~55px) rather than stretching to the grid row's height (~800px, via CSS Grid's default `stretch`, which only reaches the *direct* grid-item ancestor). A `position: sticky` element only has room to stick within its immediate parent's box, so with zero slack there it behaved as ordinary static flow across the whole section. Fixed with `h-full` on that wrapper. Also swapped its `top-24` for the `header` spacing token (`top-header`, 104px) to match `<main>`'s own header-clearance value — `top-24` (96px) left the stuck marker's top few pixels under the fixed header. Both found by scrolling the built page (chrome-devtools MCP), not by static screenshot, which is why they survived P2.
+
+- 2026-08-17 (LCP/CSS follow-up to P4): `astro.config.mjs`'s
+  `build.inlineStylesheets` set to `'always'` (Astro default is `'auto'`,
+  which only inlines stylesheets under Vite's ~4KB asset limit — this
+  project's single global stylesheet is ~17KB, so it was always shipped as
+  an external, render-blocking `<link>`). Re-measured LCP on a clean
+  production build served from `dist/` (scratch static server, port 4323 —
+  dev server on 4321 and `astro preview` untouched): Slow 4G + 4x CPU LCP
+  1,925–1,934ms → 1,137ms (spec §9 budget 2.0s); Fast 4G LCP 607ms → 344ms;
+  CLS 0.00 before and after. `dist/en/index.html` grew 26,141 → 43,452
+  bytes (CSS now paid as inline HTML instead of a separate fetch), gzips to
+  9,882 bytes — trivial against the 900KB first-load budget. Chosen over
+  the alternative candidates (font-preload trimming, critical-CSS
+  splitting) because it's the smallest change that removes the entire
+  render-blocking penalty outright, per the ambiguity-resolution order's
+  "fewer kilobytes" and "removes rather than adds" bias — no new build step,
+  no new dependency, one config line. Font preloads were audited alongside
+  this (3 Latin subsets on `/en/`, ~56KB combined, no Arabic subset,
+  `font-display: swap` confirmed on all five `@font-face` rules) and left
+  unchanged: the mono face is used above the fold (Hero's `Eyebrow`, which
+  sits above the `<h1>`), so dropping its preload would trade a render-delay
+  problem for a flash-of-invisible-text problem on the page's first text.
+  Trade-off accepted and logged: `'always'` means every future route
+  (`/ar`, product pages, `/contact`) repeats the full stylesheet inline
+  rather than sharing one cached external file across the site — acceptable
+  for a small marketing site prioritising first-visit LCP over same-visitor
+  repeat-view cache savings; revisit if the route count grows enough to
+  matter. Full before/after detail in known-issues.md's P4 section.
+
+- 2026-08-17 (P5): Routing stays manual per-locale files (`src/pages/en/*`,
+  `src/pages/ar/*`), matching the pattern already established at P1–P4,
+  rather than switching to Astro's automatic i18n page generation —
+  `astro.config.mjs`'s `i18n` block (already present since P1) only
+  configures locale metadata (`Astro.currentLocale`, hreflang helpers), not
+  routing generation, when pages are hand-authored per locale; no change
+  needed there. Consistent with BUILD_FLAGS' "keep one shared component"
+  bias: every home-page component now takes a `lang` prop and reads copy
+  from `i18n/ui.ts` rather than the Arabic tree forking into parallel
+  components.
+- 2026-08-17 (P5): RTL mirroring split by whether a fragment contains
+  `<text>`. `CommandCentreDim.astro` (no text) mirrors as one CSS
+  `scaleX(-1)` group transform. `StageGateQueue.astro` (has text) gets a
+  hand-authored second geometry: every x-coordinate mirrored (`360 - x`,
+  rects additionally subtracting their own width), `text-anchor` flipped,
+  and the fragment's own `direction: ltr` pinned explicitly (see
+  known-issues.md — SVG `<text>` inherits `direction` from `html[dir=rtl]`,
+  which otherwise flips what `text-anchor: start/end` mean and breaks the
+  mirror). The wipe (`fragment.ts`) mirrors its slide direction by reading
+  `document.documentElement.dir` once, rather than threading a `lang` prop
+  through a script that has no other language-dependent behaviour.
+- 2026-08-17 (P5): Digit handling — Western digits stay Western in Arabic
+  wherever the content brief doesn't already write Arabic-Indic ones
+  (spec §8's rule, applied literally); the brief's own verbatim Arabic-Indic
+  digits (confidence score, AI card's day count, timestamp, panel label)
+  ship as-is per "verbatim wins" (PLAN.md §4 ambiguity 15). The brief's own
+  internal inconsistency (chain link 5's Western "24" vs. the AI card's
+  Arabic-Indic "١٢" for the same kind of quantity) ships unedited and is
+  logged in known-issues.md as a copy observation, not silently normalised
+  either direction. Separately — and not a digit-*style* question — two
+  Western-digit values joined by a bare separator ("68 / 75", "01 / 05")
+  needed an explicit `dir="ltr"` bidi isolate to stop rendering visually
+  reversed inside RTL flow; see known-issues.md.
+
+- 2026-08-17 (P6): Product-page copy lives in each `/en/` page's own
+  frontmatter as a typed `ProductPageCopy` object
+  (`src/components/product/copy.ts`), NOT in `i18n/ui.ts`. That table is
+  `Record<Language, UiStrings>`, so a `product` branch would force an Arabic
+  value to exist for every English string written this prompt — and
+  `trumandate-product-pages.md` is explicit that Arabic is produced only after
+  Piyush approves the English. Writing placeholder Arabic to satisfy a type
+  would waste the pass the doc is protecting and would break "Arabic never
+  carries less content than English" in the worst way, by carrying *wrong*
+  content rather than none. `ProductPage.astro` already takes `lang`, so the
+  move into `UiStrings.product` after approval is a lift-and-shift with no
+  structural change. Logged in TODO.md.
+- 2026-08-17 (P6): The five-part skeleton is rendered as FOUR `<Section>`s,
+  not five. Parts 1 (the question) and 2 (the argument) share one section,
+  because a full section break between a page's `<h1>` and the first paragraph
+  of the argument that `<h1>` introduces reads as two unrelated blocks. The
+  five parts and their order are unchanged; only the wrapper count differs.
+  All three pages compose the same `ProductPage.astro`, so this cannot drift
+  per page.
+- 2026-08-17 (P6): No spine on the product pages. PLAN.md §3 makes the rail
+  the home page's signature ("the only place boldness is spent"); repeating it
+  on every route spends the signature. Product pages get section reveals
+  (motion #2), the fragment wipe (motion #3), the AI card (motion #4) and the
+  header rule (motion #6) — no pin, no scrub, matching the prompt's "one
+  pinned section and one scrubbed timeline per route MAX, and these pages
+  should have NEITHER".
+- 2026-08-17 (P6): Motion #5 (the count-up) is NOT used on any product page.
+  Spec §7 item 5 reads as a cap ("One number per page… One only"), not a
+  quota, and none of the three pages has a number that can honestly be
+  animated as a running total — the home page's AED 41M qualifies because a
+  benefit-to-date figure IS a running total (PLAN.md §3's own argument).
+  Counting a confidence value (0.81), a divergence (18%) or a measurement
+  window (24 months) up from zero would animate a static reading and imply it
+  is moving as you watch, which is the small lie PLAN.md already rejected once.
+  Per the ambiguity-resolution order, "remove rather than add" wins.
+- 2026-08-17 (P6): `SuggestionCard.astro` generalised rather than forked. Its
+  four content strings and the confidence value became optional props that
+  default to the home page's `home.ai.*` values, so `<SuggestionCard
+  lang={lang} />` behaves exactly as before at the home call site (unchanged)
+  while the three product pages pass their own. Accept/Modify/Reject are
+  deliberately NOT overridable — they are the product's own control labels and
+  spec §4 says the pattern repeating is the point. The confidence bar's width
+  is now derived from the numeric prop (`Math.round(confidence * 100)%`)
+  instead of a hard-coded 77%, so the bar and the printed value cannot drift.
+  Per BUILD_FLAGS' "keep one shared component rather than creating a variant".
+- 2026-08-17 (P6): LangToggle on unpaired routes points at the target
+  language's HOME page rather than a URL that would 404. Implemented in
+  `i18n/utils.ts` as a `pairedRoutes` set (currently `{"/"}`) consulted by
+  `altUrl`; add a route to that set the moment its second-language file lands
+  and the fallback deletes itself. The alternative — hiding the toggle on
+  routes with no counterpart — was rejected: spec §8 treats the toggle as
+  permanent chrome, and a control that vanishes on three of five routes reads
+  as a bug to a reader who just used it on the home page. Verified:
+  `/en/strategy` → `/ar/`, `/en/` → `/ar/`, `/ar/` → `/en/`.
+- 2026-08-17 (P6): Product fragments crop via their own authored viewBox (the
+  neighbouring KPI card runs to x=620 against a 460 viewBox; the initiative
+  list container runs to y=290 against a 206 viewBox; the benefit plot's card
+  runs to x=508 against a 460 viewBox), matching `StageGateQueue.astro`'s
+  established P2 pattern rather than introducing a CSS fade-to-ground mask on
+  these three only. Spec §5 sanctions either ("clipped by the section edge or
+  by a mask that fades to the page ground"), and adding the fade to the
+  product fragments but not the home one would be exactly the per-page visual
+  pattern this prompt forbids. Observation logged in TODO.md.
+
+## Deferred
+
+(Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)
+
+- 2026-08-17 (P1): Button.astro, favicon set, OG images, vendor SVGs, Formspree
+  endpoint, contact email, Lenis, sitemap.xml.ts, provisional Arabic nav
+  labels, header-height offset re-check — full detail in TODO.md.

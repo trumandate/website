@@ -1,0 +1,132 @@
+@import "./fonts.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- reset, minimal, not a full modern-normalize import ---- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    text-size-adjust: 100%;
+    scroll-behavior: auto; /* Lenis/ScrollTrigger own smoothing once motion lands */
+  }
+
+  body {
+    @apply bg-ink font-sans font-light text-body;
+    margin: 0;
+    min-height: 100svh;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* Arabic gets its own line-height and letter-spacing per spec §3 — the
+   * fontSize scale above is authored for Latin. */
+  [dir="rtl"] {
+    line-height: theme("lineHeight.arabic");
+    letter-spacing: theme("letterSpacing.none");
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] .font-display {
+    line-height: theme("lineHeight.display-ar");
+  }
+
+  [dir="rtl"] h2,
+  [dir="rtl"] h3 {
+    line-height: theme("lineHeight.heading-ar");
+  }
+}
+
+/* ---- spec §3's mono-role swap: "In Arabic this role swaps to Plex Sans
+ * 600 at normal tracking, because letterspaced mono destroys Arabic
+ * joining." Every data/eyebrow instance on the site (Eyebrow.astro,
+ * Datum.astro, and the few raw font-mono call sites — ChainMarker.astro,
+ * SuggestionCard.astro, ClosingCta.astro's caption) reaches the page
+ * through the shared `.font-mono` / `.text-eyebrow` / `.text-datum`
+ * utility classes, so one override each here covers all of them — no
+ * component-level lang branching needed for type treatment, only for
+ * copy text. Higher specificity than the plain utility (attribute
+ * selector + class vs. class alone) wins regardless of layer order. `/ar`
+ * never loads the Plex Mono font file at all (BaseLayout.astro's
+ * per-locale preload list), so this isn't just a style swap — it's the
+ * only path Arabic type ever takes through this role. ---- */
+@layer utilities {
+  [dir="rtl"] .font-mono {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+  }
+
+  /* fontSize.eyebrow-ar / datum-ar (tailwind.config.mjs) already carry the
+   * Arabic size, line-height and zeroed letter-spacing for these two roles
+   * — reused via @apply rather than re-stating the values here, so the
+   * token stays the one place these numbers live. */
+  [dir="rtl"] .text-eyebrow {
+    @apply text-eyebrow-ar;
+  }
+
+  [dir="rtl"] .text-datum {
+    @apply text-datum-ar;
+  }
+}
+
+/* ---- corePlugins.textAlign is switched off in tailwind.config.mjs so
+ * text-left / text-right cannot exist. Only the two logical values a
+ * disciplined type system needs are re-provided. ---- */
+@layer utilities {
+  .text-start {
+    text-align: start;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+}
+
+/* ---- visible focus on every interactive element (spec §9) ---- */
+@layer base {
+  :focus-visible {
+    outline: 2px solid theme("colors.accent");
+    outline-offset: 2px;
+  }
+}
+
+/* ---- motion #2 end state. GSAP only ever runs gsap.from() against this
+ * class, animating FROM an offset back to these values — which are also
+ * exactly what a JS-disabled or prefers-reduced-motion page renders,
+ * because no timeline is created in either case (see scripts/motion.ts). ---- */
+@layer utilities {
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* visually-hidden, but announced — RAG status words, skip-link resting state */
+@layer utilities {
+  .visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+    padding: 0;
+    margin: -1px;
+  }
+}

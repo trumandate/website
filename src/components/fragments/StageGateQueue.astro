@@ -1,0 +1,232 @@
+---
+// StageGateQueue.astro — the home page's one chain-attached fragment (spec
+// §5), assigned to Milestone (PLAN.md §3: Milestone's copy is about a slip
+// surfaced before the date passes, and this is the only canonical fragment
+// not already spoken for by a product page). Hand-authored inline SVG from
+// tokens, one screen region, data anonymised — never the interface (spec
+// §5's fidelity rule).
+//
+// The crop is authored directly into the viewBox: the second queue item's
+// card starts inside the frame and its geometry runs past the viewBox's own
+// right edge, so the browser's default SVG clipping (content outside the
+// viewBox is not painted) crops it — no CSS overflow trick, no mask needed.
+//
+// Text is sized in bare (unitless-equivalent) numbers rather than the
+// rem-based `text-*` type-scale classes: an SVG `font-size` given without a
+// root-relative unit is resolved in the element's own user-coordinate space,
+// so it scales with the artwork exactly like the surrounding rects when the
+// SVG is drawn at any width. A `rem` value would not — `rem` always resolves
+// against the document root, ignoring the viewBox transform entirely, and
+// would decouple the type from the shapes as this fragment scales down.
+//
+// RTL (P5): this fragment carries `<text>`, so — per this build's own
+// instruction — it gets a proper mirrored variant (Arabic strings AND
+// mirrored geometry) rather than a blanket CSS transform, which would flip
+// the glyphs backwards along with the boxes. The mirror is authored by
+// hand: every x-coordinate `x` becomes `360 - x` (rect x additionally
+// subtracts its own width, since rect x is a left edge, not a point), and
+// every `<text>`'s alignment flips from the default `text-anchor: start`
+// (glyphs grow toward the inline-end/right in the untouched, direction:ltr
+// default) to `text-anchor: end` at the mirrored point, so Arabic labels
+// sit flush against their card's now-right-hand inner edge and grow
+// leftward — the mirror image of the English card's left-inset,
+// grow-rightward labels. Net effect: item 1 (fully visible) moves from the
+// viewBox's left edge to its right edge — i.e. from the page's
+// visual-LTR-inline-start to its visual-RTL-inline-start — and item 2
+// (cropped, "the queue continues") moves from cropped-at-the-right to
+// cropped-at-the-left, so the crop still reads as continuing toward
+// inline-end in both languages.
+//
+// The wipe's slide direction mirrors too, but that's handled in
+// fragment.ts (checks `document.documentElement.dir`), not here — this
+// file only owns the resting geometry and text.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  class?: string;
+  lang: Language;
+}
+
+const { class: className, lang }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
+
+const label = t("home.stageGate.ariaLabel");
+const labelClass = isAr ? "label-ar" : "label";
+const valueClass = isAr ? "value-ar" : "value";
+---
+
+<svg
+  viewBox="0 0 360 140"
+  class:list={["stage-gate-queue w-full max-w-[420px]", className]}
+  role="img"
+  aria-label={label}
+  data-fragment
+>
+  <defs>
+    <mask id="stage-gate-wipe-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="360" height="140">
+      <rect x="0" y="0" width="360" height="140" fill="black"></rect>
+      <rect data-fragment-wipe x="0" y="0" width="360" height="140" fill="white"></rect>
+    </mask>
+  </defs>
+
+  <g mask="url(#stage-gate-wipe-mask)">
+    <rect width="360" height="140" class="fill-surface-deep"></rect>
+
+    {
+      isAr ? (
+        <>
+          {/* Queue item 1, mirrored: 360-(10+210)=140. Fully visible, now
+              at the fragment's right edge (RTL inline-start). */}
+          <rect
+            x="140"
+            y="12"
+            width="210"
+            height="116"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="334" y="34" text-anchor="end" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.gate1Label")}
+          </text>
+          {/* mirrored cx: 360-204=156 */}
+          <circle cx="156" cy="30" r="4" class="fill-amber" />
+          <text x="334" y="64" text-anchor="end" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.ownerLabel")}
+          </text>
+          <text x="334" y="80" text-anchor="end" class={`${valueClass} fill-paper`}>
+            {t("home.stageGate.ownerValue")}
+          </text>
+          <text x="334" y="102" text-anchor="end" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.dueLabel")}
+          </text>
+          <text x="334" y="118" text-anchor="end" class={`${valueClass} fill-paper`}>
+            {t("home.stageGate.dueValue")}
+          </text>
+
+          {/* Queue item 2, mirrored: 360-(250+210)=-100 — extends off-canvas
+              past the viewBox's left edge (0), cropped by it, reading as
+              "the queue continues" toward inline-end (visual left in RTL). */}
+          <rect
+            x="-100"
+            y="12"
+            width="210"
+            height="116"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="94" y="34" text-anchor="end" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.gate2Label")}
+          </text>
+        </>
+      ) : (
+        <>
+          {/* Queue item 1: fully visible */}
+          <rect
+            x="10"
+            y="12"
+            width="210"
+            height="116"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="26" y="34" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.gate1Label")}
+          </text>
+          <circle cx="204" cy="30" r="4" class="fill-amber" />
+          <text x="26" y="64" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.ownerLabel")}
+          </text>
+          <text x="26" y="80" class={`${valueClass} fill-paper`}>
+            {t("home.stageGate.ownerValue")}
+          </text>
+          <text x="26" y="102" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.dueLabel")}
+          </text>
+          <text x="26" y="118" class={`${valueClass} fill-paper`}>
+            {t("home.stageGate.dueValue")}
+          </text>
+
+          {/* Queue item 2: starts in-frame, geometry continues past the
+              viewBox's edge and is clipped by it, reading as "the queue
+              continues". */}
+          <rect
+            x="250"
+            y="12"
+            width="210"
+            height="116"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="266" y="34" class={`${labelClass} fill-muted`}>
+            {t("home.stageGate.gate2Label")}
+          </text>
+        </>
+      )
+    }
+  </g>
+</svg>
+
+<script src="../../scripts/fragment.ts"></script>
+
+<style>
+  .label {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .value {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 12px;
+  }
+
+  /* Arabic variant of the data/eyebrow role inside this fragment: these two
+     classes live in a scoped <style>, addressed directly rather than
+     through the shared .font-mono/.text-eyebrow/.text-datum utility
+     classes (global.css's [dir=rtl] overrides), so the mono-to-sans swap
+     is repeated here explicitly — same values (spec §3: Plex Sans 600,
+     normal tracking), sized ~10-15% larger than their Latin-mono
+     counterparts (9px/12px → 10px/13px) since Arabic sans at matched pixel
+     sizes reads smaller than tracked Latin mono digits. */
+  .label-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 10px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .value-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 13px;
+  }
+
+  /* Found on /ar (P5): `direction` is an inherited CSS property, and it DOES
+     cascade down through <svg> into <text> in every evergreen engine — so
+     under html[dir="rtl"], these <text> elements inherited `direction: rtl`
+     from the document root. `text-anchor: start`/`end` are defined
+     RELATIVE TO that inherited direction (CSS Writing Modes / SVG2), not
+     fixed to physical left/right, so every hand-mirrored `text-anchor="end"`
+     coordinate above — computed on the assumption of the ordinary
+     `direction: ltr` default — anchored and grew the wrong way once actual
+     inheritance kicked in, clipping most of each Arabic label against the
+     viewBox edge. Pinning `direction: ltr` here locks `start`/`end` back to
+     the physical left/right meaning this fragment's coordinates were
+     authored against, in both languages; it does not affect the Arabic
+     GLYPHS themselves, which the Unicode bidi algorithm still shapes and
+     orders right-to-left based on their own strong-RTL character
+     properties regardless of the paragraph `direction`. */
+  .stage-gate-queue {
+    direction: ltr;
+  }
+</style>

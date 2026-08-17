@@ -1,0 +1,72 @@
+---
+// Hero.astro — type only, no card, no panel border (PLAN.md §3). Copy
+// verbatim from content brief §1. The eyebrow sits on the spine's first
+// node, unlit and hairline-outlined rather than accent — PLAN.md: "the
+// signature is the only place boldness is spent," and that's the chain,
+// not the hero. The hero data panel (content brief's objective record)
+// attaches as the spine's second node, at full text-column width rather
+// than a side gutter (the binding decision that keeps the home page's
+// product-surface count at two, not three).
+//
+// Node dots are positioned with `start-[-0.5rem]`, not `start-node-inset`,
+// because each node's wrapper is a direct child of the `ps-rail` div below —
+// whose own edge already sits at the `rail` token (54px) from the section's
+// true start edge. `rail (54px) - node-inset (46px) = 8px (0.5rem)`, so
+// walking back half a rem from a ps-rail child's own edge lands the node's
+// left edge exactly on the rail's line; `-translate-x-1/2` then centres the
+// 13px node on that point. Anchoring each node to its own row (rather than
+// computing a cumulative offset from the top of the hero) keeps this correct
+// under the fluid `clamp()` type scale, where the height above any given row
+// changes with viewport width.
+import Spine from "./Spine.astro";
+import ObjectiveRecord from "./ObjectiveRecord.astro";
+import Eyebrow from "../type/Eyebrow.astro";
+import Display from "../type/Display.astro";
+import Lede from "../type/Lede.astro";
+import Button from "../ui/Button.astro";
+import Reveal from "../ui/Reveal.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="relative">
+  <Spine variant="hairline" />
+
+  <Reveal as="div" class="ps-rail">
+    <div class="relative">
+      <span
+        aria-hidden="true"
+        class="absolute start-[-0.5rem] top-1 size-node -translate-x-1/2 rounded-full ring-1 ring-hairline"
+      ></span>
+      <Eyebrow>{t("home.hero.eyebrow")}</Eyebrow>
+    </div>
+
+    <Display class="mt-4 max-w-measure-head">
+      {t("home.hero.headline")}
+    </Display>
+
+    <Lede class="mt-6">
+      {t("home.hero.lede")}
+    </Lede>
+
+    <div class="mt-8 flex flex-wrap items-center gap-4">
+      <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
+      <Button variant="ghost" href="#chain">{t("cta.secondary")}</Button>
+    </div>
+
+    <div class="relative mt-16">
+      <span
+        aria-hidden="true"
+        class="absolute start-[-0.5rem] top-1 size-node -translate-x-1/2 rounded-full ring-1 ring-hairline"
+      ></span>
+      <ObjectiveRecord lang={lang} />
+    </div>
+  </Reveal>
+</div>
