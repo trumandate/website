@@ -42,7 +42,17 @@ export interface UiStrings {
     toEnglish: string;
   };
   footer: {
+    /** Accessible name for the Intertec Systems logo mark (IntertecLogo.astro's
+     * aria-label) — the company name half of the content brief's verbatim
+     * "Intertec Systems · Dubai" line. Split from `location` at P9's logo
+     * integration so the logo (which visually draws "Intertec" only, plus a
+     * globe mark and an accent dot — no literal "Systems" glyph) still
+     * carries the full two-word company name to assistive tech. */
     company: string;
+    /** The "Dubai" half of the same verbatim line, rendered as plain text next
+     * to the logo, joined by a presentational (aria-hidden) middot in
+     * Footer.astro rather than baked into either string. */
+    location: string;
     site: string;
   };
   /** WCAG 1.4.1: the visually-hidden word every RAG dot carries alongside

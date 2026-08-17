@@ -461,6 +461,42 @@ Log every such choice under "Decisions taken" below.
     tailwind.config.mjs"/no-raster invariants in the same run. Status at
     handoff: **in progress**, not missing — see TODO.md's P9 section and
     MORNING-REPORT.md's launch checklist for the one remaining step.
+- 2026-08-18 (P9b, follow-up pass): The Intertec Systems logo integration
+  (TODO.md's P9 item, left in-progress at handoff) is closed. Two judgement
+  calls made in wiring it into `Footer.astro`, logged here:
+  (1) **`i18n` restructuring**: `footer.company` (previously the full
+  verbatim "Intertec Systems · Dubai"/"إنترتك سيستمز · دبي" string) is split
+  into `footer.company` ("Intertec Systems" only, now the logo's
+  `aria-label`) and a new `footer.location` ("Dubai"/"دبي", rendered as
+  plain text beside it). No copy was rewritten — this is the same verbatim
+  words, re-homed at the "·" the content brief's own line already treats as
+  a join between two conceptually distinct fields — but flagging the
+  restructuring here since BUILD_FLAGS' copy-authority section says home/
+  contact copy is verbatim and shouldn't be paraphrased; this is a type/
+  wiring change, not a rewrite.
+  (2) **Sizing**: the mark is `1.4em` block-size (≈21px against the footer's
+  `text-small`), not literally the adjacent text's cap-height (~11px, tried
+  first and found illegible in a chrome-devtools screenshot at 375 — the
+  wordmark's fine curves plus the globe/dot sitting above the letters in the
+  reference file's own viewBox need more room than a cap-height literally
+  would give). `1.4em` is the smallest step up that read clearly in
+  screenshots at both 375 and 1440, in both languages.
+  Also resolved: the reference file's clipPath + per-path
+  `transform="matrix(1 0 0 1.00609 436 94)"` nested inside the group's own
+  `translate(-436 -94)` (an export artefact) compose to a bare 1.00609x
+  vertical scale (0.6%) with no net translation — confirmed by hand and
+  dropped rather than reproduced, since it is imperceptible at any size this
+  mark ships at. `IntertecLogo.astro`'s own paths are the reference file's
+  raw coordinates against a plain `viewBox="0 0 200 140"`; no wrapper
+  transform, no clipPath, anywhere in the shipped component. Verified: `npm
+  run build`/`npm run check` clean, zero hex in the component, zero
+  physical-direction utilities, zero console errors on `/en/` and `/ar/` at
+  375/1440 (chrome-devtools MCP), RTL order correct via plain flex-row
+  auto-mirroring (no bespoke `[dir="rtl"]` rule needed — the logo's own
+  Latin glyphs stay unmirrored by design). Spec §5A also names `/contact` as
+  a placement site for this logo; only the footer was in this pass's scope,
+  so `/contact` is left untouched and logged as a fresh (not carried) item
+  in TODO.md.
 - 2026-08-17 (P9): `seo/JsonLd.astro` (PLAN.md §1's file tree lists an
   Organization + SoftwareApplication structured-data component) was not built
   this pass. The P9 build brief's explicit six-item list (titles/descriptions,
@@ -488,3 +524,7 @@ Log every such choice under "Decisions taken" below.
   verification passes on `/contact` and the three product pages (Playwright
   MCP in every session so far has been Chromium-bound). Full detail and the
   complete launch checklist: MORNING-REPORT.md.
+- 2026-08-18 (P9b): The Intertec Systems logo, listed above as still open, is
+  now closed — see this file's P9b entry above and TODO.md's P9 section.
+  Still open, newly logged: the same logo on `/contact` (spec §5A names both
+  the footer and the contact page; only the footer was this pass's scope).

@@ -441,19 +441,43 @@ and will be addressed as the pages that touch them get built (P2 onward).
 
 ## From P9 (SEO, OG images, favicons, contrast fix, launch decisions)
 
-- **Intertec Systems logo — in progress, not missing.** Piyush supplied the
-  real file as this prompt was closing out: `assets/intertec-logo.svg`
-  (200×140 viewBox, 9.1 KB). One step remains, deliberately not done in this
-  same pass so it gets its own build-and-verify cycle rather than a rushed
-  last-minute edit: wire it into `Footer.astro`'s brand-credit line (matching
-  the same "author from the reference file as tokens/inline SVG, the source
-  file itself never ships" treatment `assets/logo.png` got for the
-  TruMandate mark — spec §5A's no-photography/no-raster-outside-the-asset-
-  list invariant applies here too), then re-run the standing greps
-  (physical-direction, hex-outside-config) and a contrast check on whatever
-  ground it sits against. No placeholder graphic ships in the meantime
-  (BUILD_FLAGS.md's P9 decisions log) — the footer's existing plain-text
-  company credit remains the real attribution until the swap lands.
+- ~~**Intertec Systems logo — in progress, not missing.**~~ Resolved in the
+  follow-up P9b pass: `src/components/layout/IntertecLogo.astro`, re-authored
+  from `assets/intertec-logo.svg` (reference-only, never shipped) as a single
+  `currentColor` inline SVG — both original fills (a dark gray for the
+  "ntertec" letterforms/globe, a red for the accent dot) dropped in favour of
+  one monochrome colour inherited from the container, per CLAUDE.md's
+  partner-logo-mono direction. The reference file's clipPath + per-path
+  `matrix(1 0 0 1.00609 436 94)` inside a `translate(-436 -94)` group (an
+  export artefact) was collapsed: the two transforms compose to a bare
+  1.00609x vertical scale (0.6%, imperceptible), dropped rather than carried
+  forward — the component's paths are the reference file's raw coordinates
+  against a plain `viewBox="0 0 200 140"`, no wrapper transform, no clipPath,
+  anywhere. Wired into `Footer.astro` replacing the "Intertec Systems" half
+  of the brand-credit line; `· Dubai`/`· دبي` stays as text. This needed
+  splitting `i18n/types.ts` and `ui.ts`'s `footer.company` (was the full
+  verbatim "Intertec Systems · Dubai" string) into `footer.company`
+  ("Intertec Systems"/"إنترتك سيستمز", now the logo's `aria-label`) and a new
+  `footer.location` ("Dubai"/"دبي", the visible text) — same words, same two
+  languages, just re-homed at the "·" the content brief's own line already
+  implied as a join point; nothing was rewritten. Verified: `npm run build`
+  and `npm run check` both clean; zero hex in the component (grepped); zero
+  physical-direction utilities; the flex-row layout auto-mirrors under
+  `dir="rtl"` (no bespoke RTL handling needed, since the logo's own Latin
+  glyphs are meant to stay unmirrored — confirmed on `/ar/` at 375 and 1440,
+  chrome-devtools MCP: "دبي · [logo]" reads right-to-left, logo unflipped);
+  zero console errors on `/en/` and `/ar/` at both widths. Sized at `1.4em`
+  block-size (≈21px against the footer's `text-small`) rather than literally
+  cap-height — the wordmark's fine linework (plus the globe/dot sitting above
+  the letters in its own viewBox) read as an illegible smudge at true
+  cap-height (~11px, tried first); `1.4em` is the smallest step up that kept
+  every letterform legible in the screenshots. Screenshots:
+  `screenshots/p9b-footer-{en,ar}-{375,1440}.png`.
+  **Left for a future pass, not silently dropped:** spec §5A lists the logo
+  for "footer and contact page" — only the footer is done here; `/contact`
+  still shows no Intertec Systems mark. Judgement call for that page's own
+  pass, since `ContactPage.astro`/`SovereigntyBand.astro` weren't touched by
+  this one.
 - **`seo/JsonLd.astro` was never built.** PLAN.md §1's file tree plans an
   Organization + SoftwareApplication structured-data component; this
   prompt's explicit build list didn't include it, so it stayed out of scope

@@ -38,8 +38,10 @@ export const ui: UiDictionary = {
       toEnglish: "English",
     },
     footer: {
-      // content brief, Global — verbatim
-      company: "Intertec Systems · Dubai",
+      // content brief, Global — verbatim, split at P9 into the logo's
+      // accessible name and the visible "Dubai" suffix (IntertecLogo.astro).
+      company: "Intertec Systems",
+      location: "Dubai",
       site: "trumandate.com",
     },
     ragStatus: {
@@ -263,8 +265,9 @@ export const ui: UiDictionary = {
       toEnglish: "English",
     },
     footer: {
-      // content brief, Global — verbatim
-      company: "إنترتك سيستمز · دبي",
+      // content brief, Global — verbatim, split at P9 (see the English side).
+      company: "إنترتك سيستمز",
+      location: "دبي",
       site: "trumandate.com",
     },
     ragStatus: {
