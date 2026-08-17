@@ -401,3 +401,102 @@ pre-existing `Header.astro` issue recorded in the P6 section above; "اطلب
 عرضاً توضيحياً" wraps at 375 exactly as "Request a walkthrough" does. Visible in
 all three 375 screenshots. Still a `Header.astro` fix, still out of scope for a
 copy-and-pages prompt.
+
+---
+
+## P7
+
+**`aria-invalid:border-red` silently compiled to nothing until
+`tailwind.config.mjs` gained an `aria` theme extension — found by grepping the
+compiled CSS for the literal selector, with one red herring on the way.**
+Tailwind's own default `theme.aria` map (in `tailwindcss/stubs/config.full.js`)
+only defines `busy`/`checked`/`disabled`/`expanded`/`hidden`/`pressed`/
+`readonly`/`required`/`selected` — no `invalid`. `FormField.astro`'s
+`aria-invalid:border-red` (the field-invalid visual cue, always paired with the
+field's own error text — never the only signal, per spec §9) therefore matched
+no configured `aria` variant value, and Tailwind's JIT scanner left the class
+name sitting inert in the compiled HTML's `class=""` attribute with zero
+matching CSS rule — no build error, no warning, just a class that did nothing.
+Confirmed via `node -e 'resolveConfig(...)'` that `theme('aria')` really was
+missing `invalid` before the fix.
+
+The red herring: the first fix attempt added `extend.aria.invalid =
+'invalid="true"'` to `tailwind.config.mjs`, rebuilt, and grepped the compiled
+CSS for `[aria-invalid="true"]` (with the quotes the config value literally
+contains) — found nothing, which read as "the extension didn't work." It had
+worked; the grep pattern was wrong. Tailwind's `ariaVariants` corePlugin builds
+the attribute selector via `normalizeAttributeSelectors`, which drops the
+quotes from a value like `invalid="true"` before emitting the selector, so the
+real compiled rule is `[aria-invalid=true]` — unquoted. A second, deliberately
+quote-free test (`aria-[invalid=true]:border-red`, Tailwind's arbitrary-value
+variant syntax, which bypasses the theme config entirely) compiled
+immediately and definitively separated "the theme extension isn't taking
+effect" from "my grep pattern can't find what's actually there." The final
+fix keeps the named `aria-invalid:` variant (cleaner, and now proven to work)
+with the theme extension in `tailwind.config.mjs`; the bracket-syntax test
+class was reverted before this was done. Recorded because a future
+contributor adding any other `aria-*` variant not in Tailwind's default list
+will hit the same silent-no-op and should extend `theme.aria`, then verify
+against the UNQUOTED attribute-selector form in the compiled CSS, not the
+quoted config value.
+
+**Everything else on `/contact` verified clean.** `npm run build` and
+`npm run check` both clean (0 errors/warnings/hints) on every rebuild this
+session. Physical-direction grep (`grep -rEn '\b(ml|mr|pl|pr|left|right)-'
+src/`) restricted to the new files: zero real hits, only the pre-existing
+comment-prose matches already recorded in earlier sections. Zero console
+messages on `/en/contact` and `/ar/contact` across every interaction tested:
+initial load, empty-submit (error summary), invalid-email submit, and a
+stubbed-fetch success submit (the real Formspree placeholder endpoint was
+never actually posted to — `window.fetch` was replaced with a stub returning
+`{ok:true}` before triggering the success path, exactly so this verification
+wouldn't need a live endpoint to pass).
+
+**LCP and CLS, Fast 4G, no CPU throttle, production build served from `dist/`
+on port 4323** (dev server on 4321 untouched), 375×812 mobile viewport:
+`/en/contact` LCP 323–344 ms across two runs, `/ar/contact` LCP 351 ms, CLS
+0.00 on both in every run. TTFB 5 ms in both; 100% of LCP was render delay,
+and the LCP element on both routes is the page's own `<h1>` — text, not a
+network fetch. The heavier Slow-4G-plus-4x-CPU profile carried as an open item
+since P6 (host-load contamination, see that section) is still owed on an idle
+machine; not attempted again here for the same reason it wasn't trustworthy
+last time.
+
+**Keyboard walk verified programmatically (`document.activeElement` read
+after each `Tab`/`Space`), not just visually.** Focus order on a fresh
+`/en/contact` load: Name → Organisation → Work email → the radio group (one
+tab stop, `Space`/arrow keys move within it per native behaviour) → message →
+submit — matches DOM order exactly, with no invisible honeypot stop in
+between (`tabindex="-1"` holds). After an empty submit, focus lands on the
+error-summary region itself (`role="alert"`, confirmed `focused` in the
+accessibility snapshot) before any further tabbing, and its four jump links
+lead correctly into the four real fields in order. `:focus-visible`'s global
+2px accent outline (`global.css`) was confirmed present via
+`getComputedStyle` on both a jump link and a text input — this page introduces
+no new focusable element that bypasses it.
+
+**The required-radio-group's native constraint-validity state leaked into the
+accessibility tree before any script ran, and was fixed with an explicit
+static `aria-invalid="false"`.** A first accessibility-tree snapshot of a
+freshly loaded, untouched `/en/contact` showed all four "what you want to
+see" radios as `invalid="true"` — before any interaction, before
+`scripts/contactForm.ts` had done anything. Chrome's accessibility mapping
+exposes a required-and-currently-invalid form control's native
+`validity.valueMissing` state as `aria-invalid` whenever no explicit
+`aria-invalid` attribute overrides it; the three text `FormField.astro`
+inputs didn't show this because they already carry a static
+`aria-invalid="false"` (suppressing the same premature-before-any-attempt
+signal), but the radios, authored directly in `ContactForm.astro`, didn't yet
+have the equivalent override. Fixed by adding a static `aria-invalid="false"`
+to each radio (cosmetic — `scripts/contactForm.ts` only ever toggles the
+wrapping fieldset's `aria-invalid`, not each radio's, since the group is one
+"field" for this pattern) and to the fieldset itself. Confirmed resolved in a
+second snapshot of the same fresh load. Not a script bug; a gap between two
+authoring patterns for what is, underneath, the same requirement.
+
+**The header CTA still wraps to two lines on `/contact` too, in both
+languages.** Same pre-existing `Header.astro` issue recorded in the P6 and
+P6-AR sections above, reproduced without `Header.astro` having been touched
+this prompt; visible in all four P7 rest-state screenshots
+(`p7-contact-{en,ar}-{375,1440}.png`). Still out of scope for a
+form-and-copy prompt.

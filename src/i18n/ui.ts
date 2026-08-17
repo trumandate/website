@@ -188,6 +188,38 @@ export const ui: UiDictionary = {
         todayLabel: "Today",
       },
     },
+    // content brief §7 — verbatim (eyebrow, heading, sub, all four field
+    // labels and the four interest options). Everything else here is
+    // invented (no brief source) and written directly in English, not
+    // translated — see i18n/types.ts's `contact` doc comment.
+    contact: {
+      eyebrow: "Next step",
+      heading: "See it against your own plan.",
+      sub: "Send this and we will run a walkthrough on a portfolio shaped like yours, not a demo dataset.",
+      emailNote: "Prefer email? Write to hello@trumandate.com.",
+      nameLabel: "Name",
+      orgLabel: "Organisation",
+      emailLabel: "Work email",
+      interestLegend: "What you want to see",
+      interestOption1: "Full platform walkthrough",
+      interestOption2: "Strategy and KPI cascade",
+      interestOption3: "Benefits realisation",
+      interestOption4: "Deployment and data sovereignty",
+      messageLabel: "Anything we should know",
+      honeypotLabel: "Leave this field blank",
+      submittingLabel: "Sending…",
+      requiredError: "This field is required.",
+      emailError: "Enter a valid work email address.",
+      errorSummaryHeading: "Check the following before sending:",
+      successHeading: "Request sent.",
+      successBody:
+        "We will be in touch to schedule the walkthrough on your own portfolio.",
+      errorHeading: "Something went wrong.",
+      errorBody:
+        "The request was not sent. Try again, or write to hello@trumandate.com directly.",
+      sovereigntyEyebrow: "Deployment and data sovereignty",
+      sovereigntyBody: "Sovereign on-premise or cloud",
+    },
   },
   ar: {
     brand: {
@@ -385,6 +417,36 @@ export const ui: UiDictionary = {
         forecastLegend: "المتوقَّع",
         todayLabel: "اليوم",
       },
+    },
+    // content brief §7 — verbatim. Invented strings written directly in
+    // Arabic (BUILD_FLAGS: "written, not machine-translated"), matching the
+    // English list one-for-one — see i18n/types.ts's `contact` doc comment.
+    contact: {
+      eyebrow: "الخطوة التالية",
+      heading: "شاهدها على خطتك أنت.",
+      sub: "أرسل النموذج وسنقدّم عرضاً على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
+      emailNote: "تفضّل البريد الإلكتروني؟ راسلنا على hello@trumandate.com.",
+      nameLabel: "الاسم",
+      orgLabel: "الجهة",
+      emailLabel: "البريد المؤسسي",
+      interestLegend: "ما ترغب في رؤيته",
+      interestOption1: "عرض كامل للمنصة",
+      interestOption2: "تدرّج الاستراتيجية والمؤشرات",
+      interestOption3: "تحقيق المنافع",
+      interestOption4: "النشر وسيادة البيانات",
+      messageLabel: "أي معلومة تودّ إضافتها",
+      honeypotLabel: "اترك هذا الحقل فارغاً",
+      submittingLabel: "جارٍ الإرسال…",
+      requiredError: "هذا الحقل مطلوب.",
+      emailError: "أدخل عنوان بريد إلكتروني مؤسسي صالحاً.",
+      errorSummaryHeading: "تحقق مما يلي قبل الإرسال:",
+      successHeading: "تم إرسال الطلب.",
+      successBody: "سنتواصل معك لتحديد موعد العرض على محفظتك الخاصة.",
+      errorHeading: "حدث خطأ ما.",
+      errorBody:
+        "لم يُرسَل الطلب. حاول مرة أخرى، أو راسلنا مباشرة على hello@trumandate.com.",
+      sovereigntyEyebrow: "النشر وسيادة البيانات",
+      sovereigntyBody: "استضافة سيادية داخلية أو سحابية",
     },
   },
 };

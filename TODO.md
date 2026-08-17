@@ -312,3 +312,85 @@ and will be addressed as the pages that touch them get built (P2 onward).
   than transcriptions (spec §5). The Arabic adds a second question to that
   review — whether the real Arabic UI mirrors these surfaces at all, and
   whether its own column order and labels match what is drawn here.
+
+## From P7 (`/contact`, both languages)
+
+- ~~**Formspree endpoint is a placeholder.**~~ Still a placeholder value
+  (`.env`'s `PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/placeholder`) —
+  carried from P1, now actually wired into `ContactForm.astro`'s `action`
+  attribute and `scripts/contactForm.ts`'s `fetch` call (both read the same
+  env var, so there is exactly one place to change before launch). Replace it
+  with the real endpoint before launch; nothing else in the form needs to
+  change when that happens.
+- ~~**Contact email is a placeholder, not wired into any page yet.**~~
+  Resolved at P7: `hello@trumandate.com` (BUILD_FLAGS default) now appears as
+  a real `mailto:` link under the lede on `/contact`, both languages
+  (`contact.emailNote`, `ContactPage.astro`). Still the placeholder address —
+  replace it at launch alongside the Formspree endpoint above.
+- **The deployment-and-data-sovereignty band ships with two verbatim lines,
+  not the three `trumandate-product-pages.md` describes**
+  (`SovereigntyBand.astro`). Only two sourced lines exist anywhere in the
+  brief or the product-pages doc: the fourth "what you want to see" option
+  ("Deployment and data sovereignty") as the band's frame, and the Fit-section
+  chip ("Sovereign on-premise or cloud") as its one line of substance. No
+  third line is invented to round the count out — per this build's own
+  instruction, that gap is logged here rather than papered over with
+  Claude-Code-written marketing copy. Spec §5A's own candidate for a third
+  element — "any held certification marks (ISO 27001 and similar)... contact
+  page only" — is exactly this objection's natural complement, but
+  `public/vendor/iso-27001.svg` doesn't exist yet (carried from P1's vendor-SVG
+  TODO item below). Revisit the band once either real copy or that asset
+  exists.
+- **"What you want to see" is built as four radio buttons, not the select
+  element the brief's own prototype (`docs/trumandate-home.html`) used.** The
+  content brief just says "options" without naming a control type. Radios
+  keep every option visibly readable without a click (matching the site's
+  "no hidden menus" plainness elsewhere — `ObjectiveRecord.astro`'s hairline
+  rows, not a dropdown) and degrade identically with JavaScript disabled.
+  Judgement call, not a defect; a design review could reasonably prefer the
+  select.
+- **Interest option values are stable English keys**
+  (`full-walkthrough`/`strategy-kpi-cascade`/`benefits-realisation`/
+  `deployment-sovereignty`), independent of `lang`, so a Formspree submission
+  is legible regardless of which language the visitor filled the form in.
+  Judgement call, logged here and in BUILD_FLAGS.md.
+- **The honeypot field is named `_gotcha`**, Formspree's own documented
+  honeypot convention — chosen specifically because it means the no-JS POST
+  path is ALSO protected (Formspree discards any submission with that field
+  filled, server-side, with no script involved), not just the JS-enabled
+  path, which `scripts/contactForm.ts` additionally short-circuits
+  client-side as a belt-and-braces measure.
+- **All contact-page validation, submission-status and honeypot copy is
+  invented** (no line of it is in the content brief): the two error messages,
+  the error-summary heading, the success/failure banner text, the honeypot's
+  visually-hidden label, and the "prefer email" line wiring in the placeholder
+  address. Written directly in each language per BUILD_FLAGS' "written, not
+  machine-translated" rule, the same treatment `home.stageGate` and
+  `fragment.*` already got. Full list in `i18n/types.ts`'s `contact` doc
+  comment.
+- **`tailwind.config.mjs` gained one theme extension**: `extend.aria.invalid
+  = 'invalid="true"'`. Tailwind's own default `aria` variant map (busy,
+  checked, disabled, expanded, hidden, pressed, readonly, required, selected)
+  doesn't include `invalid`, so `aria-invalid:border-red` — the field-invalid
+  visual state `FormField.astro` needs, always paired with the field's own
+  error text, never the only signal — silently failed to compile until this
+  was added (found by grepping the compiled CSS for the literal selector, not
+  by trusting the class name looked right — see known-issues.md's P7 section
+  for the full story, including a red herring in that investigation).
+- **The header's two-line "Request a walkthrough" CTA (carried from P1/P2,
+  still open per P6/P6-AR) reproduces on `/contact` too, in both languages.**
+  Not introduced here — `Header.astro` was not touched this prompt — but
+  visible in all four P7 rest-state screenshots. Still a `Header.astro` fix,
+  still out of scope for this prompt.
+- **No WebKit-specific verification of `/contact`.** Same constraint carried
+  from P4–P6-AR: the browser MCP available this session is Chromium-bound.
+  This page has no pin, no scrub and no fragment wipe (spec §6: "Form only"),
+  so the historical Safari pinned-section risk doesn't apply here, but the
+  custom validation JS (event handling, `FormData`, `fetch`) is still worth a
+  real Safari pass before launch.
+- **A clean throttled (Slow 4G + 4× CPU) LCP re-measure on an idle machine is
+  still owed**, same carried item as P6/P6-AR — this session's Fast 4G,
+  no-CPU-throttle numbers (`/en/contact` 323–344 ms, `/ar/contact` 351 ms,
+  CLS 0.00 on both) are a same-session comparison against the other routes
+  measured the same way this session, not a substitute for the heavier
+  profile.

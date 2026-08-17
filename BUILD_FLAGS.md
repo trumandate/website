@@ -311,6 +311,50 @@ Log every such choice under "Decisions taken" below.
   guess is wrong and would silently send every product-page toggle back to the
   home page — the exact fallback this change exists to delete.
 
+- 2026-08-17 (P7): The deployment-and-data-sovereignty band on `/contact`
+  ships with TWO verbatim lines, not the "three-line band"
+  `trumandate-product-pages.md` describes — no third line exists anywhere in
+  the brief or that doc, only a shape ("three-line") with no text behind it.
+  Per this build's own instruction ("if no verbatim copy exists for it, add a
+  TODO rather than writing marketing copy") and the ambiguity order's "show
+  less rather than more", the band uses only what's sourced (the fourth
+  interest option as its frame, the Fit-section chip as its body) and the gap
+  is logged in TODO.md instead of a third sentence Claude Code wrote.
+- 2026-08-17 (P7): `form.noValidate` is set at RUNTIME by
+  `scripts/contactForm.ts`, never in the static markup. A JS-disabled reader
+  therefore keeps the browser's own `required`/`type="email"` constraint
+  validation as the only enforcement layer for the plain `<form action
+  method="POST">` fallback (spec §6's own line); a JS-enabled reader gets
+  `noValidate` flipped on before any submit fires, so the custom
+  `role="alert"` summary + `aria-describedby`/`aria-invalid` pattern fully
+  replaces the browser's native bubble UI instead of racing it. Chosen over
+  a static `novalidate` (which would have left JS-disabled submissions
+  completely unvalidated) or leaving native validation on for JS-enabled
+  readers too (which pre-empts the `submit` event on the first invalid
+  field, so the custom pattern would simply never run).
+- 2026-08-17 (P7): Honeypot field named `_gotcha` — Formspree's own
+  documented honeypot convention, chosen specifically because it protects the
+  no-JS POST path too (Formspree drops any submission with that field filled,
+  server-side), not only the JS-enabled path that
+  `scripts/contactForm.ts` additionally short-circuits client-side.
+- 2026-08-17 (P7): "What you want to see" built as four radio buttons, not a
+  `<select>` (the content brief's prototype, `docs/trumandate-home.html`,
+  used a select; the brief itself just says "options"). Radios keep every
+  option visible without a click, matching the site's existing "no hidden
+  menus" plainness, and need no extra work to keep working with JavaScript
+  disabled. Interest values are stable English keys independent of `lang`
+  (`full-walkthrough`, `strategy-kpi-cascade`, `benefits-realisation`,
+  `deployment-sovereignty`), a separate judgement call so a Formspree
+  submission stays legible regardless of which language the visitor used.
+- 2026-08-17 (P7): `tailwind.config.mjs` gained `extend.aria.invalid =
+  'invalid="true"'`. Tailwind's own default `aria` variant map (busy,
+  checked, disabled, expanded, hidden, pressed, readonly, required, selected)
+  has no `invalid` entry, so `FormField.astro`'s `aria-invalid:border-red` —
+  the field-invalid visual state, always paired with the field's own error
+  text per spec §9's error-identification rule, never the only signal —
+  silently compiled to nothing until this was added. Full investigation
+  (including a red herring) in known-issues.md's P7 section.
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)

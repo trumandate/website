@@ -1,0 +1,22 @@
+---
+// /en/contact — "Request a walkthrough" (P7). Content brief §7, verbatim
+// fields and lede copy; the honeypot, validation and submission-status
+// copy are invented per BUILD_FLAGS' "written, not machine-translated" rule
+// (see i18n/types.ts's `contact` doc comment for the full list).
+//
+// Structure is not this file's to choose — ContactPage.astro owns it, the
+// same "one shared skeleton, lang prop only" pattern ProductPage.astro
+// already established for /strategy, /execution and /benefits.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactPage from "../../components/contact/ContactPage.astro";
+
+const lang = "en" as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Request a walkthrough — TruMandate"
+  description="See TruMandate against your own portfolio, not a demo dataset. Send a few details and we will schedule a walkthrough."
+>
+  <ContactPage lang={lang} />
+</BaseLayout>

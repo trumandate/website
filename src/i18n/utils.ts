@@ -60,12 +60,19 @@ export function useTranslations(lang: Language) {
  * As of P6-AR that is the home page and all three product pages: the Arabic
  * copy was approved and written, so `/en/strategy` ↔ `/ar/strategy` and its
  * two siblings are now straight locale swaps rather than fallbacks to the
- * Arabic home page. `/contact` is P7 and lands in both languages at once.
+ * Arabic home page. `/contact` (P7) lands in both languages in the same
+ * prompt, so it joins the set immediately rather than waiting a round trip.
  */
 // Suffixes are normalised without a trailing slash (the home page is the one
 // exception, since its suffix is nothing at all) — see `altUrl` below, which
 // filters empty segments out before joining.
-const pairedRoutes = new Set(["/", "/strategy", "/execution", "/benefits"]);
+const pairedRoutes = new Set([
+  "/",
+  "/strategy",
+  "/execution",
+  "/benefits",
+  "/contact",
+]);
 
 /**
  * Swaps the leading /en/ or /ar/ path segment for the target language, keeping

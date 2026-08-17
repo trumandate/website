@@ -1,0 +1,77 @@
+---
+// ContactPage.astro — `/contact`'s own shared skeleton (P7), the same
+// "compose it once, both languages pass `lang`" pattern ProductPage.astro
+// established for the three product pages (BUILD_FLAGS' "keep one shared
+// component rather than a variant"). Three sections:
+//
+//   1. The question — eyebrow, heading and sub, content brief §7 verbatim,
+//      plus the placeholder contact email wired in per this build's own
+//      instruction (BUILD_FLAGS default; TODO.md).
+//   2. The form — ContactForm.astro, in full.
+//   3. The sovereignty band — SovereigntyBand.astro; see its own header
+//      comment for what is and is not verbatim here.
+//
+// No fragment, no AI moment: spec §6 is explicit ("Form only, no product
+// imagery, no AI") and spec §4's per-page AI-moment table lists "Contact:
+// none. Do not put AI in the form." No pin, no scrub, no count-up — same
+// motion posture as the three product pages (section reveal + header rule
+// only), because a contact form has nothing that should look alive while a
+// reader is trying to fill it in.
+import Section from "../layout/Section.astro";
+import Reveal from "../ui/Reveal.astro";
+import Eyebrow from "../type/Eyebrow.astro";
+import Display from "../type/Display.astro";
+import Lede from "../type/Lede.astro";
+import ContactForm from "./ContactForm.astro";
+import SovereigntyBand from "./SovereigntyBand.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+// The one wired-in mailto (BUILD_FLAGS default, `hello@trumandate.com`,
+// placeholder — TODO.md). `contact.emailNote` is plain translated prose in
+// both languages with the address embedded verbatim in Latin script
+// (matching the brand-name rule: TruMandate itself stays Latin in Arabic
+// copy too), so this only turns that literal substring into a real
+// `mailto:` link rather than hand-authoring a second, HTML-bearing string
+// per language.
+const emailNoteHtml = t("contact.emailNote").replace(
+  "hello@trumandate.com",
+  '<a href="mailto:hello@trumandate.com" class="text-paper underline underline-offset-4 hover:text-accent">hello@trumandate.com</a>',
+);
+---
+
+<Section>
+  <Reveal as="div">
+    <Eyebrow>{t("contact.eyebrow")}</Eyebrow>
+
+    <Display as="h1" class="mt-4 max-w-measure-head">
+      {t("contact.heading")}
+    </Display>
+
+    <Lede class="mt-6">{t("contact.sub")}</Lede>
+
+    <p
+      class="mt-4 max-w-measure text-small font-light text-muted"
+      set:html={emailNoteHtml}
+    />
+  </Reveal>
+</Section>
+
+<Section tight>
+  <div class="max-w-measure">
+    <ContactForm lang={lang} />
+  </div>
+</Section>
+
+<Section tight>
+  <Reveal as="div">
+    <SovereigntyBand lang={lang} />
+  </Reveal>
+</Section>

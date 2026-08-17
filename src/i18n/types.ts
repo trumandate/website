@@ -194,6 +194,62 @@ export interface UiStrings {
       todayLabel: string;
     };
   };
+  /**
+   * `/contact` (P7). Fields, options and the three verbatim lede lines are
+   * content brief §7, unedited. Everything else here — the email note, the
+   * honeypot's decorative label, the validation/submission-status copy and
+   * the sovereignty band's frame — has no brief source, so it is written per
+   * BUILD_FLAGS' "written, not machine-translated" rule, exactly like
+   * `home.stageGate` and `fragment.*`.
+   */
+  contact: {
+    eyebrow: string;
+    heading: string;
+    sub: string;
+    /** Wires the placeholder contact email (BUILD_FLAGS default,
+     * `hello@trumandate.com`) into the page per P7's own build list — not a
+     * brief line, kept to one plain sentence rather than invented marketing
+     * copy. */
+    emailNote: string;
+    nameLabel: string;
+    orgLabel: string;
+    emailLabel: string;
+    interestLegend: string;
+    interestOption1: string;
+    interestOption2: string;
+    interestOption3: string;
+    interestOption4: string;
+    messageLabel: string;
+    /** Visually hidden (aria-hidden) — decorative only; a real `<label>`
+     * exists because the field is real markup, but no assistive-technology
+     * user ever reaches it. */
+    honeypotLabel: string;
+    /** Submit button's text while the fetch is in flight. */
+    submittingLabel: string;
+    requiredError: string;
+    emailError: string;
+    /** Heading of the assertive, focus-moved error summary. */
+    errorSummaryHeading: string;
+    successHeading: string;
+    successBody: string;
+    /** Generic submission failure (network error, non-2xx response) — distinct
+     * from the per-field validation errors above. */
+    errorHeading: string;
+    errorBody: string;
+    /**
+     * The deployment-and-data-sovereignty band (trumandate-product-pages.md:
+     * "a three-line band that appears once on the home page and once on
+     * /contact"). Only two of the described three lines exist verbatim
+     * anywhere in the source material — this phrase (content brief §7's own
+     * fourth interest option) as the band's frame, and the Fit-section chip
+     * below as its one line of substance. No third line is invented to round
+     * the count out to three; see TODO.md.
+     */
+    sovereigntyEyebrow: string;
+    /** Content brief §6's Fit-section chip, verbatim — reused here as the
+     * band's one sourced line of substance. */
+    sovereigntyBody: string;
+  };
 }
 
 export type UiDictionary = Record<Language, UiStrings>;

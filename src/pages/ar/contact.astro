@@ -1,0 +1,19 @@
+---
+// /ar/contact — "تواصل" (P7). Same ContactPage.astro skeleton as
+// /en/contact; content brief §7's Arabic is verbatim, the invented strings
+// (honeypot, validation, submission status) are written directly in Arabic
+// per BUILD_FLAGS rather than translated from the English sentences — see
+// i18n/types.ts's `contact` doc comment and i18n/ui.ts's `ar.contact` block.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactPage from "../../components/contact/ContactPage.astro";
+
+const lang = "ar" as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="اطلب عرضاً توضيحياً — TruMandate"
+  description="شاهد TruMandate على محفظتك أنت، لا على بيانات تجريبية. أرسل بضعة تفاصيل وسنحدد موعداً للعرض."
+>
+  <ContactPage lang={lang} />
+</BaseLayout>

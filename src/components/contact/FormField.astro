@@ -1,0 +1,85 @@
+---
+// FormField.astro — one text/email/textarea field for ContactForm.astro:
+// label, native input/textarea, and a permanently-rendered (but empty at
+// rest) error paragraph.
+//
+// Accessibility pattern (P7): `aria-describedby` ties the field to its own
+// error paragraph (announced by AT when the field receives focus, or on
+// re-focus after a failed submit), `aria-invalid` is toggled by
+// scripts/contactForm.ts, and the paragraph keeps a reserved `min-height` at
+// ALL times — including empty — so text arriving after validation never
+// pushes any field below it (CLAUDE.md: "keep layout stable (no CLS when
+// they appear)"). The message text itself renders in `text-paper` (14.96:1
+// on ink, verified — see the contrast note in ContactForm.astro), not `red`
+// (4.42:1 on ink, i.e. under the 4.5:1 AA floor for normal-size text): the
+// small red dot beside it is the colour cue, the paper-coloured text is what
+// actually carries the meaning, matching RagDot.astro's own "colour is never
+// the only signal" pattern.
+//
+// Native `required`/`type="email"` stay on the element regardless of
+// JavaScript — see ContactForm.astro's comment on `form.noValidate` for why
+// this is what keeps a JS-disabled submission validated at all.
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: "text" | "email" | "textarea";
+  required?: boolean;
+  autocomplete?: string;
+}
+
+const {
+  id,
+  name,
+  label,
+  type = "text",
+  required = false,
+  autocomplete,
+}: Props = Astro.props;
+
+const errorId = `${id}-error`;
+---
+
+<div class="contact-field">
+  <label for={id} class="text-small font-semi text-paper">
+    {label}
+    {required && (
+      <span aria-hidden="true" class="text-muted">
+        {" "}
+        *
+      </span>
+    )}
+  </label>
+
+  {
+    type === "textarea" ? (
+      <textarea
+        id={id}
+        name={name}
+        rows={4}
+        required={required}
+        autocomplete={autocomplete}
+        aria-describedby={errorId}
+        aria-invalid="false"
+        class="mt-2 w-full resize-y border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition-colors duration-state ease-standard placeholder:text-muted aria-invalid:border-red focus:border-accent"
+      />
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        autocomplete={autocomplete}
+        aria-describedby={errorId}
+        aria-invalid="false"
+        class="mt-2 w-full border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition-colors duration-state ease-standard placeholder:text-muted aria-invalid:border-red focus:border-accent"
+      />
+    )
+  }
+
+  <p
+    id={errorId}
+    data-field-error
+    class="mt-2 min-h-[1.3em] text-small font-light text-paper"
+  ></p>
+</div>

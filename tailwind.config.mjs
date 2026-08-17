@@ -93,6 +93,20 @@ export default {
     },
 
     extend: {
+      // Tailwind's own default `aria` variant map (theme, not extend, so it's
+      // inherited from the preset since this file never redefines the key
+      // wholesale) covers busy/checked/disabled/expanded/hidden/pressed/
+      // readonly/required/selected — not `invalid`. P7's contact-form fields
+      // need `aria-invalid:border-red` to reflect validation state visually
+      // (scripts/contactForm.ts toggles the attribute; the colour is always
+      // paired with the field's own error text, never the only signal — spec
+      // §9's WCAG contrast/error-identification rule), so the one missing
+      // variant is added here rather than hand-writing an attribute-selector
+      // in a component `<style>` block.
+      aria: {
+        invalid: 'invalid="true"',
+      },
+
       maxWidth: {
         content: "1180px", // spec §3, the one wrapper width
         measure: "56ch", // lede

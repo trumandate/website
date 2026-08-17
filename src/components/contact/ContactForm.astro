@@ -1,0 +1,183 @@
+---
+// ContactForm.astro — content brief §7's fields, in the order it lists them,
+// plus the honeypot and the two ARIA status regions scripts/contactForm.ts
+// drives. Shared by both /en/contact and /ar/contact (BUILD_FLAGS' "keep one
+// shared component" bias) — only `lang` differs between the two call sites.
+//
+// Posts to Formspree via the `action` attribute (spec §6's own line: "Posts
+// to Formspree with fetch"), reading the endpoint from
+// `PUBLIC_FORMSPREE_ENDPOINT` (BUILD_FLAGS default; `.env`'s placeholder
+// value ships as-is, logged in TODO.md). The `action` attribute is not
+// decorative: it is the entire submission path for a reader with JavaScript
+// disabled, since `<form action method>` needs no script to POST. See
+// scripts/contactForm.ts for how the two paths (native POST vs. fetch)
+// share one endpoint without duplicating it.
+//
+// Interest values (`full-walkthrough`, `strategy-kpi-cascade`,
+// `benefits-realisation`, `deployment-sovereignty`) are stable English keys
+// independent of `lang`, so the same Formspree submission is legible
+// regardless of which language the visitor filled the form in — an
+// implementation judgement call, not brief content (BUILD_FLAGS-style
+// decision, logged there).
+import FormField from "./FormField.astro";
+import Button from "../ui/Button.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+const interestOptions = [
+  { value: "full-walkthrough", label: t("contact.interestOption1") },
+  { value: "strategy-kpi-cascade", label: t("contact.interestOption2") },
+  { value: "benefits-realisation", label: t("contact.interestOption3") },
+  { value: "deployment-sovereignty", label: t("contact.interestOption4") },
+];
+---
+
+{/* No static `novalidate`: scripts/contactForm.ts sets `form.noValidate =
+    true` at runtime, once it has actually loaded and can take over
+    validation with the custom ARIA pattern below. A JS-disabled reader never
+    runs that line, so the browser's own `required`/`type="email"` constraint
+    validation (still present on every field regardless of script state)
+    stays the enforcement layer for the plain-POST fallback — this is the one
+    property "the form should degrade to a normal POST" depends on for
+    validated, not just delivered, submissions. */}
+<form
+  id="contact-form"
+  data-contact-form
+  action={import.meta.env.PUBLIC_FORMSPREE_ENDPOINT}
+  method="POST"
+>
+  {/* Assertive, focus-moved status region for BOTH a failed-validation
+      summary and the post-submit success/error result. One region, not two:
+      each state fully replaces the previous one's content, and `role="alert"`
+      re-announces on every content change regardless of what it says.
+      `hidden` at rest — its later appearance is a direct, synchronous result
+      of the reader's own submit click, which the CLS metric explicitly
+      excludes (`hadRecentInput`), so this doesn't cost the budget the way an
+      unrelated layout jump would. Verified in the P7 QA pass. */}
+  <div
+    id="form-status"
+    data-form-status
+    role="alert"
+    tabindex="-1"
+    hidden
+    class="mb-8 rounded-control border-y border-e border-s-marker border-hairline bg-jade p-5"
+  >
+  </div>
+
+  <div class="grid grid-cols-1 gap-x-gutter gap-y-8 lg:grid-cols-2">
+    <FormField
+      id="contact-name"
+      name="name"
+      label={t("contact.nameLabel")}
+      required
+      autocomplete="name"
+    />
+    <FormField
+      id="contact-organisation"
+      name="organisation"
+      label={t("contact.orgLabel")}
+      required
+      autocomplete="organization"
+    />
+    <FormField
+      id="contact-email"
+      name="email"
+      type="email"
+      label={t("contact.emailLabel")}
+      required
+      autocomplete="email"
+    />
+  </div>
+
+  {/* The radio group is one "field" for the aria-describedby/aria-invalid
+      pattern above — scripts/contactForm.ts toggles this fieldset's
+      aria-invalid, not each radio's. Each radio still gets its own static
+      aria-invalid="false" below, purely to suppress Chrome's own inference
+      (an unauthored, required, unchecked radio is exposed as invalid="true"
+      in the accessibility tree from the moment the page loads, driven by
+      native constraint validity rather than anything this page's script
+      does) — the same premature-before-any-attempt state FormField.astro's
+      text/email inputs already avoid with their own static aria-invalid. */}
+  <fieldset
+    id="interest-group"
+    class="mt-8 border-0 p-0"
+    data-field
+    aria-describedby="interest-error"
+    aria-invalid="false"
+  >
+    <legend class="text-small font-semi text-paper">
+      {t("contact.interestLegend")}
+      <span aria-hidden="true" class="text-muted"> *</span>
+    </legend>
+
+    <div class="mt-3 flex flex-col gap-3">
+      {
+        interestOptions.map((option) => (
+          <label class="flex items-center gap-3 text-body font-light text-paper">
+            <input
+              type="radio"
+              name="interest"
+              value={option.value}
+              required
+              aria-invalid="false"
+              class="size-4 shrink-0 accent-accent"
+            />
+            {option.label}
+          </label>
+        ))
+      }
+    </div>
+
+    <p
+      id="interest-error"
+      data-field-error
+      class="mt-2 min-h-[1.3em] text-small font-light text-paper"
+    ></p>
+  </fieldset>
+
+  <div class="mt-8">
+    <FormField
+      id="contact-message"
+      name="message"
+      type="textarea"
+      label={t("contact.messageLabel")}
+    />
+  </div>
+
+  {/* Formspree's own honeypot convention: any submission with `_gotcha`
+      filled is silently discarded server-side, which is what keeps this
+      working with JavaScript disabled too (scripts/contactForm.ts adds a
+      matching client-side check only as a belt-and-braces measure). Hidden
+      from sight (`visually-hidden`) AND from assistive technology
+      (`aria-hidden`) AND from the tab order (`tabindex="-1"`) AND from
+      autofill (`autocomplete="off"` plus a name no browser recognises) — a
+      sighted keyboard or screen-reader user can never reach or perceive it,
+      only a bot that fills every field it can find in the raw HTML. */}
+  <div aria-hidden="true" class="visually-hidden">
+    <label for="contact-gotcha">{t("contact.honeypotLabel")}</label>
+    <input
+      id="contact-gotcha"
+      type="text"
+      name="_gotcha"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
+  <input type="hidden" name="_subject" value="TruMandate — walkthrough request" />
+
+  <div class="mt-10">
+    <Button type="submit" class="min-w-[12rem]">
+      <span data-submit-label>{t("cta.primary")}</span>
+    </Button>
+  </div>
+</form>
+
+<script src="../../scripts/contactForm.ts"></script>
