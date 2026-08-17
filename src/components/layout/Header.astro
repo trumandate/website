@@ -13,6 +13,15 @@
 // in tokens rather than the deck's own hexes: "Tru" in `accent`, "Mandate"
 // in the heading colour for this (dark) surface, `paper`. The primary CTA
 // uses the shared Button.astro (built at P2, TODO.md).
+//
+// Wordmark text is `hidden sm:inline` (P8 fix, known-issues.md): at 375 the
+// logomark + language toggle + a non-wrapping, non-shrinking CTA (Button's
+// own P8 fix) don't all fit alongside the full "TruMandate" text lockup in
+// either language — measured ~57px short in English, ~37px short in Arabic.
+// Below the `sm` breakpoint (640px, a stock Tailwind default, no bespoke
+// screen added) only the icon shows; the link's `aria-label` already carries
+// the full brand name for assistive tech regardless of what's visually
+// rendered, so this is a display-only change, not a content change.
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
 import Nav from "./Nav.astro";
@@ -45,7 +54,7 @@ const t = useTranslations(lang);
         <rect x="24" y="64" width="22" height="12" rx="6" class="fill-accent"
         ></rect>
       </svg>
-      <span class="font-sans text-h3 font-semi tracking-brand">
+      <span class="hidden font-sans text-h3 font-semi tracking-brand sm:inline">
         <span class="text-accent">Tru</span><span class="text-paper"
           >Mandate</span
         >

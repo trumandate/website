@@ -11,6 +11,16 @@
 // token... reads as a deliberate state change rather than a brightness
 // nudge"). Ghost is the same idea at rest: a hairline outline rather than a
 // filled surface, so two CTAs never compete for attention.
+//
+// `whitespace-nowrap shrink-0` (P8 fix, known-issues.md P1/P2/P6/P6-AR/P7):
+// the header's CTA wrapped to two lines because as a bare flex-item it
+// defaulted to `flex-shrink: 1`, so any flex-layout rounding (a sub-pixel
+// deficit at 1440, real crowding against the logo lockup and language toggle
+// at 375) shrank the anchor a hair under its own text's single-line width and
+// forced a word onto a second line. Every Button instance now refuses to
+// shrink or wrap; in Hero's `flex flex-wrap` CTA row this means a whole
+// button drops to the next line at narrow widths rather than its own label
+// splitting mid-phrase.
 interface Props {
   variant?: "primary" | "ghost";
   href?: string;
@@ -26,7 +36,7 @@ const {
 }: Props = Astro.props;
 
 const base =
-  "inline-flex items-center justify-center rounded-control px-4 py-2 text-small font-semi transition-colors duration-state ease-standard";
+  "inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control px-4 py-2 text-small font-semi transition-colors duration-state ease-standard";
 
 const variants: Record<NonNullable<Props["variant"]>, string> = {
   primary:

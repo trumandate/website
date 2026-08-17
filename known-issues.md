@@ -500,3 +500,112 @@ P6-AR sections above, reproduced without `Header.astro` having been touched
 this prompt; visible in all four P7 rest-state screenshots
 (`p7-contact-{en,ar}-{375,1440}.png`). Still out of scope for a
 form-and-copy prompt.
+
+---
+
+## P8
+
+**The header CTA's two-line wrap (open since P1/P2, reproduced every prompt
+through P7) was root-caused and fixed.** It was never purely a crowding
+problem: at 1440 — plenty of layout room — the anchor still wrapped, by
+about 1.5px, because a bare flex item defaults to `flex-shrink: 1` and the
+browser's shrink algorithm trimmed it a hair under its own text's one-line
+width. At 375 the same default shrink met genuine crowding: logo lockup +
+language toggle + a non-shrinking "Request a walkthrough" needs ~432px
+against a 375px viewport, 56px short in English (36px short in Arabic,
+which reads longer but measures narrower once actually laid out). Fixed
+with `shrink-0 whitespace-nowrap` added to `Button.astro`'s base classes
+(every Button on the site, not a one-off override) and the header wordmark
+text set to `hidden sm:inline` (stock Tailwind breakpoint; `aria-label`
+still carries "TruMandate" for assistive tech regardless of what's visually
+shown). Verified one line, `scrollWidth === clientWidth`, at 375/768/1440 in
+both languages — see QA-REPORT.md §1 for the full numbers.
+
+**`StageGateQueue.astro`'s amber dot had no accessible status word — the
+one RAG-colour gap on the site (WCAG 1.4.1).** Every other RAG dot on the
+site states its status in text somewhere: `RagDot.astro` (used in
+`ObjectiveRecord.astro`) pairs every dot with a `visually-hidden` word;
+`KpiCard.astro`'s dot is covered by its own `aria-label` ("Status: at
+risk."); `InitiativeRows.astro`'s three dots each get their status word
+built into that row's slice of the `aria-label` sentence. `StageGateQueue`'s
+dot — styled identically, same amber token — had none of that; its
+`aria-label` described the gate's facts (owner, due date, queue depth) but
+never the status colour was carrying. Fixed by appending the same shared
+`ragStatus.atRisk` string `RagDot.astro` already uses (`i18n/ui.ts`, both
+languages) to this fragment's `aria-label` computation — no invented copy.
+Verified in the built HTML: EN `"...Status: at risk"`, AR `"...الحالة: في
+خطر"`.
+
+**A real, unfixed spec-vs-spec conflict found via Lighthouse, not visual
+inspection: the home page chain's rest-state opacity fails AA contrast, and
+the failing value is a number spec §7 states explicitly.** Lighthouse
+accessibility scored 96 (not 100) on both `/en/` and `/ar/`, 100 on every
+other route. The cause: `ChainLink.astro`'s copy dims to `opacity-rest`
+(0.40, `tailwind.config.mjs`) before its own scroll trigger fires — by
+design (`chain.ts`'s own comment: "the rest state... is applied
+imperatively... only once motion is confirmed safe does a node ever dim").
+On a fresh page load, every node below the one nearest the fold sits at
+that dimmed opacity simultaneously (found 10 Lighthouse violations: 5 nodes
+× {name, body}), and `text-paper`/`text-body` at 0.40 opacity over `ink`
+measures 3.49:1 / 2.92:1 by hand recomputation — both below the 4.5:1
+AA-normal floor (19.2px/16px text, neither qualifies as "large"). Spec §7
+names the value directly: *"each node's caption lifts from 40% to full
+opacity."* Spec §9 separately requires WCAG AA and Lighthouse accessibility
+100. These two requirements are mutually exclusive at this exact pairing
+and this exact opacity. Per CLAUDE.md's "if a spec contradicts the code,
+stop and say so. Do not silently pick one," this was **not** fixed by
+quietly nudging the opacity token — it's logged in TODO.md and
+QA-REPORT.md §4/§6 as a decision Piyush needs to make (raise
+`opacity.rest` to ≈0.49–0.50, amend spec §7's number, or accept the
+transient pre-scroll state as a stated exception). Confined entirely to the
+home route, both languages — `grep -rn opacity-rest src` shows the class
+used nowhere else.
+
+**Full contrast audit, both the DOM-pair extraction and PLAN.md §4's two
+flagged close pairs, recomputed independently this session.** 19 real
+`color`/`background-color` pairs extracted programmatically from the built
+`/en/` page (walked every text-carrying element, deduped) all pass AA, most
+with wide margins. PLAN.md §4's two flagged pairs recomputed by hand against
+the WCAG relative-luminance formula: `accent` on `jade` measures 4.52:1
+(PLAN.md said 4.6:1), `muted` on `jade` measures 4.79:1 (PLAN.md said 4.8:1)
+— both confirmed passing AA-normal with zero margin, matching PLAN.md's own
+"will not survive a token nudge" conclusion almost exactly (the small
+deltas are rounding, not a discrepancy). SVG-fragment text (KpiCard,
+InitiativeRows, BenefitCurve, StageGateQueue) paints via `fill`, which
+`getComputedStyle().color` cannot see, so those were checked directly
+against their token values instead — all pass, 5.5:1–16.7:1.
+
+**WebKit verification actually ran this session** — every prior prompt
+(P4/P6/P6-AR/P7) recorded "no WebKit-specific verification was possible in
+this environment" because the Playwright MCP available was Chromium-bound
+with no engine-selection tool. This session drove real WebKit
+(`AppleWebKit/605.1.15 ... Version/26.5`) directly via `npx playwright`
+(installed to the npx cache only — never added to `package.json`), scripts
+written to the scratchpad, never the repo. Findings: the chain's
+`position: sticky` marker engages/releases correctly on both `/en/` and
+`/ar/` at 1440×900 (scrollY 1750→2500 EN, 1650→2300 AR), the GSAP
+ScrollTrigger scrub updates the count/name text correctly, language-toggle
+header geometry is pixel-identical EN vs AR at both 375 and 1440 across
+three route pairs, and all three Arabic fragment SVGs render RTL
+`text-anchor` correctly with no glyph mirroring or unintended clipping
+(`InitiativeRows`' row 4 extends past its own SVG box by design — that's
+the documented crop-signals-continuation behaviour, not a defect). Zero
+console errors across every WebKit check. No WebKit-specific defect found
+— the historical Safari pinned-section risk this check exists for did not
+reproduce.
+
+**Everything else verified clean.** `npm run build` (11 pages) and
+`npm run check` (62 files) both clean. Physical-direction and
+hex-outside-config greps: zero real hits, same pre-existing comment-prose
+matches as every prior section. Banned-marketing-word grep against the
+built English HTML (all 5 EN routes): zero hits. `/ar` preloads exactly 4
+font files (Arabic 300/600, Latin 300/600), never `plex-mono`, on every
+Arabic route. Curiosity-ledger fragment count: exactly one `data-fragment`
+SVG per product page (6/6 across both languages), exactly two fragment
+surfaces on home (`StageGateQueue` + `CommandCentreDim`, both languages).
+Zero console messages across all 10 routes in every condition tested (Fast
+4G, Slow 4G + 4× CPU, reduced motion, JS disabled). Zero horizontal overflow
+at 375/768/1440 on all 10 routes. LCP well inside spec §9's 2.0s budget
+everywhere — worst figure 466ms (`/ar/benefits`, Slow 4G + 4× CPU, 23% of
+budget); CLS 0.00 on every route, every run. Full numbers, the WebKit
+detail, and every manual-check result: `QA-REPORT.md`.

@@ -52,7 +52,18 @@ const { class: className, lang }: Props = Astro.props;
 const t = useTranslations(lang);
 const isAr = lang === "ar";
 
-const label = t("home.stageGate.ariaLabel");
+// P8 fix (WCAG 1.4.1 / spec §9): the amber dot beside the gate-4 label is a
+// RAG status indicator like every other RAG dot on the site, but unlike
+// KpiCard.astro's ("Status: at risk." is part of `fragment.kpiCard.ariaLabel`
+// itself) or InitiativeRows.astro's (the status word is built into its
+// per-row aria-label sentence), this fragment's aria-label named only the
+// gate's facts (owner, due date, queue depth) and never the status the dot
+// carries — colour alone conveyed it, the exact WCAG 1.4.1 gap RagDot.astro
+// exists to close elsewhere on the site. Appending the same shared
+// `ragStatus.atRisk` string RagDot.astro uses (i18n/ui.ts, both languages)
+// closes the gap with no invented copy: one dot, one status, stated once,
+// same word the rest of the site already uses for "amber".
+const label = `${t("home.stageGate.ariaLabel")} ${t("ragStatus.atRisk")}`;
 const labelClass = isAr ? "label-ar" : "label";
 const valueClass = isAr ? "value-ar" : "value";
 ---

@@ -256,11 +256,16 @@ and will be addressed as the pages that touch them get built (P2 onward).
   3,391 ms against the 1,137 ms recorded for it in known-issues.md, so the
   absolute figures are not comparable to the P4 baseline. Full detail and the
   same-session control numbers in known-issues.md's P6 section.
-- **The header's "Request a walkthrough" CTA wraps to two lines** at both 375
+- ~~**The header's "Request a walkthrough" CTA wraps to two lines** at both 375
   and 1440 (measured 63px tall against a 23.3px line-height). Pre-existing in
   `Header.astro` and reproduced on the untouched home page, so not introduced
   by P6, but it is visible in all six P6 screenshots and wants a
-  `whitespace-nowrap` or a shorter header label. Logged in known-issues.md.
+  `whitespace-nowrap` or a shorter header label. Logged in known-issues.md.~~
+  Resolved at P8: `Button.astro` gained `shrink-0 whitespace-nowrap` (every
+  Button site-wide, not just this one) and `Header.astro`'s wordmark text
+  is now `hidden sm:inline` (icon-only below 640px, `aria-label` unchanged).
+  Verified one line, no overflow, at 375/768/1440 in both languages. Full
+  root-cause writeup in QA-REPORT.md §1.
 
 ## From P6-AR (the three product pages in Arabic)
 
@@ -394,3 +399,27 @@ and will be addressed as the pages that touch them get built (P2 onward).
   CLS 0.00 on both) are a same-session comparison against the other routes
   measured the same way this session, not a substitute for the heavier
   profile.
+
+## From P8 (full verification pass)
+
+- **Home page chain-link rest-state contrast is a genuine spec-vs-spec
+  conflict, not fixed this pass.** Spec §7 states motion #1's rest state as
+  an exact number — "each node's caption lifts from 40% to full opacity" —
+  and at that value `text-paper`/`text-body` on `ink` measure 3.49:1 /
+  2.92:1, below spec §9's 4.5:1 AA-normal floor (Lighthouse accessibility 96
+  on `/en/` and `/ar/`, 100 on every other route). CLAUDE.md requires
+  stopping and surfacing a spec conflict rather than silently picking a
+  side, so this needs a design decision: raise `opacity.rest` (tailwind.config.mjs)
+  to roughly 0.49–0.50 (clears both text roles, breaks the literal "40%" in
+  spec §7), amend spec §7's number instead, or accept the transient
+  pre-scroll state as a stated exception (reduced-motion and JS-failure
+  readers never see it; a motion-safe reader only sees it briefly, on nodes
+  not yet scrolled to). Full numbers in QA-REPORT.md §4/§6.
+- **`<main id="main">` has no `tabindex="-1"`.** The skip link still works
+  correctly in Chromium (confirmed by reading `document.activeElement`
+  after `Tab`+`Enter`+`Tab`: focus lands on the first element inside
+  `<main>`, fully bypassing the header), but that relies on Chromium's
+  navigation-focus fallback rather than a spec-guaranteed target. Adding
+  `tabindex="-1"` to `<main>` in `BaseLayout.astro` would make the same
+  behaviour hold by contract rather than by browser-specific fallback, and
+  costs nothing (WCAG technique G1). Not verified in WebKit this pass.
