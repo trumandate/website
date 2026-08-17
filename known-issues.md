@@ -298,3 +298,106 @@ correctly gets 1rem/1.55/0em AND `#C6DAD3` simultaneously. Recorded here only
 because it looked like a real defect before the compiled output was checked;
 no action needed, and no future contributor should "fix" the apparent name
 collision.
+
+---
+
+## P6-AR
+
+**Nothing was found broken in the RTL work this prompt, and that is worth
+stating plainly**, because P5's equivalent section records two genuine bugs
+(the scoped-style `[dir="rtl"]` that could never match, and `text-anchor`
+changing meaning under an inherited direction). Both were avoided here by
+construction rather than by luck: every new `[dir="rtl"]` rule is written as
+`:global([dir="rtl"]) .class`, and every mirrored geometry states its own
+`direction` rather than inheriting one. The notes below are observations and
+accepted trade-offs, not defects.
+
+**Two direction-handling patterns now coexist in `components/fragments/`.**
+`StageGateQueue.astro` (P5) pins `direction: ltr` in both languages and flips
+each `text-anchor` by hand. `KpiCard.astro`, `InitiativeRows.astro` and
+`BenefitCurve.astro` (P6-AR) pin `ltr` for LTR pages and set `rtl` on the
+mirrored branch, letting `text-anchor: start`/`end` resolve logically. Both
+render correctly today. The newer pattern is strictly better for any label that
+mixes Arabic with digits: under a pinned-LTR paragraph the Arabic run is laid
+out to the LEFT of the number, so an Arabic reader's eye lands on the number
+first. `home.stageGate.dueValue` ("14 أغسطس") is exactly that kind of label, so
+StageGateQueue has a real (small, cosmetic) instance of the problem the newer
+pattern solves. Migration logged in TODO.md; not done in the same pass that
+introduced the second pattern, so that if the newer approach turns out to
+misbehave in Safari there is still one fragment on the old one to compare
+against.
+
+**The `/ar/execution` page shows Arabic-Indic and Western digits within one
+scroll.** Its AI card reads "المبادرة ٠٧ والمبادرة ٢١"; its fragment reads
+"الهدف 1.2". This is the home page's existing split (brief-verbatim
+Arabic-Indic in page copy and AI cards, Western in product surfaces per spec
+§8), applied consistently rather than a new inconsistency — but it is the kind
+of thing a reviewer notices and reports as a bug, so it is recorded here with
+its reasoning. See BUILD_FLAGS.md's P6-AR entry.
+
+**Arabic word counts run 12–20% below the English on all three routes** —
+`/strategy` 517 against 618, `/execution` 526 against 633, `/benefits` 549
+against 628, counting every piece of prose a reader gets including the
+fragments' aria-labels. Verified section by section that this is morphology and
+not omission: all nineteen content slots per page (eyebrow, headline, four
+argument paragraphs, two caption lines, fragment aria-label, AI eyebrow,
+heading, body, confidence, card title, card detail, gate buttons, audit line,
+handoff, CTA) are present in both languages, and the claims inside each were
+checked one by one against the approved English.
+
+**Curiosity-ledger grep, both languages.** `/ar/strategy`: تدرّج ×1, موزونة ×1,
+بأوزانها ×1 — all three inside the handoff sentence, nowhere else; وزن, ترجيح,
+مرجّح, محرر all ×0. `/ar/execution`: تُرفض بوابة ×1, in the handoff; the second
+رفض on the page is the SuggestionCard's own Reject control, which the English
+route also carries twice for the same reason; سير العمل, مسار الاعتماد,
+الموافقة, تصعيد all ×0 (the two توجيه hits are اللجنة التوجيهية, "the steering
+committee"). `/ar/benefits`: سجل المنافع ×1, in the handoff; the one إسناد hit
+is "إعادة إسناد ملكية المنفعة" on the AI card, which is the approved English's
+own "reassign benefit ownership" — ownership, not attribution logic; منطق and
+توزيع المنفعة ×0. The English control run gives the matching shape: cascade ×1
+and weight ×1 on `/en/strategy`, register ×1 on `/en/benefits`, Reject ×2 on
+`/en/execution`.
+
+**LCP and CLS, clean Fast 4G profile, no CPU throttle, production build served
+from `dist/` on port 4323** (the dev server on 4321 untouched), 375×812 mobile
+viewport. Arabic: `/ar/strategy` LCP 355 ms, `/ar/execution` 346 ms,
+`/ar/benefits` 340 ms. English siblings measured in the same session as
+controls: `/en/strategy` 334 ms, `/en/execution` 332 ms, `/en/benefits`
+336 ms. CLS 0.000 on all six. The Arabic routes run 4–21 ms slower, which is
+the extra font subset — `/ar` preloads four woff2 files against `/en`'s three
+— and every figure is an order of magnitude inside spec §9's 2.0 s budget.
+TTFB was 5–7 ms; 100% of LCP was render delay, and the LCP element on all six
+routes is the page's own `<h1>`, which is text and not a network fetch. The
+heavily-throttled (Slow 4G + 4× CPU) re-measure carried from P6 is still owed
+on an idle machine; these numbers are not a substitute for it, they are a
+same-session comparison between siblings, which is what the Arabic work
+actually needed.
+
+**Zero console errors on all three Arabic routes.** The one message seen all
+session was a 404 for `/favicon.svg` on the first navigation of the browser
+session — the pre-existing missing-favicon item from P1's TODO, cached by the
+browser for the rest of the session, which is why it appears once rather than
+per route. No failed resource requests of any other kind on any Arabic route.
+
+**Reduced motion verified on `/ar/benefits`**, by stubbing `matchMedia` before
+any script ran so `whenMotionSafe`'s reduce branch was the live one: all four
+`[data-reveal]` elements at `opacity: 1` and `transform: none`, the AI card
+resolved, the confidence bar at its full 69% CSS width with no residual scale,
+and the fragment's wipe mask at `translate(0)` with the fragment fully
+uncovered. That is the served end state, which is also what a JS failure
+produces — the contract CLAUDE.md asks for.
+
+**Physical-direction grep is clean.** The only three hits across `src/` are
+prose inside comments explaining why physical utilities are NOT used
+(`SuggestionCard.astro` ×2, `global.css` ×1), all pre-existing.
+
+**`/ar` still never fetches Plex Mono.** Confirmed on the built
+`/ar/strategy`: four font requests, all Plex Sans Arabic subsets. The three new
+fragments' Arabic branches set even their digit-only figure roles in Plex Sans
+for this reason — see BUILD_FLAGS.md's P6-AR entry.
+
+**The header CTA still wraps to two lines on the Arabic routes too.** Same
+pre-existing `Header.astro` issue recorded in the P6 section above; "اطلب
+عرضاً توضيحياً" wraps at 375 exactly as "Request a walkthrough" does. Visible in
+all three 375 screenshots. Still a `Header.astro` fix, still out of scope for a
+copy-and-pages prompt.

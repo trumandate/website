@@ -7,34 +7,51 @@
 // WITHHELD, and absent from this file by design: the gate workflow and the
 // approval routing. There is no gate column, no decision queue, no approver
 // name, no next-step arrow and no routing state anywhere in this fragment or
-// its aria-label — which is also why each row's secondary line names the
-// objective that funded it rather than the gate it currently sits at.
-// `/execution`'s handoff sentence is the only place on that page where a gate
-// decision is named.
+// its aria-label, in either language — which is also why each row's secondary
+// line names the objective that funded it rather than the gate it currently
+// sits at. `/execution`'s handoff sentence is the only place on that page
+// where a gate decision is named.
 //
 // The crop is vertical, not horizontal, because the ledger asks for "cropped
 // mid-list so the list clearly continues": the list container runs to y=290
 // and the viewBox stops at 206, so a fourth row is cut through its own text.
 // Three rows are fully readable, the fourth is visibly present and visibly
 // cut, and nothing draws a bottom edge that would let the eye read the list as
-// finished.
+// finished. That crop is horizontal-axis-neutral, so it survives the RTL
+// mirror untouched — the only thing mirroring changes here is the column
+// order.
 //
 // One row is red (spec §5 / the ledger). RAG reaches the reader three ways, so
 // colour never carries it alone (WCAG 1.4.1, spec §9): the dot's fill, the
-// progress bar's fill, and the status word spelled out in the aria-label.
+// progress bar's fill, and the status word spelled out in the aria-label — in
+// both languages, from i18n/ui.ts.
 //
 // Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
-// for the reasoning. RTL mirroring is not authored yet (no `/ar/execution`
-// until the English copy is approved); `direction: ltr` is pinned below so the
-// hand-computed coordinates keep their physical meaning either way. Logged in
-// TODO.md.
+// for the reasoning. RTL (P6-AR): every x becomes `460 - x`, rects
+// additionally subtracting their own width, and the progress bar's fill is
+// re-anchored to the track's inline-start (now right-hand) edge so it still
+// grows toward inline-end. See KpiCard.astro's header for why the mirrored
+// branch sets `direction: rtl` rather than pinning `ltr` and flipping every
+// `text-anchor` by hand.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
 interface Props {
   class?: string;
+  lang: Language;
 }
 
-const { class: className }: Props = Astro.props;
+const { class: className, lang }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
 
+const VIEW_W = 460;
 const BAR_TRACK = 94;
+const BAR_X = 306;
+/** Mirrored track origin: 460 - 306 - 94. The fill grows leftward from the
+ * track's right-hand edge (154), which is inline-start under RTL. */
+const BAR_X_AR = VIEW_W - BAR_X - BAR_TRACK;
+const BAR_END_AR = BAR_X_AR + BAR_TRACK;
 
 type Status = "on-track" | "at-risk" | "off-track";
 
@@ -45,9 +62,9 @@ const statusFill: Record<Status, string> = {
 };
 
 const statusWord: Record<Status, string> = {
-  "on-track": "on track",
-  "at-risk": "at risk",
-  "off-track": "off track",
+  "on-track": t("fragment.initiativeRows.onTrack"),
+  "at-risk": t("fragment.initiativeRows.atRisk"),
+  "off-track": t("fragment.initiativeRows.offTrack"),
 };
 
 const rows: {
@@ -57,28 +74,28 @@ const rows: {
   progress: number;
 }[] = [
   {
-    name: "Unified service portal",
-    objective: "Objective 1.2",
+    name: t("fragment.initiativeRows.row1Name"),
+    objective: t("fragment.initiativeRows.row1Objective"),
     status: "on-track",
     progress: 74,
   },
   {
-    name: "Records digitisation",
-    objective: "Objective 1.2",
+    name: t("fragment.initiativeRows.row2Name"),
+    objective: t("fragment.initiativeRows.row2Objective"),
     status: "at-risk",
     progress: 41,
   },
   {
-    name: "Legacy decommission",
-    objective: "Objective 3.1",
+    name: t("fragment.initiativeRows.row3Name"),
+    objective: t("fragment.initiativeRows.row3Objective"),
     status: "off-track",
     progress: 18,
   },
   // The fourth row is the crop, not a fourth reveal: the viewBox cuts through
   // it. Kept in the same array so its geometry cannot drift from the others'.
   {
-    name: "Shared identity rollout",
-    objective: "Objective 2.4",
+    name: t("fragment.initiativeRows.row4Name"),
+    objective: t("fragment.initiativeRows.row4Objective"),
     status: "on-track",
     progress: 66,
   },
@@ -87,13 +104,16 @@ const rows: {
 const ROW_TOP = 54;
 const ROW_HEIGHT = 44;
 
-const ariaLabel = `Portfolio initiative list, cropped. ${rows
+// Arabic uses its own comma (U+060C) as the list separator; English keeps the
+// Latin one. Same sentence shape, correct punctuation in each script.
+const sep = isAr ? "، " : ", ";
+const ariaLabel = `${t("fragment.initiativeRows.ariaLabelLead")} ${rows
   .slice(0, 3)
   .map(
     (row) =>
-      `${row.name}, ${row.objective}, ${statusWord[row.status]}, ${row.progress} per cent.`,
+      `${row.name}${sep}${row.objective}${sep}${statusWord[row.status]}${sep}${row.progress} ${t("fragment.initiativeRows.perCent")}.`,
   )
-  .join(" ")} A fourth row is cut off at the frame edge and the list continues past it.`;
+  .join(" ")} ${t("fragment.initiativeRows.ariaLabelTail")}`;
 ---
 
 <svg
@@ -113,21 +133,20 @@ const ariaLabel = `Portfolio initiative list, cropped. ${rows
       height="206"
     >
       <rect x="0" y="0" width="460" height="206" fill="black"></rect>
-      <rect
-        data-fragment-wipe
-        x="0"
-        y="0"
-        width="460"
-        height="206"
-        fill="white"></rect>
+      <rect data-fragment-wipe x="0" y="0" width="460" height="206" fill="white"
+      ></rect>
     </mask>
   </defs>
 
   <g mask="url(#initiative-rows-wipe-mask)">
     <rect width="460" height="206" class="fill-surface-deep"></rect>
 
-    <!-- The list container. Height 290 against a 206 viewBox: the bottom edge
-         is never drawn, so the list reads as continuing. -->
+    {
+      /* The list container. Height 290 against a 206 viewBox: the bottom edge
+        is never drawn, so the list reads as continuing. Its own geometry is
+        symmetric about the viewBox centre (8 + 444 + 8), so it needs no
+        mirrored variant. */
+    }
     <rect
       x="8"
       y="10"
@@ -137,54 +156,101 @@ const ariaLabel = `Portfolio initiative list, cropped. ${rows
       class="fill-surface stroke-hairline"
       stroke-width="1"></rect>
 
-    <text x="26" y="34" class="label fill-muted">Initiative</text>
-    <text x="232" y="34" class="label fill-muted">Status</text>
-    <text x="306" y="34" class="label fill-muted">Progress</text>
+    {
+      isAr ? (
+        <>
+          {/* Column headers mirrored: 460-26=434, 460-232=228, 460-306=154. */}
+          <text x="434" y="34" class="label-ar fill-muted">
+            {t("fragment.initiativeRows.initiativeHeader")}
+          </text>
+          <text x="228" y="34" class="label-ar fill-muted">
+            {t("fragment.initiativeRows.statusHeader")}
+          </text>
+          <text x="154" y="34" class="label-ar fill-muted">
+            {t("fragment.initiativeRows.progressHeader")}
+          </text>
+        </>
+      ) : (
+        <>
+          <text x="26" y="34" class="label fill-muted">
+            {t("fragment.initiativeRows.initiativeHeader")}
+          </text>
+          <text x="232" y="34" class="label fill-muted">
+            {t("fragment.initiativeRows.statusHeader")}
+          </text>
+          <text x="306" y="34" class="label fill-muted">
+            {t("fragment.initiativeRows.progressHeader")}
+          </text>
+        </>
+      )
+    }
 
-    <line x1="26" y1="46" x2="434" y2="46" class="stroke-hairline" stroke-width="1"
-    ></line>
+    {/* Symmetric about the viewBox centre — no mirrored variant needed. */}
+    <line
+      x1="26"
+      y1="46"
+      x2="434"
+      y2="46"
+      class="stroke-hairline"
+      stroke-width="1"></line>
 
     {
       rows.map((row, index) => {
         const top = ROW_TOP + index * ROW_HEIGHT;
+        const fill = (BAR_TRACK * row.progress) / 100;
         return (
           <>
-            <text x="26" y={top + 22} class="name fill-paper">
+            <text
+              x={isAr ? 434 : 26}
+              y={top + 22}
+              class={isAr ? "name-ar fill-paper" : "name fill-paper"}
+            >
               {row.name}
             </text>
-            <text x="26" y={top + 38} class="ref fill-muted">
+            <text
+              x={isAr ? 434 : 26}
+              y={top + 38}
+              class={isAr ? "ref-ar fill-muted" : "ref fill-muted"}
+            >
               {row.objective}
             </text>
 
+            {/* mirrored cx: 460-246=214 */}
             <circle
-              cx="246"
+              cx={isAr ? 214 : 246}
               cy={top + 22}
               r="4.5"
               class={statusFill[row.status]}
             />
 
             <rect
-              x="306"
+              x={isAr ? BAR_X_AR : BAR_X}
               y={top + 18}
               width={BAR_TRACK}
               height="4"
               rx="2"
               class="fill-hairline"
             />
+            {/* The fill is anchored to the track's inline-start edge in both
+                languages: its left edge in LTR, its right edge in RTL, so it
+                always grows toward inline-end. */}
             <rect
-              x="306"
+              x={isAr ? BAR_END_AR - fill : BAR_X}
               y={top + 18}
-              width={(BAR_TRACK * row.progress) / 100}
+              width={fill}
               height="4"
               rx="2"
               class={statusFill[row.status]}
             />
 
+            {/* text-anchor="end" is logical: it resolves to the left edge under
+                the mirrored branch's direction: rtl, so the figure still sits
+                flush against the container's inline-end inner edge. */}
             <text
-              x="434"
+              x={isAr ? 26 : 434}
               y={top + 27}
               text-anchor="end"
-              class="value fill-paper"
+              class={isAr ? "value-ar fill-paper" : "value fill-paper"}
             >
               {row.progress}%
             </text>
@@ -236,10 +302,47 @@ const ariaLabel = `Portfolio initiative list, cropped. ${rows
     font-size: 13px;
   }
 
-  /* See known-issues.md (P5): `direction` inherits into <text> and redefines
-     what `text-anchor: start`/`end` mean, which would break the hand-computed
-     `text-anchor="end"` percentage column under html[dir="rtl"]. */
+  /* Arabic: spec §3's mono role swaps to Plex Sans 600 at normal tracking (see
+     KpiCard.astro for why the swap is repeated per fragment rather than
+     inherited from global.css, and why the digit-only value role swaps too). */
+  .label-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .ref-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+
+  .name-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 15px;
+  }
+
+  .value-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 14px;
+  }
+
+  /* known-issues.md (P5): `direction` inherits into <text> and redefines what
+     `text-anchor: start`/`end` mean. Stated explicitly in both directions so
+     the hand-computed coordinates keep the meaning they were authored
+     against; `:global()` keeps Astro's scope hash off the `[dir]` half of the
+     selector, which is what made the equivalent P4 rule in
+     SuggestionCard.astro silently never match. */
   .initiative-rows {
     direction: ltr;
+  }
+
+  :global([dir="rtl"]) .initiative-rows {
+    direction: rtl;
   }
 </style>

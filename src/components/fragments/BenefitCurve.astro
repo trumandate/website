@@ -6,8 +6,9 @@
 // WITHHELD, and absent from this file by design: the benefit register and the
 // attribution logic. There is no list of benefits, no business-case reference,
 // no contributing-initiative breakdown and no apportionment of the curve
-// across anything — one benefit, one axis, two lines. `/benefits`' handoff
-// sentence is the only place on that page where the register is named.
+// across anything — one benefit, one axis, two lines, in either language.
+// `/benefits`' handoff sentence is the only place on that page where the
+// register is named.
 //
 // What the ledger asks for, and what is drawn: the forecast solid to today and
 // dashed beyond it, the measurement window marked, and "no axis labels beyond
@@ -28,25 +29,36 @@
 // the composition reads as continuing to the inline-end rather than as a
 // finished chart that happens to stop.
 //
-// Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
-// for the reasoning. RTL mirroring is not authored yet (no `/ar/benefits`
-// until the English copy is approved); `direction: ltr` is pinned below.
-// Logged in TODO.md.
+// RTL (P6-AR): every x becomes `460 - x` (the card rect additionally
+// subtracting its own width), which mirrors the time axis along with
+// everything else — the curve now begins at the right and runs left, closure
+// and today fall to the left of the origin, and the crop moves to the left
+// edge, which is inline-END in RTL. A chart whose time axis ran left-to-right
+// inside an RTL page would be the single loudest LTR artefact on the route, so
+// this is mirrored rather than pinned. Type sizing and the direction handling
+// follow KpiCard.astro — see its header for why the mirrored branch sets
+// `direction: rtl` instead of pinning `ltr`.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
 interface Props {
   class?: string;
+  lang: Language;
 }
 
-const { class: className }: Props = Astro.props;
+const { class: className, lang }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
 
-const ariaLabel =
-  "Benefit curve, cropped. Benefit 4.2, annual operating saving. The actual is plotted as a solid line up to today; the forecast continues past it as a dashed projection. The measurement window is marked and runs 24 months from closure. The two lines coincide until closure, after which the forecast keeps rising and the actual flattens. The plot is cut off at the frame edge.";
+const label = isAr ? "label-ar" : "label";
+const tick = isAr ? "tick-ar" : "tick";
 ---
 
 <svg
   viewBox="0 0 460 220"
   class:list={["benefit-curve w-full max-w-[560px]", className]}
   role="img"
-  aria-label={ariaLabel}
+  aria-label={t("fragment.benefitCurve.ariaLabel")}
   data-fragment
 >
   <defs>
@@ -59,98 +71,250 @@ const ariaLabel =
       height="220"
     >
       <rect x="0" y="0" width="460" height="220" fill="black"></rect>
-      <rect
-        data-fragment-wipe
-        x="0"
-        y="0"
-        width="460"
-        height="220"
-        fill="white"></rect>
+      <rect data-fragment-wipe x="0" y="0" width="460" height="220" fill="white"
+      ></rect>
     </mask>
   </defs>
 
   <g mask="url(#benefit-curve-wipe-mask)">
     <rect width="460" height="220" class="fill-surface-deep"></rect>
 
-    <!-- The plot's card. Width 500 against a 460 viewBox: the inline-end edge
-         is never drawn, so the plot reads as continuing. -->
-    <rect
-      x="8"
-      y="10"
-      width="500"
-      height="200"
-      rx="4"
-      class="fill-surface stroke-hairline"
-      stroke-width="1"></rect>
+    {
+      isAr ? (
+        <>
+          {/* The plot's card, mirrored: 460-(8+500)=-48. Its inline-end (left)
+              edge is never drawn, so the plot reads as continuing. */}
+          <rect
+            x="-48"
+            y="10"
+            width="500"
+            height="200"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
 
-    <text x="26" y="32" class="label fill-muted">
-      Benefit 4.2 · Annual operating saving
-    </text>
+          <text x="434" y="32" class={`${label} fill-muted`}>
+            {t("fragment.benefitCurve.recordLabel")}
+          </text>
 
-    <!-- The measurement window: opens at closure (x=214) and is cut by the
-         frame edge, because it has not finished running. -->
-    <rect x="214" y="48" width="246" height="132" class="fill-hairline"></rect>
-    <line x1="214" y1="48" x2="214" y2="180" class="stroke-hairline" stroke-width="1"
-    ></line>
-    <text x="222" y="62" class="tick fill-muted">
-      Measurement window · 24 months
-    </text>
+          {/* Measurement window, mirrored: 460-(214+246)=0. Opens at closure
+              (now x=246) and is cut by the left frame edge, because it has not
+              finished running. */}
+          <rect x="0" y="48" width="246" height="132" class="fill-hairline" />
+          <line
+            x1="246"
+            y1="48"
+            x2="246"
+            y2="180"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="238" y="62" class={`${tick} fill-muted`}>
+            {t("fragment.benefitCurve.windowLabel")}
+          </text>
 
-    <!-- Today. Starts at y=72, below the measurement-window label's baseline
-         (62), so the marker does not strike through that label's text — found
-         by screenshotting the built fragment at 1440. -->
-    <line
-      x1="320"
-      y1="72"
-      x2="320"
-      y2="180"
-      stroke-dasharray="3 3"
-      stroke-width="1"
-      class="stroke-muted"></line>
+          {/* Today, mirrored: 460-320=140. */}
+          <line
+            x1="140"
+            y1="72"
+            x2="140"
+            y2="180"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            class="stroke-muted"
+          />
 
-    <!-- The axis, and the only one -->
-    <line x1="26" y1="180" x2="460" y2="180" class="stroke-hairline" stroke-width="1"
-    ></line>
+          <line
+            x1="434"
+            y1="180"
+            x2="0"
+            y2="180"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
 
-    <!-- Forecast: solid to today -->
-    <path
-      d="M26 168 C90 164 150 148 214 134 S290 120 320 112"
-      fill="none"
-      stroke-width="1.5"
-      class="stroke-muted"></path>
-    <!-- Forecast: dashed projection beyond today, cut by the frame edge -->
-    <path
-      d="M320 112 C360 104 410 90 470 76"
-      fill="none"
-      stroke-width="1.5"
-      stroke-dasharray="5 4"
-      class="stroke-muted"></path>
+          {/* Forecast: solid to today, every x mirrored. */}
+          <path
+            d="M434 168 C370 164 310 148 246 134 S170 120 140 112"
+            fill="none"
+            stroke-width="1.5"
+            class="stroke-muted"
+          />
+          {/* Forecast: dashed projection beyond today, cut by the frame edge. */}
+          <path
+            d="M140 112 C100 104 50 90 -10 76"
+            fill="none"
+            stroke-width="1.5"
+            stroke-dasharray="5 4"
+            class="stroke-muted"
+          />
 
-    <!-- Actual: coincides with the forecast to closure, then flattens -->
-    <path
-      d="M26 168 C90 164 150 148 214 134 C258 128 292 128 320 130"
-      fill="none"
-      stroke-width="1.75"
-      stroke-linecap="round"
-      class="stroke-accent"></path>
-    <circle cx="320" cy="130" r="3" class="fill-accent"></circle>
+          {/* Actual: coincides with the forecast to closure, then flattens. */}
+          <path
+            d="M434 168 C370 164 310 148 246 134 C202 128 168 128 140 130"
+            fill="none"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            class="stroke-accent"
+          />
+          <circle cx="140" cy="130" r="3" class="fill-accent" />
 
-    <!-- Legend and the one time label -->
-    <line x1="26" y1="193" x2="44" y2="193" stroke-width="1.75" class="stroke-accent"
-    ></line>
-    <text x="50" y="197" class="tick fill-muted">Actual</text>
+          {/* Legend and the one time label. */}
+          <line
+            x1="434"
+            y1="193"
+            x2="416"
+            y2="193"
+            stroke-width="1.75"
+            class="stroke-accent"
+          />
+          <text x="410" y="197" class={`${tick} fill-muted`}>
+            {t("fragment.benefitCurve.actualLegend")}
+          </text>
 
-    <line
-      x1="110"
-      y1="193"
-      x2="128"
-      y2="193"
-      stroke-width="1.5"
-      stroke-dasharray="5 4"
-      class="stroke-muted"></line>
-    <text x="134" y="197" class="tick fill-muted">Forecast</text>
+          <line
+            x1="350"
+            y1="193"
+            x2="332"
+            y2="193"
+            stroke-width="1.5"
+            stroke-dasharray="5 4"
+            class="stroke-muted"
+          />
+          <text x="326" y="197" class={`${tick} fill-muted`}>
+            {t("fragment.benefitCurve.forecastLegend")}
+          </text>
 
-    <text x="320" y="197" text-anchor="middle" class="tick fill-muted">Today</text>
+          {/* text-anchor="middle" is direction-independent. */}
+          <text
+            x="140"
+            y="197"
+            text-anchor="middle"
+            class={`${tick} fill-muted`}
+          >
+            {t("fragment.benefitCurve.todayLabel")}
+          </text>
+        </>
+      ) : (
+        <>
+          {/* The plot's card. Width 500 against a 460 viewBox: the inline-end
+              edge is never drawn, so the plot reads as continuing. */}
+          <rect
+            x="8"
+            y="10"
+            width="500"
+            height="200"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+
+          <text x="26" y="32" class={`${label} fill-muted`}>
+            {t("fragment.benefitCurve.recordLabel")}
+          </text>
+
+          {/* The measurement window: opens at closure (x=214) and is cut by the
+              frame edge, because it has not finished running. */}
+          <rect x="214" y="48" width="246" height="132" class="fill-hairline" />
+          <line
+            x1="214"
+            y1="48"
+            x2="214"
+            y2="180"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="222" y="62" class={`${tick} fill-muted`}>
+            {t("fragment.benefitCurve.windowLabel")}
+          </text>
+
+          {/* Today. Starts at y=72, below the measurement-window label's
+              baseline (62), so the marker does not strike through that label's
+              text — found by screenshotting the built fragment at 1440. */}
+          <line
+            x1="320"
+            y1="72"
+            x2="320"
+            y2="180"
+            stroke-dasharray="3 3"
+            stroke-width="1"
+            class="stroke-muted"
+          />
+
+          {/* The axis, and the only one */}
+          <line
+            x1="26"
+            y1="180"
+            x2="460"
+            y2="180"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+
+          {/* Forecast: solid to today */}
+          <path
+            d="M26 168 C90 164 150 148 214 134 S290 120 320 112"
+            fill="none"
+            stroke-width="1.5"
+            class="stroke-muted"
+          />
+          {/* Forecast: dashed projection beyond today, cut by the frame edge */}
+          <path
+            d="M320 112 C360 104 410 90 470 76"
+            fill="none"
+            stroke-width="1.5"
+            stroke-dasharray="5 4"
+            class="stroke-muted"
+          />
+
+          {/* Actual: coincides with the forecast to closure, then flattens */}
+          <path
+            d="M26 168 C90 164 150 148 214 134 C258 128 292 128 320 130"
+            fill="none"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            class="stroke-accent"
+          />
+          <circle cx="320" cy="130" r="3" class="fill-accent" />
+
+          {/* Legend and the one time label */}
+          <line
+            x1="26"
+            y1="193"
+            x2="44"
+            y2="193"
+            stroke-width="1.75"
+            class="stroke-accent"
+          />
+          <text x="50" y="197" class={`${tick} fill-muted`}>
+            {t("fragment.benefitCurve.actualLegend")}
+          </text>
+
+          <line
+            x1="110"
+            y1="193"
+            x2="128"
+            y2="193"
+            stroke-width="1.5"
+            stroke-dasharray="5 4"
+            class="stroke-muted"
+          />
+          <text x="134" y="197" class={`${tick} fill-muted`}>
+            {t("fragment.benefitCurve.forecastLegend")}
+          </text>
+
+          <text
+            x="320"
+            y="197"
+            text-anchor="middle"
+            class={`${tick} fill-muted`}
+          >
+            {t("fragment.benefitCurve.todayLabel")}
+          </text>
+        </>
+      )
+    }
   </g>
 </svg>
 
@@ -173,9 +337,32 @@ const ariaLabel =
     text-transform: uppercase;
   }
 
-  /* See known-issues.md (P5): `direction` inherits into <text> and redefines
-     what `text-anchor: middle`/`end` resolve against. */
+  /* Arabic: spec §3's mono role swaps to Plex Sans 600 at normal tracking.
+     See KpiCard.astro for why this is repeated per fragment. */
+  .label-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .tick-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 11px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* known-issues.md (P5): `direction` inherits into <text> and redefines what
+     `text-anchor: middle`/`end` resolve against. Stated explicitly for both
+     geometries; `:global()` keeps Astro's scope hash off the `[dir]` half. */
   .benefit-curve {
     direction: ltr;
+  }
+
+  :global([dir="rtl"]) .benefit-curve {
+    direction: rtl;
   }
 </style>

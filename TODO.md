@@ -12,12 +12,12 @@ Deferred work. Nothing here lives only in a spec, in BUILD_FLAGS.md, or in chat.
   build list was tailwind config + Section + Reveal + header/footer only, so
   `Header.astro`'s primary CTA is an inline-styled `<a>` rather than a shared
   component. Build `Button.astro` at P2 and swap Header's CTA to use it.
-- **Arabic nav labels are provisional, not reviewed copy.** `src/i18n/ui.ts`
-  translates Strategy/Execution/Benefits as الاستراتيجية/التنفيذ/المنافع —
-  working translations of single governance nouns already used elsewhere in
-  the content brief, not yet run through the P6 Arabic review process that
-  `trumandate-product-pages.md` specifies for the three product pages. Confirm
-  or correct them when product-page Arabic is approved.
+- ~~**Arabic nav labels are provisional, not reviewed copy.**~~ Confirmed
+  unchanged at P6-AR, once the product-page Arabic existed to check them
+  against — الاستراتيجية / التنفيذ / المنافع are the short forms of the three
+  page titles now written (الاستراتيجية ومؤشرات الأداء / التنفيذ والحوكمة /
+  تحقيق المنافع), the same relationship the English nav has to its own page
+  titles. تواصل (`/contact`) still awaits P7. See the P6-AR section below.
 - ~~**Header height offset is an estimate.**~~ Resolved at P2: measured the
   fixed header at 94.625px (chrome-devtools MCP, both 375 and 1440 widths —
   it doesn't vary with viewport), added a `header` spacing token (6.5rem /
@@ -162,9 +162,10 @@ and will be addressed as the pages that touch them get built (P2 onward).
 
 ## From P5 (Arabic home page, RTL)
 
-- **Arabic nav labels are still provisional** (carried from P1 — see that
-  item above). Not re-confirmed at P5; the home page doesn't touch the nav
-  strings themselves, only the routes they now genuinely point to.
+- ~~**Arabic nav labels are still provisional**~~ (carried from P1). Not
+  re-confirmed at P5 — the home page doesn't touch the nav strings themselves,
+  only the routes they point to — and confirmed at P6-AR instead, when the
+  three Arabic page titles they abbreviate were written.
 - **`StageGateQueue.astro`'s invented copy** (owner name, gate numbers, due
   date — none of it sourced from the content brief) **now has an Arabic
   version written per BUILD_FLAGS' "written, not machine-translated" rule,
@@ -185,26 +186,32 @@ and will be addressed as the pages that touch them get built (P2 onward).
 
 ## From P6 (the three product pages, English only)
 
-- **Arabic for `/strategy`, `/execution` and `/benefits` does not exist and
-  must not be written until Piyush approves `COPY-REVIEW.md`.** This is the
-  prompt's and `trumandate-product-pages.md`'s explicit instruction, not an
-  oversight. When approved: move each page's `ProductPageCopy` object out of
-  its frontmatter into a new `UiStrings.product` branch (`i18n/types.ts` +
-  `ui.ts`), write the Arabic per BUILD_FLAGS' "written, not
-  machine-translated" rule, create `src/pages/ar/{strategy,execution,
-  benefits}.astro` passing `lang="ar"` to the same `ProductPage.astro`, and
-  add `"/strategy"`, `"/execution"`, `"/benefits"` to `pairedRoutes` in
-  `i18n/utils.ts` so LangToggle stops falling back to the Arabic home page.
-- **The three new fragments are LTR-only.** `KpiCard.astro`,
-  `InitiativeRows.astro` and `BenefitCurve.astro` all carry `<text>`, so each
-  needs a hand-mirrored geometry the way `StageGateQueue.astro` got one at P5
-  (every x becomes `W - x`, rects additionally subtracting their own width,
-  `text-anchor` flipped) — a blanket CSS `scaleX(-1)` would render the glyphs
-  backwards. Not written yet because no `/ar/` counterpart exists to exercise
-  it. All three DO already pin `direction: ltr` in their scoped style, so the
-  hand-computed `text-anchor` coordinates keep their physical meaning if the
-  files are ever rendered under `dir="rtl"` before the mirror is authored
-  (known-issues.md, P5, explains why that pin is necessary).
+- ~~**Arabic for `/strategy`, `/execution` and `/benefits` does not exist and
+  must not be written until Piyush approves `COPY-REVIEW.md`.**~~ Resolved at
+  P6-AR, after the English was approved with no edits. Both languages now sit
+  in one `Record<Language, Record<ProductPageKey, ProductPageCopy>>` table in
+  `src/components/product/copy.ts` — NOT in `UiStrings.product` as this item
+  originally specified, because `ProductPageCopy` carries a `string[]` and a
+  `number` and `useTranslations`' `KeyPath`/`t()` contract is string-only; the
+  three fragments' short label strings, which really are all strings, did go
+  into `i18n/ui.ts` under a new `fragment` branch and reach the SVGs through
+  `t()` exactly as `home.stageGate.*` does. Reasoning logged in
+  BUILD_FLAGS.md. `/ar/{strategy,execution,benefits}.astro` created, passing
+  `lang="ar"` to the same `ProductPage.astro`; the three routes added to
+  `pairedRoutes`, so LangToggle now pairs both ways on all three (verified).
+- ~~**The three new fragments are LTR-only.**~~ Resolved at P6-AR. Each of
+  `KpiCard.astro`, `InitiativeRows.astro` and `BenefitCurve.astro` now carries
+  a hand-mirrored second geometry (every x becomes `460 - x`, rects
+  additionally subtracting their own width; the initiative bar's fill is
+  re-anchored so it grows from the track's inline-start edge; the benefit
+  curve's time axis mirrors with everything else so it runs right to left).
+  One deliberate divergence from `StageGateQueue.astro`'s P5 treatment: rather
+  than pinning `direction: ltr` in both languages and flipping every
+  `text-anchor` by hand, the mirrored branch sets `direction: rtl` (via
+  `:global([dir="rtl"]) .fragment-class`), so `text-anchor: start` resolves to
+  the inline-start edge by itself AND mixed strings such as "آخر 6 فترات" get
+  their natural Arabic bidi order instead of being laid out in an LTR
+  paragraph. See the new item below about aligning StageGateQueue with this.
 - **The three fragments are specifications, not transcriptions.** Spec §5's
   fidelity rule says that where the real Echelons UI exists the SVG is
   authored against a screenshot of it, and where it does not, "the fragment is
@@ -254,3 +261,54 @@ and will be addressed as the pages that touch them get built (P2 onward).
   `Header.astro` and reproduced on the untouched home page, so not introduced
   by P6, but it is visible in all six P6 screenshots and wants a
   `whitespace-nowrap` or a shorter header label. Logged in known-issues.md.
+
+## From P6-AR (the three product pages in Arabic)
+
+- **The Arabic product-page copy wants a native-reader pass, the way the
+  English got one.** It is in `COPY-REVIEW.md` under "Part two — the Arabic",
+  as plain prose in reading order, with a short note per page saying how the
+  argument was restructured and a list of the vocabulary choices worth a second
+  opinion (نقطة الوصل, تدرّج الأهداف, تحقيق المنافع, تسرّب المنفعة, المستهدف).
+  Nothing about it blocks a build; it is a copy review, not a defect.
+- **`StageGateQueue.astro` still uses P5's direction handling, the three
+  product fragments use P6-AR's.** P5 pins `direction: ltr` in both languages
+  and hand-flips every `text-anchor`; P6-AR's three fragments set
+  `direction: rtl` on the mirrored branch and let `text-anchor: start`/`end`
+  resolve logically. Both are correct on screen today. The newer one is better
+  for any label mixing Arabic with digits — under a pinned-LTR paragraph the
+  Arabic run is laid out to the left of the number, so an Arabic reader meets
+  the number first — and `home.stageGate.dueValue` ("14 أغسطس") is exactly such
+  a label. Worth migrating StageGateQueue to the same treatment so the codebase
+  has one answer rather than two, but it is a visual-nicety fix on an
+  already-shipping fragment, not a defect: deliberately not done in the same
+  pass that introduced the second pattern.
+- ~~**Arabic nav labels are provisional, not reviewed copy.**~~ Confirmed at
+  P6-AR (carried from P1 and P5). الاستراتيجية / التنفيذ / المنافع read as the
+  short forms of the three page titles now written and reviewed
+  (الاستراتيجية ومؤشرات الأداء / التنفيذ والحوكمة / تحقيق المنافع), exactly as
+  the English nav's Strategy / Execution / Benefits are short forms of
+  "Strategy and KPIs" / "Execution and governance" / "Benefits realisation".
+  Left unchanged, now deliberately rather than provisionally. تواصل
+  (`/contact`) is untouched by this prompt and gets its confirmation at P7,
+  when the contact page's Arabic is written.
+- **The Arabic fragments' figures use Plex Sans, not Plex Mono, even for
+  digit-only values** (`42.0`, `74%`). Spec §3's mono→sans swap is written
+  about Arabic joining, which digits do not have — but `/ar` never preloads
+  Plex Mono (BaseLayout.astro), so keeping the figure role mono would make
+  three digits per fragment the only reason an Arabic page fetches a fifth font
+  file. Verified on the built pages: `/ar/strategy` fetches four font files and
+  no mono. Revisit only if a design review wants tabular digits in Arabic badly
+  enough to pay for the request.
+- **No WebKit pass on the three Arabic routes.** Same constraint carried from
+  P4/P5/P6: the browser MCP in this session is Chromium-bound. This is the
+  gap that matters most of the ones outstanding — Safari has historically had
+  more bidi and logical-property bugs than Chromium, and these three routes
+  now depend on `direction: rtl` resolving `text-anchor` inside SVG `<text>`,
+  which is precisely the kind of thing that diverges. The English siblings are
+  unaffected either way.
+- **The fragments' side-by-side check against the real product now covers two
+  languages.** Carried from P6: no screenshot of the real KPI card, portfolio
+  list or benefit curve was available, so all three are specifications rather
+  than transcriptions (spec §5). The Arabic adds a second question to that
+  review — whether the real Arabic UI mirrors these surfaces at all, and
+  whether its own column order and labels match what is drawn here.

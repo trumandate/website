@@ -1,0 +1,35 @@
+---
+// /ar/execution — "التنفيذ والحوكمة" (P6-AR). Composes the same
+// ProductPage.astro skeleton and the same InitiativeRows fragment as
+// /en/execution; only `lang` differs, which selects the Arabic copy branch and
+// the fragment's mirrored geometry.
+//
+// The Arabic is written, not translated: the argument — project tools cannot
+// roll up to a mandate, so the roll-up becomes a monthly human exercise that
+// arrives stale and negotiated; TruMandate holds initiatives against the
+// objective that funded them, with baseline and actual on every milestone and
+// a named person against every gate decision; what changes is the meeting —
+// is carried in four paragraphs of Arabic prose rather than sentence-by-
+// sentence. Plain-prose version in COPY-REVIEW.md.
+//
+// Curiosity ledger, identical to the English route: the gate workflow and the
+// approval routing appear nowhere except the handoff sentence. Gates
+// themselves are named (the page's brief requires it); the mechanism is not.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductPage from "../../components/product/ProductPage.astro";
+import InitiativeRows from "../../components/fragments/InitiativeRows.astro";
+import { productCopy } from "../../components/product/copy";
+
+const lang = "ar" as const;
+const copy = productCopy[lang].execution;
+---
+
+<BaseLayout
+  lang={lang}
+  title={copy.documentTitle}
+  description={copy.documentDescription}
+>
+  <ProductPage lang={lang} copy={copy}>
+    <InitiativeRows slot="fragment" lang={lang} />
+  </ProductPage>
+</BaseLayout>

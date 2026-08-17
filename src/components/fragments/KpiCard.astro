@@ -12,8 +12,9 @@
 //
 // WITHHELD, and absent from this file by design: the cascade editor and how
 // weighting works. No weight column, no parent-objective tree, no editor
-// chrome, and nothing about either in the aria-label. `/strategy`'s handoff
-// sentence is the only place on that page where they are named.
+// chrome, and nothing about either in the aria-label, in either language.
+// `/strategy`'s handoff sentence is the only place on that page where they are
+// named.
 //
 // The crop is authored into the viewBox: the neighbouring KPI card starts at
 // x=320 and runs to x=620, past the viewBox's own 460 edge, so the browser's
@@ -27,29 +28,54 @@
 // the viewBox transform, decoupling the type from the shapes as the fragment
 // scales).
 //
-// RTL: this fragment carries <text>, so it needs a hand-mirrored geometry the
-// way StageGateQueue.astro has one — not a CSS scaleX, which would render the
-// glyphs backwards. That is not written yet because `/ar/strategy` does not
-// exist yet (English copy is approved first, per
-// trumandate-product-pages.md). `direction: ltr` is pinned in the scoped
-// style below regardless, so the hand-computed `text-anchor` coordinates keep
-// their physical meaning if this file is ever rendered under `dir="rtl"`
-// before the mirror is authored. Logged in TODO.md.
+// RTL (P6-AR): this fragment carries <text>, so it gets a hand-mirrored
+// geometry rather than a CSS scaleX, which would render every glyph backwards.
+// Every x becomes `460 - x`; rects additionally subtract their own width,
+// since a rect's x is a left edge rather than a point. Two consequences worth
+// stating, because both are the point of doing it by hand: the fully readable
+// card moves to the fragment's right-hand (RTL inline-start) edge, and the
+// neighbouring card moves to x=-160, so the crop lands on the left — the RTL
+// inline-END edge — and still reads as "the list continues". fragment.ts
+// flips the wipe's travel to match, so the reveal still uncovers from
+// inline-start.
+//
+// Direction handling differs deliberately from StageGateQueue.astro's P5
+// treatment. That file pins `direction: ltr` in BOTH languages and flips
+// `text-anchor` by hand, which is correct for its labels but forces every
+// mixed Arabic-plus-digits string into an LTR paragraph, where the Arabic run
+// is laid out to the left of the digits and an Arabic reader meets the number
+// first. This fragment instead pins `direction: ltr` for LTR pages only and
+// switches the mirrored variant to `direction: rtl`, so `text-anchor: start`
+// keeps meaning "the inline-start edge" and resolves to the right by itself —
+// the hand-computed coordinates stay honest AND strings like "آخر 6 فترات"
+// get their natural Arabic bidi order. known-issues.md's P5 note (direction
+// inherits into <text> and redefines what start/end mean) is the reason both
+// files state a direction explicitly rather than inheriting one.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
 interface Props {
   class?: string;
+  lang: Language;
 }
 
-const { class: className }: Props = Astro.props;
+const { class: className, lang }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
 
-const ariaLabel =
-  "KPI record. Digital service adoption, KPI 1.2.3. Baseline 42.0, target 75.0, live actual 61.4. Status: at risk. A sparkline of the last six periods rises across the card. A second KPI record is cropped at the frame edge.";
+// Arabic sans at a matched pixel size reads smaller than tracked Latin mono,
+// so each role is set ~10% larger in Arabic — the same adjustment
+// StageGateQueue.astro makes, for the same reason.
+const label = isAr ? "label-ar" : "label";
+const name = isAr ? "name-ar" : "name";
+const figure = isAr ? "figure-ar" : "figure";
 ---
 
 <svg
   viewBox="0 0 460 236"
   class:list={["kpi-card w-full max-w-[560px]", className]}
   role="img"
-  aria-label={ariaLabel}
+  aria-label={t("fragment.kpiCard.ariaLabel")}
   data-fragment
 >
   <defs>
@@ -62,77 +88,239 @@ const ariaLabel =
       height="236"
     >
       <rect x="0" y="0" width="460" height="236" fill="black"></rect>
-      <rect
-        data-fragment-wipe
-        x="0"
-        y="0"
-        width="460"
-        height="236"
-        fill="white"></rect>
+      <rect data-fragment-wipe x="0" y="0" width="460" height="236" fill="white"
+      ></rect>
     </mask>
   </defs>
 
   <g mask="url(#kpi-card-wipe-mask)">
     <rect width="460" height="236" class="fill-surface-deep"></rect>
 
-    <!-- The KPI card itself, fully readable -->
-    <rect
-      x="8"
-      y="10"
-      width="300"
-      height="216"
-      rx="4"
-      class="fill-surface stroke-hairline"
-      stroke-width="1"></rect>
+    {
+      isAr ? (
+        <>
+          {/* The KPI card itself, mirrored: 460-(8+300)=152. */}
+          <rect
+            x="152"
+            y="10"
+            width="300"
+            height="216"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
 
-    <text x="26" y="32" class="label fill-muted">KPI · 1.2.3</text>
-    <circle cx="282" cy="28" r="4.5" class="fill-amber"></circle>
+          <text x="434" y="32" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.ref")}
+          </text>
+          {/* mirrored cx: 460-282=178 */}
+          <circle cx="178" cy="28" r="4.5" class="fill-amber" />
 
-    <text x="26" y="57" class="name fill-paper">Digital service adoption</text>
+          <text x="434" y="57" class={`${name} fill-paper`}>
+            {t("fragment.kpiCard.name")}
+          </text>
 
-    <line x1="26" y1="74" x2="290" y2="74" class="stroke-hairline" stroke-width="1"
-    ></line>
+          <line
+            x1="434"
+            y1="74"
+            x2="170"
+            y2="74"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
 
-    <text x="26" y="97" class="label fill-muted">Baseline</text>
-    <text x="26" y="124" class="figure fill-paper">42.0</text>
+          {/* The three figure columns mirror to right-anchored columns that
+              grow leftward: 460-26=434, 460-114=346, 460-202=258. */}
+          <text x="434" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.baselineLabel")}
+          </text>
+          <text x="434" y="124" class={`${figure} fill-paper`}>
+            {t("fragment.kpiCard.baselineValue")}
+          </text>
 
-    <text x="114" y="97" class="label fill-muted">Target</text>
-    <text x="114" y="124" class="figure fill-paper">75.0</text>
+          <text x="346" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.targetLabel")}
+          </text>
+          <text x="346" y="124" class={`${figure} fill-paper`}>
+            {t("fragment.kpiCard.targetValue")}
+          </text>
 
-    <text x="202" y="97" class="label fill-muted">Actual</text>
-    <text x="202" y="124" class="figure fill-accent">61.4</text>
+          <text x="258" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.actualLabel")}
+          </text>
+          <text x="258" y="124" class={`${figure} fill-accent`}>
+            {t("fragment.kpiCard.actualValue")}
+          </text>
 
-    <line x1="26" y1="142" x2="290" y2="142" class="stroke-hairline" stroke-width="1"
-    ></line>
+          <line
+            x1="434"
+            y1="142"
+            x2="170"
+            y2="142"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
 
-    <text x="26" y="163" class="label fill-muted">Last 6 periods</text>
+          <text x="434" y="163" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.sparklineLabel")}
+          </text>
 
-    <polyline
-      points="26,212 78,204 130,207 182,192 234,184 286,174"
-      fill="none"
-      stroke-width="1.5"
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      class="stroke-accent"></polyline>
-    <circle cx="286" cy="174" r="3" class="fill-accent"></circle>
+          {/* Sparkline mirrored point by point, so the six periods still run
+              from the oldest at inline-start (right) to the newest at
+              inline-end (left) — time reads with the language. */}
+          <polyline
+            points="434,212 382,204 330,207 278,192 226,184 174,174"
+            fill="none"
+            stroke-width="1.5"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            class="stroke-accent"
+          />
+          <circle cx="174" cy="174" r="3" class="fill-accent" />
 
-    <!-- The neighbouring card: starts in-frame, geometry runs past the
-         viewBox's edge and is clipped by it. -->
-    <rect
-      x="320"
-      y="10"
-      width="300"
-      height="216"
-      rx="4"
-      class="fill-surface stroke-hairline"
-      stroke-width="1"></rect>
+          {/* The neighbouring card, mirrored: 460-(320+300)=-160. Runs off the
+              viewBox's left edge — inline-end in RTL — and is clipped by it. */}
+          <rect
+            x="-160"
+            y="10"
+            width="300"
+            height="216"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
 
-    <text x="338" y="32" class="label fill-muted">KPI · 1.2.4</text>
-    <text x="338" y="57" class="name fill-paper">Case processing time</text>
-    <line x1="338" y1="74" x2="460" y2="74" class="stroke-hairline" stroke-width="1"
-    ></line>
-    <text x="338" y="97" class="label fill-muted">Baseline</text>
-    <text x="338" y="124" class="figure fill-paper">38.0</text>
+          <text x="122" y="32" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.nextRef")}
+          </text>
+          <text x="122" y="57" class={`${name} fill-paper`}>
+            {t("fragment.kpiCard.nextName")}
+          </text>
+          <line
+            x1="122"
+            y1="74"
+            x2="0"
+            y2="74"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="122" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.nextBaselineLabel")}
+          </text>
+          <text x="122" y="124" class={`${figure} fill-paper`}>
+            {t("fragment.kpiCard.nextBaselineValue")}
+          </text>
+        </>
+      ) : (
+        <>
+          {/* The KPI card itself, fully readable */}
+          <rect
+            x="8"
+            y="10"
+            width="300"
+            height="216"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+
+          <text x="26" y="32" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.ref")}
+          </text>
+          <circle cx="282" cy="28" r="4.5" class="fill-amber" />
+
+          <text x="26" y="57" class={`${name} fill-paper`}>
+            {t("fragment.kpiCard.name")}
+          </text>
+
+          <line
+            x1="26"
+            y1="74"
+            x2="290"
+            y2="74"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+
+          <text x="26" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.baselineLabel")}
+          </text>
+          <text x="26" y="124" class={`${figure} fill-paper`}>
+            {t("fragment.kpiCard.baselineValue")}
+          </text>
+
+          <text x="114" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.targetLabel")}
+          </text>
+          <text x="114" y="124" class={`${figure} fill-paper`}>
+            {t("fragment.kpiCard.targetValue")}
+          </text>
+
+          <text x="202" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.actualLabel")}
+          </text>
+          <text x="202" y="124" class={`${figure} fill-accent`}>
+            {t("fragment.kpiCard.actualValue")}
+          </text>
+
+          <line
+            x1="26"
+            y1="142"
+            x2="290"
+            y2="142"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+
+          <text x="26" y="163" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.sparklineLabel")}
+          </text>
+
+          <polyline
+            points="26,212 78,204 130,207 182,192 234,184 286,174"
+            fill="none"
+            stroke-width="1.5"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            class="stroke-accent"
+          />
+          <circle cx="286" cy="174" r="3" class="fill-accent" />
+
+          {/* The neighbouring card: starts in-frame, geometry runs past the
+              viewBox's edge and is clipped by it. */}
+          <rect
+            x="320"
+            y="10"
+            width="300"
+            height="216"
+            rx="4"
+            class="fill-surface stroke-hairline"
+            stroke-width="1"
+          />
+
+          <text x="338" y="32" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.nextRef")}
+          </text>
+          <text x="338" y="57" class={`${name} fill-paper`}>
+            {t("fragment.kpiCard.nextName")}
+          </text>
+          <line
+            x1="338"
+            y1="74"
+            x2="460"
+            y2="74"
+            class="stroke-hairline"
+            stroke-width="1"
+          />
+          <text x="338" y="97" class={`${label} fill-muted`}>
+            {t("fragment.kpiCard.nextBaselineLabel")}
+          </text>
+          <text x="338" y="124" class={`${figure} fill-paper`}>
+            {t("fragment.kpiCard.nextBaselineValue")}
+          </text>
+        </>
+      )
+    }
   </g>
 </svg>
 
@@ -163,12 +351,53 @@ const ariaLabel =
     font-size: 22px;
   }
 
-  /* See known-issues.md (P5): `direction` inherits into <text>, and
-     `text-anchor: start`/`end` are defined relative to it, so every
-     hand-computed coordinate in this file would change meaning under
-     html[dir="rtl"]. Pinned here so the geometry keeps the physical meaning
-     it was authored against. */
+  /* Arabic: spec §3's mono role swaps to Plex Sans 600 at normal tracking,
+     because letterspaced mono destroys Arabic joining. Repeated here rather
+     than inherited from global.css's `[dir="rtl"] .font-mono` override,
+     because fragment type is sized in user-space units and never goes through
+     that utility. The figure role swaps too, even though "42.0" contains no
+     Arabic: `/ar` never preloads Plex Mono (BaseLayout.astro), so leaving it
+     mono would make three digits the only reason the page fetches a fifth
+     font file. */
+  .label-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .name-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 15px;
+  }
+
+  .figure-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 22px;
+  }
+
+  /* known-issues.md (P5): `direction` inherits into <text>, and
+     `text-anchor: start`/`end` are defined relative to it, so a fragment that
+     inherits its direction from <html> has coordinates whose meaning changes
+     under the reader's locale. Both branches above therefore state a direction
+     explicitly: LTR pages get `ltr` (matching the unmirrored geometry), and
+     the mirrored Arabic geometry gets `rtl`, which is what makes its
+     unqualified `text-anchor: start` resolve to the right-hand edge without a
+     single hand-flipped anchor — and lets mixed strings such as
+     "آخر 6 فترات" order themselves the way an Arabic reader reads them.
+     `:global()` wraps the ancestor half of the selector: Astro's scoped-style
+     processor otherwise appends this component's scope hash to `[dir="rtl"]`
+     too, producing a selector that can never match, since dir lives on
+     <html>. That bug is why the P4 confidence-bar override silently did
+     nothing until P5 — see SuggestionCard.astro. */
   .kpi-card {
     direction: ltr;
+  }
+
+  :global([dir="rtl"]) .kpi-card {
+    direction: rtl;
   }
 </style>

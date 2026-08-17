@@ -128,6 +128,72 @@ export interface UiStrings {
       caption: string;
     };
   };
+  /**
+   * The three product-page fragments' own labels (P6-AR). Invented, anonymised
+   * product data — no brief source — so the Arabic is written per BUILD_FLAGS'
+   * "written, not machine-translated" rule, exactly like `home.stageGate`.
+   *
+   * These live here and not in `product/copy.ts` because they really are all
+   * strings, so they reach the SVG through `t()` the way `home.stageGate.*`
+   * already does; the page-level copy has a `string[]` and a `number` in it
+   * and cannot.
+   *
+   * Numerals inside fragments stay Western in both languages — spec §8's rule
+   * read literally, and the pattern StageGateQueue.astro already ships
+   * ("بوابة المرحلة · 04", "14 أغسطس"). The Arabic-Indic digits elsewhere on
+   * `/ar` are the content brief's own, in page copy and AI cards, not in
+   * product surfaces.
+   */
+  fragment: {
+    kpiCard: {
+      ariaLabel: string;
+      ref: string;
+      name: string;
+      baselineLabel: string;
+      baselineValue: string;
+      targetLabel: string;
+      targetValue: string;
+      actualLabel: string;
+      actualValue: string;
+      sparklineLabel: string;
+      nextRef: string;
+      nextName: string;
+      nextBaselineLabel: string;
+      nextBaselineValue: string;
+    };
+    initiativeRows: {
+      /** Assembled from the row data below, so the label and the drawn rows
+       * cannot drift; the two sentences that frame them are here. */
+      ariaLabelLead: string;
+      ariaLabelTail: string;
+      /** WCAG 1.4.1 again: the status word the aria-label spells out beside
+       * each RAG dot, so colour never carries the status alone. */
+      onTrack: string;
+      atRisk: string;
+      offTrack: string;
+      /** "per cent", spelled out in the aria-label rather than read as "%". */
+      perCent: string;
+      initiativeHeader: string;
+      statusHeader: string;
+      progressHeader: string;
+      row1Name: string;
+      row1Objective: string;
+      row2Name: string;
+      row2Objective: string;
+      row3Name: string;
+      row3Objective: string;
+      row4Name: string;
+      row4Objective: string;
+    };
+    benefitCurve: {
+      ariaLabel: string;
+      recordLabel: string;
+      windowLabel: string;
+      actualLegend: string;
+      forecastLegend: string;
+      todayLabel: string;
+    };
+  };
 }
 
 export type UiDictionary = Record<Language, UiStrings>;

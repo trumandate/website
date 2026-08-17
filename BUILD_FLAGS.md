@@ -232,6 +232,85 @@ Log every such choice under "Decisions taken" below.
   product fragments but not the home one would be exactly the per-page visual
   pattern this prompt forbids. Observation logged in TODO.md.
 
+- 2026-08-17 (P6-AR): Product-page copy moved out of the three `/en/` page
+  frontmatters into ONE bilingual table,
+  `productCopy: Record<Language, Record<ProductPageKey, ProductPageCopy>>` in
+  `src/components/product/copy.ts` — not into `UiStrings.product`, which is
+  what TODO.md's P6 item had specified. `UiStrings` is consumed through
+  `useTranslations`, whose `KeyPath<T>` walks every property and whose `t()`
+  returns `string`; `ProductPageCopy` carries `argument: string[]` and
+  `confidence: number`, so a `product` branch there would make `KeyPath`
+  recurse into array and number prototypes and would put two of the type's
+  fields permanently out of `t()`'s reach. The invariant that item was really
+  protecting — that an English string cannot exist without an Arabic one — is
+  delivered by `Record<Language, …>` either way, and is now a compile error
+  rather than a review note. The three fragments' short label strings, which
+  genuinely are all strings, DID go into `i18n/ui.ts` under a new `fragment`
+  branch and reach the SVGs through `t()`, exactly as `home.stageGate.*` does.
+  Per BUILD_FLAGS' "keep one shared component": the English pages shrank to a
+  page key plus a fragment, and every English string was verified byte-identical
+  through the move before the Arabic was written.
+- 2026-08-17 (P6-AR): RTL direction handling on the three product fragments
+  DIVERGES from `StageGateQueue.astro`'s P5 treatment, deliberately. P5 pins
+  `direction: ltr` in both languages and hand-flips every `text-anchor`, which
+  keeps the hand-computed coordinates honest but forces every label into an LTR
+  paragraph — and in an LTR paragraph a string mixing Arabic with digits lays
+  its Arabic run out to the LEFT of the number, so an Arabic reader meets the
+  number first. These three fragments instead pin `direction: ltr` for LTR
+  pages only and set `direction: rtl` on the mirrored branch (via
+  `:global([dir="rtl"]) .fragment-class`, the scoped-style pattern P5 had to
+  discover the hard way). Two things follow: `text-anchor: start`/`end` resolve
+  logically, so the mirror needs no flipped anchors at all, and strings like
+  "آخر 6 فترات" and "نافذة القياس · 24 شهراً" order themselves the way they are
+  read. Verified in the browser: every mirrored `<text>`'s measured bbox ends
+  exactly at its authored x, and no two labels collide on any row. Migrating
+  StageGateQueue to match is logged in TODO.md rather than done in the same
+  pass that introduced the second pattern.
+- 2026-08-17 (P6-AR): The benefit curve's TIME AXIS mirrors along with the rest
+  of its geometry, so under `/ar` the curve begins at the right, closure and
+  "today" fall to its left, and the dashed projection is cut by the left (RTL
+  inline-end) frame edge. Spec §8 only says horizontal motion mirrors, not
+  charts; the alternative — pinning the plot LTR inside an RTL page — was
+  rejected because a time axis running left-to-right would be the single
+  loudest LTR artefact on the route, and because the fragment's crop is
+  supposed to land on the inline-end edge, which is only true if the whole
+  composition mirrors. The initiative list's crop is vertical and therefore
+  needs no equivalent decision.
+- 2026-08-17 (P6-AR): The Arabic chain-link eyebrows name the relation in words
+  ("من الهدف إلى مؤشر الأداء") rather than carrying the English's "→". U+2192
+  has `Bidi_Mirrored=Yes`, so an arrow authored in either direction is re-drawn
+  mirrored by the shaping engine under RTL — it cannot be relied on to state
+  which way the chain runs, and "fixing" it by typing the opposite arrow just
+  moves the bug. Per the ambiguity order's "remove rather than add": drop the
+  glyph, keep the meaning.
+- 2026-08-17 (P6-AR): Arabic fragment type sets the digit-only `figure`/`value`
+  roles in Plex Sans too, not just the Arabic-bearing label roles. Spec §3's
+  mono→sans swap is argued from Arabic joining, which digits do not have, so
+  the letter of the rule would allow mono here — but `/ar` never preloads Plex
+  Mono (BaseLayout.astro's per-locale list), and keeping three digits in mono
+  would make them the only reason an Arabic page fetches a fifth font file.
+  Verified on the built page: `/ar/strategy` fetches four font files, none of
+  them mono. Per "the option that costs fewer kilobytes".
+- 2026-08-17 (P6-AR): Numerals split by ELEMENT TYPE, following the home page's
+  own precedent rather than picking one rule for the whole route. Product
+  fragments are Western throughout (spec §8 read literally; matches
+  StageGateQueue's "بوابة المرحلة · 04" and "14 أغسطس"). Page prose and the AI
+  cards use Arabic-Indic for reference numbers, confidence values and
+  timestamps, because that is what the content brief's own verbatim Arabic does
+  on the home page (٠٫٧٧, البوابة ٣, ٠٩:٤٢) and the AI card is the same
+  component in the same role. The one measured quantity that appears in both
+  worlds — the 24-month benefit window — stays Western in prose because the
+  brief's own chain copy writes it "24 شهراً". Consequence, stated so it is not
+  read as a defect: `/ar/execution` shows "المبادرة ٠٧" on its AI card and
+  "الهدف 1.2" inside its fragment, on the same page. That is the home page's
+  existing split, not a new inconsistency.
+- 2026-08-17 (P6-AR): `pairedRoutes` suffixes are stored WITHOUT a trailing
+  slash ("/strategy", not "/strategy/"), because `altUrl` filters empty path
+  segments out before joining and therefore never produces one; "/" is the sole
+  exception, being a suffix of nothing at all. Recorded because the natural
+  guess is wrong and would silently send every product-page toggle back to the
+  home page — the exact fallback this change exists to delete.
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)

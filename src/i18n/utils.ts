@@ -57,14 +57,15 @@ export function useTranslations(lang: Language) {
  * `altUrl` uses this to decide whether a straight locale swap has anywhere to
  * go.
  *
- * As of P6 that is the home page only. `/strategy`, `/execution` and
- * `/benefits` exist under `/en/` and not under `/ar/`, on purpose:
- * `trumandate-product-pages.md` is explicit that "Arabic copy for these three
- * pages does not yet exist… Claude Code writes the English first, Piyush
- * approves it, and only then is Arabic produced". `/contact` is P7 and lands
- * in both languages at once.
+ * As of P6-AR that is the home page and all three product pages: the Arabic
+ * copy was approved and written, so `/en/strategy` ↔ `/ar/strategy` and its
+ * two siblings are now straight locale swaps rather than fallbacks to the
+ * Arabic home page. `/contact` is P7 and lands in both languages at once.
  */
-const pairedRoutes = new Set(["/"]);
+// Suffixes are normalised without a trailing slash (the home page is the one
+// exception, since its suffix is nothing at all) — see `altUrl` below, which
+// filters empty segments out before joining.
+const pairedRoutes = new Set(["/", "/strategy", "/execution", "/benefits"]);
 
 /**
  * Swaps the leading /en/ or /ar/ path segment for the target language, keeping

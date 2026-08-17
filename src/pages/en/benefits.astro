@@ -3,8 +3,9 @@
 // home page's traceability chain: Benefit. The one question it answers: how do
 // you know the outcome happened, after the team has gone?
 //
-// Structure belongs to ProductPage.astro; this file supplies the copy object
-// and the one fragment, exactly like the other two product pages.
+// Structure belongs to ProductPage.astro and copy to
+// components/product/copy.ts's bilingual table; this file supplies the page
+// key and the one fragment, exactly like the other two product pages.
 //
 // Curiosity ledger for this route:
 //   Reveals  — the forecast curve shape (BenefitCurve.astro).
@@ -13,53 +14,23 @@
 // or the AI card. The word "register" occurs exactly once on this page, in
 // `handoff`, which is the sentence whose job is to promise it; nothing
 // anywhere on the page explains how a benefit is apportioned to the work that
-// produced it.
-//
-// English only; Arabic follows copy approval. See strategy.astro's header for
-// the LangToggle behaviour on unpaired routes.
+// produced it. The Arabic holds the same line: "سجل المنافع" occurs once, in
+// the Arabic handoff, and nowhere else on /ar/benefits.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProductPage from "../../components/product/ProductPage.astro";
 import BenefitCurve from "../../components/fragments/BenefitCurve.astro";
-import type { ProductPageCopy } from "../../components/product/copy";
+import { productCopy } from "../../components/product/copy";
 
 const lang = "en" as const;
-
-const copy: ProductPageCopy = {
-  eyebrow: "Benefit",
-  headline: "The project closed. Did the benefit arrive?",
-  argument: [
-    "Benefits are forecast during business case approval, which is the one moment in a programme's life when optimism is rewarded. They are measured never, because the team that promised them has been released by the time the benefit is due to appear. Between those two facts sits the largest credibility gap in portfolio governance, and everyone involved knows it is there. It is simply nobody's job to close it once the project has closed.",
-    "It is also why the same saving gets promised by three consecutive programmes. Nobody is lying. Each business case is written against a real problem by people who were not in the room for the last one, and none of them can see that an earlier programme already claimed the same money, because that earlier promise stopped being tracked on the day its project shut down. The promise outlives the tracking by years, and the gap is where a portfolio quietly loses its credibility with the people funding it.",
-    "TruMandate keeps the benefit alive for 24 months past closure. It stays attached to the exact KPI it promised to move, and it has an owner who still holds that role rather than a project manager who has moved to another programme. Forecast and actual sit on the same axis, on the same record, in the units the business case used. Divergence shows up without anyone requesting a report, which is the point, because the period when nobody is asking is precisely the period the benefit was supposed to arrive in.",
-    "This is the least comfortable part of the platform to demonstrate and the part that decides whether the rest of it is worth anything. A governance system that can only report on work in flight is a schedule with a dashboard attached. The real test is whether it can still answer a question about a programme that finished two years ago, whose sponsor has retired and whose delivery team has been reassigned twice. If the answer to that is a shrug, the objective tree at the top was decoration.",
-  ],
-  captionLead:
-    "One benefit, actual against forecast, on the axis its business case set.",
-  captionSecond:
-    "Solid to today, projected beyond it, and measured for 24 months from the day the project closed.",
-  ai: {
-    eyebrow: "AI in the platform",
-    heading: "Leakage, found in the quarter nobody was watching.",
-    body: "The model watches the measure the benefit was attached to rather than the project that promised it, so it keeps watching after the project stops existing. When actuals pull away from forecast it says by how much, over what period, and what it thinks caused the divergence. Then it does what it does everywhere else here: it hands the decision to a person, names them in the record, and leaves the forecast alone until they act. A number this uncomfortable is worth being certain about.",
-    badge: "AI watch",
-    confidenceLabel: "confidence 0.69",
-    confidence: 0.69,
-    title: "Benefit leakage detected after closure",
-    detail:
-      "Benefit 4.2. Evidence: actuals have diverged from forecast by 18% in the two quarters since closure, and the underlying KPI stopped improving when the programme team was released. No owner has been notified. Suggested action: reassign benefit ownership and revise the forecast.",
-    log: "Decision logged · s.alnuaimi · 16:30",
-  },
-  handoff:
-    "The demo opens the benefit register: every promise made in a business case, with its current status and the person who now owns it, in one list.",
-};
+const copy = productCopy[lang].benefits;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Benefits realisation — TruMandate"
-  description="How you know the outcome happened after the team has gone: benefits kept alive for 24 months past closure, against the exact KPI they promised to move."
+  title={copy.documentTitle}
+  description={copy.documentDescription}
 >
   <ProductPage lang={lang} copy={copy}>
-    <BenefitCurve slot="fragment" />
+    <BenefitCurve slot="fragment" lang={lang} />
   </ProductPage>
 </BaseLayout>

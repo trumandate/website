@@ -2,10 +2,16 @@ import type { UiDictionary } from "./types";
 
 /**
  * Chrome string table — header, footer, skip link, language toggle, the two
- * global CTAs. Values marked "provisional" below are working translations,
- * not yet reviewed copy; per BUILD_FLAGS and trumandate-product-pages.md,
- * Arabic for the three product pages (and therefore their nav labels) is
- * only finalised after English copy is approved at P6. Flagged in TODO.md.
+ * global CTAs — plus the home page's body copy (P5) and the three product
+ * fragments' labels (P6-AR).
+ *
+ * The Arabic nav labels were provisional through P1–P5 and were confirmed
+ * unchanged at P6-AR, once the three Arabic page titles they abbreviate
+ * existed to check them against: الاستراتيجية / التنفيذ / المنافع stand to
+ * الاستراتيجية ومؤشرات الأداء / التنفيذ والحوكمة / تحقيق المنافع exactly as
+ * Strategy / Execution / Benefits stand to their own English page titles.
+ * تواصل (`/contact`) is still provisional and gets its confirmation at P7,
+ * when that page's Arabic is written. See TODO.md.
  */
 export const ui: UiDictionary = {
   en: {
@@ -131,6 +137,57 @@ export const ui: UiDictionary = {
         caption: "The whole board, in forty minutes.",
       },
     },
+    // Product-page fragment labels — English exactly as authored at P6 inside
+    // KpiCard/InitiativeRows/BenefitCurve, lifted into this table unchanged
+    // when the Arabic landed.
+    fragment: {
+      kpiCard: {
+        ariaLabel:
+          "KPI record. Digital service adoption, KPI 1.2.3. Baseline 42.0, target 75.0, live actual 61.4. Status: at risk. A sparkline of the last six periods rises across the card. A second KPI record is cropped at the frame edge.",
+        ref: "KPI · 1.2.3",
+        name: "Digital service adoption",
+        baselineLabel: "Baseline",
+        baselineValue: "42.0",
+        targetLabel: "Target",
+        targetValue: "75.0",
+        actualLabel: "Actual",
+        actualValue: "61.4",
+        sparklineLabel: "Last 6 periods",
+        nextRef: "KPI · 1.2.4",
+        nextName: "Case processing time",
+        nextBaselineLabel: "Baseline",
+        nextBaselineValue: "38.0",
+      },
+      initiativeRows: {
+        ariaLabelLead: "Portfolio initiative list, cropped.",
+        ariaLabelTail:
+          "A fourth row is cut off at the frame edge and the list continues past it.",
+        onTrack: "on track",
+        atRisk: "at risk",
+        offTrack: "off track",
+        perCent: "per cent",
+        initiativeHeader: "Initiative",
+        statusHeader: "Status",
+        progressHeader: "Progress",
+        row1Name: "Unified service portal",
+        row1Objective: "Objective 1.2",
+        row2Name: "Records digitisation",
+        row2Objective: "Objective 1.2",
+        row3Name: "Legacy decommission",
+        row3Objective: "Objective 3.1",
+        row4Name: "Shared identity rollout",
+        row4Objective: "Objective 2.4",
+      },
+      benefitCurve: {
+        ariaLabel:
+          "Benefit curve, cropped. Benefit 4.2, annual operating saving. The actual is plotted as a solid line up to today; the forecast continues past it as a dashed projection. The measurement window is marked and runs 24 months from closure. The two lines coincide until closure, after which the forecast keeps rising and the actual flattens. The plot is cut off at the frame edge.",
+        recordLabel: "Benefit 4.2 · Annual operating saving",
+        windowLabel: "Measurement window · 24 months",
+        actualLegend: "Actual",
+        forecastLegend: "Forecast",
+        todayLabel: "Today",
+      },
+    },
   },
   ar: {
     brand: {
@@ -212,7 +269,8 @@ export const ui: UiDictionary = {
         heading: "سلسلة واحدة من الهدف إلى المنفعة، دون حلقة مفقودة.",
         sub: "تابع السلسلة بالتمرير. كل حلقة سجل في المنصة، وتحمل هوية الحلقة التي تسبقها.",
         objectiveName: "الهدف",
-        objectiveBody: "مُصدَّر بنسخة معتمدة، له مالك محدَّد ووزن مُسند داخل الخطة.",
+        objectiveBody:
+          "مُصدَّر بنسخة معتمدة، له مالك محدَّد ووزن مُسند داخل الخطة.",
         kpiName: "مؤشر الأداء",
         kpiBody:
           "مقياس مركّب بخط أساس وهدف وقيمة فعلية حيّة، لتكون الحركة واقعاً لا ادعاءً.",
@@ -220,7 +278,8 @@ export const ui: UiDictionary = {
         initiativeBody:
           "مموّلة ومزوّدة بالموارد ومحكومة ببوابات، ومرتبطة بالهدف الذي وُجدت لتحريكه.",
         milestoneName: "المعلم",
-        milestoneBody: "خط الأساس مقابل الفعلي، مع إظهار التأخير قبل انقضاء التاريخ لا بعده.",
+        milestoneBody:
+          "خط الأساس مقابل الفعلي، مع إظهار التأخير قبل انقضاء التاريخ لا بعده.",
         benefitName: "المنفعة",
         benefitBody:
           "تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر ذاته الذي وُعدت بتحسينه.",
@@ -268,6 +327,63 @@ export const ui: UiDictionary = {
         heading: "شاشة واحدة يُدار عليها الأسبوع.",
         sub: "صحة المحفظة مجمَّعة من مستوى المبادرات، وحركة المؤشرات مقابل الهدف، والقرارات التي تنتظر شخصاً بالاسم.",
         caption: "اللوحة كاملة، خلال أربعين دقيقة.",
+      },
+    },
+    // Product-page fragment labels — invented, anonymised product data with no
+    // brief source, so written per BUILD_FLAGS rather than translated. Digits
+    // stay Western throughout, matching `home.stageGate` and spec §8's KPI/date
+    // rule; the KPI references keep the product's own dotted form (1.2.3) since
+    // they are identifiers in a UI, not quantities in prose.
+    //
+    // The mono→sans type swap these labels need is NOT applied through
+    // global.css's `[dir="rtl"] .font-mono` override, because fragment type is
+    // sized in SVG user-space units rather than rem (see KpiCard.astro); each
+    // fragment carries its own `*-ar` class instead, same as StageGateQueue.
+    fragment: {
+      kpiCard: {
+        ariaLabel:
+          "سجل مؤشر أداء. تبنّي الخدمات الرقمية، المؤشر 1.2.3. خط الأساس 42.0، والقيمة المستهدفة 75.0، والقيمة الفعلية الحيّة 61.4. الحالة: في خطر. ويصعد عبر البطاقة خط بياني مصغَّر لآخر ست فترات. وسجل مؤشر ثانٍ مقصوص عند حافة الإطار.",
+        ref: "مؤشر · 1.2.3",
+        name: "تبنّي الخدمات الرقمية",
+        baselineLabel: "خط الأساس",
+        baselineValue: "42.0",
+        targetLabel: "المستهدف",
+        targetValue: "75.0",
+        actualLabel: "الفعلي",
+        actualValue: "61.4",
+        sparklineLabel: "آخر 6 فترات",
+        nextRef: "مؤشر · 1.2.4",
+        nextName: "زمن معالجة المعاملة",
+        nextBaselineLabel: "خط الأساس",
+        nextBaselineValue: "38.0",
+      },
+      initiativeRows: {
+        ariaLabelLead: "قائمة مبادرات المحفظة، مقصوصة.",
+        ariaLabelTail: "وصف رابع مقطوع عند حافة الإطار، والقائمة تستمر بعده.",
+        onTrack: "على المسار الصحيح",
+        atRisk: "في خطر",
+        offTrack: "خارج المسار",
+        perCent: "بالمئة",
+        initiativeHeader: "المبادرة",
+        statusHeader: "الحالة",
+        progressHeader: "التقدّم",
+        row1Name: "بوابة الخدمات الموحّدة",
+        row1Objective: "الهدف 1.2",
+        row2Name: "رقمنة السجلات",
+        row2Objective: "الهدف 1.2",
+        row3Name: "إيقاف الأنظمة القديمة",
+        row3Objective: "الهدف 3.1",
+        row4Name: "إطلاق الهوية المشتركة",
+        row4Objective: "الهدف 2.4",
+      },
+      benefitCurve: {
+        ariaLabel:
+          "منحنى منفعة، مقصوص. المنفعة 4.2، وفر تشغيلي سنوي. القيمة الفعلية مرسومة بخط متصل حتى اليوم، والقيمة المتوقَّعة تمتد بعده بخط متقطّع. نافذة القياس محدَّدة وتمتد 24 شهراً من الإغلاق. الخطان متطابقان حتى الإغلاق، ثم يواصل المتوقَّع الصعود بينما يستوي الفعلي. والرسم مقطوع عند حافة الإطار.",
+        recordLabel: "المنفعة 4.2 · وفر تشغيلي سنوي",
+        windowLabel: "نافذة القياس · 24 شهراً",
+        actualLegend: "الفعلي",
+        forecastLegend: "المتوقَّع",
+        todayLabel: "اليوم",
       },
     },
   },
