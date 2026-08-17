@@ -473,11 +473,25 @@ and will be addressed as the pages that touch them get built (P2 onward).
   cap-height (~11px, tried first); `1.4em` is the smallest step up that kept
   every letterform legible in the screenshots. Screenshots:
   `screenshots/p9b-footer-{en,ar}-{375,1440}.png`.
-  **Left for a future pass, not silently dropped:** spec §5A lists the logo
+  ~~**Left for a future pass, not silently dropped:** spec §5A lists the logo
   for "footer and contact page" — only the footer is done here; `/contact`
   still shows no Intertec Systems mark. Judgement call for that page's own
   pass, since `ContactPage.astro`/`SovereigntyBand.astro` weren't touched by
-  this one.
+  this one.~~ Resolved at P9c: `SovereigntyBand.astro` now renders the same
+  `IntertecLogo.astro` mark Footer.astro uses (`text-muted`, `1.4em`
+  block-size, `footer.company` as its `aria-label` — no new i18n string
+  needed), placed below the band's two existing lines. This is a genuine
+  second placement, not merely the site-wide footer appearing on `/contact`
+  too: spec §5A's asset list gives the logo two placements ("footer and
+  contact page") as a separate line from the certification marks' "contact
+  page only", so the contact-page mark had to be an in-page addition to mean
+  anything beyond what every route already had. `npm run build`/`npm run
+  check` both clean; zero hex, zero physical-direction utilities in the
+  component; zero console errors on `/en/contact` and `/ar/contact` at 375
+  and 1440 (chrome-devtools MCP); mark confirmed unmirrored under `/ar`
+  (`getComputedStyle(svg).transform === "none"` at both widths, both
+  languages) with the Latin "Intertec" wordmark reading correctly rather than
+  flipped. Screenshots: `screenshots/p9c-contact-logo-{en,ar}-{375,1440}.png`.
 - **`seo/JsonLd.astro` was never built.** PLAN.md §1's file tree plans an
   Organization + SoftwareApplication structured-data component; this
   prompt's explicit build list didn't include it, so it stayed out of scope

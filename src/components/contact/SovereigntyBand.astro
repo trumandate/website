@@ -35,8 +35,29 @@
 // No product imagery, no AI: this is plain page typography on a hairline
 // rule, matching ObjectiveRecord.astro's "page typography, not product
 // chrome" treatment rather than a card.
+//
+// The Intertec Systems mark (P9c): spec §5A's own asset line reads "Intertec
+// Systems logo, SVG, footer and contact page" — a second, deliberate
+// placement distinct from Footer.astro's (P9b), not merely the site-wide
+// footer showing up here too. It sits in this band rather than anywhere else
+// on the page because this is the one place `/contact` already carries a
+// vendor-trust argument for the same sovereignty-sensitive reader spec §5A
+// names for the (deliberately omitted, see above) certification marks — the
+// mark is the honest half of that pairing: Intertec Systems is the operator
+// of record, unlike a certification the product itself does not hold.
+// Reuses `IntertecLogo.astro` exactly as Footer.astro does — same
+// `currentColor` mark, same `footer.company` aria-label (no new i18n string
+// needed) — sized and coloured to this band's own `text-muted` eyebrow
+// rather than repeated at footer scale, so it reads as a small credential
+// beside the claim, not a second footer. No visible "Intertec Systems" text
+// is repeated here: the footer immediately below already spells out the
+// full "Intertec Systems · Dubai" credit, and role="img" + aria-label carry
+// the accessible name without echoing it visually a second time on the same
+// page. Flex-row order auto-mirrors under `dir="rtl"` exactly as Footer's
+// does, so the Latin wordmark stays unmirrored in both languages.
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
+import IntertecLogo from "../layout/IntertecLogo.astro";
 
 interface Props {
   lang: Language;
@@ -52,5 +73,8 @@ const t = useTranslations(lang);
   </p>
   <p class="mt-3 text-body font-light text-body">
     {t("contact.sovereigntyBody")}
+  </p>
+  <p class="mt-6 inline-flex items-center text-muted">
+    <IntertecLogo label={t("footer.company")} class="h-[1.4em] w-auto shrink-0" />
   </p>
 </div>

@@ -497,6 +497,36 @@ Log every such choice under "Decisions taken" below.
   a placement site for this logo; only the footer was in this pass's scope,
   so `/contact` is left untouched and logged as a fresh (not carried) item
   in TODO.md.
+- 2026-08-18 (P9c): Spec §5A's "Intertec Systems logo, SVG, footer and contact
+  page" is read as TWO placements, not one — the footer already renders on
+  every route including `/contact` (P9b), so if that satisfied the clause the
+  bullet would have said "footer" alone, the way the very next bullet says
+  "contact page only" for the certification marks with no footer mention at
+  all. The two bullets share the same list and the same sentence shape, and
+  only this one names two locations; reading "footer and contact page" as
+  "footer" would make that half of the sentence do nothing. So `/contact`
+  gets an actual in-page placement: `SovereigntyBand.astro` now renders
+  `IntertecLogo.astro` (same component, same `currentColor` mark, same
+  `footer.company` aria-label Footer.astro already uses — no new component,
+  no new i18n string) beneath the band's two existing lines, sized to that
+  band's own `text-muted` role rather than repeated at footer scale. Chosen
+  over placing it elsewhere on the page (e.g. beside the hero) because this
+  band is the one place `/contact` already carries a vendor-trust argument
+  for the same sovereignty-sensitive reader spec §5A pairs with the (P9,
+  deliberately omitted) certification marks — the logo is the honest half of
+  that pairing, since Intertec Systems' own identity, unlike a product-level
+  certification, is genuinely "held". No visible "Intertec Systems" text is
+  repeated alongside the mark here (the footer immediately below already
+  spells the full credit out); `role="img"` + `aria-label` carry the
+  accessible name without a second visual echo on the same page. Verified:
+  `npm run build`/`npm run check` clean; zero hex, zero physical-direction
+  utilities (`Grep` over the touched file); zero console errors on
+  `/en/contact` and `/ar/contact` at 375/1440 (chrome-devtools MCP); mark's
+  `getComputedStyle(...).transform === "none"` at every width/language check,
+  confirming the Latin wordmark stays unmirrored under `/ar` exactly as
+  Footer's copy does. Screenshots:
+  `screenshots/p9c-contact-logo-{en,ar}-{375,1440}.png`. TODO.md's P9 item
+  (the one P9b left open) is closed, not carried forward.
 - 2026-08-17 (P9): `seo/JsonLd.astro` (PLAN.md §1's file tree lists an
   Organization + SoftwareApplication structured-data component) was not built
   this pass. The P9 build brief's explicit six-item list (titles/descriptions,
@@ -528,3 +558,6 @@ Log every such choice under "Decisions taken" below.
   now closed — see this file's P9b entry above and TODO.md's P9 section.
   Still open, newly logged: the same logo on `/contact` (spec §5A names both
   the footer and the contact page; only the footer was this pass's scope).
+- 2026-08-18 (P9c): The `/contact` placement of the Intertec Systems logo,
+  logged as open above, is now closed — see this file's P9c entry and
+  TODO.md's P9 section.
