@@ -778,3 +778,30 @@ and will be addressed as the pages that touch them get built (P2 onward).
   makes `IntertecLogo.astro` (already flagged above as unreferenced since
   Wave A dropped its footer call site) doubly unreferenced — its other
   remaining caller was `SovereigntyBand.astro`, now gone.
+
+## From the Command Centre board mobile fix (home hero)
+
+- **A genuine, small, RTL-only horizontal overflow in `AiQueue.astro` is
+  still open — not fixed in this session, which was scoped to the board
+  only.** `/ar/` at 320/375/414px has a real (not artefact) ~18–19px
+  horizontal scroll, confirmed with `window.scrollTo(-9999, 0)` then
+  reading `scrollX` back in an isolated browser context: it lands at
+  ≈-19.33px (320, 375) / -18px (414), not 0. Root cause: the first (mint,
+  spotlight) card's `pointer-events-none absolute -inset-10
+  bg-spotlight-accent` glow div bleeds past the card on all sides by
+  design; under `dir=rtl` that bleed escapes physically start-ward (right)
+  far enough to be genuinely scrollable at narrow widths, where the
+  `grid-template-columns: repeat(auto-fit, minmax(min(100%,288px),1fr))`
+  layout collapses to one column and the card sits flush against the
+  container edge. `/en/` does NOT have this problem — the equivalent
+  end-ward (right) bleed is absorbed by a Chrome mobile-viewport-expansion
+  quirk that widens `window.innerWidth` without ever making the page
+  actually scroll (`scrollX` stays exactly 0 there) — which is likely why
+  `known-issues.md`'s P10-wave-1 entry cleared this as "no real overflow":
+  it checked `scrollWidth === innerWidth` in both languages but only
+  tested scroll reachability in the positive (LTR) direction. Resolves to
+  0 at 768px+ (2-column grid gives the card enough margin). Likely fix:
+  clip the glow horizontally at the card or section boundary (e.g.
+  `overflow-x-hidden` on the card or on `<section class="relative w-full
+  py-section">` in `AiQueue.astro`) — full details and measurements in
+  `known-issues.md`'s new "Board mobile fix" section.

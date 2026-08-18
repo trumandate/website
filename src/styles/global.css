@@ -15,12 +15,34 @@
   html {
     text-size-adjust: 100%;
     scroll-behavior: auto; /* Lenis/ScrollTrigger own smoothing once motion lands */
+
+    /* Several sections place decoration outside the content column on
+       purpose: the record chain swings cards through 3D space well past
+       both edges, and the AI queue's spotlight glow is a -inset-10 halo
+       that exceeds the gutter at narrow widths. None of it is meant to be
+       reachable — but at 375 it left the page scrollable ~19px sideways in
+       Arabic (where the leak falls on the start edge and nothing clipped
+       it).
+
+       `clip`, not `hidden`: `overflow-x: hidden` would make this element a
+       scroll container and break `position: sticky` — which the record
+       chain's pinned stage and the chain marker both depend on. `clip`
+       paints nothing outside the box and creates no scroll container, so
+       sticky keeps working.
+
+       Declared on `body` as well as `html`: setting it on the root alone
+       propagates to the viewport rather than applying to the element, and
+       Chromium does not honour that propagation for `clip` — the page
+       still scrolled sideways with only the `html` rule in place
+       (measured, not assumed). */
+    overflow-x: clip;
   }
 
   body {
     @apply bg-ink font-sans font-light text-body;
     margin: 0;
     min-height: 100svh;
+    overflow-x: clip; /* see the html rule above for why clip, not hidden */
   }
 
   img,

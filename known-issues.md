@@ -1256,3 +1256,76 @@ immune to the same interference and was used for the Lighthouse/
 performance-trace/screenshot work that specifically needed that MCP.
 A future session sharing this machine should expect the same and reach
 for `emulate` or a separate browser process rather than `resize_page`.
+
+## Board mobile fix (Command Centre board, home hero — mobile legibility/overflow)
+
+**The user-reported "numbers overflow" was the board's `zoom` formula
+shrinking to illegibility, not a page-level overflow the board itself was
+causing.** `scripts/board.ts`'s `zoom = containerWidth / 1036` (capped at 1,
+no floor) reached ~0.323 at 375px — the board's own smallest authored type
+(`CommandCentreBoard.astro`'s `.kpi.budgetTarget` caption, 8px) rendered at
+~2.6px, and every other label scaled proportionally. The reference itself
+(`CommandCentreBoard.dc.html` / `Home (redesign).dc.html` at 375, served
+locally over `python -m http.server`) does exactly the same thing —
+zoom ≈0.3234, same formula, same illegible result — so this was not a
+regression to fix but a design gap the reference doesn't solve either.
+Fixed with a floor: `MOBILE_ZOOM_FLOOR = 7/8`, derived from that same 8px
+minimum (7/8 keeps it at 7 effective px; every other board type, ≥8.5px,
+clears 7.4px+). Below a ~906px container (`0.875 × 1036`, close to the
+`lg` breakpoint) the board now stops shrinking and its existing frame —
+`.cc-board`'s `overflow: hidden`, unchanged — crops more of the board
+horizontally instead, anchored to the inline-start corner (sidebar + first
+KPI tile(s) + start of the chart) via the board's own existing `dir`
+mechanism, with no extra positioning code: a block child wider than its
+parent already renders from the parent's start edge under `overflow:
+hidden`, and mirrors under `dir=rtl` for free. Screenshotted at 375/414,
+both languages (`screenshots/boardfix-after-{en,ar}-{375,414}.png`) —
+reads as an intentional cropped corner, not a shrunken smudge; verified
+unchanged at 1440 against the existing `redesign-compare2-board-built.png`
+comparison (`zoom: 1`, identical layout).
+
+**`text-size-adjust: none` had to go on as an inline `style` attribute, not
+in the component's scoped `<style>` block, because the build's CSS
+minifier silently drops the `-webkit-` prefixed declaration.** Authoring
+`-webkit-text-size-adjust: none; text-size-adjust: none;` together inside
+`.cc-board {}` survives Astro's own dev-time render but the production
+`dist/en/index.html` keeps only `text-size-adjust:none` after build — the
+`-webkit-` form is gone, and Chromium's actual font-boosting behaviour
+only reads the `-webkit-` form, so the authored rule would have looked
+correct in source while doing nothing once built (would have shipped
+silently broken if not checked against the actual `dist/` output, not just
+the dev server). Moved both declarations to an inline `style` attribute on
+the board's root div (`CommandCentreBoard.astro`), which the minifier
+doesn't touch; confirmed present in the built HTML after rebuild. Separately:
+Chrome's `getComputedStyle` reports `text-size-adjust`/`-webkit-text-size-
+adjust` as `100%` regardless of an element's actual specified value once
+that value is the `none` keyword specifically (confirmed on a throwaway
+test element: `37%` round-trips correctly through `getComputedStyle`,
+`none` always reports back `100%` even though `element.style.getPropertyValue`
+confirms `none` really is the specified value) — a Chromium CSSOM
+reporting quirk for this specific legacy property, not a sign the fix
+didn't take. Recorded here so a future session doesn't re-diagnose it as
+a live bug from `getComputedStyle` alone.
+
+**Re-investigating the P10-wave-1 "no real overflow" finding above (line
+~838) surfaced one real gap in it: it was checked in the positive scroll
+direction only, which is correct for LTR but misses a genuine, small,
+RTL-only overflow.** Using this session's own corrected methodology
+(`window.scrollTo(-9999, 0)` then reading `scrollX` back, in a dedicated
+`isolatedContext` page to rule out the shared-browser-watcher hazard both
+P10 sections above document) at 320/375/414px on `/ar/`: `scrollX` actually
+reaches ≈-19.3px (320: -19.33, 375: -19.33, 414: -18), i.e. genuinely
+reachable, not the layout-viewport-expansion artefact the same check
+correctly clears for `/en/` (`scrollX` stays exactly 0 there at every
+width tried, 320–768). Bisected to the same root cause the wave-1 entry
+already named — `AiQueue.astro`'s `spotlight-accent` glow
+(`pointer-events-none absolute -inset-10`) on the first (mint) card — just
+mirrored to bleed physically start-ward (right, under `dir=rtl`) instead
+of end-ward. Confirmed via `display:none` toggling in the isolated context
+that this is 100% attributable to `AiQueue.astro`; the Command Centre
+board contributes zero at every breakpoint checked, in both languages, with
+or without its own `zoom` set (i.e. identically with JS never having run).
+Not fixed here — `AiQueue.astro` is a different component, outside this
+session's board-only brief — carried to TODO.md instead. Resolves to 0 at
+768px and 1440px in both languages (2-column card grid gives the first
+card enough margin).

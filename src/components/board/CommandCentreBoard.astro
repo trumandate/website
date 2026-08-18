@@ -8,11 +8,23 @@
 //
 // 1000px internal design width (the `min-width: 1000px` wrapper below); the
 // caller (Hero.astro) fits it to its own container via `data-board-fit` +
-// `zoom = containerWidth / 1036` (scripts/board.ts), capped at 1, and crops
-// it with `max-height: clamp(340px, 44vw, 580px)` + a mask fading 52%→99% —
-// the deliberate withholding mechanism (README §2: "never show the full
-// board"). This component itself renders the board's full, uncropped
-// content; the crop and the caption live in the caller.
+// `zoom = containerWidth / 1036` (scripts/board.ts), capped at 1 and floored
+// at 7/8 below ~906px of container, and crops it with `max-height:
+// clamp(340px, 44vw, 580px)` + a mask fading 52%→99% — the deliberate
+// withholding mechanism (README §2: "never show the full board"). This
+// component itself renders the board's full, uncropped content; the crop
+// and the caption live in the caller.
+//
+// The floor exists so mobile gets "crop, don't shrink": past that width the
+// board stops scaling down as a whole (which would run its own smallest
+// type, the 8px `.kpi.budgetTarget` caption below, well past reading size)
+// and instead lets its own frame — `.cc-board`'s `overflow: hidden`, plus
+// the immediate `overflow-hidden` wrapper around the 1000px content div —
+// crop away more of the board horizontally at a legible, near-authored
+// size. `dir` on this component's own root does the anchoring for free:
+// the visible slice is always the inline-start corner (sidebar + first KPI
+// tiles + the start of the chart), mirrored under RTL by the same
+// mechanism that mirrors the rest of the board's layout.
 //
 // Direction: the outer wrapper takes an explicit `dir` (mirrors the
 // reference's own `<div dir="rtl" lang="ar" role="img">`) rather than
@@ -65,8 +77,9 @@ const dir = isAr ? "rtl" : "ltr";
   aria-label={c.ariaLabel}
   class:list={["cc-board relative overflow-hidden", className]}
   data-cc-board
+  style="-webkit-text-size-adjust: none; text-size-adjust: none;"
 >
-  <div class="overflow-x-auto overflow-y-hidden">
+  <div class="overflow-hidden">
     <div style="min-width: 1000px;">
       <!-- top bar -->
       <div
@@ -339,6 +352,22 @@ const dir = isAr ? "rtl" : "ltr";
     box-shadow:
       inset 0 1px 0 0 theme("colors.highlight"),
       0 18px 44px -12px theme("colors.shade");
+    /* This subtree is fitted by `zoom` (scripts/board.ts), not left at its
+       authored size — a mobile browser's font-boosting would then rescale
+       individual text runs on top of that zoom, independently per element,
+       breaking the board's internal layout non-uniformly (the "numbers
+       overflow their tiles" symptom on real devices). `html`'s own
+       `text-size-adjust: 100%` (global.css) is a no-op already, but pin it
+       explicitly here so nothing upstream can re-enable boosting for this
+       one fragment — as an inline style on the root div below, not here:
+       the build's CSS minifier collapses a same-value
+       `-webkit-text-size-adjust` + `text-size-adjust` pair in a stylesheet
+       down to just the unprefixed one, and Chromium's actual boosting
+       behavior only reads the `-webkit-` form, so the rule as authored
+       here would look correct in source but do nothing after build
+       (verified: dist HTML keeps only `text-size-adjust:none`, computed
+       `-webkit-text-size-adjust` stayed the inherited 100%). An inline
+       `style` attribute isn't touched by that pass, so both survive. */
   }
 
   .cc-nav-active {
