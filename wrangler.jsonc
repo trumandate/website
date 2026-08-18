@@ -5,5 +5,14 @@
 	"compatibility_date": "2026-08-17",
 	"assets": {
 		"directory": "./dist"
+	},
+	// Workers Logs. Full sampling is right at this traffic level; lower
+	// head_sampling_rate if request volume ever makes the log volume costly.
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"invocation_logs": true,
+			"head_sampling_rate": 1
+		}
 	}
 }
