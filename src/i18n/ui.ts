@@ -50,7 +50,7 @@ export const ui: UiDictionary = {
       poweredByPrefix: "Powered by ",
       poweredBySuffix: " · Dubai, UAE",
       copyright: "© 2026 Intertec Systems. All rights reserved.",
-      trademark: "TruMandate™ · trumandate.com",
+      trademark: "TruMandate™",
     },
     ragStatus: {
       onTrack: "Status: on track",
@@ -199,7 +199,7 @@ export const ui: UiDictionary = {
           "Arabic and English, both first-class, reports included.",
         row3Label: "Operated by",
         row3Body:
-          "Intertec Systems, Dubai. Governance delivery for UAE and Saudi entities.",
+          "Intertec Systems, Dubai.",
       },
     },
     // Product-page fragment labels — English exactly as authored at P6 inside
@@ -343,7 +343,7 @@ export const ui: UiDictionary = {
       poweredByPrefix: "مشغَّل من ",
       poweredBySuffix: " · دبي، الإمارات",
       copyright: "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
-      trademark: "TruMandate™ · trumandate.com",
+      trademark: "TruMandate™",
     },
     ragStatus: {
       onTrack: "الحالة: على المسار الصحيح",
@@ -480,7 +480,7 @@ export const ui: UiDictionary = {
         row2Label: "اللغة",
         row2Body: "العربية والإنجليزية، كلتاهما أساسية، بما في ذلك التقارير.",
         row3Label: "التشغيل",
-        row3Body: "إنترتك سيستمز، دبي. تنفيذ الحوكمة لجهات الإمارات والسعودية.",
+        row3Body: "إنترتك سيستمز، دبي.",
       },
     },
     // Product-page fragment labels — invented, anonymised product data with no

@@ -2,9 +2,14 @@
 // Footer.astro — redesign wave A: the slim enterprise footer
 // (docs/design_handoff_website_redesign/SiteFooter.dc.html /
 // SiteFooterAR.dc.html), replacing the single-line P1 footer. Brand mark +
-// "Powered by Intertec Systems · Dubai, UAE", the four page links + email +
-// language toggle, then a hairline row with the copyright and the
-// trademark line.
+// "Powered by Intertec Systems · Dubai, UAE", the four page links, then a
+// hairline row with the copyright.
+//
+// The email address, the "· trumandate.com" half of the trademark line and
+// the footer's own language toggle were all removed on Piyush's call: each
+// duplicated something already on the page (the contact route owns the
+// address, the domain restates the URL bar, and the header carries the
+// language toggle), so the footer keeps only what is not said elsewhere.
 //
 // The reference's own footer draws "Intertec Systems"/"إنترتك سيستمز" as
 // plain text, not the IntertecLogo.astro mark P9 introduced — reproduced
@@ -14,7 +19,6 @@
 // earlier session, not an orphaned "old home component."
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
-import LangToggle from "./LangToggle.astro";
 
 interface Props {
   lang: Language;
@@ -94,13 +98,6 @@ const links = [
             </a>
           ))
         }
-        <a
-          href="mailto:trumandate@intertecsys.com"
-          dir="ltr"
-          class="text-small font-light text-body transition-colors duration-state ease-standard hover:text-accent"
-          >trumandate@intertecsys.com</a
-        >
-        <LangToggle lang={lang} />
       </div>
     </div>
 
