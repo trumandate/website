@@ -280,23 +280,17 @@ Everything below is either a real placeholder still in the code, or a
 one-time action outside this repo. Nothing on this list is guessed at or
 invented; each traces to a TODO.md/known-issues.md entry.
 
-1. **Formspree endpoint — still a placeholder, blocks the form from actually
-   sending anything.** `.env`'s `PUBLIC_FORMSPREE_ENDPOINT` is set to
-   `https://formspree.io/f/placeholder`. It is read in exactly one place at
-   build/runtime (`ContactForm.astro`'s `action` attribute and
-   `scripts/contactForm.ts`'s `fetch` call both use the same env var), so
-   there is exactly one line to change:
-   - Create (or reuse) a Formspree form for `trumandate.com`, copy its
-     endpoint (`https://formspree.io/f/XXXXXXX`).
-   - Set `PUBLIC_FORMSPREE_ENDPOINT` to that URL — in `.env` for local
-     builds, and as a Cloudflare Pages/Workers environment variable for the
-     deployed build (this is a `PUBLIC_` Astro env var, so it is inlined at
-     build time — it must be set **before** `npm run build` runs in CI/CD,
-     not only in a runtime secret store).
-   - No code change needed beyond that — the honeypot field (`_gotcha`,
-     Formspree's own convention) and the no-JS `<form method="POST">`
-     fallback both already point at the same env var.
-   - Test with a real submission (both languages) once the endpoint is live.
+1. **Formspree endpoint — RESOLVED 2026-08-18.** The user created the form
+   (recipient `trumandate@intertecsys.com`); the live endpoint
+   `https://formspree.io/f/meajpeja` is now in `.env` AND hardcoded as the
+   in-code fallback in `ContactForm.astro`'s `action` (the endpoint is
+   public by design — it ships in the form's HTML), so Cloudflare CI builds
+   post correctly with **zero dashboard configuration**. Setting
+   `PUBLIC_FORMSPREE_ENDPOINT` in Cloudflare build variables remains an
+   optional override for staging. Verified end-to-end with a real test
+   submission (`{"ok": true}` from Formspree; test email delivered to the
+   recipient). Remaining user action: none, unless the first-submission
+   "activate this form" email from Formspree is still unclicked.
 
 2. **Contact email — now real, no longer a placeholder.** Was
    `hello@trumandate.com` (a BUILD_FLAGS default) through P7; replaced this

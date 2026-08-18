@@ -48,10 +48,12 @@ Deferred work. Nothing here lives only in a spec, in BUILD_FLAGS.md, or in chat.
   real address, `trumandate@intertecsys.com` (BUILD_FLAGS' `hello@trumandate.com`
   default is gone from every live string), wired into `i18n/ui.ts` and
   `ContactPage.astro`'s `mailto:` link, both languages.
-- **Formspree endpoint is a placeholder.** `.env`'s
-  `PUBLIC_FORMSPREE_ENDPOINT` is a fake URL. Still open at handoff — the one
-  item on this list that needs a real external service Claude Code cannot
-  supply. Exact replacement steps: MORNING-REPORT.md's launch checklist.
+- ~~**Formspree endpoint is a placeholder.**~~ Resolved 2026-08-18: user
+  created the form (recipient `trumandate@intertecsys.com`), live endpoint
+  `https://formspree.io/f/meajpeja` wired into `.env` and as the in-code
+  fallback in `ContactForm.astro` (endpoint is public by design), verified
+  end-to-end with a real accepted test submission. Cloudflare env var is now
+  an optional staging override, not a launch requirement.
 - ~~**`site.webmanifest` not built.**~~ Resolved at P9, alongside the favicon
   set above.
 - **Lenis not added.** PLAN.md §1 lists `src/scripts/lenis.ts`, but smooth
