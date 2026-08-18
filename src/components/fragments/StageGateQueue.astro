@@ -99,6 +99,9 @@ const valueClass = isAr ? "value-ar" : "value";
             class="fill-surface stroke-hairline"
             stroke-width="1"
           />
+          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
+              within the card — no new geometry that reads as information. */}
+          <rect x="141" y="13" width="208" height="1" class="fill-highlight" />
           <text x="334" y="34" text-anchor="end" class={`${labelClass} fill-muted`}>
             {t("home.stageGate.gate1Label")}
           </text>
@@ -129,6 +132,7 @@ const valueClass = isAr ? "value-ar" : "value";
             class="fill-surface stroke-hairline"
             stroke-width="1"
           />
+          <rect x="-99" y="13" width="208" height="1" class="fill-highlight" />
           <text x="94" y="34" text-anchor="end" class={`${labelClass} fill-muted`}>
             {t("home.stageGate.gate2Label")}
           </text>
@@ -145,6 +149,7 @@ const valueClass = isAr ? "value-ar" : "value";
             class="fill-surface stroke-hairline"
             stroke-width="1"
           />
+          <rect x="11" y="13" width="208" height="1" class="fill-highlight" />
           <text x="26" y="34" class={`${labelClass} fill-muted`}>
             {t("home.stageGate.gate1Label")}
           </text>
@@ -174,6 +179,7 @@ const valueClass = isAr ? "value-ar" : "value";
             class="fill-surface stroke-hairline"
             stroke-width="1"
           />
+          <rect x="251" y="13" width="208" height="1" class="fill-highlight" />
           <text x="266" y="34" class={`${labelClass} fill-muted`}>
             {t("home.stageGate.gate2Label")}
           </text>

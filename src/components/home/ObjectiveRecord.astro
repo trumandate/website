@@ -17,6 +17,12 @@
 //     is motion #2, not a seventh animation, so it's just another <Reveal>
 //     instance around the one element, per this build's own instruction to
 //     reuse the existing pattern rather than invent a parallel one.
+//
+// P10 (DESIGN-ELEVATION.md §3.3): each row carries `data-hero-row` +
+// `class="reveal"` — the query hook for scripts/hero.ts's own staggered
+// group (own trigger at top 85%, separate from the hero's load sequence)
+// and the same unconditional CSS end state `.reveal` already provides
+// elsewhere, so a JS failure or reduced motion renders every row in place.
 import RagDot from "../ui/RagDot.astro";
 import Datum from "../type/Datum.astro";
 import Reveal from "../ui/Reveal.astro";
@@ -72,7 +78,10 @@ const sparklinePath =
   <dl class="mt-4">
     {
       rows.map((row) => (
-        <div class="flex items-center justify-between border-t border-hairline py-3">
+        <div
+          class="reveal flex items-center justify-between border-t border-hairline py-3"
+          data-hero-row
+        >
           <dt>
             <Datum as="span" tone="muted">
               {row.label}

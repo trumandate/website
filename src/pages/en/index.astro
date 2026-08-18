@@ -22,6 +22,15 @@
 // these is gated by motion.ts's whenMotionSafe, so the page's *served*
 // state — what a reduced-motion reader or a JS-disabled reader sees — is
 // still every section already in its final, correct, fully-legible state.
+//
+// P10 (DESIGN-ELEVATION.md §3.9): one ground change per page, direction
+// encoding the argument — hero lifts (`texture` + `ground-rise`), the page
+// darkens through failure modes and the chain (`ground="deep"`), then
+// returns to `ink` for the AI moment and lifts to light for the closing
+// CTA's board (`texture` + `ground-board`, wired inside
+// CommandCentreDim.astro). The AI moment's SuggestionCard is wrapped here in
+// the one glow this page is allowed (§3.6) — `data-ai-glow` behind the
+// opaque card, never inside it.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Section from "../../components/layout/Section.astro";
 import Hero from "../../components/home/Hero.astro";
@@ -44,17 +53,20 @@ const t = useTranslations(lang);
   title={t("meta.home.title")}
   description={t("meta.home.description")}
 >
-  <Section>
+  <Section texture>
+    <Fragment slot="backdrop">
+      <div class="absolute inset-0 bg-ground-rise"></div>
+    </Fragment>
     <Hero lang={lang} />
   </Section>
 
-  <Section>
+  <Section ground="deep" seam="down">
     <FailureModes lang={lang} />
   </Section>
 
   <ChainSection lang={lang} />
 
-  <Section>
+  <Section seam="up">
     <div class="grid grid-cols-1 gap-gutter lg:grid-cols-2">
       <div class="relative">
         <!-- The spine continues out of the chain, into this section, and
@@ -82,13 +94,23 @@ const t = useTranslations(lang);
         </Reveal>
       </div>
 
-      <div>
+      <!-- P10 (DESIGN-ELEVATION.md §3.6): the one glow per page, always the
+           AI card, never anything else. The glow layer sits BEHIND the
+           opaque card and never inside it — the card's own accent-on-jade
+           and muted-on-jade pairs have zero contrast headroom. -->
+      <div class="relative">
+        <div
+          aria-hidden="true"
+          data-ai-glow
+          class="pointer-events-none absolute -inset-12 z-0 bg-spotlight-accent"
+        >
+        </div>
         <SuggestionCard lang={lang} />
       </div>
     </div>
   </Section>
 
-  <Section bleed>
+  <Section bleed texture>
     <ClosingCta lang={lang} />
   </Section>
 </BaseLayout>

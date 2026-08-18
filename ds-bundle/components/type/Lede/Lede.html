@@ -1,0 +1,27 @@
+<!-- @dsCard group="type" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lede</title>
+<link rel="stylesheet" href="../../../styles.css">
+<style>
+  body{margin:0;padding:24px;background:#04241E}
+  .ds-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:start}
+  .ds-cell{border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:24px;min-width:0}
+  .ds-cell>h4{margin:0 0 16px;font:600 11px/1.2 system-ui;color:#9CB8AE;text-transform:uppercase;letter-spacing:.06em}
+</style>
+</head>
+<body class="bg-ink">
+  <div class="ds-grid">
+    <section class="ds-cell">
+      <h4>Latin — as="p" (default; capped at 56ch via max-w-measure)</h4>
+      <p class="max-w-measure text-lede font-light text-body">TruMandate holds strategy, KPIs, initiatives and benefits in one record, so the office that sets direction can see what that direction produced.</p>
+    </section>
+    <section class="ds-cell" dir="rtl" lang="ar">
+      <h4>Arabic — as="p" (dir="rtl"; [dir=rtl] sets the site-wide Arabic line-height, 1.80 vs Latin's 1.55)</h4>
+      <p class="max-w-measure text-lede font-light text-body">يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد، ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.</p>
+    </section>
+  </div>
+</body>
+</html>

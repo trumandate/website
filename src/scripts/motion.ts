@@ -116,4 +116,15 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
 /** The site ease, ready to pass as `ease:` in any gsap.to/from/timeline call. */
 export const standardEase = cubicBezier(0.22, 0.61, 0.36, 1);
 
+/**
+ * P10 (DESIGN-ELEVATION.md §2.2): the `micro` tier — Attio's measured
+ * `.22,1,.36,1`, the same shape family as `standard` with `y1` raised from
+ * 0.61 to 1, so short states (≤300ms) snap out of rest and decelerate the
+ * whole way. `y` never exceeds 1, so there is no overshoot — reimplemented
+ * the same way as `standardEase` (a plain function, not a CSS string or the
+ * CustomEase plugin) so GSAP tweens match the CSS `ease-micro` utility
+ * exactly without adding a dependency outside the three-plugin allowlist.
+ */
+export const microEase = cubicBezier(0.22, 1, 0.36, 1);
+
 export { gsap, ScrollTrigger };

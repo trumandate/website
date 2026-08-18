@@ -21,7 +21,7 @@
 // showing "01 / 05" / "Objective". A JS failure degrades to the identical
 // page for the identical reason: none of that markup is JS-authored, so
 // nothing has to "fail open" — it was already open.
-import { gsap, ScrollTrigger, whenMotionSafe } from "./motion";
+import { gsap, ScrollTrigger, whenMotionSafe, standardEase, microEase } from "./motion";
 
 whenMotionSafe(() => {
   const track = document.querySelector<HTMLElement>("[data-chain-track]");
@@ -70,11 +70,25 @@ whenMotionSafe(() => {
             const count = `${String(index + 1).padStart(2, "0")} / ${String(
               total,
             ).padStart(2, "0")}`;
+            // P10 (DESIGN-ELEVATION.md §3.5(d)): the marker's text used to
+            // mutate `textContent` with no transition — the only text on the
+            // site that mutated, which read as a glitch. On change, dip to
+            // 0.35 opacity and tween back to 1 over 0.20s with `micro`.
             if (markerCount && markerCount.textContent !== count) {
               markerCount.textContent = count;
+              gsap.fromTo(
+                markerCount,
+                { opacity: 0.35 },
+                { opacity: 1, duration: 0.2, ease: microEase },
+              );
             }
             if (markerName && markerName.textContent !== name) {
               markerName.textContent = name;
+              gsap.fromTo(
+                markerName,
+                { opacity: 0.35 },
+                { opacity: 1, duration: 0.2, ease: microEase },
+              );
             }
           },
         },
@@ -92,8 +106,12 @@ whenMotionSafe(() => {
   // reduced motion and a JS failure both show the finished chain, and only
   // once motion is confirmed safe does a node ever dim before its trigger
   // fires. ----
+  // P10 (DESIGN-ELEVATION.md §3.5(b)): ring width now stays at 2 in both
+  // states — only colour swaps — so the existing `transition-colors`
+  // declaration is honest. Previously REST held `ring-1`, a WIDTH change
+  // `transition-colors` never animated, so the dot visibly snapped.
   const ACTIVE_DOT = ["bg-accent", "ring-2", "ring-accent"];
-  const REST_DOT = ["bg-jade", "ring-1", "ring-muted"];
+  const REST_DOT = ["bg-jade", "ring-2", "ring-muted"];
 
   nodes.forEach((node) => {
     const dot = node.querySelector<HTMLElement>("[data-chain-dot]");
@@ -101,10 +119,16 @@ whenMotionSafe(() => {
 
     dot?.classList.remove(...ACTIVE_DOT);
     dot?.classList.add(...REST_DOT);
+    // P10 (§3.5(c)): the caption now arrives (opacity + a 6px block-axis
+    // translate) instead of merely brightening, over `duration-copy` (400ms,
+    // see tailwind.config.mjs's own comment on that token) rather than the
+    // shorter `duration-state`. Still an imperative class toggle driving a
+    // plain CSS transition, exactly as the opacity-only version was.
     copy?.classList.add(
       "opacity-rest",
-      "transition-opacity",
-      "duration-state",
+      "translate-y-1.5",
+      "transition",
+      "duration-copy",
       "ease-standard",
     );
 
@@ -115,7 +139,16 @@ whenMotionSafe(() => {
       onEnter: () => {
         dot?.classList.remove(...REST_DOT);
         dot?.classList.add(...ACTIVE_DOT);
-        copy?.classList.remove("opacity-rest");
+        copy?.classList.remove("opacity-rest", "translate-y-1.5");
+
+        // P10 (§3.5(b)): a one-shot seat on activation, transform only, no
+        // layout — scale 1 → 1.15 → 1 over 0.32s total (2 × 0.16s legs).
+        if (dot) {
+          gsap
+            .timeline()
+            .to(dot, { scale: 1.15, duration: 0.16, ease: standardEase })
+            .to(dot, { scale: 1, duration: 0.16, ease: standardEase });
+        }
       },
     });
   });

@@ -2,6 +2,15 @@
 // Rule.astro — the hairline, solid or dashed (spec §3: "sections separate
 // with hairline rules, not cards"). A block-direction (horizontal) divider;
 // unrelated to Spine.astro, which is the inline-start vertical rail.
+//
+// P10 (DESIGN-ELEVATION.md §3.4, §5.2): FailureModes.astro's three instances
+// draw via a `scaleX(0 → 1)` tween (scripts/reveal.ts's group handler).
+// `transform-origin` is pinned to the inline-start edge here so the draw
+// reads correctly under RTL — Tailwind's own `origin-*` utilities are
+// physical-only (`origin-left`/`origin-right`), so this uses the
+// `:global([dir="rtl"])` scoped-style pattern SuggestionCard.astro already
+// established at P5. Harmless on every other Rule instance that never
+// animates: an unused transform-origin has no visible effect.
 interface Props {
   dashed?: boolean;
   class?: string;
@@ -17,3 +26,13 @@ const { dashed = false, class: className }: Props = Astro.props;
     className,
   ]}
 />
+
+<style>
+  hr {
+    transform-origin: 0% 50%;
+  }
+
+  :global([dir="rtl"]) hr {
+    transform-origin: 100% 50%;
+  }
+</style>

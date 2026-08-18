@@ -75,8 +75,16 @@ const log = Astro.props.log ?? t("home.ai.log");
 const barWidth = `width: ${Math.round(confidence * 100)}%`;
 ---
 
+{
+  /* P10 (DESIGN-ELEVATION.md §3.6): `z-10` seats this opaque card above the
+     spotlight-accent glow layer its caller wraps it in (index.astro) —
+     "the glow layer is strictly behind an opaque card and never inside it,"
+     the binding AA constraint, since this card's own accent-on-jade and
+     muted-on-jade pairs have zero contrast headroom. `shadow-focal` is
+     tier 4 — the one glow per page, always this card, never anything else. */
+}
 <div
-  class="reveal relative rounded-control border-y border-e border-s-marker border-hairline border-s-accent bg-jade p-6"
+  class="reveal relative z-10 rounded-control border-y border-e border-s-marker border-hairline border-s-accent bg-jade p-6 shadow-focal"
   data-ai-card
 >
   <div class="flex items-baseline justify-between gap-4">

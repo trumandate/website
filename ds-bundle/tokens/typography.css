@@ -1,0 +1,64 @@
+/* typography.css — the three type roles (spec §3) plus the Arabic
+ * counterparts, copied verbatim from tailwind.config.mjs `theme.fontFamily`,
+ * `theme.fontWeight`, `theme.fontSize` and `theme.lineHeight` /
+ * `theme.letterSpacing`. This site has exactly three roles: display/heading
+ * (semi 600), body/lede (light 300), and data/eyebrow (mono, data 500,
+ * tracked). There is no fourth role — see Display.astro's own comment.
+ *
+ * Arabic handling is NOT a separate role — it is the same three roles with
+ * different line-height/letter-spacing/(for data/eyebrow) font-family,
+ * switched by a `[dir="rtl"]` selector in the compiled CSS (see
+ * _ds_bundle.css and every component .prompt.md's "bilingual/RTL behaviour"
+ * section). Letterspaced mono destroys Arabic joining, so the data/eyebrow
+ * role swaps its FAMILY to Plex Sans Arabic 600 in Arabic — not just its
+ * metrics.
+ */
+
+:root {
+  /* ---- families ---- */
+  --font-sans: "IBM Plex Sans Arabic", system-ui, "Segoe UI", Tahoma, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ---- weights — three only, named for their role, not their number ---- */
+  --font-weight-light: 300; /* body role */
+  --font-weight-semi: 600; /* display, headings, buttons, Arabic eyebrow */
+  --font-weight-data: 500; /* Plex Mono only */
+
+  /* ---- line-heights ---- */
+  --line-height-latin: 1.55;
+  --line-height-arabic: 1.8;
+  --line-height-tight: 1.06;
+  --line-height-heading: 1.14;
+  --line-height-heading-ar: 1.4;
+  --line-height-display-ar: 1.32;
+
+  /* ---- letter-spacing ---- */
+  --tracking-display: -0.02em;
+  --tracking-display-lg: -0.028em; /* Latin only, above the `lg` breakpoint where the display clamp tops out at 68px */
+  --tracking-heading: -0.015em;
+  --tracking-brand: -0.01em; /* wordmark, nav links */
+  --tracking-none: 0;
+  --tracking-eyebrow: 0.16em;
+  --tracking-datum: 0.1em;
+}
+
+/*
+ * ---- fontSize scale (Latin values; each pairs a size with its own
+ * line-height and letter-spacing, exactly as tailwind.config.mjs declares
+ * them as a [size, {lineHeight, letterSpacing}] tuple) ----
+ *
+ *   display    clamp(2.25rem, 5.2vw, 4.25rem)   / 1.06 / -0.02em   — the ONE h1 role, one instance per page
+ *   h2         clamp(1.65rem, 3.4vw, 2.75rem)   / 1.14 / -0.015em  — section headings
+ *   h3         clamp(1.20rem, 2.2vw, 1.65rem)   / 1.20 / -0.01em   — section headings, smaller step
+ *   lede       clamp(1.02rem, 1.4vw, 1.20rem)   / 1.55 / 0         — the one intro paragraph per section
+ *   body       1rem                              / 1.55 / 0         — running paragraph text
+ *   small      0.94rem                            / 1.55 / 0         — nav, buttons, footer, form labels
+ *   eyebrow    0.70rem                            / 1.20 / 0.16em    — mono uppercase label
+ *   datum      0.72rem                            / 1.30 / 0.10em    — mono data values
+ *   eyebrow-ar 0.80rem                            / 1.50 / 0         — Arabic counterpart (Plex Sans 600, no tracking)
+ *   datum-ar   0.82rem                            / 1.60 / 0         — Arabic counterpart
+ *
+ * These ship as compiled Tailwind utilities (`.text-display`, `.text-h2`,
+ * `.text-eyebrow`, …) in _ds_bundle.css, not as custom properties here —
+ * grep _ds_bundle.css for the exact declarations before using a class name.
+ */

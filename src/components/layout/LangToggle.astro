@@ -22,7 +22,44 @@ const href = altUrl(Astro.url, target);
   href={href}
   hreflang={target}
   lang={target}
-  class="text-small font-semi text-paper transition-colors duration-state ease-standard hover:text-accent"
+  class="lang-link relative text-small font-semi text-paper transition-colors duration-state ease-standard hover:text-accent"
 >
   {label}
 </a>
+
+<style>
+  /* P10 (DESIGN-ELEVATION.md §3.8) — same recipe as Nav.astro's underline:
+   * transform-origin flip for RTL (SuggestionCard.astro's established
+   * pattern), and the transition below is motion-safe: equivalent — wrapped
+   * in `@media (prefers-reduced-motion: no-preference)`, the exact CSS
+   * Tailwind's own `motion-safe:` variant compiles to — hand-authored
+   * because the transition targets a pseudo-element's `transform`, which a
+   * utility class cannot address directly on `::after`. */
+  .lang-link::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: -0.25rem;
+    inline-size: 100%;
+    block-size: 1px;
+    background-color: theme("colors.accent");
+    transform: scaleX(0);
+    transform-origin: 0% 50%;
+  }
+
+  :global([dir="rtl"]) .lang-link::after {
+    transform-origin: 100% 50%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lang-link::after {
+      transition: transform theme("transitionDuration.micro")
+        theme("transitionTimingFunction.micro");
+    }
+  }
+
+  .lang-link:hover::after,
+  .lang-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+</style>

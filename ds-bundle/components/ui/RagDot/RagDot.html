@@ -1,0 +1,71 @@
+<!-- @dsCard group="ui" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RagDot</title>
+<link rel="stylesheet" href="../../../styles.css">
+<style>
+  body{margin:0;padding:24px;background:#04241E}
+  .ds-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;align-items:start}
+  .ds-cell{border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:24px;min-width:0}
+  .ds-cell>h4{margin:0 0 16px;font:600 11px/1.2 system-ui;color:#9CB8AE;text-transform:uppercase;letter-spacing:.06em}
+  .row{display:flex;align-items:center;gap:10px;font:400 14px/1.4 system-ui;color:#F1F5F3}
+  .announced{margin:12px 0 0;font:400 12px/1.5 system-ui;color:#9CB8AE}
+  .announced code{color:#19C39B}
+  /* This visually-hidden class is copied verbatim from the compiled
+     _ds_bundle.css utility of the same name; repeated here only so the card
+     is legible without the stylesheet link. The real card links styles.css
+     and does not need this duplicate — see the utility's real definition
+     there. */
+  .visually-hidden{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border-width:0;padding:0;margin:-1px}
+</style>
+</head>
+<body class="bg-ink">
+  <div class="ds-grid">
+    <section class="ds-cell">
+      <h4>status="on-track"</h4>
+      <span class="row">
+        <span class="inline-flex items-center">
+          <span aria-hidden="true" class="inline-block size-rag-dot rounded-full bg-accent"></span>
+          <span class="visually-hidden">Status: on track</span>
+        </span>
+        Unified service portal
+      </span>
+      <p class="announced">Colour never carries status alone (WCAG 1.4.1): the dot is <code>aria-hidden</code>, and a screen reader announces the visually-hidden text instead — <code>"Status: on track"</code>.</p>
+    </section>
+    <section class="ds-cell">
+      <h4>status="at-risk"</h4>
+      <span class="row">
+        <span class="inline-flex items-center">
+          <span aria-hidden="true" class="inline-block size-rag-dot rounded-full bg-amber"></span>
+          <span class="visually-hidden">Status: at risk</span>
+        </span>
+        Records digitisation
+      </span>
+      <p class="announced">Announced text: <code>"Status: at risk"</code>.</p>
+    </section>
+    <section class="ds-cell">
+      <h4>status="off-track"</h4>
+      <span class="row">
+        <span class="inline-flex items-center">
+          <span aria-hidden="true" class="inline-block size-rag-dot rounded-full bg-red"></span>
+          <span class="visually-hidden">Status: off track</span>
+        </span>
+        Legacy decommission
+      </span>
+      <p class="announced">Announced text: <code>"Status: off track"</code>. Note: <code>red</code> is 4.42:1 on <code>ink</code> — below the 4.5:1 AA-normal floor — which is exactly why this component never uses colour as the only signal.</p>
+    </section>
+    <section class="ds-cell" dir="rtl" lang="ar">
+      <h4>status="at-risk" — Arabic (dir="rtl"; the hidden word is bilingual, i18n/ui.ts's ragStatus table)</h4>
+      <span class="row">
+        <span class="inline-flex items-center">
+          <span aria-hidden="true" class="inline-block size-rag-dot rounded-full bg-amber"></span>
+          <span class="visually-hidden">الحالة: في خطر</span>
+        </span>
+        رقمنة السجلات
+      </span>
+    </section>
+  </div>
+</body>
+</html>

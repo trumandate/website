@@ -518,3 +518,44 @@ and will be addressed as the pages that touch them get built (P2 onward).
 - **The Formspree endpoint remains the one placeholder Claude Code cannot
   close.** Exact replacement steps are in MORNING-REPORT.md's launch
   checklist rather than repeated here.
+
+## From P10 wave 1 (design elevation — home page)
+
+- **A clean throttled (Slow 4G + 4x CPU) LCP re-measure on an idle machine is
+  owed again**, the same carried item as P6 onward, now with a wave-1-specific
+  wrinkle: measured LCP on this session's scratch static server exceeded
+  DESIGN-ELEVATION.md §6.1's 900ms gate on BOTH the pre-wave-1 baseline
+  (1,398ms / 1,708ms across two runs, `git stash`-isolated) and the wave-1
+  build (964ms / 1,111ms across two runs) — i.e. wave 1 measured *lower* than
+  the untouched baseline in this environment, not higher. The 900ms gate was
+  not met, but not because of anything this wave added; see
+  known-issues.md's P10 wave 1 section for the full paired measurement. The
+  §6.4 abort ("drop the hero SplitText") was deliberately NOT invoked, because
+  removing SplitText would not address the actual bottleneck (main-thread
+  render delay present in the untouched baseline too) and would discard
+  spec-approved value for no measured gain. Flagged for Piyush rather than
+  silently applied or silently ignored, per CLAUDE.md's "stop and say so."
+- **DESIGN-ELEVATION.md §3.7(b) is internally inconsistent about the
+  highlight-rect count on `CommandCentreDim.astro`** — its own itemised list
+  ("each metric card, the initiative table, the AI panel, the benefit strip")
+  names six surfaces, but the same paragraph also states "Nine rects."
+  Implemented as itemised (six rects: three metric cards + table + AI panel +
+  benefit strip), flagged here rather than inventing three more surfaces to
+  force the count to nine. Worth a spec correction, not a code change.
+- **Wave 2 (product pages + contact, DESIGN-ELEVATION.md §6.2) and wave 3
+  (full QA re-verification and WebKit pass, §6.3) have not started.** This
+  session was scoped to wave 1 (home page + the shared chrome it touches)
+  only, per the task's own instruction.
+- **No WebKit-specific verification of any wave-1 change.** Same standing gap
+  as every prior phase's product-page/contact prompts — wave 3 is where
+  spec §10's WebKit pass (including the new `backdrop-blur` header) is
+  scheduled.
+- **The scroll frame-trace check (no sustained frames > 16.7ms) was verified
+  once, not paired against a pre-wave-1 control.** A scripted full-page
+  scroll on `/en/` at 1440 under 4x CPU throttle showed ~173ms of total
+  forced-reflow time, attributed by the tool to `motion.ts`/GSAP
+  ScrollTrigger internals (pre-existing architecture, not a wave-1
+  addition) with an "estimated savings: none" verdict. Unlike the LCP check,
+  this was not re-measured against the untouched baseline for a clean
+  before/after — worth doing in wave 3's full re-verification pass if frame
+  performance becomes a concern.

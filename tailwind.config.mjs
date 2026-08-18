@@ -26,7 +26,11 @@ export default {
       body: "#C6DAD3", // running paragraph text (see justification 1)
       surface: "#0A3B31", // fragment card interior (justification 2)
       "surface-deep": "#021813", // fragment ground behind cards (justification 2)
-      hairline: "rgba(255,255,255,0.10)",
+      hairline: "rgba(255,255,255,0.10)", // content-level borders, header rule
+      // ---- P10 (DESIGN-ELEVATION.md §2.1) ----
+      "hairline-soft": "rgba(255,255,255,0.06)", // chrome/decoration only: section rules, seam edges — never a control's only boundary
+      highlight: "rgba(255,255,255,0.16)", // the top-edge light catch on a raised surface
+      shade: "rgba(2,24,19,0.55)", // ambient depth layer; = surface-deep #021813 at 55%
     },
 
     fontFamily: {
@@ -85,6 +89,7 @@ export default {
 
     letterSpacing: {
       display: "-0.02em",
+      "display-lg": "-0.028em", // P10 (§2.4): Latin only, above `lg` where the display clamp tops out at 68px — see global.css's [dir=rtl] zero-override
       heading: "-0.015em",
       brand: "-0.01em",
       none: "0",
@@ -160,6 +165,9 @@ export default {
       transitionTimingFunction: {
         // spec §7 says "custom ease" and never names it. This is the site ease.
         standard: "cubic-bezier(0.22, 0.61, 0.36, 1)",
+        // ---- P10 (DESIGN-ELEVATION.md §2.2) — the two-tier system ----
+        micro: "cubic-bezier(0.22, 1, 0.36, 1)", // hover/focus/short states ≤300ms. y never exceeds 1: no overshoot, no playful bounce.
+        exit: "cubic-bezier(0.32, 0, 0.67, 0)", // ease-IN only (y2=0): dismiss/hide
       },
 
       transitionDuration: {
@@ -170,11 +178,33 @@ export default {
         reveal: "800ms", // motion #2
         wipe: "900ms", // motion #3
         counter: "1200ms", // motion #5 — §7 names no duration for the count-up; chosen long enough to read as counting, short enough not to stall the reader
+        // ---- P10 (DESIGN-ELEVATION.md §2.3) ----
+        micro: "150ms", // hover transform + colour, paired with ease-micro
+        line: "700ms", // one SplitText line, hero only
+        glow: "900ms", // the AI spotlight's fade-and-settle
+        // Not one of DESIGN-ELEVATION.md §2.3's named four (that list is
+        // micro/line/glow + the stagger delay below): §3.5(c) asks for the
+        // chain caption's arrival to run "0.40s", a value with no token
+        // anywhere in this document. Rather than write a bare arbitrary
+        // duration in scripts/chain.ts (this file is "the ONLY file
+        // containing a hex value" and, by the same discipline, the one place
+        // every other magnitude lives too), it's named here instead — see
+        // chain.ts's own comment and the wave-1 report for the discrepancy.
+        copy: "400ms",
+      },
+
+      transitionDelay: {
+        // P10 (DESIGN-ELEVATION.md §2.3): the one stagger step. Every
+        // staggered group on the site uses this, or a stated multiple —
+        // groups longer than 8 children halve it to 0.03 in the driving
+        // script (the dossier's own limit).
+        stagger: "60ms",
       },
 
       translate: {
         reveal: "24px", // motion #2 offset, spec §7
         card: "16px", // motion #4 slide
+        stagger: "12px", // P10 (§2.4): per-child offset in a staggered group; deliberately < reveal's 24px
       },
 
       zIndex: {
@@ -185,6 +215,55 @@ export default {
 
       screens: {
         // Tailwind defaults only. No bespoke breakpoints anywhere in the codebase.
+      },
+
+      // ---- P10 (DESIGN-ELEVATION.md §2.5) — elevation ----
+      // Function form so `theme()` resolves and `highlight`/`shade` each have
+      // exactly one spelling. Real-DOM surfaces only: on `ink` a black
+      // drop-shadow is invisible, so the inset top highlight is what actually
+      // reads as raised (visual dossier #9). SVG fragments never get a
+      // box-shadow or filter — see KpiCard.astro and friends, §4.2.
+      boxShadow: ({ theme }) => ({
+        raised: `inset 0 1px 0 0 ${theme("colors.highlight")}, 0 2px 4px -1px ${theme("colors.shade")}, 0 10px 24px -8px ${theme("colors.shade")}`,
+        // Tier 4, the AI card only (one glow per page, DESIGN-ELEVATION §3.6).
+        // The distinction is the accent ring, not a brighter white.
+        focal: `inset 0 1px 0 0 ${theme("colors.highlight")}, 0 0 0 1px rgba(25,195,155,0.14), 0 2px 4px -1px ${theme("colors.shade")}, 0 14px 32px -10px ${theme("colors.shade")}`,
+        // Header, scrolled state only — separates chrome from content by
+        // light, not just a line.
+        chrome: `0 10px 28px -18px ${theme("colors.shade")}`,
+      }),
+
+      // ---- P10 (DESIGN-ELEVATION.md §2.6) — background layers ----
+      // Function form so `theme("colors.ink")` / `.surface-deep` each have
+      // one spelling. Every value here is an existing token at a stated
+      // alpha (named in each comment); no new hue is introduced.
+      backgroundImage: ({ theme }) => ({
+        // Ground material — hero band and closing CTA ONLY (§1.3(c)).
+        "grid-draft":
+          "repeating-linear-gradient(to right,  rgba(255,255,255,0.035) 0 1px, transparent 1px 32px)," +
+          "repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0 1px, transparent 1px 32px)",
+        // Ground luminance — lifts where the eye enters a band, settles by 78%.
+        // rgba(15,92,75,…) is `jade-lift`.
+        "ground-rise":
+          "linear-gradient(to bottom, rgba(15,92,75,0.18) 0%, rgba(15,92,75,0.05) 42%, transparent 78%)",
+        // The board's own light, closing CTA only. Ground hue, never accent.
+        "ground-board":
+          "radial-gradient(70% 55% at 50% 40%, rgba(15,92,75,0.28) 0%, transparent 70%)",
+        // Section seams — a 128px blend band, never a 1px cut.
+        "seam-down": `linear-gradient(to bottom, ${theme("colors.ink")} 0%, ${theme("colors.surface-deep")} 100%)`,
+        "seam-up": `linear-gradient(to bottom, ${theme("colors.surface-deep")} 0%, ${theme("colors.ink")} 100%)`,
+        // THE ONE GLOW. AI card only, on a wrapper BEHIND the opaque card
+        // (§3.6). rgba(25,195,155,…) is `accent`.
+        "spotlight-accent":
+          "radial-gradient(58% 58% at 50% 38%, rgba(25,195,155,0.13) 0%, rgba(25,195,155,0.05) 38%, transparent 72%)",
+        // Four-edge vignette for the dimmed composition — replaces the hard
+        // inline crop. rgba(4,36,30,…) is `ink`.
+        "vignette-ink": `radial-gradient(72% 62% at 50% 46%, transparent 30%, rgba(4,36,30,0.55) 68%, ${theme("colors.ink")} 100%)`,
+      }),
+
+      // ---- P10 (DESIGN-ELEVATION.md §2.7) ----
+      backdropBlur: {
+        veil: "10px", // pairs with the existing opacity.veil (0.72)
       },
     },
   },

@@ -1,0 +1,32 @@
+/* spacing.css — layout measurements from tailwind.config.mjs `theme.extend`:
+ * spacing, maxWidth, borderWidth and zIndex. Values copied verbatim; the
+ * clamp() expressions are real — they are what the site actually ships, not
+ * a simplified stand-in.
+ */
+
+:root {
+  /* ---- spacing scale (theme.extend.spacing) ---- */
+  --spacing-header: 6.5rem; /* 104px: clears the fixed header */
+  --spacing-gutter: clamp(1.25rem, 5vw, 4.5rem); /* inline padding — Section.astro only */
+  --spacing-section: clamp(4.5rem, 11vh, 8.25rem); /* block rhythm — Section.astro only */
+  --spacing-section-tight: clamp(3rem, 7vh, 5rem);
+  --spacing-rail: 3.375rem; /* 54px: content offset from the chain spine */
+  --spacing-node: 0.8125rem; /* 13px: chain node diameter */
+  --spacing-node-inset: 2.875rem; /* 46px: node centre back from the content edge */
+  --spacing-rag-dot: 0.5625rem; /* 9px: RAG status dot diameter */
+
+  /* ---- max-widths (theme.extend.maxWidth) ---- */
+  --max-width-content: 1180px; /* the one wrapper width, every page */
+  --max-width-measure: 56ch; /* lede paragraphs */
+  --max-width-measure-tight: 52ch;
+  --max-width-measure-head: 24ch;
+
+  /* ---- border widths (theme.extend.borderWidth) ---- */
+  --border-width-hair: 1px;
+  --border-width-marker: 2px; /* the accent edge rule on the AI card */
+
+  /* ---- stacking (theme.extend.zIndex) ---- */
+  --z-header: 50;
+  --z-progress: 60;
+  --z-skip: 70;
+}

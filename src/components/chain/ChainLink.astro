@@ -12,6 +12,14 @@
 // that swaps them back. Node activation is deliberately not part of the
 // rail's scrub timeline — it is its own independent trigger per link.
 //
+// P10 (DESIGN-ELEVATION.md §3.5(b)/(c)): the rest state's ring now stays
+// `ring-2` (only colour swaps to `ring-muted`), so the served `transition-
+// colors` declaration is honest — it previously held `ring-1`, a width
+// change `transition-colors` never animates, which read as a snap. On
+// activation the dot also gets a one-shot `scale` seat, and the copy's rest
+// state gains a small block-axis translate that resolves alongside the
+// opacity on arrival (`duration-copy`, 400ms) — see chain.ts.
+//
 // `start-[-0.5rem]` — see Hero.astro's comment: this wrapper is a direct
 // child of ChainSection's `ps-rail` list, so the same `rail - node-inset =
 // 0.5rem` correction applies.

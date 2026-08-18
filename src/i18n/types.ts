@@ -66,7 +66,16 @@ export interface UiStrings {
     hero: {
       eyebrow: string;
       headline: string;
-      lede: string;
+      /** P10 (DESIGN-ELEVATION.md §3.3): the lede's two-tone split. Replaces
+       * the single `lede` string — `ledeLead` is the load-bearing clause
+       * (rendered `text-paper`), `ledeRest` is the remainder (`text-body`),
+       * joined by one space inside a single `<Lede>`. A markup/wiring change,
+       * not a copy change: concatenating `ledeLead + " " + ledeRest` must
+       * reproduce the original sentence byte-for-byte in both languages. The
+       * Arabic split lands at the equivalent clause by meaning, not the same
+       * word index. */
+      ledeLead: string;
+      ledeRest: string;
       panelLabel: string;
       row1Label: string;
       row1Value: string;

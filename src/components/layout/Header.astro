@@ -36,7 +36,10 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<header data-header class="fixed inset-x-0 top-0 z-header bg-ink/veil">
+<header
+  data-header
+  class="fixed inset-x-0 top-0 z-header bg-ink/veil backdrop-blur-veil"
+>
   <div
     class="mx-auto flex max-w-content items-center justify-between gap-gutter px-gutter py-4"
   >
@@ -75,6 +78,12 @@ const t = useTranslations(lang);
 <style>
   [data-header] {
     position: fixed;
+    /* P10 (DESIGN-ELEVATION.md §3.2): the scrolled state separates chrome
+     * from content by light, not just a line — same duration/ease pair the
+     * hairline opacity below already uses. */
+    box-shadow: none;
+    transition: box-shadow theme("transitionDuration.header")
+      theme("transitionTimingFunction.standard");
   }
 
   [data-header]::after {
@@ -87,6 +96,10 @@ const t = useTranslations(lang);
     opacity: 0;
     transition: opacity theme("transitionDuration.header")
       theme("transitionTimingFunction.standard");
+  }
+
+  [data-header].is-scrolled {
+    box-shadow: theme("boxShadow.chrome");
   }
 
   [data-header].is-scrolled::after {

@@ -29,7 +29,7 @@ const links = [
         <li>
           <a
             href={link.href}
-            class="text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent"
+            class="nav-link relative text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent"
           >
             {link.label}
           </a>
@@ -38,3 +38,43 @@ const links = [
     }
   </ul>
 </nav>
+
+<style>
+  /* P10 (DESIGN-ELEVATION.md §3.8): a 1px underline grows from the
+   * inline-start edge on hover/focus, CSS-only (works with JavaScript
+   * disabled, per the motion dossier's own recommendation over a GSAP hover
+   * tween). Transform-origin flip, not a physical `origin-*` utility — the
+   * pattern SuggestionCard.astro already established at P5 for the same
+   * "horizontal motion mirrors under RTL" rule (spec §8). */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: -0.25rem;
+    inline-size: 100%;
+    block-size: 1px;
+    background-color: theme("colors.accent");
+    transform: scaleX(0);
+    transform-origin: 0% 50%;
+  }
+
+  :global([dir="rtl"]) .nav-link::after {
+    transform-origin: 100% 50%;
+  }
+
+  /* motion-safe: equivalent, hand-authored because the transition targets a
+   * pseudo-element rather than a utility class. Under `reduce`, no rule here
+   * sets `transition`, so the hover/focus `scaleX(1)` below still applies —
+   * instantly, with no animated step. */
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-link::after {
+      transition: transform theme("transitionDuration.micro")
+        theme("transitionTimingFunction.micro");
+    }
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+</style>

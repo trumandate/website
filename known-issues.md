@@ -676,3 +676,178 @@ served copy).
 **`npm run build`** (11 pages, including the new `/sitemap.xml` endpoint)
 **and `npm run check`** (64 files, up from 62 — `Meta.astro` and the
 `tailwind.config.mjs` import in `BaseLayout.astro`) **both clean.**
+
+---
+
+## P10 wave 1
+
+**A genuine ship-blocking defect, found by orchestrator verification, not by
+this session's own testing: the hero's two CTA buttons ("Request a
+walkthrough", "See the chain") stayed at cumulative opacity 0 indefinitely on
+`/en/` and `/ar/` — GSAP's `.from()` on Button.astro's own CSS `transition`
+utility, combined with `stagger`, silently freezes a staggered target's
+render short of its end value, with zero console errors.** Reproduced,
+root-caused and fixed in the same session it was reported.
+
+Root cause, isolated empirically (not guessed): `Button.astro`'s base
+classes gained a bare `transition` utility this wave (§3.8, covering
+`opacity`/`transform` among other properties), and `scripts/hero.ts`'s CTA
+row entrance directly `.from()`-tweens the two Button-rendered anchors'
+`opacity`/`y` with a `stagger`. A CSS `transition` on the same properties a
+GSAP tween is driving via inline styles causes the browser's transition
+engine to re-trigger on every GSAP-written frame, chasing a constantly
+moving target; for a STAGGERED (delayed-start) element specifically, this
+leaves the tween's `progress()`/`totalTime()` bookkeeping reporting full
+completion while the actual `element.style.opacity` is frozen near its
+starting value, forever — confirmed with a live, isolated reproduction
+(cloned the real button elements with their real classes, ran the identical
+stagger tween: index 0, no delay, completes; index 1, staggered, freezes at
+~0.06 opacity even after 6+ real seconds, `tl.progress() === 1` throughout).
+`aiCard.ts`'s own staggered Accept/Modify/Reject buttons were unaffected
+because those elements use `transition-colors` (colour properties only),
+never `transition` — confirming the mechanism precisely, not coincidentally.
+
+First fix attempt — folding `transition: "none"` + `clearProps: "transition"`
+directly into the SAME staggered `.from()` call — made it worse, not
+better: reproduced in isolation too, it broke rendering for EVERY target in
+the stagger group, not just the delayed one (GSAP's stagger distribution
+does not appear to handle a non-tweened, non-numeric property placed
+alongside a staggered numeric one). The working fix, verified against the
+live built page at 0.5s/2.5s/5s past load (the orchestrator's own repro
+window): neutralise the transition with a SEPARATE, non-staggered
+`gsap.set(ctas, { transition: "none" })` immediately before the `.from()`
+tween is created, then restore it via `tl.call()` once the tween completes
+(`el.style.transition = ""`, letting the CSS class's declaration resume for
+hover/press). Both buttons now hold `opacity: 1` from well before 0.5s
+through past 5s, transition correctly restored to `0.15s` afterward.
+
+The invariant this also violated: CLAUDE.md's "end state lives in CSS, GSAP
+animates from an offset" was true here only by omission (Button.astro sets
+no opacity/transform of its own, so the CSS-served default already happened
+to be fully visible) — but nothing in markup SAID so, unlike every other
+staggered element on the site (`ObjectiveRecord`'s rows, `FailureModes`'
+group children), which carry an explicit `class="reveal"`. Both
+`Hero.astro`'s Button instances now carry `class="reveal"` too, for the same
+reason: not a visual change (redundant with the already-correct default),
+but an explicit, grep-able statement of the contract, and cheap insurance
+if a future tween ever hangs again.
+
+Re-audit after the fix, per the orchestrator's own method (every
+text-bearing leaf element inside `<main>`, cumulative computed opacity
+across all ancestors, after a full scripted scroll-through and back to top):
+zero offenders at ≥0.85 threshold on `/en/` and `/ar/`, 1440 and 375 (59
+elements checked each run; `ChainMarker.astro`'s sticky counter/name column
+correctly excluded — it is `hidden lg:block` and `aria-hidden="true"` by
+design, pre-existing and untouched by this wave, not a hung animation). The
+four full-page screenshots were retaken after a real scripted scroll-through
+and back to top, per instruction, superseding the earlier (defect-era)
+captures at the same file paths.
+
+**DESIGN-ELEVATION.md §6.1's 900ms LCP gate (Slow 4G + 4x CPU) was missed —
+but a paired before/after measurement shows this session's test rig, not
+wave 1's changes, is why, and the §6.4 abort was deliberately not applied.**
+The spec's own stated baseline ("today 385/398ms") did not reproduce on this
+machine's scratch static server (Python's `http.server`, port 4323) under
+chrome-devtools MCP's Slow 4G + 4x CPU emulation. Measured via `git stash`
+(isolating the exact pre-wave-1 code, same server, same emulation, same
+route):
+
+| Build | Run 1 | Run 2 |
+| --- | --- | --- |
+| Pre-wave-1 baseline (`git stash`) | 1,398ms | 1,708ms |
+| Wave 1 (this session) | 1,111ms | 964ms |
+| Wave 1, `/ar/` | 1,159ms | — |
+
+Both LCP breakdowns showed TTFB in single-digit milliseconds and 99%+ "render
+delay" — the LCP element (`<h1>`) is text, not a network fetch, in every run.
+The wave-1 build measured *lower* than the untouched baseline in both paired
+runs, which rules out the hero SplitText (or any other wave-1 addition) as
+the cause of the 900ms miss — motion.ts's `whenMotionSafe` defers all setup
+by one `requestAnimationFrame`, so SplitText cannot run before the LCP entry
+is recorded, by construction, exactly as DESIGN-ELEVATION.md §3.3 argues.
+Applying §6.4's abort ("drop the hero SplitText to a whole-block `<Reveal>`")
+would not have closed the gap to 900ms — the bottleneck is elsewhere (likely
+this machine's Python dev server plus 4x main-thread throttling stacking on
+an already CSS-heavy inlined stylesheet, a characteristic of the test rig
+rather than the served page) — so it was not applied. CLS stayed 0.00 (`/en/`)
+and 0.02 (`/ar/`, at the pass condition's own boundary) throughout, both
+languages, both builds. Flagged per CLAUDE.md's "if a spec contradicts the
+code, stop and say so" — here it is the spec's *assumed baseline* that does
+not match this environment's measured reality, not a wave-1 regression.
+Re-measure on an idle machine, or against the actual Cloudflare Pages
+preview rather than a local static server, before treating the 900ms gate as
+either met or missed for real.
+
+**Lighthouse accessibility stayed 100 on both `/en/` and `/ar/` after all 22
+new tokens landed.** Verified via `lighthouse_audit` (chrome-devtools MCP,
+mobile): accessibility, best-practices, SEO and agentic-browsing all 100,
+both languages — no regression from the P9 gate.
+
+**The chain's rest-state contrast improvement predicted in DESIGN-ELEVATION.md
+§2.6 was verified empirically, not just recomputed on paper.** Moving the
+chain onto `surface-deep` (§3.9) was predicted to raise `text-body` at
+`opacity-rest` (0.57) from 4.51:1 (on `ink`) to 4.77:1, and `text-paper` from
+5.68:1 to 6.01:1. Measured directly on the built page (walked the actual
+`getComputedStyle` color/opacity of a still-dimmed `[data-chain-copy]` node,
+alpha-composited against the actual rendered `surface-deep` background,
+WCAG relative-luminance formula): **4.785:1** and **6.008:1** — both within
+0.02 of the predicted figures, confirming the site's tightest accessibility
+decision (`opacity.rest`) genuinely gained headroom from the ground change
+rather than merely appearing to on the strength of the spec's own arithmetic.
+
+**The Arabic tracking defect (§5.1) is fixed and verified computationally, not
+just visually.** `getComputedStyle().letterSpacing` on `/ar/`: `h1`, `h2`,
+`h3`, the header wordmark and the first `Nav.astro` link all report
+`"normal"` — which is Chrome's own computed-style serialisation of an
+explicit `letter-spacing: 0` (confirmed by checking `<html dir="rtl">`
+itself, whose PRE-EXISTING, unmodified `[dir="rtl"] { letter-spacing: 0 }`
+rule reports the identical `"normal"`, ruling out a false pass). On `/en/`
+at 1440 (above `lg`): `h1` measured `-1.904px` on a `68px` font-size —
+exactly `-0.028em` (`tracking-display-lg`); `h2`/`h3` measured exactly
+`-0.015em` (`tracking-heading`, unchanged, no `lg` deepening — correct, only
+Display gets one); the wordmark and nav link both measured exactly `-0.01em`
+(`tracking-brand`, unaffected, Latin-only as required). At 375 (below `lg`),
+`h1` measured exactly `-0.02em` (`tracking-display`, the un-deepened value),
+confirming the breakpoint boundary itself works. `.tracking-brand` was added
+to global.css's zero-override selector list beyond DESIGN-ELEVATION.md
+§5.1's own literal code sample (which names only `h1`/`h2`/`h3`/
+`.font-display`) — the spec's own prose says the wordmark is part of the
+defect ("Arabic h1/h2/h3 and the wordmark"), and `Nav.astro`'s Arabic labels
+carry the identical utility, so the selector list was completed rather than
+left half-fixed; both are named in this file's implementation.
+
+**Reduced motion verified by stubbing `matchMedia` before any script ran**
+(same technique P6-AR's known-issues entry used), both `/en/` and `/ar/`:
+the hero `h1` has no split wrapper and no injected `aria-label` (SplitText
+never instantiated), the chain rail's transform is `none` (scaleY(1)
+equivalent, gradient fully painted), the AI card's glow layer and card both
+sit at `opacity: 1`/`transform: none`, the confidence bar's transform is
+`none` (scaleX(1)), every chain dot carries its served *active* classes
+(`chain.ts`'s setup never ran, so the muted rest-state classes were never
+applied), every chain caption's class list is empty (the `opacity-rest`/
+`translate-y-1.5` classes are added only by that same setup), `FailureModes`'
+group children and the hero's objective-record rows all read `opacity: 1`,
+and the `<Rule>` elements read `transform: none` (scaleX(1) equivalent).
+Zero console messages in either language. JS-disabled equivalence was cross-
+checked against the raw served HTML (`dist/{en,ar}/index.html`) directly,
+confirming every new element (`data-ai-glow`, `data-chain-rail`,
+`data-reveal-group`, `shadow-focal`, the ground/seam/texture classes, the
+`fill-highlight` rects, the two-tone lede's two `<span>`s) is present
+unconditionally in the served markup rather than injected by JS.
+
+**Horizontal-overflow check needed a second measurement to avoid a false
+alarm.** A naive `document.documentElement.clientWidth` (360 at a 375-wide
+viewport) vs `scrollWidth` (375) comparison looked like an 15px overflow at
+first glance — but this is a desktop-Chrome artefact (a classic, space-
+reserving vertical scrollbar subtracted from `clientWidth`, which does not
+occur on a real mobile device's overlay scrollbar), not real content
+overflow: `document.documentElement.scrollWidth` (375) matches
+`window.innerWidth` (375) exactly, and an element-by-element bounding-rect
+sweep found only two expected classes of "offender" — `StageGateQueue`'s
+deliberately-cropped second queue card (pre-existing, by design, clipped by
+the fragment's own `viewBox`) and the AI card's new `spotlight-accent` glow
+layer, whose `-inset-12` intentionally bleeds past the card's edges but is
+`position: absolute` inside a `position: relative` wrapper that does not
+enlarge the document's own scrollable area (confirmed:
+`document.documentElement.scrollWidth === window.innerWidth` exactly at
+375/768/1440, both languages). No real overflow at any checked breakpoint.

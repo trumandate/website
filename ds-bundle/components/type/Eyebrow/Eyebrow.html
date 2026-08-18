@@ -1,0 +1,31 @@
+<!-- @dsCard group="type" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Eyebrow</title>
+<link rel="stylesheet" href="../../../styles.css">
+<style>
+  body{margin:0;padding:24px;background:#04241E}
+  .ds-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:start}
+  .ds-cell{border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:24px;min-width:0}
+  .ds-cell>h4{margin:0 0 16px;font:600 11px/1.2 system-ui;color:#9CB8AE;text-transform:uppercase;letter-spacing:.06em}
+</style>
+</head>
+<body class="bg-ink">
+  <div class="ds-grid">
+    <section class="ds-cell">
+      <h4>Latin — as="p" (default)</h4>
+      <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Portfolio governance · Intertec Systems</p>
+    </section>
+    <section class="ds-cell">
+      <h4>Latin — as="span" (inline usage)</h4>
+      <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">How it holds together</span>
+    </section>
+    <section class="ds-cell" dir="rtl" lang="ar">
+      <h4>Arabic — as="p" (dir="rtl"; [dir=rtl] .text-eyebrow swaps in the Arabic size/line-height/zero-tracking pair, and [dir=rtl] .font-mono swaps the family to Plex Sans Arabic 600 — letterspaced mono breaks Arabic joining)</h4>
+      <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">حَوكمة المحافظ · إنترتك سيستمز</p>
+    </section>
+  </div>
+</body>
+</html>

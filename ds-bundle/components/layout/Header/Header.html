@@ -1,0 +1,93 @@
+<!-- @dsCard group="layout" cardMode="column" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Header</title>
+<link rel="stylesheet" href="../../../styles.css">
+<style>
+  body{margin:0;padding:24px;background:#04241E}
+  .ds-col{display:flex;flex-direction:column;gap:20px}
+  .ds-cell{border:1px solid rgba(255,255,255,.10);border-radius:8px;overflow:hidden;min-width:0}
+  .ds-cell>h4{margin:0;padding:14px 20px;font:600 11px/1.2 system-ui;color:#9CB8AE;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.10)}
+  .frame{position:relative;height:120px;background:#04241E}
+  /* Header.astro is `position:fixed` in real use (inset-x-0 top-0 z-header).
+     Pinned to `position:static` here only so the card frames it — see this
+     component's .prompt.md. */
+  .fixed-for-card{position:static !important}
+  /* Header.astro's own scoped style, copied verbatim. */
+  [data-header]{box-shadow:none;transition:box-shadow 300ms cubic-bezier(0.22,0.61,0.36,1)}
+  [data-header]::after{content:"";position:absolute;inset-inline:0;bottom:0;block-size:1px;background-color:rgba(255,255,255,0.10);opacity:0;transition:opacity 300ms cubic-bezier(0.22,0.61,0.36,1)}
+  [data-header].is-scrolled{box-shadow:0 10px 28px -18px rgba(2,24,19,0.55)}
+  [data-header].is-scrolled::after{opacity:1}
+  /* Nav.astro's own scoped style, copied verbatim. */
+  .nav-link::after{content:"";position:absolute;inset-inline-start:0;bottom:-0.25rem;inline-size:100%;block-size:1px;background-color:#19C39B;transform:scaleX(0);transform-origin:0% 50%}
+  [dir="rtl"] .nav-link::after{transform-origin:100% 50%}
+  .nav-link:hover::after,.nav-link:focus-visible::after{transform:scaleX(1)}
+  /* LangToggle.astro's own scoped style, copied verbatim. */
+  .lang-link::after{content:"";position:absolute;inset-inline-start:0;bottom:-0.25rem;inline-size:100%;block-size:1px;background-color:#19C39B;transform:scaleX(0);transform-origin:0% 50%}
+  [dir="rtl"] .lang-link::after{transform-origin:100% 50%}
+  .lang-link:hover::after,.lang-link:focus-visible::after{transform:scaleX(1)}
+</style>
+</head>
+<body class="bg-ink">
+  <div class="ds-col">
+
+    <section class="ds-cell">
+      <h4>resting (top of page) — bg-ink/veil at 72% opacity + 10px backdrop-blur; no hairline, no shadow</h4>
+      <div class="frame">
+        <header data-header class="fixed-for-card inset-x-0 top-0 z-header bg-ink/veil backdrop-blur-veil">
+          <div class="mx-auto flex max-w-content items-center justify-between gap-gutter px-gutter py-4">
+            <a href="/en/" class="flex items-center gap-3" aria-label="TruMandate">
+              <svg viewBox="0 0 100 100" class="h-8 w-8" role="img" aria-hidden="true">
+                <rect width="100" height="100" rx="24" class="fill-paper"></rect>
+                <rect x="24" y="24" width="54" height="12" rx="6" class="fill-jade"></rect>
+                <rect x="24" y="44" width="38" height="12" rx="6" class="fill-accent"></rect>
+                <rect x="24" y="64" width="22" height="12" rx="6" class="fill-accent"></rect>
+              </svg>
+              <span class="hidden font-sans text-h3 font-semi tracking-brand sm:inline"><span class="text-accent">Tru</span><span class="text-paper">Mandate</span></span>
+            </a>
+            <div class="hidden items-center gap-gutter lg:flex">
+              <nav aria-label="Primary">
+                <ul class="flex items-center gap-gutter">
+                  <li><a href="/en/strategy" class="nav-link relative text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent">Strategy</a></li>
+                  <li><a href="/en/execution" class="nav-link relative text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent">Execution</a></li>
+                  <li><a href="/en/benefits" class="nav-link relative text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent">Benefits</a></li>
+                  <li><a href="/en/contact" class="nav-link relative text-small font-semi tracking-brand text-paper transition-colors duration-state ease-standard hover:text-accent">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="flex items-center gap-6">
+              <a href="/ar/" hreflang="ar" lang="ar" class="lang-link relative text-small font-semi text-paper transition-colors duration-state ease-standard hover:text-accent">العربية</a>
+              <a href="/en/contact" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control px-4 py-2 text-small font-semi transition duration-micro ease-micro motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0 bg-accent text-ink hover:bg-transparent hover:text-accent hover:outline hover:outline-hair hover:outline-accent">Request a walkthrough</a>
+            </div>
+          </div>
+        </header>
+      </div>
+    </section>
+
+    <section class="ds-cell">
+      <h4>scrolled (.is-scrolled, applied by scripts/header.ts past 12px of scroll) — shadow-chrome separates chrome from content by light, plus the hairline fades in</h4>
+      <div class="frame">
+        <header data-header class="is-scrolled fixed-for-card inset-x-0 top-0 z-header bg-ink/veil backdrop-blur-veil">
+          <div class="mx-auto flex max-w-content items-center justify-between gap-gutter px-gutter py-4">
+            <a href="/en/" class="flex items-center gap-3" aria-label="TruMandate">
+              <svg viewBox="0 0 100 100" class="h-8 w-8" role="img" aria-hidden="true">
+                <rect width="100" height="100" rx="24" class="fill-paper"></rect>
+                <rect x="24" y="24" width="54" height="12" rx="6" class="fill-jade"></rect>
+                <rect x="24" y="44" width="38" height="12" rx="6" class="fill-accent"></rect>
+                <rect x="24" y="64" width="22" height="12" rx="6" class="fill-accent"></rect>
+              </svg>
+              <span class="hidden font-sans text-h3 font-semi tracking-brand sm:inline"><span class="text-accent">Tru</span><span class="text-paper">Mandate</span></span>
+            </a>
+            <div class="flex items-center gap-6">
+              <a href="/en/contact" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control px-4 py-2 text-small font-semi transition duration-micro ease-micro motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0 bg-accent text-ink hover:bg-transparent hover:text-accent hover:outline hover:outline-hair hover:outline-accent">Request a walkthrough</a>
+            </div>
+          </div>
+        </header>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -6,6 +6,25 @@
 // `mx-auto` and `px-gutter` are symmetric (equal on both inline edges), so
 // they are RTL-safe without being logical-property utilities themselves —
 // there is no direction-carrying value here for `[dir=rtl]` to get wrong.
+//
+// P10 (DESIGN-ELEVATION.md §3.1, §3.9): three optional props add the site's
+// one light source without growing a second component for it. When any of
+// `ground`/`seam`/`texture` is set (or the `backdrop` slot carries content),
+// an `aria-hidden pointer-events-none absolute inset-0` layer renders at
+// `z-0` and the content wrapper becomes `relative z-10`. Deliberately `z-0`,
+// not `-z-10`: a negative z-index inside a positioned parent still paints
+// inside that parent's stacking context and reliably produces a
+// hard-to-debug occlusion bug against the fixed header (`z-header: 50`) —
+// spelled out here because it is the classic failure of this pattern.
+//
+// `ground-rise` (hero) and `ground-board` (closing CTA) are NOT props here:
+// both are precise, composition-specific washes (their radial centres are
+// authored against that one section's own content, not a generic band), so
+// they're wired directly in Hero.astro/CommandCentreDim.astro via the
+// `backdrop` slot or the component's own markup, not as a third `ground`
+// value.
+import GroundTexture from "./GroundTexture.astro";
+
 interface Props {
   /** Rendered tag. Defaults to `section`; layout chrome (header/footer) uses
    * something else via BaseLayout, not this component. */
@@ -16,6 +35,16 @@ interface Props {
    * max-width/padding are dropped. The closing CTA (spec §3, home) is the
    * one section that breaks the 1180px column. */
   bleed?: boolean;
+  /** Page ground. Default "ink" emits no backdrop class of its own — body
+   * ground already shows through. "deep" fills the section with
+   * `surface-deep`, the one darker band per page (§3.9). */
+  ground?: "ink" | "deep";
+  /** A 128px block-start blend band, never a 1px cut. "down" is ink→deep,
+   * "up" is deep→ink — the direction encodes the argument (§3.9). */
+  seam?: "none" | "down" | "up";
+  /** The drafting grid (§1.3(c)). Home hero + closing CTA only — repeating
+   * it elsewhere spends the one aesthetic risk this phase allows itself. */
+  texture?: boolean;
   class?: string;
   id?: string;
 }
@@ -24,20 +53,48 @@ const {
   as: Tag = "section",
   tight = false,
   bleed = false,
+  ground = "ink",
+  seam = "none",
+  texture = false,
   class: className,
   id,
 }: Props = Astro.props;
+
+const hasBackdropSlot = Astro.slots.has("backdrop");
+const hasBackdrop =
+  ground === "deep" || seam !== "none" || texture || hasBackdropSlot;
 ---
 
 <Tag
   id={id}
-  class:list={["w-full", tight ? "py-section-tight" : "py-section", className]}
+  class:list={[
+    "relative w-full",
+    tight ? "py-section-tight" : "py-section",
+    className,
+  ]}
 >
   {
+    hasBackdrop && (
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+        {ground === "deep" && <div class="absolute inset-0 bg-surface-deep" />}
+        {seam === "down" && (
+          <div class="absolute inset-x-0 top-0 h-32 bg-seam-down" />
+        )}
+        {seam === "up" && (
+          <div class="absolute inset-x-0 top-0 h-32 bg-seam-up" />
+        )}
+        <slot name="backdrop" />
+        {texture && <GroundTexture />}
+      </div>
+    )
+  }
+  {
     bleed ? (
-      <slot />
+      <div class="relative z-10">
+        <slot />
+      </div>
     ) : (
-      <div class="mx-auto max-w-content px-gutter">
+      <div class="relative z-10 mx-auto max-w-content px-gutter">
         <slot />
       </div>
     )

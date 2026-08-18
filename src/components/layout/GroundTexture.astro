@@ -1,0 +1,39 @@
+---
+// GroundTexture.astro — the drafting-paper grid (DESIGN-ELEVATION.md §1.3(c),
+// §3.1): a 32px hairline grid at ~3.5% white, the one aesthetic risk this
+// phase takes on. Rendered only by Section.astro's `texture` prop, which has
+// exactly two call sites — the hero and the closing CTA — so the grid
+// bookends the page rather than wallpapering it (spending it everywhere
+// would make it decoration instead of material).
+//
+// Static paint only: CLAUDE.md's "transforms and opacity only" rule means a
+// background-image is never animated, so this component ships no script and
+// needs no motion-safe branch — there is nothing to suppress under reduced
+// motion or JS-disabled.
+---
+
+<div aria-hidden="true" class="ground-texture absolute inset-0 bg-grid-draft">
+</div>
+
+<style>
+  /* Block-axis fade so the grid dissolves at the band's own edges rather
+   * than hard-cutting (§3.1). Vertical only — no RTL variant needed (§5.2:
+   * "a repeating pattern has no inherent inline direction; it tiles
+   * identically either way"). */
+  .ground-texture {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 12%,
+      black 88%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 12%,
+      black 88%,
+      transparent 100%
+    );
+  }
+</style>

@@ -54,7 +54,13 @@ export const ui: UiDictionary = {
       hero: {
         eyebrow: "Portfolio governance · Intertec Systems",
         headline: "Every mandate, traced to the outcome it promised.",
-        lede: "TruMandate holds strategy, KPIs, initiatives and benefits in one record, so the office that sets direction can see what that direction produced.",
+        // P10 (DESIGN-ELEVATION.md §3.3): split verbatim from the former
+        // single `lede` string at its own clause boundary — `ledeLead + " "
+        // + ledeRest` reproduces the original sentence exactly.
+        ledeLead:
+          "TruMandate holds strategy, KPIs, initiatives and benefits in one record,",
+        ledeRest:
+          "so the office that sets direction can see what that direction produced.",
         panelLabel: "Objective 1.2 · Digital government maturity",
         row1Label: "Published plan",
         row1Value: "v3",
@@ -283,7 +289,12 @@ export const ui: UiDictionary = {
       hero: {
         eyebrow: "حَوكمة المحافظ · إنترتك سيستمز",
         headline: "كل تكليف، متتبَّع حتى الأثر الذي وُعد به.",
-        lede: "يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد، ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.",
+        // P10 (DESIGN-ELEVATION.md §3.3): split at the equivalent clause by
+        // meaning (not the same word index as the English) — `ledeLead + " "
+        // + ledeRest` reproduces the original sentence exactly.
+        ledeLead:
+          "يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد،",
+        ledeRest: "ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.",
         panelLabel: "الهدف ١.٢ · نضج الحكومة الرقمية",
         row1Label: "الخطة المعتمدة",
         row1Value: "v3",

@@ -35,8 +35,15 @@ const {
   class: className,
 }: Props = Astro.props;
 
+// P10 (DESIGN-ELEVATION.md §3.8): the bare `transition` utility covers
+// colour/border/outline/box-shadow/transform in one property list, paired
+// with the micro tier (150ms, y-never-exceeds-1 easing) rather than the
+// content-motion `state`/`standard` pair. `motion-safe:` gates the seat —
+// under `prefers-reduced-motion: reduce` the transform never enters the
+// cascade at all, so hover/press are colour-only there, which is correct
+// (a colour state is information, not motion).
 const base =
-  "inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control px-4 py-2 text-small font-semi transition-colors duration-state ease-standard";
+  "inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control px-4 py-2 text-small font-semi transition duration-micro ease-micro motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0";
 
 const variants: Record<NonNullable<Props["variant"]>, string> = {
   primary:

@@ -1,0 +1,97 @@
+/* elevation.css — the P10 light model (DESIGN-ELEVATION.md §2.5–§2.7),
+ * copied verbatim from tailwind.config.mjs's function-form `boxShadow` and
+ * `backgroundImage` theme extensions (their `theme()` calls resolved here to
+ * the literal colour values so this file stands alone).
+ *
+ * THE MODEL (DESIGN-ELEVATION.md §1.3): one light source, above and
+ * slightly behind the reader. Every rule below is a consequence of that one
+ * decision, not an independent choice:
+ *   - raised surfaces catch light on their TOP EDGE only (`--highlight`
+ *     inset, or the literal 1px `fill-highlight` rect fragments draw) —
+ *     never a bottom/side highlight.
+ *   - depth is the GROUND darkening around an object (`--shade`), never a
+ *     black drop-shadow under it — on `ink` a black shadow is invisible.
+ *   - depth is RANKED, four tiers, and exactly one thing per page may reach
+ *     tier 4 (`shadow-focal` + `spotlight-accent` — always the AI/assistant
+ *     card, never anything else — "one glow, one place").
+ *
+ *   Tier 0  page ground              --color-ink, or --color-surface-deep for the one darker band per page
+ *   Tier 1  ground texture + seams   grid-draft / ground-rise / seam-* — all ≤1.2:1 against their ground
+ *   Tier 2  raised product surfaces  fragments, records — top-edge highlight + a deeper ground beneath
+ *   Tier 3  real-DOM cards           --shadow-raised
+ *   Tier 4  the one focal surface    --shadow-focal + --bg-spotlight-accent (AI card only)
+ *
+ * SVG fragments (KpiCard, InitiativeRows, BenefitCurve, StageGateQueue,
+ * CommandCentreDim) never get a box-shadow or SVG filter — see each
+ * fragment's own .prompt.md "elevation" note and DESIGN-ELEVATION.md §4.2
+ * for why (a filter region clips at the fragment's own authored crop edge;
+ * a DOM box-shadow would shadow the fragment's bounding box, not the card
+ * drawn inside it). They get the literal 1px highlight rect instead.
+ */
+
+:root {
+  /* ---- box-shadow recipes (real values; theme() calls resolved) ---- */
+  --shadow-raised: inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
+    0 2px 4px -1px rgba(2, 24, 19, 0.55), 0 10px 24px -8px rgba(2, 24, 19, 0.55);
+  /* Tier 4 — the AI card only. The distinguishing feature is the accent
+     ring (rgba(25,195,155,.14) = --color-accent at 14%), not a brighter
+     white. */
+  --shadow-focal: inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
+    0 0 0 1px rgba(25, 195, 155, 0.14), 0 2px 4px -1px rgba(2, 24, 19, 0.55),
+    0 14px 32px -10px rgba(2, 24, 19, 0.55);
+  /* Header, scrolled state only — separates chrome from content by light,
+     not just a 1px line. */
+  --shadow-chrome: 0 10px 28px -18px rgba(2, 24, 19, 0.55);
+
+  /* ---- background-image recipes (ground material + the one glow) ---- */
+  /* Hero band and closing CTA ONLY — the site's one aesthetic risk, spent in
+     exactly two places so it reads as material, not wallpaper. */
+  --bg-grid-draft: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.035) 0 1px,
+      transparent 1px 32px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0 1px,
+      transparent 1px 32px
+    );
+  /* Ground luminance lift where the eye enters a band, settling by 78%. */
+  --bg-ground-rise: linear-gradient(
+    to bottom,
+    rgba(15, 92, 75, 0.18) 0%,
+    rgba(15, 92, 75, 0.05) 42%,
+    transparent 78%
+  );
+  /* The closing-CTA board's own light — ground hue, never accent. */
+  --bg-ground-board: radial-gradient(
+    70% 55% at 50% 40%,
+    rgba(15, 92, 75, 0.28) 0%,
+    transparent 70%
+  );
+  /* Section seams — a 128px blend band, never a 1px cut. */
+  --bg-seam-down: linear-gradient(to bottom, #04241e 0%, #021813 100%);
+  --bg-seam-up: linear-gradient(to bottom, #021813 0%, #04241e 100%);
+  /* THE ONE GLOW. AI card only, on a wrapper BEHIND the opaque card. */
+  --bg-spotlight-accent: radial-gradient(
+    58% 58% at 50% 38%,
+    rgba(25, 195, 155, 0.13) 0%,
+    rgba(25, 195, 155, 0.05) 38%,
+    transparent 72%
+  );
+  /* Four-edge vignette for the dimmed Command Centre composition. */
+  --bg-vignette-ink: radial-gradient(
+    72% 62% at 50% 46%,
+    transparent 30%,
+    rgba(4, 36, 30, 0.55) 68%,
+    #04241e 100%
+  );
+
+  /* ---- blur ---- */
+  --blur-veil: 10px; /* pairs with --opacity-veil below — the header ground */
+
+  /* ---- opacity (theme.extend.opacity) ---- */
+  --opacity-dim: 0.25; /* the closing-CTA dimmed composition */
+  --opacity-rest: 0.57; /* chain-link copy before its reveal activates — raised from the spec's literal 0.40 to clear WCAG AA (see colors.css's contrast note and QA-REPORT.md §4) */
+  --opacity-veil: 0.72; /* header ground, paired with --blur-veil */
+}

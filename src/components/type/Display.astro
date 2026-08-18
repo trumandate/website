@@ -3,6 +3,13 @@
 // Arabic (handled by global.css's [dir=rtl] override). One instance per page,
 // and it is always that page's <h1>: the home page's hero headline, and (P6)
 // each product page's opening question. Section headings use Heading.astro.
+//
+// P10 (DESIGN-ELEVATION.md §1.5, §3.3): `lg:tracking-display-lg` deepens
+// tracking to -0.028em above the `lg` breakpoint, where the display clamp
+// tops out at 68px and reference sites push tracking tighter as size grows.
+// Latin only, by construction (the class simply never resolves Arabic tracking
+// away from 0) — enforced belt-and-suspenders by global.css's
+// `[dir="rtl"] h1` zero-override, which must ship in the same change.
 interface Props {
   as?: "h1" | "h2";
   class?: string;
@@ -13,7 +20,7 @@ const { as: Tag = "h1", class: className }: Props = Astro.props;
 
 <Tag
   class:list={[
-    "font-sans font-display text-display font-semi tracking-display text-paper",
+    "font-sans font-display text-display font-semi tracking-display lg:tracking-display-lg text-paper",
     className,
   ]}
 >

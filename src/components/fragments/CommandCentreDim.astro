@@ -42,11 +42,38 @@
 // mirroring glyphs backwards because there are none to mirror. The
 // block-direction fade mask below is applied to the *wrapping* div, not the
 // svg, so the horizontal flip doesn't touch it.
+//
+// P10 (DESIGN-ELEVATION.md §3.7): four static changes, all inside the
+// existing `opacity-dim` group so the ledger's own constraint holds ("It
+// gains no rows, no labels, no values... stays aria-hidden, single-hue, at
+// opacity-dim"):
+//   (a) a full-viewBox `fill-jade` rect, first child, behind everything —
+//       the board finally gets a body instead of floating rects on `ink`.
+//   (b) a 1px `fill-highlight` inset rect on each card's top edge — the
+//       light catch. DESIGN-ELEVATION §3.7(b) itemises six surfaces (three
+//       metric cards, the initiative table, the AI panel, the benefit
+//       strip) but its own prose also says "Nine rects" — a count this
+//       document does not reconcile with its own itemised list. Implemented
+//       as itemised (six), flagged rather than silently resolved (CLAUDE.md:
+//       "if a spec contradicts the code [or itself], stop and say so").
+//   (c)/(d) `ground-board` (room light, behind the SVG) and `vignette-ink`
+//       (four-edge dissolve, above the SVG) live on THIS wrapper, outside
+//       the RTL flip below — exactly where the existing block-axis mask
+//       already sits, so both mirror for free with no per-element geometry.
 ---
 
 <div class="command-centre-dim relative w-full">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-ground-board"
+  >
+  </div>
+
   <svg viewBox="0 0 1600 640" class="block w-full" aria-hidden="true" focusable="false">
     <g class="opacity-dim">
+      <!-- P10 §3.7(a): the board's own body -->
+      <rect x="0" y="0" width="1600" height="640" class="fill-jade"></rect>
+
       <!-- top bar -->
       <rect x="0" y="0" width="1600" height="44" class="fill-jade-lift"></rect>
 
@@ -75,6 +102,8 @@
               class="fill-jade-lift stroke-hairline"
               stroke-width="1"
             />
+            {/* P10 §3.7(b): the top-edge light catch */}
+            <rect x={cardX + 1} y="69" width={378} height="1" class="fill-highlight" />
             <rect x={cardX + 24} y="140" width={332} height="8" rx="2" class="fill-hairline" />
           </>
         ))
@@ -90,6 +119,7 @@
         class="fill-jade-lift stroke-hairline"
         stroke-width="1"
       ></rect>
+      <rect x="261" y="203" width="758" height="1" class="fill-highlight"></rect>
       {
         [0, 1, 2, 3, 4].map((row) => (
           <>
@@ -123,6 +153,7 @@
         class="fill-jade-lift stroke-hairline"
         stroke-width="1"
       ></rect>
+      <rect x="1041" y="203" width="298" height="1" class="fill-highlight"></rect>
       <rect x="1064" y="228" width="140" height="8" rx="2" class="fill-hairline"></rect>
       <rect x="1064" y="252" width="200" height="6" rx="2" class="fill-hairline"></rect>
       <rect x="1064" y="270" width="170" height="6" rx="2" class="fill-hairline"></rect>
@@ -141,6 +172,7 @@
         class="fill-jade-lift stroke-hairline"
         stroke-width="1"
       ></rect>
+      <rect x="261" y="481" width="1098" height="1" class="fill-highlight"></rect>
       <polyline
         points="292,566 400,548 508,554 616,528 724,534 832,510 940,516 1048,494 1156,500 1264,478"
         fill="none"
@@ -165,6 +197,12 @@
       ></line>
     </g>
   </svg>
+
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-vignette-ink"
+  >
+  </div>
 </div>
 
 <style>

@@ -17,6 +17,21 @@
 // physical value, not a logical one, on purpose — this is a block-axis
 // (vertical) transform and spec §8 is explicit that vertical motion does not
 // mirror under RTL, so "top" is direction-independent here.
+//
+// P10 (DESIGN-ELEVATION.md §3.5(a)): the filled rail's flat `bg-accent`
+// becomes a vertical gradient — `accent` at 35% for the first 82%, ramping
+// to full `accent` at 100%. Because this element is scaled with `scaleY`
+// from `origin-top`, its PAINTED content scales with it, so the bright stop
+// is always at the rail's currently-drawn end: the drawn portion reads as
+// recorded and settled, the head reads as live. Zero new JS, zero new
+// animation — a background-image is paint, not motion (CLAUDE.md). Written
+// as a scoped rule rather than a new `tailwind.config.mjs` background-image
+// token: DESIGN-ELEVATION.md's own §2.6 count (7 layers) doesn't include
+// this one, and `theme()` inside a component `<style>` block (the same
+// technique Header.astro already uses for its hairline colour) keeps the
+// rgba literal commented against the token it derives from, exactly as the
+// config file's own convention requires, without adding an eighth entry to
+// a list the spec states as exactly seven.
 interface Props {
   variant?: "hairline" | "dashed" | "filled";
   class?: string;
@@ -26,7 +41,7 @@ const { variant = "hairline", class: className }: Props = Astro.props;
 
 const styles: Record<NonNullable<Props["variant"]>, string> = {
   hairline: "w-px bg-hairline",
-  filled: "w-px origin-top bg-accent",
+  filled: "w-px origin-top",
   dashed: "border-s border-dashed border-hairline",
 };
 ---
@@ -40,3 +55,15 @@ const styles: Record<NonNullable<Props["variant"]>, string> = {
     className,
   ]}
 ></div>
+
+<style>
+  /* rgba(25,195,155,…) is `accent` — tailwind.config.mjs — at 35%/100%. */
+  [data-chain-rail] {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(25, 195, 155, 0.35) 0%,
+      rgba(25, 195, 155, 0.35) 82%,
+      theme("colors.accent") 100%
+    );
+  }
+</style>

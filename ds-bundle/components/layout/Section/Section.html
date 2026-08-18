@@ -1,0 +1,81 @@
+<!-- @dsCard group="layout" cardMode="column" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Section</title>
+<link rel="stylesheet" href="../../../styles.css">
+<style>
+  body{margin:0;padding:24px;background:#04241E}
+  .ds-col{display:flex;flex-direction:column;gap:20px}
+  .ds-cell{border:1px solid rgba(255,255,255,.10);border-radius:8px;overflow:hidden;min-width:0}
+  .ds-cell>h4{margin:0;padding:14px 20px;font:600 11px/1.2 system-ui;color:#9CB8AE;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.10)}
+  .demo-content{position:relative;z-index:10}
+  /* GroundTexture.astro's own scoped style, copied verbatim. */
+  .ground-texture{mask-image:linear-gradient(to bottom,transparent 0%,black 12%,black 88%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 12%,black 88%,transparent 100%)}
+</style>
+</head>
+<body class="bg-ink">
+  <div class="ds-col">
+
+    <section class="ds-cell">
+      <h4>ground="ink" (default) — no backdrop layer at all; body ground already shows through</h4>
+      <section class="relative w-full py-section-tight">
+        <div class="relative z-10 mx-auto max-w-content px-gutter">
+          <p class="demo-content font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Section content sits here</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="ds-cell">
+      <h4>ground="deep" — fills the section with surface-deep, the one darker band per page</h4>
+      <section class="relative w-full py-section-tight">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+          <div class="absolute inset-0 bg-surface-deep"></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-content px-gutter">
+          <p class="demo-content font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Section content sits here</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="ds-cell">
+      <h4>seam="down" — a 128px block-start blend band, ink → surface-deep (never a 1px cut)</h4>
+      <section class="relative w-full py-section-tight">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+          <div class="absolute inset-0 bg-surface-deep"></div>
+          <div class="absolute inset-x-0 top-0 h-32 bg-seam-down"></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-content px-gutter">
+          <p class="demo-content font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Section content sits here</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="ds-cell">
+      <h4>seam="up" — surface-deep → ink; the direction encodes the argument in the prop name</h4>
+      <section class="relative w-full py-section-tight">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+          <div class="absolute inset-x-0 top-0 h-32 bg-seam-up"></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-content px-gutter">
+          <p class="demo-content font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Section content sits here</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="ds-cell">
+      <h4>texture=true — the drafting-paper grid (GroundTexture.astro). Two call sites only: hero and closing CTA — never elsewhere, or it stops reading as material and starts reading as decoration.</h4>
+      <section class="relative w-full py-section-tight">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+          <div class="ground-texture absolute inset-0 bg-grid-draft"></div>
+        </div>
+        <div class="relative z-10 mx-auto max-w-content px-gutter">
+          <p class="demo-content font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Section content sits here</p>
+        </div>
+      </section>
+    </section>
+
+  </div>
+</body>
+</html>

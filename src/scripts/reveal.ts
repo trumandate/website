@@ -21,6 +21,64 @@ whenMotionSafe(() => {
       },
     });
   });
+
+  // P10 (DESIGN-ELEVATION.md §3.4, §6.1) — the staggered-group variant.
+  // `data-reveal-group` sections stagger their DIRECT CHILDREN (the CSS end
+  // state for which is global.css's `[data-reveal-group] > *`, the ".reveal
+  // group class" that keeps a JS failure or reduced motion rendering every
+  // child already in place) rather than the group root itself, which is why
+  // this is a second handler rather than a `[data-reveal]` variant. Any
+  // `<hr>` inside a child (Rule.astro) draws alongside it in the same
+  // timeline, at the same stagger step — FailureModes.astro's own argument
+  // ("the chain doesn't exist yet") stated as three rules drawing and
+  // stopping.
+  const groups = document.querySelectorAll<HTMLElement>("[data-reveal-group]");
+
+  groups.forEach((group) => {
+    const blocks = Array.from(group.children) as HTMLElement[];
+    if (blocks.length === 0) return;
+
+    // The dossier's own ceiling: beyond ~8 children a 60ms step reads
+    // laggy, so longer groups halve it.
+    const stagger = blocks.length > 8 ? 0.03 : 0.06; // transitionDelay.stagger, or its stated half
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: group,
+        start: "top 85%",
+        once: true,
+      },
+    });
+
+    tl.from(
+      blocks,
+      {
+        opacity: 0,
+        y: 12, // translate.stagger token
+        duration: 0.5,
+        ease: standardEase,
+        stagger,
+      },
+      0,
+    );
+
+    const rules = blocks
+      .map((block) => block.querySelector<HTMLElement>("hr"))
+      .filter((rule): rule is HTMLElement => Boolean(rule));
+
+    if (rules.length) {
+      tl.from(
+        rules,
+        {
+          scaleX: 0,
+          duration: 0.5,
+          ease: standardEase,
+          stagger,
+        },
+        0,
+      );
+    }
+  });
 });
 
 export {};

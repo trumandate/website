@@ -49,6 +49,31 @@
   [dir="rtl"] h3 {
     line-height: theme("lineHeight.heading-ar");
   }
+
+  /* P10 (DESIGN-ELEVATION.md §5.1) — a live defect this phase fixes first.
+   * Spec requires display tracking of −0.02em Latin, 0 Arabic. The [dir=rtl]
+   * rule above only reaches descendants by INHERITANCE, but Display.astro,
+   * Heading.astro and Header.astro each apply a direct tracking-display /
+   * tracking-heading / tracking-brand utility on the element itself, which
+   * overrides inheritance outright — so Arabic h1/h2/h3 and the wordmark
+   * were rendering with Latin negative tracking. This must land in the same
+   * change as `lg:tracking-display-lg` (Display.astro), because deepening
+   * Latin tracking without it would make the defect worse.
+   *
+   * `.tracking-brand` is added beyond DESIGN-ELEVATION §5.1's own literal
+   * code sample (which lists only h1/h2/h3/.font-display): the wordmark
+   * (Header.astro) carries `tracking-brand`, not `tracking-display`, and
+   * Nav.astro's links carry the same utility for their own Arabic labels —
+   * both are named in §5.1's prose ("Arabic h1/h2/h3 and the wordmark") and
+   * both are wave-1 files, so the selector list is completed here rather
+   * than left half-fixed. */
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] .font-display,
+  [dir="rtl"] .tracking-brand {
+    letter-spacing: theme("letterSpacing.none");
+  }
 }
 
 /* ---- spec §3's mono-role swap: "In Arabic this role swaps to Plex Sans
@@ -110,6 +135,21 @@
  * because no timeline is created in either case (see scripts/motion.ts). ---- */
 @layer utilities {
   .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* P10 (DESIGN-ELEVATION.md §3.4, §6.1) — the `.reveal` group variant.
+ * `data-reveal-group` sections (FailureModes.astro's three mode blocks, and
+ * any future staggered group) key their end state off structure rather than
+ * a repeated class name on every child, since scripts/reveal.ts's group
+ * handler tweens the container's direct children rather than the container
+ * itself. Identical contract to `.reveal` above: present unconditionally, so
+ * a JS failure or prefers-reduced-motion reader sees every child already in
+ * its finished position. */
+@layer utilities {
+  [data-reveal-group] > * {
     opacity: 1;
     transform: translateY(0);
   }

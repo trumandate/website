@@ -60,7 +60,12 @@ const links: Array<{ name: string; body: string; hasFragment?: boolean }> = [
 ];
 ---
 
-<Section id="chain">
+{/* P10 (DESIGN-ELEVATION.md §3.9): ground="deep" — the page darkens as the
+    failure is described and the chain is traced through it, then lifts
+    again for the AI moment. No seam here: the previous section (failure
+    modes) already carries the down-seam into this same `surface-deep`
+    ground, so the two sections share one continuous band. */}
+<Section id="chain" ground="deep">
   <Reveal>
     <Eyebrow>{t("home.chain.eyebrow")}</Eyebrow>
     <Heading as="h2" class="mt-4 max-w-measure">

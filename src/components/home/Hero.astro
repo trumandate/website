@@ -18,6 +18,26 @@
 // computing a cumulative offset from the top of the hero) keeps this correct
 // under the fluid `clamp()` type scale, where the height above any given row
 // changes with viewport width.
+//
+// P10 (DESIGN-ELEVATION.md §3.3): `data-hero` scopes scripts/hero.ts's own
+// load-sequence timeline (eyebrow → SplitText headline lines → lede → CTA
+// row, then the objective-record rows on their own scroll trigger) — a
+// dedicated script rather than an addition to reveal.ts, since it's the one
+// place on the site SplitText runs. The lede is now two-tone (`ledeLead` in
+// `paper`, `ledeRest` in `body`, i18n/ui.ts) and the CTA row carries
+// `hero-cta-row` purely as hero.ts's query hook, not for styling.
+//
+// Each Button also carries `class="reveal"` — CLAUDE.md's "end state lives
+// in CSS, GSAP animates from an offset" contract, made explicit rather than
+// incidental: these anchors already have no opacity/transform of their own,
+// so `.reveal` (global.css: opacity 1, translateY 0) changes nothing
+// visually, but it states in markup — the same way ObjectiveRecord's rows
+// and FailureModes' group children do — that this is the served,
+// unconditional end state a JS failure or a hung tween must fall back to.
+// See hero.ts's own comment for the defect this addressed (a CSS
+// `transition` on these same buttons fighting GSAP's per-frame writes on a
+// staggered/delayed target) and its fix (neutralising the transition for
+// the tween's duration, restored after via `clearProps`).
 import Spine from "./Spine.astro";
 import ObjectiveRecord from "./ObjectiveRecord.astro";
 import Eyebrow from "../type/Eyebrow.astro";
@@ -36,7 +56,7 @@ const { lang }: Props = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div class="relative">
+<div class="relative" data-hero>
   <Spine variant="hairline" />
 
   <Reveal as="div" class="ps-rail">
@@ -52,13 +72,15 @@ const t = useTranslations(lang);
       {t("home.hero.headline")}
     </Display>
 
-    <Lede class="mt-6">
-      {t("home.hero.lede")}
-    </Lede>
+    <Lede class="mt-6"
+      ><span class="text-paper">{t("home.hero.ledeLead")}</span>{" "}<span
+        class="text-body">{t("home.hero.ledeRest")}</span
+      ></Lede
+    >
 
-    <div class="mt-8 flex flex-wrap items-center gap-4">
-      <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
-      <Button variant="ghost" href="#chain">{t("cta.secondary")}</Button>
+    <div class="hero-cta-row mt-8 flex flex-wrap items-center gap-4">
+      <Button class="reveal" href={`/${lang}/contact`}>{t("cta.primary")}</Button>
+      <Button class="reveal" variant="ghost" href="#chain">{t("cta.secondary")}</Button>
     </div>
 
     <div class="relative mt-16">
@@ -70,3 +92,5 @@ const t = useTranslations(lang);
     </div>
   </Reveal>
 </div>
+
+<script src="../../scripts/hero.ts"></script>
