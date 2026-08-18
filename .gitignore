@@ -31,3 +31,6 @@ screenshots/
 
 # firecrawl CLI scratch output (signed URLs, no durable content)
 .firecrawl/
+
+# design-sync local bundle output (uploaded via DesignSync, not site source)
+ds-bundle/
