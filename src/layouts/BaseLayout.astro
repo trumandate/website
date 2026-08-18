@@ -74,14 +74,29 @@ const fontPreloads =
       ogImageAlt={t("meta.ogImageAlt")}
     />
 
-    <!-- Favicon set (P9, spec §5A): the SVG mark is the primary icon in
-         browsers that support it; favicon.ico (16/32/48, one file) is the
-         fallback for the rest. apple-touch-icon covers iOS/iPadOS home-screen
+    <!-- Favicon set (P9, spec §5A; PNG sizes + optically-corrected geometry
+         added later — see public/favicon.svg's own comment for why its
+         geometry no longer matches Header.astro's lockup): the SVG mark is
+         the primary icon in browsers that support it. The explicit PNG links
+         below exist for Google Search (which reads sized <link rel="icon">
+         PNGs from the homepage head and prefers a size that's a multiple of
+         48px) and for browsers/surfaces that don't take SVG favicons.
+         favicon.ico (16/32/48, one file, still at the root) is the fallback
+         both Google and older browsers reach for automatically even without
+         a <link> tag. apple-touch-icon covers iOS/iPadOS home-screen
          bookmarks specifically — Apple never reads favicon.svg or the
          manifest for that icon. theme-color tints mobile browser chrome
          (Android Chrome address bar, iOS Safari status bar) with the same
          `jade` raised-surface token the manifest uses, not a new value. -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link
+      rel="icon"
+      href="/favicon-192.png"
+      type="image/png"
+      sizes="192x192"
+    />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
