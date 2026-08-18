@@ -28,3 +28,6 @@ assets/
 
 # regenerable QA artifacts
 screenshots/
+
+# firecrawl CLI scratch output (signed URLs, no durable content)
+.firecrawl/

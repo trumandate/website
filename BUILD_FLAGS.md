@@ -538,6 +538,8 @@ Log every such choice under "Decisions taken" below.
   prompt of the run rather than a gap-fill. Logged in TODO.md as optional
   future work, not silently dropped.
 
+- 2026-08-18 (P10, user directive): design-elevation phase opened. The user judges the shipped motion too sparse and not smooth enough; spec §7's "complete list" cap on the motion inventory is RELAXED by user instruction. Unchanged and still binding: transforms/opacity only, reduced-motion real branch, accessibility 100, spec §9 budgets, token-only colour, curiosity ledger, no photography. Research dossier from best-in-class product sites (firecrawl + chrome-devtools) feeds a written elevation spec before any implementation. shadcn MCP added to .mcp.json at user request (reference/registry use; shadcn React components are NOT imported into this zero-React Astro site — see P10 scope note).
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)

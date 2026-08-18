@@ -17,7 +17,7 @@
 import type { APIRoute } from "astro";
 import type { Language } from "../i18n/types";
 
-const SITE = "https://trumandate.com";
+const SITE = "https://www.trumandate.com";
 const LANGUAGES: Language[] = ["en", "ar"];
 // Same five suffixes as i18n/utils.ts's `pairedRoutes` — every route exists
 // in both languages as of P7.

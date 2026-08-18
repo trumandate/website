@@ -23,12 +23,12 @@ interface Props {
 
 const { lang, path, title, description, ogImageAlt } = Astro.props;
 
-// astro.config.mjs sets `site: "https://trumandate.com"`; reading it back
+// astro.config.mjs sets `site: "https://www.trumandate.com"`; reading it back
 // through Astro.site (rather than a second hardcoded literal here) means
 // there is exactly one place the domain is spelled, per CLAUDE.md's "no
 // value outside its one source" discipline applied to config as well as
 // colour tokens.
-const base = Astro.site ?? new URL("https://trumandate.com/");
+const base = Astro.site ?? new URL("https://www.trumandate.com/");
 
 function urlFor(targetLang: Language): string {
   const suffix = path === "/" ? "/" : `${path}/`;
