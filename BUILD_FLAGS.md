@@ -622,6 +622,39 @@ Log every such choice under "Decisions taken" below.
 
 - 2026-08-18 (REDESIGN, user directive): docs/design_handoff_website_redesign/ (Claude Design handoff) is now the SOLE design source of truth — it supersedes DESIGN-ELEVATION.md, the P10 waves, and spec §§5–7's content/withholding rules ("tokens binding, content rules open" per the handoff README; the cropped board is the new withholding mechanism; owner-approved copy including its figures). Engineering invariants unchanged: tokens-only colour (4 new hue tokens approved: mint/cyan/gold/coral), logical properties, reduced-motion end states, one pin per route, whenMotionSafe, budgets §9, a11y 100. All work on main branch (preview split postponed).
 - 2026-08-18 (REDESIGN, user directive #2): exact fidelity to the .dc.html references overrides ALL repo conventions including token indirection and the no-hex rule — porting reference markup/CSS near-verbatim is the preferred approach. Still required (plumbing, not visuals): clean build, correct i18n routing, readable under reduced-motion/JS-off, performance budgets. Primary acceptance test: built-vs-reference side-by-side near-indistinguishable at 1440, both languages.
+- 2026-08-19: `seo/JsonLd.astro` built and wired into `BaseLayout.astro`
+  (same three props Meta.astro already takes — lang/path/title/description —
+  so every route gets a graph with no page file touched). One `@graph` per
+  route: Organization (Intertec Systems — the company, not the product;
+  name/url/logo/description/address all read through existing `footer.*`
+  i18n keys, `areaServed` AE/SA per CLAUDE.md's own description of the
+  business, `contactPoint.email` = the same address ContactPage.astro's
+  `mailto:` already uses), WebSite (no SearchAction — the site has no search
+  function), SoftwareApplication for TruMandate, WebPage/ContactPage per
+  route, BreadcrumbList on the four non-home routes (leaf name = that
+  route's own `title` prop with the shared `" — TruMandate"` suffix
+  stripped, not a new invented label). **SoftwareApplication chosen over
+  Product**, after fetching Google Search Central's current Software App
+  structured-data reference this session: a SoftwareApplication rich result
+  requires `offers.price` AND (`aggregateRating` OR `review`); Google's
+  Product guidelines carry a stricter, review-integrity-policed surface for
+  exactly the same two missing facts (no public price, no reviews — this is
+  a B2B enterprise platform with neither). All three are omitted outright
+  rather than fabricated; the node is valid schema, just not rich-result
+  eligible for the star treatment, which is the documented-correct trade
+  when the fact doesn't exist. `operatingSystem` also omitted — not asserted
+  anywhere on the site (deployment model ≠ runtime/OS). Verified: `npm run
+  build` (11 pages) and `npm run check` (64 files) both clean, 0/0/0;
+  JSON.parse succeeds on all 10 routes' emitted script tag; grepped the
+  built output for `aggregateRating`/`review`/`offers`/`price`/`telephone`/
+  `sameAs`/`streetAddress`/`foundingDate`/`numberOfEmployees` — zero hits
+  anywhere; diffed every canonical/hreflang/OG/Twitter/icon/manifest tag on
+  all 10 routes against a pre-change build — byte-identical, no regression.
+  Live Rich Results Test / validator.schema.org need a reachable public URL
+  (or interactive paste); this change isn't deployed, so validation is
+  structural against Google's documented required/recommended properties
+  (fetched this session) rather than a live-tool pass — worth a real
+  Rich Results Test run once this ships. TODO.md's P9 item closed.
 
 ## Deferred
 
@@ -646,3 +679,8 @@ Log every such choice under "Decisions taken" below.
 - 2026-08-18 (P9c): The `/contact` placement of the Intertec Systems logo,
   logged as open above, is now closed — see this file's P9c entry and
   TODO.md's P9 section.
+- 2026-08-19: `seo/JsonLd.astro`, listed above (2026-08-17 P9 entry) as never
+  built, is now closed — see this file's 2026-08-19 decisions-log entry and
+  TODO.md's P9 section. Still open, unaffected by this pass: the Formspree
+  endpoint, a native-reader Arabic pass, `<main>`'s missing `tabindex="-1"`,
+  and the WebKit-specific verification passes.

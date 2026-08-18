@@ -9,6 +9,7 @@ import SkipLink from "../components/layout/SkipLink.astro";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import Meta from "../components/seo/Meta.astro";
+import JsonLd from "../components/seo/JsonLd.astro";
 // CLAUDE.md: "no hex value outside tailwind.config.mjs." <meta name="theme-color">
 // needs a literal colour string (there is no Tailwind-class equivalent for a
 // browser-chrome tint), so the value is imported from the config at build
@@ -73,6 +74,7 @@ const fontPreloads =
       description={description}
       ogImageAlt={t("meta.ogImageAlt")}
     />
+    <JsonLd lang={lang} path={path} title={title} description={description} />
 
     <!-- Favicon set (P9, spec §5A; PNG sizes + optically-corrected geometry
          added later — see public/favicon.svg's own comment for why its

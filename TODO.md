@@ -527,11 +527,19 @@ and will be addressed as the pages that touch them get built (P2 onward).
   (`getComputedStyle(svg).transform === "none"` at both widths, both
   languages) with the Latin "Intertec" wordmark reading correctly rather than
   flipped. Screenshots: `screenshots/p9c-contact-logo-{en,ar}-{375,1440}.png`.
-- **`seo/JsonLd.astro` was never built.** PLAN.md §1's file tree plans an
-  Organization + SoftwareApplication structured-data component; this
-  prompt's explicit build list didn't include it, so it stayed out of scope
-  rather than being added unrequested in the final prompt. Optional future
-  work — full reasoning in BUILD_FLAGS.md's P9 decisions log.
+- ~~**`seo/JsonLd.astro` was never built.**~~ Resolved 2026-08-19: built and
+  wired into `BaseLayout.astro` (same lang/path/title/description props
+  Meta.astro already takes, so no page file needed a change). One `@graph`
+  per route — Organization (Intertec Systems), WebSite, SoftwareApplication
+  (TruMandate; chosen over Product — see BUILD_FLAGS.md's 2026-08-19 entry
+  for the Google Search Central-sourced reasoning), WebPage/ContactPage per
+  route, BreadcrumbList on the four non-home routes. Every string reused
+  from `i18n/ui.ts`/the page's own `title`/`description` props, no
+  aggregateRating/review/offers/telephone/sameAs/street address anywhere
+  (deliberately omitted, not fabricated). `npm run build`/`npm run check`
+  clean; JSON.parse succeeds on all 10 routes; existing canonical/hreflang/
+  OG/Twitter/icon tags diffed byte-identical against the pre-change build.
+  Full detail: BUILD_FLAGS.md's 2026-08-19 decisions-log entry.
 - **A native-reader Arabic pass is still owed** on the home page, the three
   product pages and `/contact` — carried from P5/P6-AR/P7, unaffected by
   this prompt (P9 touched no page copy). Full vocabulary-review notes:

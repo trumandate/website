@@ -1,0 +1,209 @@
+---
+// JsonLd.astro — structured data (schema.org JSON-LD), the last substantive
+// SEO gap this site had (TODO.md's P9 section: "seo/JsonLd.astro was never
+// built"). Wired into BaseLayout.astro exactly like Meta.astro, from the
+// same three props BaseLayout already holds (lang/path/title/description),
+// so every route gets a graph with no page needing to change.
+//
+// One `@graph` per route (JSON-LD cannot span documents, so the shared
+// entities below are re-serialized on every page rather than written once):
+//   - Organization — Intertec Systems, the company. TruMandate is the
+//     product; Intertec Systems is who CLAUDE.md's own "no invented facts"
+//     rule requires this to be modelled as, since the site has no
+//     independent legal identity for the product itself.
+//   - WebSite — the whole bilingual site. Deliberately no SearchAction: the
+//     site has no search function, and claiming one is a documented Google
+//     policy violation (fabricated sitelinks-searchbox).
+//   - SoftwareApplication — TruMandate, the product. Chosen over Product
+//     after checking Google's current Software App structured-data
+//     reference (Google Search Central, fetched this session): a
+//     SoftwareApplication rich result requires `offers.price` AND
+//     (`aggregateRating` OR `review`), and Google's Product guidelines
+//     separately carry a stricter, review-integrity-policed surface for
+//     exactly the two facts this platform (no public price, no consumer
+//     reviews) does not have. SoftwareApplication is also the more accurate
+//     type for a described platform, independent of rich-result eligibility.
+//     All three optional-but-rich-result-gating properties are omitted
+//     outright — fabricating any of them is a Google structured-data policy
+//     violation (manual-action risk), and omitting is the documented-correct
+//     move when the fact doesn't exist.
+//   - WebPage (ContactPage on `/contact`) — this route.
+//   - BreadcrumbList — the four non-home routes only.
+//
+// Every string is read through `t()` (i18n/ui.ts) or is one of the two
+// props (`title`/`description`) BaseLayout already passes to Meta.astro —
+// nothing here duplicates a string that exists as its own token elsewhere,
+// with two narrow exceptions, both logged rather than silently done:
+//   1. The contact email: it exists in `ui.ts` only embedded mid-sentence
+//      inside `contact.emailNote`/`contact.errorBody`, never as a standalone
+//      key. Regex-extracting it from translated prose is more fragile than
+//      the one literal below, which is the same address ContactPage.astro's
+//      own `mailto:` link already uses verbatim.
+//   2. `areaServed`'s ISO 3166-1 codes ("AE"/"SA"): CLAUDE.md's own
+//      description of the business names UAE and Saudi Arabia as the two
+//      served markets; no page copy states this as a standalone fact (only
+//      "Dubai, UAE" and "sovereign… in your own cloud tenancy" appear in
+//      copy), so this is the one fact sourced from the brief rather than
+//      rendered copy — included because CLAUDE.md itself asserts it, not
+//      invented.
+import type { Language } from "../../i18n/types";
+import { useTranslations } from "../../i18n/utils";
+
+interface Props {
+  /** Identical props to Meta.astro's own — BaseLayout passes the same four
+   * values to both components. */
+  lang: Language;
+  path: string;
+  title: string;
+  description: string;
+}
+
+const { lang, path, title, description } = Astro.props;
+const t = useTranslations(lang);
+
+// Same `Astro.site` single-source-of-truth Meta.astro already uses, rather
+// than a second hardcoded domain literal.
+const base = Astro.site ?? new URL("https://www.trumandate.com/");
+const siteRoot = base.href;
+
+function urlFor(targetLang: Language, suffix: string): string {
+  const s = suffix === "/" ? "/" : `${suffix}/`;
+  return new URL(`${targetLang}${s}`, base).href;
+}
+
+const canonical = urlFor(lang, path);
+const homeUrl = urlFor(lang, "/");
+const isHome = path === "/";
+const isContact = path === "/contact";
+
+// Stable @ids so the Organization/WebSite/SoftwareApplication nodes read as
+// the same three entities across every route's independently-served graph.
+const orgId = `${siteRoot}#organization`;
+const websiteId = `${siteRoot}#website`;
+const softwareId = `${siteRoot}#software`;
+const webpageId = `${canonical}#webpage`;
+
+// BaseLayout already links this exact file as a sized <link rel="icon">
+// PNG (192×192, clears Google's documented 112×112 logo minimum) — reused
+// rather than the OG image, since a square icon is what Organization.logo
+// expects and the OG image is a 1200×630 social card, not a logo.
+const logoUrl = new URL("/favicon-192.png", base).href;
+
+// The four non-home routes' `title` prop is always `"<page title> —
+// TruMandate"` (copy.ts's `documentTitle` / ui.ts's `meta.contact.title`,
+// both languages, verified against every one of the six product-page
+// strings and the two contact strings). Stripping the shared brand suffix
+// derives the BreadcrumbList leaf's `name` from the exact string already in
+// <title>/og:title, rather than inventing a second short label — falls back
+// to the untouched title if a future string ever doesn't carry the suffix.
+function stripBrandSuffix(fullTitle: string): string {
+  const suffix = " — TruMandate";
+  return fullTitle.endsWith(suffix)
+    ? fullTitle.slice(0, -suffix.length)
+    : fullTitle;
+}
+
+const organization = {
+  "@type": "Organization",
+  "@id": orgId,
+  name: t("footer.company"),
+  url: siteRoot,
+  logo: logoUrl,
+  // No `description`. The obvious candidate was the footer's brand-credit
+  // line ("Powered by Intertec Systems · Dubai, UAE"), but that is a
+  // provenance label for the product, not a description of the company —
+  // emitting it here would tell Google the organisation's description is
+  // the phrase "Powered by Intertec Systems". The site asserts nothing else
+  // about Intertec Systems itself, and Organization does not require a
+  // description, so the honest move is to omit the field rather than invent
+  // or repurpose a sentence. `name`, `url`, `logo`, `address`, `areaServed`
+  // and `contactPoint` below are all directly asserted on the site.
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: t("footer.location"),
+    addressCountry: "AE",
+  },
+  areaServed: ["AE", "SA"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: "trumandate@intertecsys.com",
+    contactType: "sales",
+    areaServed: ["AE", "SA"],
+    // Both first-class per the site's own copy (home.closingCta.row2Body /
+    // contact page existing in both languages) — not an invented capability.
+    availableLanguage: ["English", "Arabic"],
+  },
+};
+
+const website = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: t("brand.name"),
+  url: siteRoot,
+  inLanguage: lang,
+  publisher: { "@id": orgId },
+  // Deliberately no potentialAction/SearchAction: no search function exists
+  // on this site (see file header).
+};
+
+const softwareApplication = {
+  "@type": "SoftwareApplication",
+  "@id": softwareId,
+  name: t("brand.name"),
+  applicationCategory: "BusinessApplication",
+  description: t("home.hero.lede"),
+  provider: { "@id": orgId },
+  publisher: { "@id": orgId },
+  // Deliberately no operatingSystem: not asserted anywhere on the site
+  // (deployment model — "sovereign, on-premise or in your own cloud
+  // tenancy" — is not the same fact as a runtime/OS). Deliberately no
+  // offers/aggregateRating/review — see file header.
+};
+
+const webPage: Record<string, unknown> = {
+  "@type": isContact ? "ContactPage" : "WebPage",
+  "@id": webpageId,
+  url: canonical,
+  name: title,
+  description,
+  inLanguage: lang,
+  isPartOf: { "@id": websiteId },
+};
+
+const graph: unknown[] = [organization, website, softwareApplication, webPage];
+
+// BreadcrumbList — the four non-home routes only (task brief; the home page
+// IS the root of the trail, so it gets no breadcrumb of its own).
+if (!isHome) {
+  graph.push({
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: t("brand.name"),
+        item: homeUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: stripBrandSuffix(title),
+        item: canonical,
+      },
+    ],
+  });
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": graph,
+};
+
+// `<` guard: defends against a future translated string containing a
+// literal "<" (e.g. "</script>") ever prematurely closing this tag — none of
+// today's strings do, verified below, but the escape costs nothing and
+// removes the failure mode entirely.
+const jsonLdSafe = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
+---
+
+<script type="application/ld+json" is:inline set:html={jsonLdSafe} />
