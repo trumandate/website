@@ -294,21 +294,39 @@ export const ui: UiDictionary = {
       sovereigntyBody: "Sovereign on-premise or cloud",
     },
     meta: {
-      // Moved verbatim from src/pages/en/index.astro's BaseLayout props
-      // (P2) — same title/description, one home now.
+      // Redesign wave A/B fidelity pass: these two strings still read the
+      // pre-redesign copy after the home hero and /contact were rewritten
+      // (home.hero.* above, contact.heading/sub above) — the live H1 no
+      // longer matched the <title>. Rewritten here to derive from each
+      // page's own current H1/lede rather than reuse either the old string
+      // or a new invented claim: `home` is the hero's own headline
+      // (headlineLead+headlineGradient+headlineTail) with "TruMandate — "
+      // prefixed, same brand-first convention this key already used; the
+      // description is `home.hero.lede` verbatim (131 chars). `contact`
+      // takes its title from `contact.heading` ("See it against your own
+      // plan.") suffixed "— TruMandate", matching the brand-last convention
+      // `product/copy.ts`'s `documentTitle` already established for the
+      // three product pages; the description is `contact.sub` verbatim (90
+      // chars) — also retires "walkthrough" language the redesign's own CTA
+      // rename (`cta.primary`, "Book a demo") superseded.
       home: {
-        title: "TruMandate — Every mandate, traced to the outcome it promised.",
+        title: "TruMandate — Every mandate, traced to its measured benefit.",
         description:
-          "TruMandate holds strategy, KPIs, initiatives and benefits in one record, so the office that sets direction can see what that direction produced.",
+          "Strategy is a promise. Delivery is the proof. TruMandate keeps the thread between them unbroken, and its AI reads every inch of it.",
       },
-      // Moved verbatim from src/pages/en/contact.astro's BaseLayout props (P7).
       contact: {
-        title: "Request a walkthrough — TruMandate",
+        title: "See it against your own plan — TruMandate",
         description:
-          "See TruMandate against your own portfolio, not a demo dataset. Send a few details and we will schedule a walkthrough.",
+          "Send this and we will run the demo on a portfolio shaped like yours, not a sample dataset.",
       },
+      // Redesign wave A: the OG image no longer shows the pre-redesign
+      // "chain motif" this comment used to describe. The regenerated image
+      // (public/og/og-en.png) reuses the home hero's own vocabulary: the
+      // wordmark, the eyebrow, and the H1 with its accent-into-cyan
+      // gradient-clip key phrase (Hero.astro's own `gradient-text` token),
+      // on the site's `ink` ground.
       ogImageAlt:
-        "TruMandate wordmark and the traceability chain motif on a jade ground.",
+        "TruMandate wordmark and the headline 'Every mandate, traced to its measured benefit' on a dark green ground.",
     },
   },
   ar: {
@@ -575,20 +593,26 @@ export const ui: UiDictionary = {
       sovereigntyBody: "استضافة سيادية داخلية أو سحابية",
     },
     meta: {
-      // Moved verbatim from src/pages/ar/index.astro's BaseLayout props (P5).
+      // Redesign wave A/B fidelity pass — see the English side's comment
+      // for the full reasoning. `home` is `home.hero.headlineLead` +
+      // `headlineGradient` + `headlineTail` above, "TruMandate — " prefixed;
+      // description is `home.hero.lede` verbatim. `contact` title is
+      // `contact.heading` ("شاهدها على خطتك أنت.") suffixed "— TruMandate";
+      // description is `contact.sub` verbatim. Written directly in Arabic
+      // from those already-authored strings, not translated from the
+      // English side of this table.
       home: {
-        title: "TruMandate — كل تكليف، متتبَّع حتى الأثر الذي وُعد به.",
+        title: "TruMandate — كل تكليف، متتبَّع حتى أثره المُقاس.",
         description:
-          "يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد، ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.",
+          "الاستراتيجية وعد، والتنفيذ برهانه. يُبقي TruMandate الخيط بينهما متصلاً بلا انقطاع، ويقرؤه الذكاء الاصطناعي بكامله.",
       },
-      // Moved verbatim from src/pages/ar/contact.astro's BaseLayout props (P7).
       contact: {
-        title: "اطلب عرضاً توضيحياً — TruMandate",
+        title: "شاهدها على خطتك أنت — TruMandate",
         description:
-          "شاهد TruMandate على محفظتك أنت، لا على بيانات تجريبية. أرسل بضعة تفاصيل وسنحدد موعداً للعرض.",
+          "أرسل النموذج ونقدّم العرض على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
       },
       ogImageAlt:
-        "شعار TruMandate وخط سلسلة التتبّع على خلفية خضراء داكنة.",
+        "شعار TruMandate وعنوان 'كل تكليف، متتبَّع حتى أثره المُقاس' على خلفية خضراء داكنة.",
     },
   },
 };
