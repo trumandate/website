@@ -54,6 +54,15 @@ interface Props {
   texture?: boolean;
   class?: string;
   id?: string;
+  /** Redesign wave B: a handful of the product-page/contact sections in the
+   * reference carry their own bespoke `padding-top`/`padding-bottom` (a
+   * `clamp()` pair that isn't either of `py-section`/`py-section-tight`) —
+   * one-off values a single call site needs, not a second rhythm token every
+   * caller should reach for. Same precedent as `Button.astro`'s own `style`
+   * prop: an inline style reliably overrides the class-based padding without
+   * growing this component's prop surface for a shape used once or twice.
+   * Always paired with `pad={false}` at the call site. */
+  style?: string;
 }
 
 const {
@@ -66,6 +75,7 @@ const {
   pad = true,
   class: className,
   id,
+  style,
 }: Props = Astro.props;
 
 const hasBackdropSlot = Astro.slots.has("backdrop");
@@ -75,6 +85,7 @@ const hasBackdrop =
 
 <Tag
   id={id}
+  style={style}
   class:list={[
     "relative w-full",
     pad && (tight ? "py-section-tight" : "py-section"),

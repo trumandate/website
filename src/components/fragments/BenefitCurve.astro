@@ -1,374 +1,183 @@
 ---
-// BenefitCurve.astro — /benefits' ONE fragment (curiosity ledger: "Reveals:
-// the forecast curve shape"). Hand-authored inline SVG from tokens, one screen
-// region, data anonymised — never the interface (spec §5's fidelity rule).
+// BenefitCurve.astro — /benefits's ONE fragment (Benefits (redesign).dc.html
+// §2, "Benefit curve fragment"). Redesign wave B replaces the pre-redesign
+// SVG chart wholesale with the reference's own version: a gold-tinted
+// "measurement window" band (24 months from closure), a dashed forecast line
+// running the chart's full width, a gradient actual line solid only to
+// today (with an endpoint dot + halo), a "−18% VS FORECAST / AI FLAG"
+// callout box, and a "Today" marker — cropped by an inline-end mask fade.
 //
-// WITHHELD, and absent from this file by design: the benefit register and the
-// attribution logic. There is no list of benefits, no business-case reference,
-// no contributing-initiative breakdown and no apportionment of the curve
-// across anything — one benefit, one axis, two lines, in either language.
-// `/benefits`' handoff sentence is the only place on that page where the
-// register is named.
+// WITHHELD, and absent from this file by design: the benefit register and
+// the attribution logic — no reader of this fragment, in either language,
+// can tell how a benefit is apportioned to the work that produced it.
+// `/benefits`'s handoff sentence is the only place either is named.
 //
-// What the ledger asks for, and what is drawn: the forecast solid to today and
-// dashed beyond it, the measurement window marked, and "no axis labels beyond
-// the minimum" — so there is no value axis, no time axis and no gridlines.
-// Four labels total: the record's own name, the measurement window, today, and
-// a two-item legend, because a curve with two lines on it and no legend is a
-// puzzle rather than a fragment.
+// role="img" + aria-label (unlike the two DOM fragments this wave adds):
+// this one really is a chart image, not real text a screen reader can
+// linearize on its own — the label states the same fact the visual callout
+// does (actual 18% below forecast, found in the quarter after closure)
+// rather than every coordinate.
 //
-// The second line is the actual. Spec §6 and the page's own argument both say
-// "forecast against actual", and divergence being visible without anyone
-// asking for it is the whole claim — a fragment showing only the forecast
-// would illustrate the opposite of what the page argues. Both lines coincide
-// until closure (x=214) and separate after it, which is the point: the actual
-// flattens in exactly the window where the delivery team no longer exists.
+// RTL (known-issues.md's established pattern): `direction: ltr` is pinned
+// explicitly on the `<svg>` in BOTH languages, since `text-anchor`
+// inherits `direction` and the reference's own path/text coordinates are
+// authored once and never hand-mirrored — only the outer mask's crop
+// direction and the callout box's own (wider, Arabic-authored) width flip.
 //
-// The crop: the plot's card runs to x=508 against a 460 viewBox, and both the
-// dashed projection and the measurement-window band are cut by that edge, so
-// the composition reads as continuing to the inline-end rather than as a
-// finished chart that happens to stop.
-//
-// RTL (P6-AR): every x becomes `460 - x` (the card rect additionally
-// subtracting its own width), which mirrors the time axis along with
-// everything else — the curve now begins at the right and runs left, closure
-// and today fall to the left of the origin, and the crop moves to the left
-// edge, which is inline-END in RTL. A chart whose time axis ran left-to-right
-// inside an RTL page would be the single loudest LTR artefact on the route, so
-// this is mirrored rather than pinned. Type sizing and the direction handling
-// follow KpiCard.astro — see its header for why the mirrored branch sets
-// `direction: rtl` instead of pinning `ltr`.
-import { useTranslations } from "../../i18n/utils";
+// Colours resolve from tailwind.config.mjs at build time for the rgba washes
+// with no existing token (the gold measurement-window tint, the mint
+// endpoint halo) — same `hexToRgb` pattern as the other two new fragments.
 import type { Language } from "../../i18n/types";
+import tailwindConfig from "../../../tailwind.config.mjs";
 
 interface Props {
   class?: string;
   lang: Language;
+  caption: string;
 }
 
-const { class: className, lang }: Props = Astro.props;
-const t = useTranslations(lang);
+const { class: className, lang, caption }: Props = Astro.props;
 const isAr = lang === "ar";
 
-const label = isAr ? "label-ar" : "label";
-const tick = isAr ? "tick-ar" : "tick";
+const colors = (tailwindConfig as { theme: { colors: Record<string, string> } })
+  .theme.colors;
+
+function hexToRgb(hex: string): string {
+  const clean = hex.replace("#", "");
+  return [0, 2, 4]
+    .map((i) => Number.parseInt(clean.slice(i, i + 2), 16))
+    .join(",");
+}
+
+const goldRgb = hexToRgb(colors.gold);
+const mintRgb = hexToRgb(colors.mint);
+const accentRgb = hexToRgb(colors.accent);
+
+const ariaLabel = isAr
+  ? "منحنى منفعة واحد: القيمة الفعلية مقابل المتوقَّعة. القيمة الفعلية انحرفت 18 بالمئة دون المتوقَّع في الربع الذي تلا إغلاق المشروع، وهو ما وسمه الذكاء الاصطناعي."
+  : "One benefit curve: actual against forecast. Actual has diverged 18 per cent below forecast in the quarter after project closure, flagged by AI.";
+
+// Arabic text inside the SVG uses Plex Sans Arabic 600 rather than mono —
+// `/ar` never preloads Plex Mono (BaseLayout.astro), matching the other two
+// fragments' own digit/label treatment.
+const svgFontFamily = isAr
+  ? "'IBM Plex Sans Arabic', sans-serif"
+  : "'IBM Plex Mono', monospace";
+const svgFontWeight = isAr ? 600 : 400;
+
+// Same two-branch micro-label pattern as KpiCard.astro/InitiativeRows.astro:
+// the AR reference reaches for the real `text-datum` role (no inline
+// font-size, no `uppercase`/tracking beyond what the role already bundles)
+// on these two plain-HTML header spans, letting the sitewide
+// `[dir=rtl] .text-datum → text-datum-ar` override size Arabic ~10% larger
+// than the EN reference's own bespoke 9/10px literal values.
+const microClass = (extra: string) =>
+  (isAr ? `font-mono text-datum font-data ${extra}` : `font-mono font-data ${extra}`).trim();
 ---
 
-<svg
-  viewBox="0 0 460 220"
-  class:list={["benefit-curve w-full max-w-[560px]", className]}
-  role="img"
-  aria-label={t("fragment.benefitCurve.ariaLabel")}
-  data-fragment
->
-  <defs>
-    <mask
-      id="benefit-curve-wipe-mask"
-      maskUnits="userSpaceOnUse"
-      x="0"
-      y="0"
-      width="460"
-      height="220"
+<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative; max-width: 880px;">
+  <div
+    style={`border: 1px solid ${colors.hairline}; border-radius: 6px; background: linear-gradient(180deg, ${colors["kpi-tile-top"]} 0%, ${colors.surface} 100%); padding: 20px; box-shadow: inset 0 1px 0 0 ${colors.highlight}, 0 14px 32px -10px rgba(2,24,19,0.6); overflow: hidden; mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 82%, transparent 99%); -webkit-mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 82%, transparent 99%);`}
+  >
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px;">
+      <span class={microClass("tracking-datum text-muted")} style={isAr ? undefined : "font-size: 10px; text-transform: uppercase;"}>
+        {isAr ? "المنفعة 4.2 · وفر تشغيلي سنوي" : "Benefit 4.2 · Annual operating saving"}
+      </span>
+      <span style="display: inline-flex; gap: 14px;">
+        <span class={microClass("text-muted")} style={isAr ? undefined : "font-size: 9px;"}>
+          <span class="text-mint">—</span> {isAr ? "الفعلي" : "Actual"}
+        </span>
+        <span class={microClass("text-muted")} style={isAr ? undefined : "font-size: 9px;"}>‑ ‑ {isAr ? "المتوقَّع" : "Forecast"}</span>
+      </span>
+    </div>
+    <svg
+      viewBox="0 0 800 250"
+      style={`width: 100%; margin-top: 12px; direction: ltr;`}
+      role="img"
+      aria-label={ariaLabel}
     >
-      <rect x="0" y="0" width="460" height="220" fill="black"></rect>
-      <rect data-fragment-wipe x="0" y="0" width="460" height="220" fill="white"
+      <defs>
+        <linearGradient id="benefit-area" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color={`rgba(${accentRgb},0.28)`}></stop>
+          <stop offset="1" stop-color={`rgba(${accentRgb},0)`}></stop>
+        </linearGradient>
+        <linearGradient id="benefit-stroke" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color={colors.accent}></stop>
+          <stop offset="1" stop-color={colors.mint}></stop>
+        </linearGradient>
+      </defs>
+
+      <rect x="380" y="16" width="420" height="184" fill={`rgba(${goldRgb},0.06)`}></rect>
+      <line x1="380" y1="16" x2="380" y2="200" stroke={`rgba(${goldRgb},0.45)`} stroke-width="1"></line>
+      <text
+        x="390"
+        y="32"
+        style={`font-family: ${svgFontFamily}; font-weight: ${svgFontWeight}; font-size: ${isAr ? 11 : 10}px; letter-spacing: ${isAr ? "normal" : "0.08em"};`}
+        class="fill-gold"
+      >
+        {isAr ? "نافذة القياس · 24 شهراً من الإغلاق" : "MEASUREMENT WINDOW · 24 MONTHS FROM CLOSURE"}
+      </text>
+
+      <line x1="560" y1="52" x2="560" y2="200" stroke="rgba(156,184,174,0.6)" stroke-width="1" stroke-dasharray="3 3"></line>
+      <text
+        x="560"
+        y="222"
+        text-anchor="middle"
+        style={`font-family: ${svgFontFamily}; font-weight: ${svgFontWeight}; font-size: ${isAr ? 11 : 10}px; letter-spacing: ${isAr ? "normal" : "0.08em"};`}
+        class="fill-muted"
+      >
+        {isAr ? "اليوم" : "TODAY"}
+      </text>
+
+      <line x1="10" y1="200" x2="790" y2="200" class="stroke-hairline-08"></line>
+
+      <path
+        d="M10 186 C120 178 240 160 380 138 C460 126 540 112 620 96 C680 84 740 72 800 60"
+        fill="none"
+        stroke="rgba(156,184,174,0.55)"
+        stroke-width="1.5"
+        stroke-dasharray="5 5"
+      ></path>
+      <path d="M10 186 C120 178 240 160 380 138 C440 130 500 128 560 132 L560 200 L10 200 Z" fill="url(#benefit-area)"></path>
+      <path
+        class="tm-spark"
+        d="M10 186 C120 178 240 160 380 138 C440 130 500 128 560 132"
+        fill="none"
+        stroke="url(#benefit-stroke)"
+        stroke-width="2.5"
+        stroke-linecap="round"
+      ></path>
+      <circle cx="560" cy="132" r="4" class="fill-mint"></circle>
+      <circle cx="560" cy="132" r="9" fill={`rgba(${mintRgb},0.2)`}></circle>
+
+      <rect
+        x="574"
+        y="96"
+        width={isAr ? 168 : 150}
+        height="34"
+        rx="3"
+        class="fill-surface-deep"
+        stroke="rgba(255,122,110,0.35)"
       ></rect>
-    </mask>
-  </defs>
-
-  <g mask="url(#benefit-curve-wipe-mask)">
-    <rect width="460" height="220" class="fill-surface-deep"></rect>
-
-    {
-      isAr ? (
-        <>
-          {/* The plot's card, mirrored: 460-(8+500)=-48. Its inline-end (left)
-              edge is never drawn, so the plot reads as continuing. */}
-          <rect
-            x="-48"
-            y="10"
-            width="500"
-            height="200"
-            rx="4"
-            class="fill-surface stroke-hairline"
-            stroke-width="1"
-          />
-          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
-              within the card. */}
-          <rect x="-47" y="11" width="498" height="1" class="fill-highlight" />
-
-          <text x="434" y="32" class={`${label} fill-muted`}>
-            {t("fragment.benefitCurve.recordLabel")}
-          </text>
-
-          {/* Measurement window, mirrored: 460-(214+246)=0. Opens at closure
-              (now x=246) and is cut by the left frame edge, because it has not
-              finished running. */}
-          <rect x="0" y="48" width="246" height="132" class="fill-hairline" />
-          <line
-            x1="246"
-            y1="48"
-            x2="246"
-            y2="180"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-          <text x="238" y="62" class={`${tick} fill-muted`}>
-            {t("fragment.benefitCurve.windowLabel")}
-          </text>
-
-          {/* Today, mirrored: 460-320=140. */}
-          <line
-            x1="140"
-            y1="72"
-            x2="140"
-            y2="180"
-            stroke-dasharray="3 3"
-            stroke-width="1"
-            class="stroke-muted"
-          />
-
-          <line
-            x1="434"
-            y1="180"
-            x2="0"
-            y2="180"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-
-          {/* Forecast: solid to today, every x mirrored. */}
-          <path
-            d="M434 168 C370 164 310 148 246 134 S170 120 140 112"
-            fill="none"
-            stroke-width="1.5"
-            class="stroke-muted"
-          />
-          {/* Forecast: dashed projection beyond today, cut by the frame edge. */}
-          <path
-            d="M140 112 C100 104 50 90 -10 76"
-            fill="none"
-            stroke-width="1.5"
-            stroke-dasharray="5 4"
-            class="stroke-muted"
-          />
-
-          {/* Actual: coincides with the forecast to closure, then flattens. */}
-          <path
-            d="M434 168 C370 164 310 148 246 134 C202 128 168 128 140 130"
-            fill="none"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            class="stroke-accent"
-          />
-          <circle cx="140" cy="130" r="3" class="fill-accent" />
-
-          {/* Legend and the one time label. */}
-          <line
-            x1="434"
-            y1="193"
-            x2="416"
-            y2="193"
-            stroke-width="1.75"
-            class="stroke-accent"
-          />
-          <text x="410" y="197" class={`${tick} fill-muted`}>
-            {t("fragment.benefitCurve.actualLegend")}
-          </text>
-
-          <line
-            x1="350"
-            y1="193"
-            x2="332"
-            y2="193"
-            stroke-width="1.5"
-            stroke-dasharray="5 4"
-            class="stroke-muted"
-          />
-          <text x="326" y="197" class={`${tick} fill-muted`}>
-            {t("fragment.benefitCurve.forecastLegend")}
-          </text>
-
-          {/* text-anchor="middle" is direction-independent. */}
-          <text
-            x="140"
-            y="197"
-            text-anchor="middle"
-            class={`${tick} fill-muted`}
-          >
-            {t("fragment.benefitCurve.todayLabel")}
-          </text>
-        </>
-      ) : (
-        <>
-          {/* The plot's card. Width 500 against a 460 viewBox: the inline-end
-              edge is never drawn, so the plot reads as continuing. */}
-          <rect
-            x="8"
-            y="10"
-            width="500"
-            height="200"
-            rx="4"
-            class="fill-surface stroke-hairline"
-            stroke-width="1"
-          />
-          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
-              within the card. */}
-          <rect x="9" y="11" width="498" height="1" class="fill-highlight" />
-
-          <text x="26" y="32" class={`${label} fill-muted`}>
-            {t("fragment.benefitCurve.recordLabel")}
-          </text>
-
-          {/* The measurement window: opens at closure (x=214) and is cut by the
-              frame edge, because it has not finished running. */}
-          <rect x="214" y="48" width="246" height="132" class="fill-hairline" />
-          <line
-            x1="214"
-            y1="48"
-            x2="214"
-            y2="180"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-          <text x="222" y="62" class={`${tick} fill-muted`}>
-            {t("fragment.benefitCurve.windowLabel")}
-          </text>
-
-          {/* Today. Starts at y=72, below the measurement-window label's
-              baseline (62), so the marker does not strike through that label's
-              text — found by screenshotting the built fragment at 1440. */}
-          <line
-            x1="320"
-            y1="72"
-            x2="320"
-            y2="180"
-            stroke-dasharray="3 3"
-            stroke-width="1"
-            class="stroke-muted"
-          />
-
-          {/* The axis, and the only one */}
-          <line
-            x1="26"
-            y1="180"
-            x2="460"
-            y2="180"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-
-          {/* Forecast: solid to today */}
-          <path
-            d="M26 168 C90 164 150 148 214 134 S290 120 320 112"
-            fill="none"
-            stroke-width="1.5"
-            class="stroke-muted"
-          />
-          {/* Forecast: dashed projection beyond today, cut by the frame edge */}
-          <path
-            d="M320 112 C360 104 410 90 470 76"
-            fill="none"
-            stroke-width="1.5"
-            stroke-dasharray="5 4"
-            class="stroke-muted"
-          />
-
-          {/* Actual: coincides with the forecast to closure, then flattens */}
-          <path
-            d="M26 168 C90 164 150 148 214 134 C258 128 292 128 320 130"
-            fill="none"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            class="stroke-accent"
-          />
-          <circle cx="320" cy="130" r="3" class="fill-accent" />
-
-          {/* Legend and the one time label */}
-          <line
-            x1="26"
-            y1="193"
-            x2="44"
-            y2="193"
-            stroke-width="1.75"
-            class="stroke-accent"
-          />
-          <text x="50" y="197" class={`${tick} fill-muted`}>
-            {t("fragment.benefitCurve.actualLegend")}
-          </text>
-
-          <line
-            x1="110"
-            y1="193"
-            x2="128"
-            y2="193"
-            stroke-width="1.5"
-            stroke-dasharray="5 4"
-            class="stroke-muted"
-          />
-          <text x="134" y="197" class={`${tick} fill-muted`}>
-            {t("fragment.benefitCurve.forecastLegend")}
-          </text>
-
-          <text
-            x="320"
-            y="197"
-            text-anchor="middle"
-            class={`${tick} fill-muted`}
-          >
-            {t("fragment.benefitCurve.todayLabel")}
-          </text>
-        </>
-      )
-    }
-  </g>
-</svg>
-
-<script src="../../scripts/fragment.ts"></script>
-
-<style>
-  .label {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .tick {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* Arabic: spec §3's mono role swaps to Plex Sans 600 at normal tracking.
-     See KpiCard.astro for why this is repeated per fragment. */
-  .label-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 12px;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  .tick-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 11px;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  /* known-issues.md (P5): `direction` inherits into <text> and redefines what
-     `text-anchor: middle`/`end` resolve against. Stated explicitly for both
-     geometries; `:global()` keeps Astro's scope hash off the `[dir]` half. */
-  .benefit-curve {
-    direction: ltr;
-  }
-
-  :global([dir="rtl"]) .benefit-curve {
-    direction: rtl;
-  }
-</style>
+      <text
+        x="584"
+        y="110"
+        style={`font-family: ${svgFontFamily}; font-weight: ${svgFontWeight}; font-size: 11px; letter-spacing: ${isAr ? "normal" : "0.06em"};`}
+        class="fill-coral"
+      >
+        {isAr ? "−18% عن المتوقَّع" : "−18% VS FORECAST"}
+      </text>
+      <text
+        x="584"
+        y={isAr ? 124 : 123}
+        style={`font-family: ${svgFontFamily}; font-weight: ${svgFontWeight}; font-size: ${isAr ? 10 : 9}px; letter-spacing: ${isAr ? "normal" : "0.06em"};`}
+        class="fill-muted"
+      >
+        {isAr ? "علامة ذكاء · الربع الثاني بعد الإغلاق" : "AI FLAG · Q2 AFTER CLOSURE"}
+      </text>
+    </svg>
+  </div>
+  <p class="tm-load font-mono text-datum font-data tracking-datum text-muted" style="--d: 650ms; margin-top: 14px;">
+    {caption}
+  </p>
+</div>

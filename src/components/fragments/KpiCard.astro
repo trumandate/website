@@ -1,411 +1,200 @@
 ---
-// KpiCard.astro — /strategy's ONE fragment (curiosity ledger: "Reveals: one
-// KPI card, fully readable"). Hand-authored inline SVG from tokens, one screen
-// region, data anonymised — never the interface (spec §5's fidelity rule).
-//
-// Contents are exactly the six things the ledger enumerates and nothing more:
-// label, baseline, target, live actual, RAG dot, and a sparkline of the last
-// six periods. The owner row that the page's argument mentions a KPI carrying
-// is deliberately NOT drawn — the ledger's list is a specification, and a card
-// that grows an extra row per paragraph of copy is how a fragment becomes a
-// screenshot.
+// KpiCard.astro — /strategy's ONE fragment (Strategy (redesign).dc.html §2,
+// "KPI fragment"). Redesign wave B replaces the pre-redesign inline-SVG card
+// wholesale with the reference's own real-DOM/CSS card: a full KPI record
+// (ref, at-risk pill, name, baseline/target/live-actual figures, a gradient
+// sparkline, "Carries" chips linking Objective/Initiatives/Benefit) plus a
+// second card cropped by an inline-end mask fade — "the neighbouring card is
+// half visible at the frame edge," reproduced with `overflow:hidden` +
+// `mask-image` on the row wrapper exactly as the reference does it, not a
+// hand-computed SVG viewBox crop.
 //
 // WITHHELD, and absent from this file by design: the cascade editor and how
-// weighting works. No weight column, no parent-objective tree, no editor
-// chrome, and nothing about either in the aria-label, in either language.
-// `/strategy`'s handoff sentence is the only place on that page where they are
-// named.
+// weighting works — no weight column, no parent-objective tree, no editor
+// chrome, in either language. `/strategy`'s handoff sentence is the only
+// place either is named.
 //
-// The crop is authored into the viewBox: the neighbouring KPI card starts at
-// x=320 and runs to x=620, past the viewBox's own 460 edge, so the browser's
-// default SVG clipping cuts it roughly in half — the ledger's "cropped so the
-// neighbouring card is half visible at the frame edge", with no CSS overflow
-// trick and no second mask. Its title text is cut mid-glyph for the same
-// reason, which is what a real crop looks like.
+// RTL: the crop mirrors by flipping the mask's own gradient direction ("to
+// left" instead of "to right") — the row's `display:flex` needs no DOM
+// reordering, since an un-annotated `flex-direction: row` already lays out
+// along the *inline* axis and reverses under `dir="rtl"` by itself (verified
+// against the reference's own AR markup, which keeps the same card order).
+// The sparkline SVG pins `direction: ltr` regardless of language — its path
+// coordinates are decorative and unmirrored in the reference's own AR file,
+// matching the fragment's `direction: ltr` device other fragments use for
+// numeric figures.
 //
-// Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
-// for the full reasoning (rem resolves against the document root and ignores
-// the viewBox transform, decoupling the type from the shapes as the fragment
-// scales).
+// Type sizes, a two-part fix caught only by measured comparison against the
+// reference (chips wrapped to a second line, +43px section height first
+// pass; then a second, opposite-direction 29px gap on /ar):
+//   EN: this card's micro-labels (9/10px) are the reference's OWN bespoke
+//       literal pixel values, NOT the sitewide `text-eyebrow`/`text-datum`
+//       roles (11.2/11.52px) — `tracking-eyebrow`/`tracking-datum`
+//       (letter-spacing only) pair with an explicit inline `font-size`
+//       exactly as the EN reference composes them.
+//   AR: the reference's own AR file does the OPPOSITE for these same
+//       labels — it reaches for the real `text-datum` role (no inline
+//       font-size), letting the sitewide `[dir=rtl] .text-datum →
+//       text-datum-ar` override (global.css) size Arabic ~10% larger than
+//       the Latin figure, the same "Arabic reads smaller at a matched pixel
+//       size" adjustment this fragment's pre-redesign version made by hand.
+//       Reproduced here as an `isAr` branch per label rather than one
+//       shared class list.
+// Only the outer mono caption line uses `text-datum` in both languages,
+// matching the reference (it's the one label already sized at the sitewide
+// role in EN too).
 //
-// RTL (P6-AR): this fragment carries <text>, so it gets a hand-mirrored
-// geometry rather than a CSS scaleX, which would render every glyph backwards.
-// Every x becomes `460 - x`; rects additionally subtract their own width,
-// since a rect's x is a left edge rather than a point. Two consequences worth
-// stating, because both are the point of doing it by hand: the fully readable
-// card moves to the fragment's right-hand (RTL inline-start) edge, and the
-// neighbouring card moves to x=-160, so the crop lands on the left — the RTL
-// inline-END edge — and still reads as "the list continues". fragment.ts
-// flips the wipe's travel to match, so the reveal still uncovers from
-// inline-start.
-//
-// Direction handling differs deliberately from StageGateQueue.astro's P5
-// treatment. That file pins `direction: ltr` in BOTH languages and flips
-// `text-anchor` by hand, which is correct for its labels but forces every
-// mixed Arabic-plus-digits string into an LTR paragraph, where the Arabic run
-// is laid out to the left of the digits and an Arabic reader meets the number
-// first. This fragment instead pins `direction: ltr` for LTR pages only and
-// switches the mirrored variant to `direction: rtl`, so `text-anchor: start`
-// keeps meaning "the inline-start edge" and resolves to the right by itself —
-// the hand-computed coordinates stay honest AND strings like "آخر 6 فترات"
-// get their natural Arabic bidi order. known-issues.md's P5 note (direction
-// inherits into <text> and redefines what start/end mean) is the reason both
-// files state a direction explicitly rather than inheriting one.
-import { useTranslations } from "../../i18n/utils";
+// Colours resolve from tailwind.config.mjs at build time (no hex literal in
+// this file) for the two values with no existing utility class: the sparkline
+// stroke/area gradients and the card's own two-stop background wash.
 import type { Language } from "../../i18n/types";
+import tailwindConfig from "../../../tailwind.config.mjs";
 
 interface Props {
   class?: string;
   lang: Language;
+  /** The mono caption line under the fragment (ProductPageCopy's own
+   * `fragmentCaption`) — rendered here, inside the same `.tm-boardload`
+   * wrapper, exactly where the reference places it. */
+  caption: string;
 }
 
-const { class: className, lang }: Props = Astro.props;
-const t = useTranslations(lang);
+const { class: className, lang, caption }: Props = Astro.props;
 const isAr = lang === "ar";
 
-// Arabic sans at a matched pixel size reads smaller than tracked Latin mono,
-// so each role is set ~10% larger in Arabic — the same adjustment
-// StageGateQueue.astro makes, for the same reason.
-const label = isAr ? "label-ar" : "label";
-const name = isAr ? "name-ar" : "name";
-const figure = isAr ? "figure-ar" : "figure";
+const colors = (tailwindConfig as { theme: { colors: Record<string, string> } })
+  .theme.colors;
+
+function hexToRgb(hex: string): string {
+  const clean = hex.replace("#", "");
+  return [0, 2, 4]
+    .map((i) => Number.parseInt(clean.slice(i, i + 2), 16))
+    .join(",");
+}
+
+const cyanRgb = hexToRgb(colors.cyan);
+const cardBg = `linear-gradient(180deg, ${colors["kpi-tile-top"]} 0%, ${colors.surface} 100%)`;
+const cardShadow = `inset 0 1px 0 0 ${colors.highlight}, 0 14px 32px -10px rgba(2,24,19,0.6)`;
+
+// The two micro-label class/style pairs the reference switches between —
+// "ref" role keeps `tracking-datum` in both languages (the AR file's own
+// choice, harmless redundancy under RTL since `text-datum-ar`'s own
+// letter-spacing:0 wins on specificity); "eyebrow" role drops all tracking
+// in AR, matching the reference exactly.
+const refClass = isAr
+  ? "font-mono text-datum font-data tracking-datum text-muted"
+  : "font-mono font-data tracking-datum text-muted";
+const refStyle = isAr ? undefined : "font-size: 10px; text-transform: uppercase;";
+
+const eyebrowMicroClass = (colorClass: string) =>
+  isAr ? `font-mono text-datum font-data ${colorClass}` : `font-mono font-data ${colorClass}`;
+const eyebrowMicroStyle = (extra = "") =>
+  isAr ? undefined : `font-size: 9px; text-transform: uppercase;${extra}`;
+
+const copy = {
+  ref: isAr ? "مؤشر · 1.2.3" : "KPI · 1.2.3",
+  atRisk: isAr ? "في خطر" : "At risk",
+  name: isAr ? "تبنّي الخدمات الرقمية" : "Digital service adoption",
+  baselineLabel: isAr ? "خط الأساس" : "Baseline",
+  baselineValue: "42.0",
+  targetLabel: isAr ? "المستهدف" : "Target",
+  targetValue: "75.0",
+  actualLabel: isAr ? "الفعلي الحي" : "Live actual",
+  actualValue: "61.4",
+  carriesLabel: isAr ? "يحمل" : "Carries",
+  chipObjective: isAr ? "الهدف 1.2" : "Objective 1.2",
+  chipInitiative07: isAr ? "المبادرة 07" : "Initiative 07",
+  chipInitiative12: isAr ? "المبادرة 12" : "Initiative 12",
+  chipBenefit: isAr ? "المنفعة 4.2" : "Benefit 4.2",
+  nextRef: isAr ? "مؤشر · 1.2.4" : "KPI · 1.2.4",
+  nextName: isAr ? "زمن معالجة المعاملة" : "Case processing time",
+  nextBaselineValue: "38.0",
+  nextTargetValue: "21.0",
+};
 ---
 
-<svg
-  viewBox="0 0 460 236"
-  class:list={["kpi-card w-full max-w-[560px]", className]}
-  role="img"
-  aria-label={t("fragment.kpiCard.ariaLabel")}
-  data-fragment
->
-  <defs>
-    <mask
-      id="kpi-card-wipe-mask"
-      maskUnits="userSpaceOnUse"
-      x="0"
-      y="0"
-      width="460"
-      height="236"
-    >
-      <rect x="0" y="0" width="460" height="236" fill="black"></rect>
-      <rect data-fragment-wipe x="0" y="0" width="460" height="236" fill="white"
-      ></rect>
-    </mask>
-  </defs>
+<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative; max-width: 880px;">
+  <div
+    style={`position: relative; overflow: hidden; mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 78%, transparent 99%); -webkit-mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 78%, transparent 99%);`}
+  >
+    <div style="display: flex; gap: 14px; min-width: 980px;">
+      <div
+        style={`flex: 0 0 560px; border: 1px solid ${colors.hairline}; border-radius: 6px; background: ${cardBg}; padding: 20px; box-shadow: ${cardShadow};`}
+      >
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <span class={refClass} style={refStyle}>{copy.ref}</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 9999px; background: rgba(255,201,92,0.14);">
+            <span aria-hidden="true" class="bg-gold" style="width: 5px; height: 5px; border-radius: 50%;"></span>
+            <span class={eyebrowMicroClass("text-gold")} style={isAr ? undefined : "font-size: 9px;"}>{copy.atRisk}</span>
+          </span>
+        </div>
+        <p class="font-sans font-semi tracking-heading text-paper" style="font-size: 19px; margin: 8px 0 0;">{copy.name}</p>
+        <div class="border-hairline" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top-width: 1px; border-top-style: solid; margin-top: 14px; padding-top: 14px;">
+          <div>
+            <p class={eyebrowMicroClass("text-muted")} style={eyebrowMicroStyle(" margin: 0;")}>{copy.baselineLabel}</p>
+            <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">{copy.baselineValue}</p>
+          </div>
+          <div>
+            <p class={eyebrowMicroClass("text-muted")} style={eyebrowMicroStyle(" margin: 0;")}>{copy.targetLabel}</p>
+            <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">{copy.targetValue}</p>
+          </div>
+          <div>
+            <p class={eyebrowMicroClass("text-muted")} style={eyebrowMicroStyle(" margin: 0;")}>{copy.actualLabel}</p>
+            <p dir="ltr" class="font-mono font-data text-cyan" style="font-size: 24px; margin: 6px 0 0;">{copy.actualValue}</p>
+          </div>
+        </div>
+        <svg viewBox="0 0 500 54" style="width: 100%; margin-top: 14px; direction: ltr;" aria-hidden="true">
+          <defs>
+            <linearGradient id="kpi-spark-stroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color={colors.accent}></stop>
+              <stop offset="1" stop-color={colors.cyan}></stop>
+            </linearGradient>
+            <linearGradient id="kpi-spark-area" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color={`rgba(${cyanRgb},0.25)`}></stop>
+              <stop offset="1" stop-color={`rgba(${cyanRgb},0)`}></stop>
+            </linearGradient>
+          </defs>
+          <path d="M2 44 L85 40 L168 42 L251 30 L334 24 L417 18 L498 10 L498 54 L2 54 Z" fill="url(#kpi-spark-area)"></path>
+          <path class="tm-spark" d="M2 44 L85 40 L168 42 L251 30 L334 24 L417 18 L498 10" fill="none" stroke="url(#kpi-spark-stroke)" stroke-width="2" stroke-linecap="round"></path>
+          <circle cx="498" cy="10" r="3.5" class="fill-cyan"></circle>
+        </svg>
+        <div class="border-hairline" style="display: flex; flex-wrap: wrap; gap: 8px; border-top-width: 1px; border-top-style: solid; margin-top: 14px; padding-top: 12px;">
+          <span class={eyebrowMicroClass("text-muted")} style={isAr ? "align-self: center;" : "font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; align-self: center;"}>{copy.carriesLabel}</span>
+          <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(89,216,230,0.35);">
+            <span class={eyebrowMicroClass("text-cyan")} style={isAr ? undefined : "font-size: 9px;"}>{copy.chipObjective}</span>
+          </span>
+          <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.14);">
+            <span class={eyebrowMicroClass("text-paper")} style={isAr ? undefined : "font-size: 9px;"}>{copy.chipInitiative07}</span>
+          </span>
+          <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.14);">
+            <span class={eyebrowMicroClass("text-paper")} style={isAr ? undefined : "font-size: 9px;"}>{copy.chipInitiative12}</span>
+          </span>
+          <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.14);">
+            <span class={eyebrowMicroClass("text-paper")} style={isAr ? undefined : "font-size: 9px;"}>{copy.chipBenefit}</span>
+          </span>
+        </div>
+      </div>
 
-  <g mask="url(#kpi-card-wipe-mask)">
-    <rect width="460" height="236" class="fill-surface-deep"></rect>
-
-    {
-      isAr ? (
-        <>
-          {/* The KPI card itself, mirrored: 460-(8+300)=152. */}
-          <rect
-            x="152"
-            y="10"
-            width="300"
-            height="216"
-            rx="4"
-            class="fill-surface stroke-hairline"
-            stroke-width="1"
-          />
-          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
-              within the card — no new geometry that reads as information. */}
-          <rect x="153" y="11" width="298" height="1" class="fill-highlight" />
-
-          <text x="434" y="32" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.ref")}
-          </text>
-          {/* mirrored cx: 460-282=178 */}
-          <circle cx="178" cy="28" r="4.5" class="fill-amber" />
-
-          <text x="434" y="57" class={`${name} fill-paper`}>
-            {t("fragment.kpiCard.name")}
-          </text>
-
-          <line
-            x1="434"
-            y1="74"
-            x2="170"
-            y2="74"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-
-          {/* The three figure columns mirror to right-anchored columns that
-              grow leftward: 460-26=434, 460-114=346, 460-202=258. */}
-          <text x="434" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.baselineLabel")}
-          </text>
-          <text x="434" y="124" class={`${figure} fill-paper`}>
-            {t("fragment.kpiCard.baselineValue")}
-          </text>
-
-          <text x="346" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.targetLabel")}
-          </text>
-          <text x="346" y="124" class={`${figure} fill-paper`}>
-            {t("fragment.kpiCard.targetValue")}
-          </text>
-
-          <text x="258" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.actualLabel")}
-          </text>
-          <text x="258" y="124" class={`${figure} fill-accent`}>
-            {t("fragment.kpiCard.actualValue")}
-          </text>
-
-          <line
-            x1="434"
-            y1="142"
-            x2="170"
-            y2="142"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-
-          <text x="434" y="163" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.sparklineLabel")}
-          </text>
-
-          {/* Sparkline mirrored point by point, so the six periods still run
-              from the oldest at inline-start (right) to the newest at
-              inline-end (left) — time reads with the language. */}
-          <polyline
-            points="434,212 382,204 330,207 278,192 226,184 174,174"
-            fill="none"
-            stroke-width="1.5"
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            class="stroke-accent"
-          />
-          <circle cx="174" cy="174" r="3" class="fill-accent" />
-
-          {/* The neighbouring card, mirrored: 460-(320+300)=-160. Runs off the
-              viewBox's left edge — inline-end in RTL — and is clipped by it. */}
-          <rect
-            x="-160"
-            y="10"
-            width="300"
-            height="216"
-            rx="4"
-            class="fill-surface stroke-hairline"
-            stroke-width="1"
-          />
-          <rect x="-159" y="11" width="298" height="1" class="fill-highlight" />
-
-          <text x="122" y="32" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.nextRef")}
-          </text>
-          <text x="122" y="57" class={`${name} fill-paper`}>
-            {t("fragment.kpiCard.nextName")}
-          </text>
-          <line
-            x1="122"
-            y1="74"
-            x2="0"
-            y2="74"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-          <text x="122" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.nextBaselineLabel")}
-          </text>
-          <text x="122" y="124" class={`${figure} fill-paper`}>
-            {t("fragment.kpiCard.nextBaselineValue")}
-          </text>
-        </>
-      ) : (
-        <>
-          {/* The KPI card itself, fully readable */}
-          <rect
-            x="8"
-            y="10"
-            width="300"
-            height="216"
-            rx="4"
-            class="fill-surface stroke-hairline"
-            stroke-width="1"
-          />
-          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
-              within the card — no new geometry that reads as information. */}
-          <rect x="9" y="11" width="298" height="1" class="fill-highlight" />
-
-          <text x="26" y="32" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.ref")}
-          </text>
-          <circle cx="282" cy="28" r="4.5" class="fill-amber" />
-
-          <text x="26" y="57" class={`${name} fill-paper`}>
-            {t("fragment.kpiCard.name")}
-          </text>
-
-          <line
-            x1="26"
-            y1="74"
-            x2="290"
-            y2="74"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-
-          <text x="26" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.baselineLabel")}
-          </text>
-          <text x="26" y="124" class={`${figure} fill-paper`}>
-            {t("fragment.kpiCard.baselineValue")}
-          </text>
-
-          <text x="114" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.targetLabel")}
-          </text>
-          <text x="114" y="124" class={`${figure} fill-paper`}>
-            {t("fragment.kpiCard.targetValue")}
-          </text>
-
-          <text x="202" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.actualLabel")}
-          </text>
-          <text x="202" y="124" class={`${figure} fill-accent`}>
-            {t("fragment.kpiCard.actualValue")}
-          </text>
-
-          <line
-            x1="26"
-            y1="142"
-            x2="290"
-            y2="142"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-
-          <text x="26" y="163" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.sparklineLabel")}
-          </text>
-
-          <polyline
-            points="26,212 78,204 130,207 182,192 234,184 286,174"
-            fill="none"
-            stroke-width="1.5"
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            class="stroke-accent"
-          />
-          <circle cx="286" cy="174" r="3" class="fill-accent" />
-
-          {/* The neighbouring card: starts in-frame, geometry runs past the
-              viewBox's edge and is clipped by it. */}
-          <rect
-            x="320"
-            y="10"
-            width="300"
-            height="216"
-            rx="4"
-            class="fill-surface stroke-hairline"
-            stroke-width="1"
-          />
-          <rect x="321" y="11" width="298" height="1" class="fill-highlight" />
-
-          <text x="338" y="32" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.nextRef")}
-          </text>
-          <text x="338" y="57" class={`${name} fill-paper`}>
-            {t("fragment.kpiCard.nextName")}
-          </text>
-          <line
-            x1="338"
-            y1="74"
-            x2="460"
-            y2="74"
-            class="stroke-hairline"
-            stroke-width="1"
-          />
-          <text x="338" y="97" class={`${label} fill-muted`}>
-            {t("fragment.kpiCard.nextBaselineLabel")}
-          </text>
-          <text x="338" y="124" class={`${figure} fill-paper`}>
-            {t("fragment.kpiCard.nextBaselineValue")}
-          </text>
-        </>
-      )
-    }
-  </g>
-</svg>
-
-<script src="../../scripts/fragment.ts"></script>
-
-<style>
-  /* Spec §3's three type roles, expressed in the fragment's own user-space
-     units. Same treatment as StageGateQueue.astro: addressed as local classes
-     rather than through the shared .font-mono/.text-datum utilities, because
-     those carry rem sizes that would not scale with the artwork. */
-  .label {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .name {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 14px;
-  }
-
-  .figure {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 22px;
-  }
-
-  /* Arabic: spec §3's mono role swaps to Plex Sans 600 at normal tracking,
-     because letterspaced mono destroys Arabic joining. Repeated here rather
-     than inherited from global.css's `[dir="rtl"] .font-mono` override,
-     because fragment type is sized in user-space units and never goes through
-     that utility. The figure role swaps too, even though "42.0" contains no
-     Arabic: `/ar` never preloads Plex Mono (BaseLayout.astro), so leaving it
-     mono would make three digits the only reason the page fetches a fifth
-     font file. */
-  .label-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 12px;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  .name-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 15px;
-  }
-
-  .figure-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 22px;
-  }
-
-  /* known-issues.md (P5): `direction` inherits into <text>, and
-     `text-anchor: start`/`end` are defined relative to it, so a fragment that
-     inherits its direction from <html> has coordinates whose meaning changes
-     under the reader's locale. Both branches above therefore state a direction
-     explicitly: LTR pages get `ltr` (matching the unmirrored geometry), and
-     the mirrored Arabic geometry gets `rtl`, which is what makes its
-     unqualified `text-anchor: start` resolve to the right-hand edge without a
-     single hand-flipped anchor — and lets mixed strings such as
-     "آخر 6 فترات" order themselves the way an Arabic reader reads them.
-     `:global()` wraps the ancestor half of the selector: Astro's scoped-style
-     processor otherwise appends this component's scope hash to `[dir="rtl"]`
-     too, producing a selector that can never match, since dir lives on
-     <html>. That bug is why the P4 confidence-bar override silently did
-     nothing until P5 — see SuggestionCard.astro. */
-  .kpi-card {
-    direction: ltr;
-  }
-
-  :global([dir="rtl"]) .kpi-card {
-    direction: rtl;
-  }
-</style>
+      <div
+        class="border-hairline bg-surface"
+        style={`flex: 0 0 400px; border-width: 1px; border-radius: 6px; padding: 20px; box-shadow: inset 0 1px 0 0 ${colors.highlight};`}
+      >
+        <span class={refClass} style={refStyle}>{copy.nextRef}</span>
+        <p class="font-sans font-semi tracking-heading text-paper" style="font-size: 19px; margin: 8px 0 0;">{copy.nextName}</p>
+        <div class="border-hairline" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top-width: 1px; border-top-style: solid; margin-top: 14px; padding-top: 14px;">
+          <div>
+            <p class={eyebrowMicroClass("text-muted")} style={eyebrowMicroStyle(" margin: 0;")}>{copy.baselineLabel}</p>
+            <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">{copy.nextBaselineValue}</p>
+          </div>
+          <div>
+            <p class={eyebrowMicroClass("text-muted")} style={eyebrowMicroStyle(" margin: 0;")}>{copy.targetLabel}</p>
+            <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">{copy.nextTargetValue}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="tm-load font-mono text-datum font-data tracking-datum text-muted" style="--d: 650ms; margin-top: 14px;">
+    {caption}
+  </p>
+</div>

@@ -1,21 +1,13 @@
 ---
-// /en/benefits — "Benefits realisation" (P6). Expands the last link of the
-// home page's traceability chain: Benefit. The one question it answers: how do
-// you know the outcome happened, after the team has gone?
+// /en/benefits — "Benefits realisation". Redesign wave B (docs/design_
+// handoff_website_redesign/README.md §4, Benefits (redesign).dc.html — hue
+// gold). Expands the last link of the home page's traceability chain:
+// Benefit.
 //
-// Structure belongs to ProductPage.astro and copy to
-// components/product/copy.ts's bilingual table; this file supplies the page
-// key and the one fragment, exactly like the other two product pages.
-//
-// Curiosity ledger for this route:
-//   Reveals  — the forecast curve shape (BenefitCurve.astro).
+// Curiosity ledger for this route, unchanged from the pre-redesign version:
+//   Reveals  — the forecast-vs-actual curve shape, cropped inline-end.
 //   Withholds — the benefit register and the attribution logic.
-// Neither appears in the argument, the caption, the fragment, its aria-label
-// or the AI card. The word "register" occurs exactly once on this page, in
-// `handoff`, which is the sentence whose job is to promise it; nothing
-// anywhere on the page explains how a benefit is apportioned to the work that
-// produced it. The Arabic holds the same line: "سجل المنافع" occurs once, in
-// the Arabic handoff, and nowhere else on /ar/benefits.
+// Named only in `handoff` — verified by grep, both languages.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProductPage from "../../components/product/ProductPage.astro";
 import BenefitCurve from "../../components/fragments/BenefitCurve.astro";
@@ -32,6 +24,8 @@ const copy = productCopy[lang].benefits;
   description={copy.documentDescription}
 >
   <ProductPage lang={lang} copy={copy}>
-    <BenefitCurve slot="fragment" lang={lang} />
+    <BenefitCurve slot="fragment" lang={lang} caption={copy.fragmentCaption} />
   </ProductPage>
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

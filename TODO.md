@@ -714,3 +714,59 @@ and will be addressed as the pages that touch them get built (P2 onward).
   chain's `position: sticky` pin and its plain scroll-handler scrub (not a
   GSAP ScrollTrigger) are new mechanics this wave that haven't had a WebKit
   pass yet.
+
+## From redesign wave B (docs/design_handoff_website_redesign — Strategy/Execution/Benefits/Contact)
+
+- **A Slow 4G + 4x CPU LCP pass on all 8 new routes is still owed**, same
+  host-load-sensitivity reason as every earlier section of this file. This
+  wave's own measurements (chrome-devtools MCP, Fast 4G, no CPU throttle)
+  are comfortably inside budget — `/en/strategy` 158ms, `/ar/strategy`
+  188ms, `/en/contact` 163ms, CLS 0.00 throughout — but that is not a
+  substitute for the throttled pass on an idle machine.
+- **The residual ~12–15px height gap between `/ar/strategy` and
+  `/ar/execution`'s own fragment section and the reference is a pre-existing,
+  sitewide line-height cascade interaction, not something this wave
+  introduced or can cleanly fix in the fragment files alone.** Full
+  root-cause: the reference's own standalone preview sets `line-height:1.8`
+  on a wrapping `<div>` with no competing rule beneath it, so every plain
+  `<p>`/`<span>` inherits it. This repo's real `global.css` sets `body`'s
+  own `line-height:1.55` via the `text-body` fontSize utility's bundled
+  tuple (known-issues.md's earlier "text-body names both a colour and a
+  fontSize token" entry) — a declaration set directly ON `body`, which wins
+  over inheriting the `[dir=rtl]` rule's 1.8 from `<html>`, for any plain
+  element that doesn't have its own explicit line-height (h1/h2/h3 already
+  get one; arbitrary `<p>`/`<span>` micro-labels inside a fragment do not).
+  Fixing this properly means either giving `body` a non-`fontSize`-bundled
+  line-height or scoping the Arabic override with higher specificity —
+  sitewide surgery well outside a "build four pages" scope, and risky
+  against every already-shipped Arabic route. `/ar/benefits` (a pure-SVG
+  fragment, immune to this CSS inheritance chain) matches the reference to
+  the pixel on all five sections; `/ar/strategy` and `/ar/execution` are
+  exact on hero/argument/AI-moment/handoff and short by 12–15px only on the
+  DOM-based fragment's plain-text rows. Piyush's call whether this is worth
+  a dedicated sitewide line-height pass.
+- **The design handoff's own `_ds/` compiled-CSS bundle is absent from
+  `docs/design_handoff_website_redesign/`** (the README says to "keep the
+  bundle folder next to the files when previewing," but only the `.dc.html`
+  files, `README.md`, `github.md` and `support.js` are actually present —
+  confirmed by directory listing before assuming a fetch/config problem).
+  Opening any reference file directly in a browser therefore renders
+  completely unstyled. Worked around this session by extracting this repo's
+  own compiled stylesheet from a built page's inlined `<style>` (the
+  reference reuses this exact Tailwind build per its own README) and
+  reassembling a working preview in the scratchpad — not committed
+  anywhere in this repo — to get a genuine measured comparison rather than
+  reading source only. A future session should do the same rather than
+  assuming the reference can be screenshotted as-is.
+- **`SuggestionCard.astro`, `scripts/aiCard.ts`, `components/contact/
+  SovereigntyBand.astro` and `scripts/fragment.ts` are deleted, not left
+  unreferenced.** All four were the pre-redesign mechanism for something
+  this wave's reference replaces outright (the product pages' AI card, the
+  fragments' SVG-wipe reveal) or drops entirely (the contact page's
+  sovereignty band has no counterpart in `Contact (redesign).dc.html`,
+  which is exactly two sections — hero and form card — plus the shared
+  footer). Same precedent as Wave A deleting the pre-redesign chain/hero
+  components outright rather than leaving them as dead code. This also
+  makes `IntertecLogo.astro` (already flagged above as unreferenced since
+  Wave A dropped its footer call site) doubly unreferenced — its other
+  remaining caller was `SovereigntyBand.astro`, now gone.

@@ -1,40 +1,28 @@
 ---
-// ContactPage.astro — `/contact`'s own shared skeleton (P7), the same
-// "compose it once, both languages pass `lang`" pattern ProductPage.astro
-// established for the three product pages (BUILD_FLAGS' "keep one shared
-// component rather than a variant"). Three sections:
+// ContactPage.astro — `/contact`'s own shared skeleton. Redesign wave B
+// (docs/design_handoff_website_redesign/README.md §5, Contact
+// (redesign).dc.html): a grid-ground hero ("See it against your own plan.",
+// mint eyebrow, gradient key phrase, a mailto note) and the form in one
+// raised card — replacing the pre-redesign plain hero + bare form + separate
+// sovereignty band wholesale. The reference's own visual shell is exactly
+// two sections plus the footer; the sovereignty band (SovereigntyBand.astro,
+// deleted this wave) has no counterpart in the new reference and is dropped
+// rather than kept as a third section the reference never shows.
 //
-//   1. The question — eyebrow, heading and sub, content brief §7 verbatim,
-//      plus the placeholder contact email wired in per this build's own
-//      instruction (BUILD_FLAGS default; TODO.md).
-//   2. The form — ContactForm.astro, in full.
-//   3. The sovereignty band — SovereigntyBand.astro; see its own header
-//      comment for what is and is not verbatim here.
+// Submission plumbing is untouched, per this wave's own instruction ("visual
+// shell from the reference, submission plumbing from the repo"):
+// `ContactForm.astro` still keeps the Formspree POST, honeypot,
+// aria-invalid/aria-describedby pattern and every validation/status string
+// from `i18n/ui.ts`. Only its outer shell (the raised gradient card) and the
+// mono footnote are new this wave.
 //
-// No fragment, no AI moment: spec §6 is explicit ("Form only, no product
-// imagery, no AI") and spec §4's per-page AI-moment table lists "Contact:
-// none. Do not put AI in the form." No pin, no scrub, no count-up — same
-// motion posture as the three product pages (section reveal + header rule
-// only), because a contact form has nothing that should look alive while a
-// reader is trying to fill it in.
-//
-// P10 (DESIGN-ELEVATION.md §4.1): "form section on ink; the sovereignty band
-// on a seam-up band. No glow" — the question section and the form section
-// stay plain `ink` (no `ground-rise`; that treatment is the product-page
-// skeleton's own, not this page's), and only the sovereignty band's section
-// gets `seam="up"`. `grep spotlight` must return 0 hits in this tree — spec
-// §4's per-page AI-moment table gives `/contact` no AI moment, and the
-// one-glow rule (§3.6) is tied to the AI card, so its absence here is the
-// rule working, not a gap.
+// No fragment, no AI moment — spec's own contact-page rule ("no AI, no
+// product imagery") is unchanged by this wave.
 import Section from "../layout/Section.astro";
-import Reveal from "../ui/Reveal.astro";
-import Eyebrow from "../type/Eyebrow.astro";
-import Display from "../type/Display.astro";
-import Lede from "../type/Lede.astro";
 import ContactForm from "./ContactForm.astro";
-import SovereigntyBand from "./SovereigntyBand.astro";
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
+import tailwindConfig from "../../../tailwind.config.mjs";
 
 interface Props {
   lang: Language;
@@ -42,47 +30,72 @@ interface Props {
 
 const { lang }: Props = Astro.props;
 const t = useTranslations(lang);
+const isAr = lang === "ar";
 
-// The one wired-in mailto. Was the BUILD_FLAGS default placeholder
-// (`hello@trumandate.com`) through P7; replaced at P9 with the real address
-// (`trumandate@intertecsys.com`, user decision 2026-08-17 — see
-// BUILD_FLAGS.md's decisions log) — TODO.md's placeholder item is closed.
-// `contact.emailNote` is plain translated prose in both languages with the
-// address embedded verbatim in Latin script (matching the brand-name rule:
-// TruMandate itself stays Latin in Arabic copy too), so this only turns
-// that literal substring into a real `mailto:` link rather than
-// hand-authoring a second, HTML-bearing string per language.
+const colors = (tailwindConfig as { theme: { colors: Record<string, string> } })
+  .theme.colors;
+const gradientAngle = isAr ? 268 : 92;
+const gradientStyle = `background: linear-gradient(${gradientAngle}deg, ${colors.accent} 0%, ${colors.cyan} 100%); -webkit-background-clip: text; background-clip: text; color: transparent;`;
+
+// Same substring-replace pattern the pre-redesign page already used: the
+// email note is plain translated prose with the address embedded verbatim
+// in Latin script, turned into a real `mailto:` link rather than
+// hand-authoring a second HTML-bearing string per language. `dir="ltr"` on
+// the anchor matches the reference's own AR markup exactly (an explicit
+// bidi isolate around the Latin address inside RTL prose).
 const emailNoteHtml = t("contact.emailNote").replace(
   "trumandate@intertecsys.com",
-  '<a href="mailto:trumandate@intertecsys.com" class="text-paper underline underline-offset-4 hover:text-accent">trumandate@intertecsys.com</a>',
+  `<a href="mailto:trumandate@intertecsys.com" dir="ltr" class="text-paper underline underline-offset-4 hover:text-accent">trumandate@intertecsys.com</a>`,
 );
 ---
 
-<Section>
-  <Reveal as="div">
-    <Eyebrow>{t("contact.eyebrow")}</Eyebrow>
+<Section bleed pad={false}>
+  <Fragment slot="backdrop">
+    <div class="absolute inset-0 bg-ground-rise"></div>
+    <div
+      class="absolute inset-0 bg-grid-draft"
+      style="mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%);"
+    >
+    </div>
+  </Fragment>
 
-    <Display as="h1" class="mt-4 max-w-measure-head">
-      {t("contact.heading")}
-    </Display>
-
-    <Lede class="mt-6">{t("contact.sub")}</Lede>
-
+  <div
+    class="relative z-10 mx-auto max-w-content px-gutter"
+    style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(1.5rem, 3vh, 2.5rem);"
+  >
+    <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow text-mint">
+      {t("contact.eyebrow")}
+    </p>
+    <h1
+      class="tm-load mt-5 font-sans text-display font-semi tracking-display text-paper lg:tracking-display-lg"
+      style={`--d: 90ms; max-width: ${isAr ? 20 : 18}ch; text-wrap: balance;`}
+    >
+      {isAr ? (
+        <>
+          شاهدها على <span style={gradientStyle}>خطتك أنت</span>.
+        </>
+      ) : (
+        <>
+          See it against <span style={gradientStyle}>your own plan</span>.
+        </>
+      )}
+    </h1>
+    <p class="tm-load mt-6 text-lede font-light text-body" style="--d: 180ms; max-width: 54ch;">
+      {t("contact.sub")}
+    </p>
     <p
-      class="mt-4 max-w-measure text-small font-light text-muted"
+      class="tm-load mt-4 text-small font-light text-muted"
+      style="--d: 260ms;"
       set:html={emailNoteHtml}
     />
-  </Reveal>
-</Section>
-
-<Section tight>
-  <div class="max-w-measure">
-    <ContactForm lang={lang} />
   </div>
 </Section>
 
-<Section tight seam="up">
-  <Reveal as="div">
-    <SovereigntyBand lang={lang} />
-  </Reveal>
+<Section style="padding-block: clamp(2rem, 4vh, 3rem) clamp(3rem, 6vh, 5rem);" pad={false}>
+  <div
+    class="tm-load"
+    style={`--d: 320ms; max-width: 760px; border: 1px solid ${colors.hairline}; border-radius: 6px; background: linear-gradient(180deg, ${colors["kpi-tile-top"]} 0%, ${colors.surface} 100%); padding: clamp(22px, 4vw, 40px); box-shadow: inset 0 1px 0 0 ${colors.highlight}, 0 14px 32px -10px rgba(2,24,19,0.6);`}
+  >
+    <ContactForm lang={lang} />
+  </div>
 </Section>

@@ -106,6 +106,7 @@ const interestOptions = [
       id="contact-email"
       name="email"
       type="email"
+      full
       label={t("contact.emailLabel")}
       required
       autocomplete="email"
@@ -193,6 +194,11 @@ const interestOptions = [
     <Button type="submit" class="min-w-[12rem]">
       <span data-submit-label>{t("cta.primary")}</span>
     </Button>
+    {/* Redesign wave B (Contact (redesign).dc.html): the mono footnote
+        under the submit button, carried verbatim in both languages. */}
+    <p class="mt-4 font-mono text-datum font-data tracking-datum text-muted">
+      {t("contact.footnote")}
+    </p>
   </div>
 </form>
 

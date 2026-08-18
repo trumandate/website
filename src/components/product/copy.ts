@@ -1,83 +1,107 @@
 import type { Language } from "../../i18n/types";
 
 /**
- * The shape of one product page's copy, and the bilingual table that holds all
- * three pages in both languages (P6 → P6-AR).
+ * Product-page copy — redesign wave B (docs/design_handoff_website_redesign/
+ * README.md §§2–4: Strategy/Execution/Benefits). Replaces the pre-redesign
+ * shape wholesale (not extended): the new reference pages carry a different
+ * skeleton — a start-aligned hero with a gradient key phrase, a bespoke DOM/
+ * SVG fragment, a three-point "argument" grid (not a paragraph stack), a
+ * hue-bordered AI moment card, and a two-CTA handoff — so the old
+ * `ProductPageCopy` shape (a `string[]` of long paragraphs) no longer matches
+ * what ships. Every string below is carried verbatim from the reference
+ * `.dc.html` files (`Strategy (redesign).dc.html` / `Strategy AR …`, and the
+ * Execution/Benefits siblings) — the standing directive for this wave is
+ * exact reference fidelity, copy included, over the pre-existing approved
+ * English/Arabic this file held before.
  *
- * Why this is a plain TS table and NOT a branch of `i18n/ui.ts`: that tree is
- * consumed through `useTranslations`, whose `KeyPath<T>` type walks every
- * property and whose `t()` returns `string`. `ProductPageCopy` carries a
- * `string[]` (the argument paragraphs) and a `number` (the confidence value
- * that drives the bar's width), neither of which `t()` can return and both of
- * which would make `KeyPath` recurse into array and number prototypes. So the
- * page-level copy keeps its own typed home here, next to the component that
- * consumes it, while the three fragments' short label strings — which really
- * are all strings — live in `i18n/ui.ts` under `fragment` and reach the SVGs
- * through `t()` exactly as `home.stageGate.*` already does.
- *
- * What matters structurally is the same thing `UiStrings` gives the chrome:
- * `Record<Language, …>` means an Arabic value cannot be missing for an English
- * one that exists. CLAUDE.md's "Arabic never carries less content than
- * English" is therefore a compile error rather than a review note.
- *
- * The English is COPY-REVIEW.md's approved text, moved here verbatim from the
- * three `/en/*.astro` frontmatters — not one word of it changed in the move.
- * The Arabic is written, not machine-translated (BUILD_FLAGS: "keep the
- * argument, not the sentence structure"): each page's argument is restructured
- * as Arabic prose of equivalent completeness, and the plain-prose version for
- * review is appended to COPY-REVIEW.md.
+ * Kept as a plain TS table rather than folded into `i18n/ui.ts`, same
+ * precedent as this file's previous shape and `components/board/copy.ts`:
+ * `argument.points` is an array and `ai.confidence` is a number, neither of
+ * which `useTranslations`'s `t()` (string-only, KeyPath-typed) can return.
  */
 
-/**
- * Spec §4's three-part AI moment: the signal (a fact with a number), the
- * evidence and confidence (as a value), then the gate plus an audit line
- * naming a person and a time. Identical shape on all three pages — the
- * pattern repeating is the point.
- */
-export interface ProductAiMoment {
-  /** Section eyebrow. */
+export interface ArgumentPoint {
+  /** Hue-coloured mono eyebrow, e.g. "The break" / "الانقطاع". */
   eyebrow: string;
-  /** Section h2 — names this page's specific signal, not "AI" in general. */
-  heading: string;
-  /** Prose explaining what the model did and where the decision sits. */
   body: string;
-  /** Card badge, e.g. "AI watch". */
+}
+
+export interface ProductArgument {
+  /** Muted mono eyebrow above the section heading, e.g. "Where it breaks". */
+  eyebrow: string;
+  heading: string;
+  /** The heading's own `max-width`, in ch — differs per page and per
+   * language in the reference (Arabic runs wider), same reasoning as
+   * `heroHeadlineMaxCh`. */
+  headingMaxCh: number;
+  /** Always three, each with its own `tm-grow` rule above it. */
+  points: ArgumentPoint[];
+}
+
+export interface ProductAiMoment {
+  eyebrow: string;
+  heading: string;
+  /** The heading's own `max-width`, in ch — same per-page/per-language
+   * reasoning as `heroHeadlineMaxCh`/`headingMaxCh`. */
+  headingMaxCh: number;
+  body: string;
+  /** Card badge, already composed with its domain suffix, e.g.
+   * "AI watch · strategy" / "مراقبة ذكية · الاستراتيجية". */
   badge: string;
-  /** Card's confidence label as displayed, e.g. "confidence 0.81". */
-  confidenceLabel: string;
-  /** 0–1. Drives the confidence bar's own width (motion #4). Must agree with
-   * the number written into `confidenceLabel`. */
+  /** "confidence" / "الثقة" — the word only; the value renders separately
+   * (Arabic wraps the digits in `dir="ltr"` for bidi isolation, matching the
+   * reference and known-issues.md's established digit-pair pattern). */
+  confidenceWord: string;
+  /** "0.81" — display string; must agree with `confidence` below. */
+  confidenceValue: string;
+  /** 0–1. Drives the confidence bar's width. */
   confidence: number;
-  /** Card title — the signal. */
   title: string;
-  /** Card detail — evidence and suggested action. */
   detail: string;
-  /** Audit line: a name and a timestamp. */
-  log: string;
+  /** "Decision logged" / "القرار مسجَّل" — the label only. */
+  logPrefix: string;
+  /** "h.alsuwaidi · 11:07" — same string both languages; Arabic wraps it in
+   * `dir="ltr"`, matching the reference. */
+  logName: string;
+}
+
+export interface ProductHandoff {
+  /** Hue-coloured mono eyebrow, e.g. "Held back from this page" / "In the
+   * demo" — wording differs per page in the reference, carried as-is. */
+  eyebrow: string;
+  heading: string;
+  /** Strategy and Execution carry a second lede line; Benefits does not
+   * (the reference's own asymmetry, reproduced rather than normalised). */
+  lede?: string;
+  /** The secondary ghost CTA's label, e.g. "Next: Execution" / "Back to
+   * home" / "العودة إلى الرئيسية". */
+  nextLabel: string;
+  /** Route suffix after `/{lang}`, e.g. "/execution" or "/" for home. */
+  nextHref: string;
 }
 
 export interface ProductPageCopy {
-  /** Part 1: eyebrow naming the chain link this page expands. */
-  eyebrow: string;
-  /** Part 1: the buyer's actual question, not a feature announcement. */
-  headline: string;
-  /** Part 2: three to four paragraphs. No bullets, no cards. */
-  argument: string[];
-  /** Part 3, line 1 of the fragment's two-line caption. */
-  captionLead: string;
-  /** Part 3, line 2 of the fragment's two-line caption. */
-  captionSecond: string;
-  /** Part 4. */
+  /** Strategy → cyan, Execution → mint, Benefits → gold. */
+  hue: "cyan" | "mint" | "gold";
+  /** "The chain · Objective → KPI" etc. */
+  chainEyebrow: string;
+  /** The H1 splits around a gradient-clip span: concatenating
+   * `headlineLead + headlineGradient + headlineTail` reproduces the
+   * reference's sentence exactly, including trailing punctuation. */
+  headlineLead: string;
+  headlineGradient: string;
+  headlineTail: string;
+  /** The H1's own `max-width`, in ch — the reference sets this per page (and
+   * wider in Arabic, since Arabic prose runs longer at the same character
+   * count) rather than one shared value. */
+  heroHeadlineMaxCh: number;
+  lede: string;
+  /** The mono caption line under the fragment. */
+  fragmentCaption: string;
+  argument: ProductArgument;
   ai: ProductAiMoment;
-  /**
-   * Part 5: ONE sentence naming what the demo shows that this page did not.
-   * This is the only place on the page where the curiosity ledger's withheld
-   * item may be named — it is promised here and nowhere else.
-   */
-  handoff: string;
-  /** <title>. */
+  handoff: ProductHandoff;
   documentTitle: string;
-  /** <meta name="description">. */
   documentDescription: string;
 }
 
@@ -89,97 +113,170 @@ export const productCopy: Record<
 > = {
   en: {
     strategy: {
-      eyebrow: "Objective → KPI",
-      headline: "A mandate is not a plan until someone owns a number.",
-      argument: [
-        "Most strategy offices can produce the objective tree. It gets built during the planning cycle, it is signed off by people senior enough to make it stick, and it is usually good work. Ask the same office which initiative moves which objective, and by how much, and the answer arrives three days later as a spreadsheet somebody assembled by hand — if it arrives at all. The tree was never the hard part. Holding it against what is actually being delivered is.",
-        "The break happens at the KPI, and it is an organisational problem before it is a technical one. Objectives are written by the people who set direction. KPIs are defined by the people who have to report, months later, against a template that came from somewhere else. The two groups work to different calendars, use different words for the same measure, and nobody's job description includes reconciling them. So the objective tree and the measurement framework drift apart quietly, and neither side finds out until someone asks a question that needs both at once.",
-        "TruMandate makes the KPI the join rather than a downstream artefact. A KPI record carries a baseline, a target, a named owner and a live actual, and it is attached upward to the objective it serves and downward to the initiatives funded to move it. Rescope an initiative and the KPI it feeds is already the place the consequence shows, because the link is part of the record rather than a note in a document somebody has to remember to update. Which initiative moves a given number becomes a lookup instead of an investigation.",
-        "The baseline is the part that is usually missing, and the platform will not accept a KPI without one. A measure with a target and no starting point can tell you where the number sits but not whether it moved, which is how a portfolio ends up reporting green against something nobody has improved. Requiring the baseline at definition time is a small piece of friction that irritates people in the first week and pays for itself the first time a minister asks what has changed since the plan was published. An opinion cannot survive that question. A baseline can.",
-      ],
-      captionLead:
-        "One KPI record as the platform stores it: baseline, target, live actual, and the last six periods.",
-      captionSecond:
-        "The status dot is derived from the movement between them. Nobody types it in.",
+      hue: "cyan",
+      chainEyebrow: "The chain · Objective → KPI",
+      headlineLead: "A mandate is not a plan until someone ",
+      headlineGradient: "owns a number",
+      headlineTail: ".",
+      heroHeadlineMaxCh: 22,
+      lede: "Every office can draw the objective tree. TruMandate makes the KPI the join: a baseline, a target, a named owner and a live actual, wired to the objective above it and the initiatives below it.",
+      fragmentCaption:
+        "One KPI record as the platform stores it. The status dot is computed from movement, never typed in.",
+      argument: {
+        eyebrow: "Where it breaks",
+        heading: "The tree was never the hard part.",
+        headingMaxCh: 28,
+        points: [
+          {
+            eyebrow: "The break",
+            body: "Objectives are written by the people who set direction. KPIs are defined months later by the people who report. Nobody's job is to reconcile the two, so they drift apart quietly.",
+          },
+          {
+            eyebrow: "The join",
+            body: "In TruMandate the KPI is the join, not a downstream artefact. Rescope an initiative and the consequence shows at the KPI it feeds, because the link is part of the record.",
+          },
+          {
+            eyebrow: "The refusal",
+            body: "The platform will not accept a KPI without a baseline. A measure with no starting point is an opinion, and an opinion does not survive a minister asking what changed.",
+          },
+        ],
+      },
       ai: {
         eyebrow: "AI in the platform",
         heading: "Two KPIs, one benefit, counted twice.",
-        body: "The model compares measure definitions and initiative links rather than KPI names, so it finds duplication that a tidy naming convention hides — two objectives, two reporting lines, one underlying benefit counted twice. It states what it found, how sure it is, and what it would do about it. Nothing reaches the record until a person chooses, and the choice is stored with their name and the time they made it. The suggestion is evidence for a decision, not the decision.",
-        badge: "AI watch",
-        confidenceLabel: "confidence 0.81",
+        headingMaxCh: 24,
+        body: "The model compares measure definitions and initiative links, not names, so it catches duplication that a tidy naming convention hides. It states what it found, how sure it is, and what it would do. A person chooses, and the choice is stored with their name.",
+        badge: "AI watch · strategy",
+        confidenceWord: "confidence",
+        confidenceValue: "0.81",
         confidence: 0.81,
         title: "Two KPIs counting the same benefit",
         detail:
           "Objective 2.1 and Objective 4.3. Evidence: identical source measure and an overlapping initiative set. Suggested action: merge, or mark one as a contributing measure.",
-        log: "Decision logged · h.alsuwaidi · 11:07",
+        logPrefix: "Decision logged",
+        logName: "h.alsuwaidi · 11:07",
       },
-      handoff:
-        "The demo starts where this page stops: the cascade being built in front of you, a national framework document in at the top and weighted objectives out at the bottom, in about ten minutes.",
+      handoff: {
+        eyebrow: "Held back from this page",
+        heading:
+          "The cascade editor. Watch it built live, in about ten minutes.",
+        lede: "A national framework document in at the top, weighted objectives out at the bottom.",
+        nextLabel: "Next: Execution",
+        nextHref: "/execution",
+      },
       documentTitle: "Strategy and KPIs — TruMandate",
       documentDescription:
         "How a mandate becomes a number someone owns: objectives joined to KPIs that carry a baseline, a target, an owner and a live actual.",
     },
 
     execution: {
-      eyebrow: "Initiative → Milestone",
-      headline:
-        "Delivery data that never reaches the funder is just paperwork.",
-      argument: [
-        "Project tools are good at managing projects. They are also structurally incapable of rolling up to a mandate, because the mandate does not exist inside them. A schedule knows its own tasks, its own dependencies and its own critical path. It does not know which objective bought it, what that objective promised in return, or which other initiative is competing for the same three people. None of that is a defect in the tool. It is a question the tool was never asked.",
-        "So the roll-up becomes a monthly human exercise. Someone requests status from every delivery lead. Someone else retypes the replies into a template. On the way through, each number is rounded gently toward the answer its author would rather give, because the person typing it is also the person who will be asked about it. By the time the pack reaches the steering committee it is both stale and negotiated, and the committee makes funding decisions on it anyway, because it is the only version that exists.",
-        "TruMandate holds initiatives against the objective that funded them. Every milestone carries a baseline date and an actual date, so slip is a subtraction rather than a judgement call, and it shows up on the day it happens instead of at the end of the reporting month. Every stage gate decision is recorded against a named person with a date, and it stays attached to the record after that person has moved on. Because the roll-up is a query rather than a collection exercise, the steering pack stops being assembled — it was never disassembled in the first place.",
-        "What changes in practice is the meeting. A committee that trusts the numbers spends its hour on the initiatives in trouble instead of spending it confirming that the rest are broadly fine. And when a number is wrong, it is wrong in a way that leads back to a record, a date and a person who can be asked about it, which is a different class of problem from a number nobody can source. Governance is mostly the ability to ask that second question and get an answer the same day.",
-      ],
-      captionLead:
-        "Three initiatives as the portfolio view lists them, each against the objective that funded it.",
-      captionSecond:
-        "Progress is read from milestone baselines and actuals, so the red row needed no separate exception report.",
+      hue: "mint",
+      chainEyebrow: "The chain · Initiative → Milestone",
+      headlineLead: "Delivery data that never reaches the funder is just ",
+      headlineGradient: "paperwork",
+      headlineTail: ".",
+      heroHeadlineMaxCh: 22,
+      lede: "Project tools cannot roll up to a mandate they have never heard of. TruMandate holds every initiative against the objective that funded it, so slip is a subtraction, visible the day it happens.",
+      fragmentCaption:
+        "The list continues past the crop. The red row raised itself; nobody filed an exception report.",
+      argument: {
+        eyebrow: "Where it breaks",
+        heading:
+          "The monthly pack is stale and negotiated. Committees fund on it anyway.",
+        headingMaxCh: 28,
+        points: [
+          {
+            eyebrow: "The ritual",
+            body: "Someone requests status. Someone retypes it into a template. Each number is rounded toward the answer its author would rather give, because the writer is also the one who will be asked about it.",
+          },
+          {
+            eyebrow: "The subtraction",
+            body: "Every milestone carries a baseline date and an actual date, so slip is arithmetic, not judgement. The steering pack stops being assembled because it was never disassembled.",
+          },
+          {
+            eyebrow: "The name",
+            body: "Every stage gate decision is recorded against a person and a date, and it stays on the record after that person moves on. A wrong number leads back to someone who can be asked.",
+          },
+        ],
+      },
       ai: {
         eyebrow: "AI in the platform",
-        heading: "A dependency at risk that neither owner has raised.",
-        body: "This one comes out of two records no person had a reason to compare: a date that moved on one initiative, and a start condition on another that points at it. Different departments, different reporting lines, no shared meeting in anyone's calendar. The model reads the link and puts the risk in front of someone while there is still a week to act on it, with its evidence attached. A person decides whether it is real, and that decision becomes part of the record rather than a remark in a meeting.",
-        badge: "AI watch",
-        confidenceLabel: "confidence 0.74",
+        heading: "A risk neither owner had raised.",
+        headingMaxCh: 24,
+        body: "Two records no person had a reason to compare: a date that moved on one initiative, and a start condition on another that points at it. Different departments, no shared meeting. The model put it in front of someone with a week still on the clock.",
+        badge: "AI watch · execution",
+        confidenceWord: "confidence",
+        confidenceValue: "0.74",
         confidence: 0.74,
         title: "Cross-department dependency at risk",
         detail:
-          "Initiative 07 and Initiative 21, different departments. Evidence: gate 3 slipped on one, and the other's start condition references it. Suggested action: raise a cross-department dependency flag before the steering meeting.",
-        log: "Decision logged · m.alfarsi · 08:15",
+          "Initiative 07 and Initiative 21, different departments. Evidence: gate 3 slipped on one, and the other's start condition references it. Suggested action: raise a dependency flag before the steering meeting.",
+        logPrefix: "Decision logged",
+        logName: "m.alfarsi · 08:15",
       },
-      handoff:
-        "The demo picks up from here: what happens when a gate is rejected, and how far the change propagates through dates, dependencies and owners before anyone sits down to re-plan.",
+      handoff: {
+        eyebrow: "Held back from this page",
+        heading: "What happens when a gate is rejected.",
+        lede: "How far the change propagates through dates, dependencies and owners before anyone sits down to re-plan.",
+        nextLabel: "Next: Benefits",
+        nextHref: "/benefits",
+      },
       documentTitle: "Execution and governance — TruMandate",
       documentDescription:
         "How delivery reality reaches the office that funded it: initiatives held against the objective that paid for them, with baseline and actual on every milestone.",
     },
 
     benefits: {
-      eyebrow: "Benefit",
-      headline: "The project closed. Did the benefit arrive?",
-      argument: [
-        "Benefits are forecast during business case approval, which is the one moment in a programme's life when optimism is rewarded. They are measured never, because the team that promised them has been released by the time the benefit is due to appear. Between those two facts sits the largest credibility gap in portfolio governance, and everyone involved knows it is there. It is simply nobody's job to close it once the project has closed.",
-        "It is also why the same saving gets promised by three consecutive programmes. Nobody is lying. Each business case is written against a real problem by people who were not in the room for the last one, and none of them can see that an earlier programme already claimed the same money, because that earlier promise stopped being tracked on the day its project shut down. The promise outlives the tracking by years, and the gap is where a portfolio quietly loses its credibility with the people funding it.",
-        "TruMandate keeps the benefit alive for 24 months past closure. It stays attached to the exact KPI it promised to move, and it has an owner who still holds that role rather than a project manager who has moved to another programme. Forecast and actual sit on the same axis, on the same record, in the units the business case used. Divergence shows up without anyone requesting a report, which is the point, because the period when nobody is asking is precisely the period the benefit was supposed to arrive in.",
-        "This is the least comfortable part of the platform to demonstrate and the part that decides whether the rest of it is worth anything. A governance system that can only report on work in flight is a schedule with a dashboard attached. The real test is whether it can still answer a question about a programme that finished two years ago, whose sponsor has retired and whose delivery team has been reassigned twice. If the answer to that is a shrug, the objective tree at the top was decoration.",
-      ],
-      captionLead:
-        "One benefit, actual against forecast, on the axis its business case set.",
-      captionSecond:
-        "Solid to today, projected beyond it, and measured for 24 months from the day the project closed.",
+      hue: "gold",
+      chainEyebrow: "The chain · Benefit",
+      headlineLead: "The project closed. Did the ",
+      headlineGradient: "benefit arrive",
+      headlineTail: "?",
+      heroHeadlineMaxCh: 20,
+      lede: "Benefits are forecast when optimism is rewarded and measured after the team is gone. TruMandate keeps each benefit alive for 24 months past closure, attached to the exact KPI it promised to move.",
+      fragmentCaption:
+        "Forecast and actual on the same axis, in the units the business case used. Divergence shows itself.",
+      argument: {
+        eyebrow: "Where it breaks",
+        heading: "The largest credibility gap in portfolio governance.",
+        headingMaxCh: 30,
+        points: [
+          {
+            eyebrow: "The gap",
+            body: "Forecast at approval, measured never. Everyone involved knows the gap is there. It is simply nobody's job to close it once the project has closed.",
+          },
+          {
+            eyebrow: "The repeat promise",
+            body: "The same saving gets promised by three consecutive programmes, because the earlier promise stopped being tracked the day its project shut down. Nobody is lying. Nobody is checking.",
+          },
+          {
+            eyebrow: "The 24 months",
+            body: "TruMandate keeps the benefit alive past closure, owned by someone still in the role, measured against the KPI it promised to move. The quiet period is exactly when it watches.",
+          },
+        ],
+      },
       ai: {
         eyebrow: "AI in the platform",
         heading: "Leakage, found in the quarter nobody was watching.",
-        body: "The model watches the measure the benefit was attached to rather than the project that promised it, so it keeps watching after the project stops existing. When actuals pull away from forecast it says by how much, over what period, and what it thinks caused the divergence. Then it does what it does everywhere else here: it hands the decision to a person, names them in the record, and leaves the forecast alone until they act. A number this uncomfortable is worth being certain about.",
-        badge: "AI watch",
-        confidenceLabel: "confidence 0.69",
+        headingMaxCh: 26,
+        body: "The model watches the measure, not the project, so it keeps watching after the project stops existing. When actuals pull away from forecast it says by how much, over what period, and what it thinks caused it. Then a person decides, on the record.",
+        badge: "AI watch · benefits",
+        confidenceWord: "confidence",
+        confidenceValue: "0.69",
         confidence: 0.69,
         title: "Benefit leakage detected after closure",
         detail:
-          "Benefit 4.2. Evidence: actuals have diverged from forecast by 18% in the two quarters since closure, and the underlying KPI stopped improving when the programme team was released. No owner has been notified. Suggested action: reassign benefit ownership and revise the forecast.",
-        log: "Decision logged · s.alnuaimi · 16:30",
+          "Benefit 4.2. Evidence: actuals diverged from forecast by 18% in the two quarters since closure, and the KPI stopped improving when the team was released. Suggested action: reassign ownership and revise the forecast.",
+        logPrefix: "Decision logged",
+        logName: "s.alnuaimi · 16:30",
       },
-      handoff:
-        "The demo opens the benefit register: every promise made in a business case, with its current status and the person who now owns it, in one list.",
+      handoff: {
+        eyebrow: "In the demo",
+        heading:
+          "The benefit register: every promise, its status, its owner. One list.",
+        nextLabel: "Back to home",
+        nextHref: "/",
+      },
       documentTitle: "Benefits realisation — TruMandate",
       documentDescription:
         "How you know the outcome happened after the team has gone: benefits kept alive for 24 months past closure, against the exact KPI they promised to move.",
@@ -187,114 +284,174 @@ export const productCopy: Record<
   },
 
   // ---------------------------------------------------------------------------
-  // Arabic. Written against the approved English argument, not translated from
-  // its sentences (BUILD_FLAGS). Numerals follow spec §8 as the home page
-  // already applies it: page prose and the AI card use the content brief's
-  // Arabic-Indic pattern for reference numbers, confidence values and
-  // timestamps (home `ai.confidence` ٠٫٧٧, `ai.detail` البوابة ٣, `ai.log`
-  // ٠٩:٤٢); measured quantities that the brief itself writes Western stay
-  // Western (home `chain.benefitBody` "24 شهراً" — the same 24-month window
-  // this page's third paragraph and caption carry). Product fragment labels
-  // are Western throughout, matching StageGateQueue.astro.
-  //
-  // The chain-link eyebrows drop the "→" and name the relation in words
-  // ("من الهدف إلى مؤشر الأداء"). U+2192 has Bidi_Mirrored=Yes, so an arrow
-  // authored in either direction is re-mirrored by the shaping engine under
-  // RTL and stops being a reliable statement about which way the chain runs;
-  // the preposition pair says it unambiguously and reads as Arabic rather
-  // than as a translated diagram label.
+  // Arabic — carried verbatim from `Strategy AR (redesign).dc.html` and its
+  // Execution/Benefits siblings, written prose (not machine-translated),
+  // exactly as the reference ships it.
   // ---------------------------------------------------------------------------
   ar: {
     strategy: {
-      eyebrow: "من الهدف إلى مؤشر الأداء",
-      headline: "التكليف لا يصير خطة حتى يملك أحدهم رقماً.",
-      argument: [
-        "معظم مكاتب الاستراتيجية قادرة على إنتاج شجرة الأهداف. تُبنى في دورة التخطيط، ويعتمدها مسؤولون على مستوى يكفي لجعلها نافذة، وهي في الغالب عمل جيد. لكن اسأل المكتب نفسه أي مبادرة تُحرّك أي هدف، وبأي قدر، فيصلك الجواب بعد ثلاثة أيام في جدول جمعه أحدهم بيده، إن وصل أصلاً. الشجرة لم تكن يوماً الجزء الصعب؛ الصعب هو مقابلتها بما يُنفَّذ فعلاً.",
-        "الانقطاع يقع عند مؤشر الأداء، وهو خلل تنظيمي قبل أن يكون خللاً تقنياً. الأهداف يكتبها من يضعون التوجّه، أما المؤشرات فيعرّفها من سيرفعون التقارير بعد أشهر وفق قالب جاء من جهة أخرى. المجموعتان تعملان على تقويمين مختلفين، وتستخدمان ألفاظاً مختلفة للمقياس نفسه، ولا يرد في وصف وظيفة أحد أن يوفّق بينهما. فتبتعد شجرة الأهداف عن إطار القياس بهدوء، ولا يكتشف أي من الطرفين ذلك إلا حين يُطرح سؤال يحتاج إليهما معاً.",
-        "يجعل TruMandate مؤشر الأداء نقطة الوصل ذاتها، لا مخرَجاً لاحقاً. سجل المؤشر يحمل خط أساس وقيمة مستهدفة ومالكاً بالاسم وقيمة فعلية حيّة، وهو مرتبط إلى أعلى بالهدف الذي يخدمه، وإلى أسفل بالمبادرات المموَّلة لتحريكه. غيّر نطاق مبادرة، فيظهر الأثر عند المؤشر الذي تغذّيه في اللحظة نفسها، لأن الرابط جزء من السجل لا ملاحظة في مستند يتذكّر أحدهم تحديثه. وهكذا يتحوّل سؤال «أي مبادرة تُحرّك هذا الرقم» من تحقيق إلى استعلام.",
-        "خط الأساس هو الجزء الغائب عادة، والمنصة لا تقبل مؤشراً بلا خط أساس. مقياس له قيمة مستهدفة بلا نقطة انطلاق يخبرك أين يقف الرقم، لا ما إذا كان قد تحرّك، وهكذا تنتهي محفظة إلى الإبلاغ باللون الأخضر عن شيء لم يحسّنه أحد. اشتراط خط الأساس عند التعريف احتكاك صغير يزعج الناس في الأسبوع الأول، ويسدّ ثمنه أول مرة يسأل فيها وزير عمّا تغيّر منذ نشر الخطة. الرأي لا ينجو من هذا السؤال. خط الأساس ينجو.",
-      ],
-      captionLead:
-        "سجل مؤشر واحد كما تحفظه المنصة: خط الأساس، والقيمة المستهدفة، والقيمة الفعلية الحيّة، وآخر ست فترات.",
-      captionSecond: "نقطة الحالة مشتقّة من الحركة بينها. لا أحد يكتبها بيده.",
+      hue: "cyan",
+      chainEyebrow: "السلسلة · من الهدف إلى مؤشر الأداء",
+      headlineLead: "التكليف لا يصير خطة حتى يملك أحدهم ",
+      headlineGradient: "رقماً",
+      headlineTail: ".",
+      heroHeadlineMaxCh: 24,
+      lede: "كل مكتب يستطيع رسم شجرة الأهداف. يجعل TruMandate المؤشر نقطة الوصل: خط أساس، وقيمة مستهدفة، ومالك بالاسم، وقيمة فعلية حيّة، موصولة بالهدف فوقها والمبادرات تحتها.",
+      fragmentCaption:
+        "سجل مؤشر واحد كما تحفظه المنصة. نقطة الحالة تُحسب من الحركة، ولا تُكتب بيد أحد.",
+      argument: {
+        eyebrow: "أين ينقطع الخيط",
+        heading: "الشجرة لم تكن يوماً الجزء الصعب.",
+        headingMaxCh: 30,
+        points: [
+          {
+            eyebrow: "الانقطاع",
+            body: "الأهداف يكتبها من يضعون التوجّه، والمؤشرات يعرّفها بعد أشهر من سيرفعون التقارير. لا أحد وظيفته التوفيق بينهما، فيبتعدان بهدوء.",
+          },
+          {
+            eyebrow: "نقطة الوصل",
+            body: "في TruMandate المؤشر هو نقطة الوصل لا مخرَجاً لاحقاً. غيّر نطاق مبادرة، فيظهر الأثر عند المؤشر الذي تغذّيه، لأن الرابط جزء من السجل.",
+          },
+          {
+            eyebrow: "الرفض",
+            body: "لا تقبل المنصة مؤشراً بلا خط أساس. مقياس بلا نقطة انطلاق رأيٌ، والرأي لا ينجو من سؤال وزير عمّا تغيّر.",
+          },
+        ],
+      },
       ai: {
         eyebrow: "الذكاء الاصطناعي في المنصة",
         heading: "مؤشران، ومنفعة واحدة، محسوبة مرتين.",
-        body: "يقارن النموذج تعريفات المقاييس وروابط المبادرات بدل أسماء المؤشرات، فيكشف ازدواجاً يخفيه اصطلاح تسمية مرتَّب: هدفان، وخطّا رفع تقارير، ومنفعة واحدة تُحتسب مرتين. يذكر ما وجده، ودرجة يقينه، وما يقترح فعله. ولا شيء يصل إلى السجل قبل أن يختار شخص، ويُحفظ الاختيار باسمه وبوقت اتخاذه. الاقتراح دليل يُبنى عليه القرار، لا القرار نفسه.",
-        badge: "مراقبة ذكية",
-        confidenceLabel: "درجة الثقة ٠٫٨١",
+        headingMaxCh: 26,
+        body: "يقارن النموذج تعريفات المقاييس وروابط المبادرات لا الأسماء، فيكشف ازدواجاً يخفيه اصطلاح تسمية مرتَّب. يذكر ما وجده ودرجة يقينه وما يقترح فعله، ويختار إنسان، ويُحفظ اختياره باسمه.",
+        badge: "مراقبة ذكية · الاستراتيجية",
+        confidenceWord: "الثقة",
+        confidenceValue: "0.81",
         confidence: 0.81,
         title: "مؤشران يحتسبان المنفعة نفسها",
         detail:
-          "الهدف ٢٫١ والهدف ٤٫٣. الدليل: مقياس مصدري متطابق ومجموعة مبادرات متداخلة. الإجراء المقترح: الدمج، أو تعليم أحدهما مقياساً مساهماً.",
-        log: "القرار مسجَّل · h.alsuwaidi · ١١:٠٧",
+          "الهدف 2.1 والهدف 4.3. الدليل: مقياس مصدري متطابق ومجموعة مبادرات متداخلة. الإجراء المقترح: الدمج، أو تعليم أحدهما مقياساً مساهماً.",
+        logPrefix: "القرار مسجَّل",
+        logName: "h.alsuwaidi · 11:07",
       },
-      handoff:
-        "يبدأ العرض التوضيحي من حيث تتوقف هذه الصفحة: تدرّج الأهداف يُبنى أمامك، وثيقة إطار وطني تدخل من أعلاه وأهداف موزونة بأوزانها تخرج من أسفله، في نحو عشر دقائق.",
+      handoff: {
+        eyebrow: "محجوب عن هذه الصفحة",
+        heading: "محرّر التدرّج. شاهده يُبنى أمامك في نحو عشر دقائق.",
+        lede: "وثيقة إطار وطني تدخل من أعلاه، وأهداف موزونة تخرج من أسفله.",
+        nextLabel: "التالي: التنفيذ",
+        nextHref: "/execution",
+      },
       documentTitle: "الاستراتيجية ومؤشرات الأداء — TruMandate",
       documentDescription:
         "كيف يصير التكليف رقماً يملكه شخص: أهداف موصولة بمؤشرات تحمل خط أساس وقيمة مستهدفة ومالكاً وقيمة فعلية حيّة.",
     },
 
     execution: {
-      eyebrow: "من المبادرة إلى المعلم",
-      headline: "بيانات التنفيذ التي لا تصل إلى مَن مَوّل العمل مجرد أوراق.",
-      argument: [
-        "أدوات إدارة المشاريع جيدة في إدارة المشاريع، وهي في الوقت نفسه عاجزة بنيوياً عن الصعود إلى مستوى التكليف، لأن التكليف غير موجود بداخلها. الجدول الزمني يعرف مهامه وتبعياته ومساره الحرج، ولا يعرف أي هدف اشتراه، ولا ما وعد به ذلك الهدف في المقابل، ولا أي مبادرة أخرى تزاحمه على الأشخاص الثلاثة أنفسهم. لا شيء من ذلك عيب في الأداة؛ إنه سؤال لم يُطرح عليها قط.",
-        "فيتحوّل التجميع إلى تمرين بشري شهري. أحدهم يطلب الحالة من كل مسؤول تنفيذ، وآخر يعيد كتابة الردود في قالب. وفي الطريق يُقرَّب كل رقم برفق نحو الجواب الذي يفضّله كاتبه، لأن من يكتبه هو نفسه من سيُسأل عنه. وحين يصل التقرير إلى اللجنة التوجيهية يكون قديماً ومتفاوَضاً عليه في آن واحد، وتبني اللجنة قرارات التمويل عليه رغم ذلك، لأنه النسخة الوحيدة الموجودة.",
-        "يحفظ TruMandate المبادرات مقابل الهدف الذي مَوّلها. كل معلم يحمل تاريخ خط أساس وتاريخاً فعلياً، فيصير التأخير عملية طرح لا حكماً شخصياً، ويظهر يوم وقوعه لا في نهاية شهر التقارير. وكل قرار عند بوابة مرحلة مسجَّل باسم شخص وبتاريخ، ويبقى ملتصقاً بالسجل بعد انتقال ذلك الشخص إلى موقع آخر. ولأن التجميع استعلام لا عملية جمع، يتوقف تقرير اللجنة عن كونه شيئاً يُركَّب — فهو لم يُفكَّك أصلاً.",
-        "وما يتغيّر عملياً هو الاجتماع نفسه. لجنة تثق بالأرقام تنفق ساعتها على المبادرات المتعثّرة، بدل أن تنفقها في التأكد من أن البقية بخير على العموم. وحين يكون رقم خاطئاً، يكون خطؤه من نوع يقود إلى سجل وتاريخ وشخص يمكن سؤاله، وهذا صنف مختلف تماماً عن رقم لا يعرف أحد مصدره. الحوكمة في جوهرها هي القدرة على طرح ذلك السؤال الثاني والحصول على جواب في اليوم نفسه.",
-      ],
-      captionLead:
-        "ثلاث مبادرات كما تسردها شاشة المحفظة، كل واحدة مقابل الهدف الذي مَوّلها.",
-      captionSecond:
-        "التقدّم مقروء من خطوط الأساس والقيم الفعلية للمعالم، فلم يحتج الصف الأحمر إلى تقرير استثناء منفصل.",
+      hue: "mint",
+      chainEyebrow: "السلسلة · من المبادرة إلى المعلم",
+      headlineLead: "بيانات التنفيذ التي لا تصل إلى الممُوِّل مجرد ",
+      headlineGradient: "أوراق",
+      headlineTail: ".",
+      heroHeadlineMaxCh: 24,
+      lede: "أدوات المشاريع لا تستطيع الصعود إلى تكليف لم تسمع به. يحفظ TruMandate كل مبادرة مقابل الهدف الذي موّلها، فيصير التأخير عملية طرح تظهر يوم وقوعها.",
+      fragmentCaption:
+        "القائمة تستمر بعد القص. الصف الأحمر رفع نفسه بنفسه؛ لم يكتب أحد تقرير استثناء.",
+      argument: {
+        eyebrow: "أين ينقطع الخيط",
+        heading:
+          "التقرير الشهري قديم ومتفاوَض عليه، واللجان تموّل بناءً عليه رغم ذلك.",
+        headingMaxCh: 32,
+        points: [
+          {
+            eyebrow: "الطقس الشهري",
+            body: "أحدهم يطلب الحالة، وآخر يعيد كتابتها في قالب. وفي الطريق يُقرَّب كل رقم نحو الجواب الذي يفضّله كاتبه، لأنه هو من سيُسأل عنه.",
+          },
+          {
+            eyebrow: "عملية الطرح",
+            body: "كل معلم يحمل تاريخ أساس وتاريخاً فعلياً، فيصير التأخير حساباً لا اجتهاداً. يتوقف تقرير اللجنة عن كونه شيئاً يُركَّب، لأنه لم يُفكَّك أصلاً.",
+          },
+          {
+            eyebrow: "الاسم",
+            body: "كل قرار بوابة مسجَّل باسم شخص وتاريخ، ويبقى على السجل بعد انتقاله. الرقم الخاطئ يقود إلى شخص يمكن سؤاله.",
+          },
+        ],
+      },
       ai: {
         eyebrow: "الذكاء الاصطناعي في المنصة",
-        heading: "تبعية معرَّضة للخطر لم يرفعها أي من المالكَين.",
-        body: "هذا الاقتراح خرج من سجلَّين لم يكن لأحد سبب لمقارنتهما: تاريخ تحرّك في مبادرة، وشرط بدء في مبادرة أخرى يشير إليه. إدارتان مختلفتان، وخطّا رفع تقارير مختلفان، ولا اجتماع مشترك في تقويم أحد. يقرأ النموذج الرابط ويضع الخطر أمام شخص بينما يبقى أسبوع للتصرّف، ومعه دليله. ويقرر ذلك الشخص إن كان الخطر حقيقياً، فيصير قراره جزءاً من السجل بدل أن يكون ملاحظة عابرة في اجتماع.",
-        badge: "مراقبة ذكية",
-        confidenceLabel: "درجة الثقة ٠٫٧٤",
+        heading: "خطرٌ لم يرفعه أي من المالكَين.",
+        headingMaxCh: 26,
+        body: "سجلّان لم يكن لأحد سبب لمقارنتهما: تاريخ تحرّك في مبادرة، وشرط بدء في أخرى يشير إليه. إدارتان مختلفتان ولا اجتماع مشترك. وضعه النموذج أمام شخص وفي الوقت أسبوع كامل.",
+        badge: "مراقبة ذكية · التنفيذ",
+        confidenceWord: "الثقة",
+        confidenceValue: "0.74",
         confidence: 0.74,
         title: "تبعية بين إدارتين معرَّضة للخطر",
         detail:
-          "المبادرة ٠٧ والمبادرة ٢١، في إدارتين مختلفتين. الدليل: تأخّرت البوابة ٣ في إحداهما، وشرط بدء الأخرى يشير إليها. الإجراء المقترح: رفع علامة تبعية بين الإدارتين قبل اجتماع اللجنة التوجيهية.",
-        log: "القرار مسجَّل · m.alfarsi · ٠٨:١٥",
+          "المبادرة 07 والمبادرة 21، في إدارتين مختلفتين. الدليل: تأخرت البوابة 3 في إحداهما، وشرط بدء الأخرى يشير إليها. الإجراء المقترح: رفع علامة تبعية قبل اجتماع اللجنة.",
+        logPrefix: "القرار مسجَّل",
+        logName: "m.alfarsi · 08:15",
       },
-      handoff:
-        "من هنا يكمل العرض التوضيحي: ماذا يحدث حين تُرفض بوابة، وإلى أي مدى ينتشر التغيير عبر التواريخ والتبعيات والمالكين قبل أن يجلس أحد لإعادة التخطيط.",
+      handoff: {
+        eyebrow: "محجوب عن هذه الصفحة",
+        heading: "ماذا يحدث حين تُرفض بوابة.",
+        lede: "إلى أي مدى ينتشر التغيير عبر التواريخ والتبعيات والمالكين قبل أن يجلس أحد لإعادة التخطيط.",
+        nextLabel: "التالي: المنافع",
+        nextHref: "/benefits",
+      },
       documentTitle: "التنفيذ والحوكمة — TruMandate",
       documentDescription:
         "كيف يصل واقع التنفيذ إلى المكتب الذي مَوّله: مبادرات محفوظة مقابل الهدف الذي دفع ثمنها، وخط أساس وقيمة فعلية على كل معلم.",
     },
 
     benefits: {
-      eyebrow: "المنفعة",
-      headline: "أُغلق المشروع. فهل وصلت المنفعة؟",
-      argument: [
-        "تُتوقَّع المنافع أثناء اعتماد دراسة الجدوى، وهي اللحظة الوحيدة في عمر البرنامج التي يُكافأ فيها التفاؤل. ولا تُقاس أبداً، لأن الفريق الذي وعد بها يكون قد سُرِّح قبل موعد ظهورها. بين هاتين الحقيقتين تقع أكبر فجوة مصداقية في حوكمة المحافظ، ويعرف كل معنيٍّ بها أنها هناك. لكنها ببساطة ليست مسؤولية أحد بعد أن يُغلق المشروع.",
-        "ولهذا السبب نفسه تَعِد ثلاثة برامج متعاقبة بالوفر ذاته. لا أحد يكذب هنا. كل دراسة جدوى تُكتب في مواجهة مشكلة حقيقية، بأيدي أشخاص لم يكونوا في الغرفة في المرة السابقة، ولا يستطيع أي منهم أن يرى أن برنامجاً أسبق طالب بالمال نفسه، لأن ذلك الوعد الأسبق توقف تتبّعه يوم أُغلق مشروعه. الوعد يعمّر سنوات بعد أن يتوقف تتبّعه، وفي هذه الفجوة تفقد المحفظة مصداقيتها بهدوء أمام من يموّلونها.",
-        "يُبقي TruMandate المنفعة حيّة 24 شهراً بعد الإغلاق. تبقى مرتبطة بالمؤشر ذاته الذي وُعدت بتحريكه، ولها مالك ما زال يشغل ذلك الدور، لا مدير مشروع انتقل إلى برنامج آخر. القيمة المتوقَّعة والقيمة الفعلية على المحور نفسه، وفي السجل نفسه، وبالوحدات التي استخدمتها دراسة الجدوى. ويظهر التباعد بينهما دون أن يطلب أحد تقريراً، وهذا هو المقصود: الفترة التي لا يسأل فيها أحد هي بالضبط الفترة التي كان يُفترض أن تصل فيها المنفعة.",
-        "هذا أقل أجزاء المنصة راحة في العرض، وهو الجزء الذي يقرّر إن كان ما تبقّى منها يساوي شيئاً. نظام حوكمة لا يحسن الإخبار إلا عن عمل جارٍ هو جدول زمني عُلِّقت عليه لوحة مؤشرات. الاختبار الحقيقي أن يظل قادراً على الإجابة عن سؤال يخص برنامجاً انتهى قبل عامين، تقاعد راعيه وأُعيد توزيع فريق تنفيذه مرتين. فإن كان الجواب هزّة كتف، فشجرة الأهداف في الأعلى كانت زينة.",
-      ],
-      captionLead:
-        "منفعة واحدة، الفعلي مقابل المتوقَّع، على المحور الذي حدّدته دراسة جدواها.",
-      captionSecond:
-        "خط متصل حتى اليوم، وامتداد متوقَّع بعده، وقياس يمتد 24 شهراً من يوم إغلاق المشروع.",
+      hue: "gold",
+      chainEyebrow: "السلسلة · المنفعة",
+      headlineLead: "أُغلق المشروع. فهل ",
+      headlineGradient: "وصلت المنفعة",
+      headlineTail: "؟",
+      heroHeadlineMaxCh: 22,
+      lede: "تُتوقَّع المنافع حين يُكافأ التفاؤل، وتُقاس بعد رحيل الفريق. يُبقي TruMandate كل منفعة حيّة 24 شهراً بعد الإغلاق، مرتبطةً بالمؤشر ذاته الذي وُعدت بتحريكه.",
+      fragmentCaption:
+        "المتوقَّع والفعلي على المحور نفسه، وبوحدات دراسة الجدوى. التباعد يُظهر نفسه بنفسه.",
+      argument: {
+        eyebrow: "أين ينقطع الخيط",
+        heading: "أكبر فجوة مصداقية في حوكمة المحافظ.",
+        headingMaxCh: 32,
+        points: [
+          {
+            eyebrow: "الفجوة",
+            body: "تُتوقَّع عند الاعتماد، ولا تُقاس أبداً. الجميع يعرف أن الفجوة هناك، لكنها ببساطة ليست مسؤولية أحد بعد إغلاق المشروع.",
+          },
+          {
+            eyebrow: "الوعد المتكرر",
+            body: "يَعِد ثلاثةُ برامج متعاقبة بالوفر ذاته، لأن الوعد الأسبق توقف تتبّعه يوم أُغلق مشروعه. لا أحد يكذب، ولا أحد يتحقق.",
+          },
+          {
+            eyebrow: "الأشهر الأربعة والعشرون",
+            body: "يُبقي TruMandate المنفعة حيّة بعد الإغلاق، بمالك ما زال في دوره، مقاسةً على المؤشر الذي وُعدت بتحريكه. فترة الصمت هي بالضبط فترة المراقبة.",
+          },
+        ],
+      },
       ai: {
         eyebrow: "الذكاء الاصطناعي في المنصة",
-        heading: "تسرّب منفعة، ظهر في الربع الذي لم يراقبه أحد.",
-        body: "يراقب النموذج المقياس الذي رُبطت به المنفعة، لا المشروع الذي وعد بها، فيستمر في المراقبة بعد أن يتوقف المشروع عن الوجود. وحين تبتعد القيم الفعلية عن المتوقَّعة يذكر مقدار الابتعاد، وعلى أي مدة، وما يرجّح أنه سببه. ثم يفعل ما يفعله في كل موضع آخر هنا: يسلّم القرار إلى شخص، ويثبّت اسمه في السجل، ويترك التوقّع كما هو حتى يتصرّف. رقم بهذا القدر من الإزعاج يستحق أن يكون المرء واثقاً منه.",
-        badge: "مراقبة ذكية",
-        confidenceLabel: "درجة الثقة ٠٫٦٩",
+        heading: "تسرّب، ظهر في الربع الذي لم يراقبه أحد.",
+        headingMaxCh: 28,
+        body: "يراقب النموذج المقياس لا المشروع، فيستمر في المراقبة بعد أن يتوقف المشروع عن الوجود. حين تبتعد القيم الفعلية عن المتوقَّعة يذكر المقدار والمدة والسبب المرجَّح، ثم يقرر إنسان، وعلى السجل.",
+        badge: "مراقبة ذكية · المنافع",
+        confidenceWord: "الثقة",
+        confidenceValue: "0.69",
         confidence: 0.69,
         title: "تسرّب منفعة بعد الإغلاق",
         detail:
-          "المنفعة ٤٫٢. الدليل: ابتعدت القيم الفعلية عن المتوقَّعة بنسبة ١٨٪ خلال الربعين التاليين للإغلاق، وتوقّف المؤشر الأساسي عن التحسّن حين سُرِّح فريق البرنامج. ولم يُبلَّغ أي مالك. الإجراء المقترح: إعادة إسناد ملكية المنفعة ومراجعة القيمة المتوقَّعة.",
-        log: "القرار مسجَّل · s.alnuaimi · ١٦:٣٠",
+          "المنفعة 4.2. الدليل: ابتعدت القيم الفعلية عن المتوقَّعة بنسبة 18% خلال الربعين التاليين للإغلاق، وتوقف المؤشر عن التحسّن حين سُرّح الفريق. الإجراء المقترح: إعادة إسناد الملكية ومراجعة التوقعات.",
+        logPrefix: "القرار مسجَّل",
+        logName: "s.alnuaimi · 16:30",
       },
-      handoff:
-        "يفتح العرض التوضيحي سجل المنافع: كل وعد قُطع في دراسة جدوى، وحالته اليوم، ومن يملكه الآن، في قائمة واحدة.",
+      handoff: {
+        eyebrow: "في العرض التوضيحي",
+        heading: "سجل المنافع: كل وعد، وحالته، ومالكه. في قائمة واحدة.",
+        nextLabel: "العودة إلى الرئيسية",
+        nextHref: "/",
+      },
       documentTitle: "تحقيق المنافع — TruMandate",
       documentDescription:
         "كيف تعرف أن الأثر وقع بعد رحيل الفريق: منافع تبقى حيّة 24 شهراً بعد الإغلاق، مقابل المؤشر ذاته الذي وُعدت بتحريكه.",

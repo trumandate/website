@@ -1,354 +1,186 @@
 ---
-// InitiativeRows.astro — /execution's ONE fragment (curiosity ledger:
-// "Reveals: three initiative rows, cropped"). Hand-authored inline SVG from
-// tokens, one screen region, data anonymised — never the interface (spec §5's
-// fidelity rule).
+// InitiativeRows.astro — /execution's ONE fragment (Execution
+// (redesign).dc.html §2, "Initiative fragment"). Redesign wave B replaces
+// the pre-redesign inline-SVG table wholesale with the reference's own
+// real-DOM stacked record cards: a status dot, name, funding objective, slip
+// figure (mint on-time, gold minor slip, coral off-track) and a gradient
+// progress bar per row — "not a flat table," the README's own phrase — the
+// whole list cropped by a bottom `mask-image` fade rather than a hand-cut
+// SVG viewBox. The fourth (red) row carries a tinted background, a coral
+// border-inline-start marker and a pulsing status dot (`.tm-live`,
+// global.css) — the one "critical, needs no separate exception report" row
+// the page's caption and argument both refer to.
 //
 // WITHHELD, and absent from this file by design: the gate workflow and the
-// approval routing. There is no gate column, no decision queue, no approver
-// name, no next-step arrow and no routing state anywhere in this fragment or
-// its aria-label, in either language — which is also why each row's secondary
-// line names the objective that funded it rather than the gate it currently
-// sits at. `/execution`'s handoff sentence is the only place on that page
-// where a gate decision is named.
+// approval routing — no reader of this fragment, in either language, can
+// tell how a stage-gate decision gets routed or to whom. `/execution`'s
+// handoff sentence is the only place either is named.
 //
-// The crop is vertical, not horizontal, because the ledger asks for "cropped
-// mid-list so the list clearly continues": the list container runs to y=290
-// and the viewBox stops at 206, so a fourth row is cut through its own text.
-// Three rows are fully readable, the fourth is visibly present and visibly
-// cut, and nothing draws a bottom edge that would let the eye read the list as
-// finished. That crop is horizontal-axis-neutral, so it survives the RTL
-// mirror untouched — the only thing mirroring changes here is the column
-// order.
+// RTL: `grid-template-columns` gets the reference's own narrower first-three-
+// column widths (its own authored AR values, not a mechanical translation of
+// the EN ones); everything else mirrors automatically via logical
+// properties (`border-inline-start`, `inset-inline-start`) and the row's own
+// unmirrored `flex`/`grid` inline axis.
 //
-// One row is red (spec §5 / the ledger). RAG reaches the reader three ways, so
-// colour never carries it alone (WCAG 1.4.1, spec §9): the dot's fill, the
-// progress bar's fill, and the status word spelled out in the aria-label — in
-// both languages, from i18n/ui.ts.
-//
-// Type is sized in bare user-space numbers, not rem — see StageGateQueue.astro
-// for the reasoning. RTL (P6-AR): every x becomes `460 - x`, rects
-// additionally subtracting their own width, and the progress bar's fill is
-// re-anchored to the track's inline-start (now right-hand) edge so it still
-// grows toward inline-end. See KpiCard.astro's header for why the mirrored
-// branch sets `direction: rtl` rather than pinning `ltr` and flipping every
-// `text-anchor` by hand.
-import { useTranslations } from "../../i18n/utils";
+// Colours resolve from tailwind.config.mjs at build time for the two rgba
+// washes with no existing token (the coral-tinted critical row's border and
+// background) — same `hexToRgb` pattern as `KpiCard.astro`/`AiMomentCard.astro`.
 import type { Language } from "../../i18n/types";
+import tailwindConfig from "../../../tailwind.config.mjs";
 
 interface Props {
   class?: string;
   lang: Language;
+  caption: string;
 }
 
-const { class: className, lang }: Props = Astro.props;
-const t = useTranslations(lang);
+const { class: className, lang, caption }: Props = Astro.props;
 const isAr = lang === "ar";
 
-const VIEW_W = 460;
-const BAR_TRACK = 94;
-const BAR_X = 306;
-/** Mirrored track origin: 460 - 306 - 94. The fill grows leftward from the
- * track's right-hand edge (154), which is inline-start under RTL. */
-const BAR_X_AR = VIEW_W - BAR_X - BAR_TRACK;
-const BAR_END_AR = BAR_X_AR + BAR_TRACK;
+const colors = (tailwindConfig as { theme: { colors: Record<string, string> } })
+  .theme.colors;
 
-type Status = "on-track" | "at-risk" | "off-track";
+function hexToRgb(hex: string): string {
+  const clean = hex.replace("#", "");
+  return [0, 2, 4]
+    .map((i) => Number.parseInt(clean.slice(i, i + 2), 16))
+    .join(",");
+}
 
-const statusFill: Record<Status, string> = {
-  "on-track": "fill-accent",
-  "at-risk": "fill-amber",
-  "off-track": "fill-red",
-};
+const coralDarkRgb = hexToRgb(colors["coral-dark"]);
+const redRgb = hexToRgb(colors.red);
 
-const statusWord: Record<Status, string> = {
-  "on-track": t("fragment.initiativeRows.onTrack"),
-  "at-risk": t("fragment.initiativeRows.atRisk"),
-  "off-track": t("fragment.initiativeRows.offTrack"),
-};
+const gridCols = isAr
+  ? "minmax(180px, 1.5fr) minmax(100px, 0.9fr) minmax(70px, 0.6fr) minmax(140px, 1fr)"
+  : "minmax(200px, 1.5fr) minmax(110px, 0.9fr) minmax(90px, 0.7fr) minmax(140px, 1fr)";
 
-const rows: {
-  name: string;
-  objective: string;
-  status: Status;
-  progress: number;
-}[] = [
+const dUnit = isAr ? "د" : "d";
+
+// AR reference reaches for the real `text-datum` role (no inline
+// font-size) on these row micro-labels, letting the sitewide
+// `[dir=rtl] .text-datum → text-datum-ar` override (global.css) size
+// Arabic ~10% larger than the EN reference's own bespoke 9/11px literal
+// values — the same two-branch pattern KpiCard.astro documents at length.
+const microClass = (extra: string) =>
+  (isAr ? `font-mono text-datum font-data ${extra}` : `font-mono font-data ${extra}`).trim();
+const microSize = (px: number) => (isAr ? undefined : `font-size: ${px}px;`);
+
+const rows = [
   {
-    name: t("fragment.initiativeRows.row1Name"),
-    objective: t("fragment.initiativeRows.row1Objective"),
-    status: "on-track",
-    progress: 74,
+    name: isAr ? "بوابة الخدمات الموحّدة" : "Unified service portal",
+    objective: isAr ? "الهدف 1.2" : "Objective 1.2",
+    dotClass: "bg-mint",
+    slip: `0 ${dUnit}`,
+    slipClass: "text-mint",
+    pct: 74,
+    barClass: isAr ? "bg-grad-mint-rtl" : "bg-grad-mint",
+    animate: true,
+    delay: undefined as string | undefined,
+    critical: false,
   },
   {
-    name: t("fragment.initiativeRows.row2Name"),
-    objective: t("fragment.initiativeRows.row2Objective"),
-    status: "at-risk",
-    progress: 41,
+    name: isAr ? "رقمنة السجلات" : "Records digitisation",
+    objective: isAr ? "الهدف 1.2" : "Objective 1.2",
+    dotClass: "bg-gold",
+    slip: `+6 ${dUnit}`,
+    slipClass: "text-gold",
+    pct: 41,
+    barClass: isAr ? "bg-grad-gold-rtl" : "bg-grad-gold",
+    animate: true,
+    delay: "200ms",
+    critical: false,
   },
   {
-    name: t("fragment.initiativeRows.row3Name"),
-    objective: t("fragment.initiativeRows.row3Objective"),
-    status: "off-track",
-    progress: 18,
+    name: isAr ? "إيقاف الأنظمة القديمة" : "Legacy decommission",
+    objective: isAr ? "الهدف 3.1" : "Objective 3.1",
+    dotClass: "bg-coral-dark",
+    slip: `+34 ${dUnit}`,
+    slipClass: "text-coral",
+    pct: 18,
+    barClass: "bg-coral-dark",
+    animate: true,
+    delay: "300ms",
+    critical: true,
   },
-  // The fourth row is the crop, not a fourth reveal: the viewBox cuts through
-  // it. Kept in the same array so its geometry cannot drift from the others'.
   {
-    name: t("fragment.initiativeRows.row4Name"),
-    objective: t("fragment.initiativeRows.row4Objective"),
-    status: "on-track",
-    progress: 66,
+    name: isAr ? "إطلاق الهوية المشتركة" : "Shared identity rollout",
+    objective: isAr ? "الهدف 2.4" : "Objective 2.4",
+    dotClass: "bg-mint",
+    slip: `0 ${dUnit}`,
+    slipClass: "text-mint",
+    pct: 66,
+    barClass: isAr ? "bg-grad-mint-rtl" : "bg-grad-mint",
+    animate: false,
+    delay: undefined as string | undefined,
+    critical: false,
   },
 ];
-
-const ROW_TOP = 54;
-const ROW_HEIGHT = 44;
-
-// Arabic uses its own comma (U+060C) as the list separator; English keeps the
-// Latin one. Same sentence shape, correct punctuation in each script.
-const sep = isAr ? "، " : ", ";
-const ariaLabel = `${t("fragment.initiativeRows.ariaLabelLead")} ${rows
-  .slice(0, 3)
-  .map(
-    (row) =>
-      `${row.name}${sep}${row.objective}${sep}${statusWord[row.status]}${sep}${row.progress} ${t("fragment.initiativeRows.perCent")}.`,
-  )
-  .join(" ")} ${t("fragment.initiativeRows.ariaLabelTail")}`;
 ---
 
-<svg
-  viewBox="0 0 460 206"
-  class:list={["initiative-rows w-full max-w-[560px]", className]}
-  role="img"
-  aria-label={ariaLabel}
-  data-fragment
->
-  <defs>
-    <mask
-      id="initiative-rows-wipe-mask"
-      maskUnits="userSpaceOnUse"
-      x="0"
-      y="0"
-      width="460"
-      height="206"
+<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative; max-width: 880px;">
+  <div
+    class="border-hairline bg-surface"
+    style="border-width: 1px; border-radius: 6px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 14px 32px -10px rgba(2,24,19,0.6); overflow: hidden; max-height: 340px;"
+  >
+    <div
+      style={`mask-image: linear-gradient(to bottom, black 0%, black 72%, transparent 99%); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 72%, transparent 99%);`}
     >
-      <rect x="0" y="0" width="460" height="206" fill="black"></rect>
-      <rect data-fragment-wipe x="0" y="0" width="460" height="206" fill="white"
-      ></rect>
-    </mask>
-  </defs>
-
-  <g mask="url(#initiative-rows-wipe-mask)">
-    <rect width="460" height="206" class="fill-surface-deep"></rect>
-
-    {
-      /* The list container. Height 290 against a 206 viewBox: the bottom edge
-        is never drawn, so the list reads as continuing. Its own geometry is
-        symmetric about the viewBox centre (8 + 444 + 8), so it needs no
-        mirrored variant. */
-    }
-    <rect
-      x="8"
-      y="10"
-      width="444"
-      height="290"
-      rx="4"
-      class="fill-surface stroke-hairline"
-      stroke-width="1"></rect>
-    {
-      /* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset within
-        the card. Symmetric about the viewBox centre like the container rect
-        itself, so it needs no mirrored variant either. */
-    }
-    <rect x="9" y="11" width="442" height="1" class="fill-highlight"></rect>
-
-    {
-      isAr ? (
-        <>
-          {/* Column headers mirrored: 460-26=434, 460-232=228, 460-306=154. */}
-          <text x="434" y="34" class="label-ar fill-muted">
-            {t("fragment.initiativeRows.initiativeHeader")}
-          </text>
-          <text x="228" y="34" class="label-ar fill-muted">
-            {t("fragment.initiativeRows.statusHeader")}
-          </text>
-          <text x="154" y="34" class="label-ar fill-muted">
-            {t("fragment.initiativeRows.progressHeader")}
-          </text>
-        </>
-      ) : (
-        <>
-          <text x="26" y="34" class="label fill-muted">
-            {t("fragment.initiativeRows.initiativeHeader")}
-          </text>
-          <text x="232" y="34" class="label fill-muted">
-            {t("fragment.initiativeRows.statusHeader")}
-          </text>
-          <text x="306" y="34" class="label fill-muted">
-            {t("fragment.initiativeRows.progressHeader")}
-          </text>
-        </>
-      )
-    }
-
-    {/* Symmetric about the viewBox centre — no mirrored variant needed. */}
-    <line
-      x1="26"
-      y1="46"
-      x2="434"
-      y2="46"
-      class="stroke-hairline"
-      stroke-width="1"></line>
-
-    {
-      rows.map((row, index) => {
-        const top = ROW_TOP + index * ROW_HEIGHT;
-        const fill = (BAR_TRACK * row.progress) / 100;
-        return (
-          <>
-            <text
-              x={isAr ? 434 : 26}
-              y={top + 22}
-              class={isAr ? "name-ar fill-paper" : "name fill-paper"}
-            >
-              {row.name}
-            </text>
-            <text
-              x={isAr ? 434 : 26}
-              y={top + 38}
-              class={isAr ? "ref-ar fill-muted" : "ref fill-muted"}
-            >
-              {row.objective}
-            </text>
-
-            {/* mirrored cx: 460-246=214 */}
-            <circle
-              cx={isAr ? 214 : 246}
-              cy={top + 22}
-              r="4.5"
-              class={statusFill[row.status]}
-            />
-
-            <rect
-              x={isAr ? BAR_X_AR : BAR_X}
-              y={top + 18}
-              width={BAR_TRACK}
-              height="4"
-              rx="2"
-              class="fill-hairline"
-            />
-            {/* The fill is anchored to the track's inline-start edge in both
-                languages: its left edge in LTR, its right edge in RTL, so it
-                always grows toward inline-end. */}
-            <rect
-              x={isAr ? BAR_END_AR - fill : BAR_X}
-              y={top + 18}
-              width={fill}
-              height="4"
-              rx="2"
-              class={statusFill[row.status]}
-            />
-
-            {/* text-anchor="end" is logical: it resolves to the left edge under
-                the mirrored branch's direction: rtl, so the figure still sits
-                flush against the container's inline-end inner edge. */}
-            <text
-              x={isAr ? 26 : 434}
-              y={top + 27}
-              text-anchor="end"
-              class={isAr ? "value-ar fill-paper" : "value fill-paper"}
-            >
-              {row.progress}%
-            </text>
-
-            {index < rows.length - 1 && (
-              <line
-                x1="26"
-                y1={top + ROW_HEIGHT}
-                x2="434"
-                y2={top + ROW_HEIGHT}
-                class="stroke-hairline"
-                stroke-width="1"
-              />
-            )}
-          </>
-        );
-      })
-    }
-  </g>
-</svg>
-
-<script src="../../scripts/fragment.ts"></script>
-
-<style>
-  .label {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .ref {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 10px;
-    letter-spacing: 0.06em;
-  }
-
-  .name {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 14px;
-  }
-
-  .value {
-    font-family: theme("fontFamily.mono");
-    font-weight: theme("fontWeight.data");
-    font-size: 13px;
-  }
-
-  /* Arabic: spec §3's mono role swaps to Plex Sans 600 at normal tracking (see
-     KpiCard.astro for why the swap is repeated per fragment rather than
-     inherited from global.css, and why the digit-only value role swaps too). */
-  .label-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 12px;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  .ref-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 11px;
-    letter-spacing: 0;
-  }
-
-  .name-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 15px;
-  }
-
-  .value-ar {
-    font-family: theme("fontFamily.sans");
-    font-weight: theme("fontWeight.semi");
-    font-size: 14px;
-  }
-
-  /* known-issues.md (P5): `direction` inherits into <text> and redefines what
-     `text-anchor: start`/`end` mean. Stated explicitly in both directions so
-     the hand-computed coordinates keep the meaning they were authored
-     against; `:global()` keeps Astro's scope hash off the `[dir]` half of the
-     selector, which is what made the equivalent P4 rule in
-     SuggestionCard.astro silently never match. */
-  .initiative-rows {
-    direction: ltr;
-  }
-
-  :global([dir="rtl"]) .initiative-rows {
-    direction: rtl;
-  }
-</style>
+      <div class="border-hairline" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom-width: 1px;">
+        <span class="font-sans font-semi text-paper" style="font-size: 13px;">
+          {isAr ? "المحفظة · المبادرات" : "Portfolio · initiatives"}
+        </span>
+        <span class={microClass("tracking-datum text-muted")} style={microSize(9)}>
+          {isAr ? "مجمَّعة حيّاً من خطوط أساس المعالم" : "Rolled up from milestone baselines, live"}
+        </span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px;">
+        {
+          rows.map((row) =>
+            row.critical ? (
+              <div
+                style={`display: grid; grid-template-columns: ${gridCols}; gap: 12px; padding: 12px 14px; border: 1px solid rgba(${coralDarkRgb},0.3); border-inline-start: 2px solid ${colors["coral-dark"]}; border-radius: 4px; background: rgba(${redRgb},0.07); align-items: center;`}
+              >
+                <span style="display: inline-flex; align-items: center; gap: 8px;">
+                  <span aria-hidden="true" class="tm-live bg-coral-dark" style="width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;" />
+                  <span class="font-sans font-semi text-paper" style="font-size: 13px;">{row.name}</span>
+                </span>
+                <span dir="ltr" class={microClass("text-muted")} style={microSize(11)}>{row.objective}</span>
+                <span dir="ltr" class={microClass(row.slipClass)} style={microSize(11)}>{row.slip}</span>
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <span class="bg-hairline-08" style="position: relative; height: 4px; border-radius: 2px; flex: 1;">
+                    <span class:list={[row.barClass]} style={`position: absolute; inset-block: 0; inset-inline-start: 0; width: ${row.pct}%; border-radius: 2px; display: block;`} />
+                  </span>
+                  <span dir="ltr" class={microClass("text-paper")} style={microSize(11)}>{row.pct}%</span>
+                </span>
+              </div>
+            ) : (
+              <div
+                class="border-hairline-08 bg-ai-panel-deep"
+                style={`display: grid; grid-template-columns: ${gridCols}; gap: 12px; padding: 12px 14px; border-width: 1px; border-radius: 4px; box-shadow: inset 0 1px 0 0 ${colors.hairline}; align-items: center;`}
+              >
+                <span style="display: inline-flex; align-items: center; gap: 8px;">
+                  <span aria-hidden="true" class:list={[row.dotClass]} style="width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;" />
+                  <span class="font-sans font-semi text-paper" style="font-size: 13px;">{row.name}</span>
+                </span>
+                <span dir="ltr" class={microClass("text-muted")} style={microSize(11)}>{row.objective}</span>
+                <span dir="ltr" class={microClass(row.slipClass)} style={microSize(11)}>{row.slip}</span>
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <span class="bg-hairline-08" style="position: relative; height: 4px; border-radius: 2px; flex: 1;">
+                    <span
+                      class:list={[row.animate && "tm-grow", row.barClass]}
+                      style={`${row.delay ? `--d: ${row.delay}; ` : ""}position: absolute; inset-block: 0; inset-inline-start: 0; width: ${row.pct}%; border-radius: 2px; display: block;`}
+                    />
+                  </span>
+                  <span dir="ltr" class={microClass("text-paper")} style={microSize(11)}>{row.pct}%</span>
+                </span>
+              </div>
+            ),
+          )
+        }
+      </div>
+    </div>
+  </div>
+  <p class="tm-load font-mono text-datum font-data tracking-datum text-muted" style="--d: 650ms; margin-top: 14px;">
+    {caption}
+  </p>
+</div>

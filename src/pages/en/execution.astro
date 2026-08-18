@@ -1,22 +1,13 @@
 ---
-// /en/execution — "Execution and governance" (P6). Expands one link of the
-// home page's traceability chain: Initiative → Milestone. The one question it
-// answers: how does delivery reality reach the office that funded it?
+// /en/execution — "Execution and governance". Redesign wave B (docs/design_
+// handoff_website_redesign/README.md §3, Execution (redesign).dc.html — hue
+// mint). Expands one link of the home page's traceability chain: Initiative
+// → Milestone.
 //
-// Structure belongs to ProductPage.astro and copy to
-// components/product/copy.ts's bilingual table; this file supplies the page
-// key and the one fragment, exactly like the other two product pages.
-//
-// Curiosity ledger for this route:
-//   Reveals  — three initiative rows, cropped (InitiativeRows.astro).
+// Curiosity ledger for this route, unchanged from the pre-redesign version:
+//   Reveals  — four stacked initiative rows, cropped by a bottom fade.
 //   Withholds — the gate workflow and the approval routing.
-// Stage gates are named as a thing that exists, because
-// trumandate-product-pages.md's own "argument to land" for this page requires
-// it ("every stage gate decision assigned to a named person with a date").
-// What is withheld is the mechanism: no page copy, no fragment element and no
-// aria-label describes how a decision is routed, who it goes to next, or what
-// the workflow does with it, in either language. The only sentence that names
-// a gate decision at all is `handoff`, whose job is to promise it.
+// Named only in `handoff` — verified by grep, both languages.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProductPage from "../../components/product/ProductPage.astro";
 import InitiativeRows from "../../components/fragments/InitiativeRows.astro";
@@ -33,6 +24,8 @@ const copy = productCopy[lang].execution;
   description={copy.documentDescription}
 >
   <ProductPage lang={lang} copy={copy}>
-    <InitiativeRows slot="fragment" lang={lang} />
+    <InitiativeRows slot="fragment" lang={lang} caption={copy.fragmentCaption} />
   </ProductPage>
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

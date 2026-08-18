@@ -32,6 +32,9 @@ interface Props {
   type?: "text" | "email" | "textarea";
   required?: boolean;
   autocomplete?: string;
+  /** Span every column of the parent grid, per the reference's own
+   *  `grid-column: 1 / -1` on the work-email field. */
+  full?: boolean;
 }
 
 const {
@@ -41,12 +44,13 @@ const {
   type = "text",
   required = false,
   autocomplete,
+  full = false,
 }: Props = Astro.props;
 
 const errorId = `${id}-error`;
 ---
 
-<div class="contact-field">
+<div class:list={["contact-field", full && "col-span-full"]}>
   <label for={id} class="text-small font-semi text-paper">
     {label}
     {required && (

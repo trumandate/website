@@ -1,0 +1,165 @@
+---
+// AiMomentCard.astro — redesign wave B, part 4 of the shared skeleton
+// (Strategy/Execution/Benefits (redesign).dc.html §4, "AI moment"). The
+// hue-bordered AI card: badge + confidence header, a gradient confidence bar
+// (scaleX draw via `.tm-grow`), title, detail, Accept/Modify/Reject, and a
+// named audit line. Distinct from both `SuggestionCard.astro` (the home
+// page's own generic AI card, now unused by the product pages and removed —
+// its shape doesn't match this reference) and `AiQueue.astro`'s three-card
+// queue (home page only) — this is the one-card-per-product-page version,
+// sharing that file's hue lookup tables (badge/confidence text colour,
+// border-inline-start colour, confidence-bar gradient) since the reference
+// authors both with the same hue vocabulary.
+//
+// The outer card's background/border/box-shadow is a literal `style` block
+// ported straight from the reference rather than composed from
+// `shadow-card-cyan`/`shadow-card-gold`/`shadow-focal`: this card's own
+// three-layer shadow (`inset highlight, 0 0 0 1px <hue ring>, 0 14px 32px
+// -10px shade`) has different offset/blur numbers from all three existing
+// boxShadow tokens (each tuned for a different component — AiQueue's home
+// cards, the contact-form status card), so reusing one would drift a few
+// pixels from the reference. Colours still resolve from
+// tailwind.config.mjs at build time (no hex literal in this file), same
+// pattern as ProductHero.astro.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+import type { ProductAiMoment, ProductPageCopy } from "./copy";
+import tailwindConfig from "../../../tailwind.config.mjs";
+
+interface Props {
+  lang: Language;
+  hue: ProductPageCopy["hue"];
+  ai: ProductAiMoment;
+}
+
+const { lang, hue, ai }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
+
+const colors = (tailwindConfig as { theme: { colors: Record<string, string> } })
+  .theme.colors;
+
+const hueTextClass: Record<ProductPageCopy["hue"], string> = {
+  cyan: "text-cyan",
+  mint: "text-mint",
+  gold: "text-gold",
+};
+
+const hueGradClass: Record<ProductPageCopy["hue"], string> = {
+  mint: isAr ? "bg-grad-mint-rtl" : "bg-grad-mint",
+  cyan: isAr ? "bg-grad-cyan-rtl" : "bg-grad-cyan",
+  gold: isAr ? "bg-grad-gold-rtl" : "bg-grad-gold",
+};
+
+// border-inline-start colour: the mint/execution card uses `accent`
+// (matching AiQueue.astro's own hueBorderStart precedent — the mint hue is
+// the *domain* colour, but the card's marker rule stays the site accent),
+// cyan/gold cards use their own hue.
+const borderStart: Record<ProductPageCopy["hue"], string> = {
+  mint: colors.accent,
+  cyan: colors.cyan,
+  gold: colors.gold,
+};
+
+// The ring alpha in the reference's box-shadow: 0.14 for the accent ring
+// (mint/execution card), 0.12 for the cyan/gold rings — matching
+// `shadow-focal`'s accent ring and the `cyan-ring-12`/`gold-ring-12` tokens'
+// own alpha exactly, just assembled here as a literal rgba() since the
+// three-layer shadow shape itself isn't one of the existing named tokens.
+function hexToRgb(hex: string): string {
+  const clean = hex.replace("#", "");
+  const r = Number.parseInt(clean.slice(0, 2), 16);
+  const g = Number.parseInt(clean.slice(2, 4), 16);
+  const b = Number.parseInt(clean.slice(4, 6), 16);
+  return `${r},${g},${b}`;
+}
+
+const ringAlpha = hue === "mint" ? 0.14 : 0.12;
+const ringRgb = hexToRgb(borderStart[hue]);
+
+const cardStyle = [
+  `position: relative`,
+  `border-radius: 2px`,
+  `background: ${colors.jade}`,
+  `border-block: 1px solid ${colors.hairline}`,
+  `border-inline-end: 1px solid ${colors.hairline}`,
+  `border-inline-start: 2px solid ${borderStart[hue]}`,
+  `padding: 22px`,
+  `box-shadow: inset 0 1px 0 0 ${colors.highlight}, 0 0 0 1px rgba(${ringRgb},${ringAlpha}), 0 14px 32px -10px ${colors.shade}`,
+].join("; ");
+
+const barWidth = `${Math.round(ai.confidence * 100)}%`;
+---
+
+<div class="tm-rise" style={`--d: 150ms; ${cardStyle}`}>
+  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+    <span
+      class:list={[
+        "font-mono text-eyebrow font-data uppercase tracking-eyebrow",
+        hueTextClass[hue],
+      ]}
+    >
+      {ai.badge}
+    </span>
+    <span
+      class:list={[
+        "font-mono text-eyebrow font-data uppercase tracking-eyebrow",
+        hueTextClass[hue],
+      ]}
+    >
+      {isAr ? (
+        <>
+          {ai.confidenceWord} <span dir="ltr">{ai.confidenceValue}</span>
+        </>
+      ) : (
+        <>
+          {ai.confidenceWord} {ai.confidenceValue}
+        </>
+      )}
+    </span>
+  </div>
+
+  <div style="position: relative; height: 2px; width: 100%; background: rgba(255,255,255,0.10); margin-top: 14px;">
+    <div
+      class:list={["tm-grow", hueGradClass[hue]]}
+      style={`position: absolute; inset-block: 0; inset-inline-start: 0; height: 2px; width: ${barWidth};`}
+    >
+    </div>
+  </div>
+
+  <h3 class="mt-5 font-sans text-h3 font-semi tracking-heading text-paper">{ai.title}</h3>
+  <p class="mt-3 text-body font-light text-body">{ai.detail}</p>
+
+  <div class="mt-6 flex flex-wrap gap-3">
+    <button
+      type="button"
+      class="rounded-control border border-accent px-4 py-2.5 text-small font-semi text-accent transition-colors duration-state ease-standard hover:bg-accent hover:text-ink"
+    >
+      {t("home.ai.accept")}
+    </button>
+    <button
+      type="button"
+      class="rounded-control border border-hairline px-4 py-2.5 text-small font-semi text-paper transition-colors duration-state ease-standard hover:border-muted"
+    >
+      {t("home.ai.modify")}
+    </button>
+    <button
+      type="button"
+      class="rounded-control border border-hairline px-4 py-2.5 text-small font-semi text-paper transition-colors duration-state ease-standard hover:border-muted"
+    >
+      {t("home.ai.reject")}
+    </button>
+  </div>
+
+  <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">
+    {isAr ? (
+      <>
+        {ai.logPrefix} · <span dir="ltr">{ai.logName}</span>
+      </>
+    ) : (
+      <>
+        {ai.logPrefix} · {ai.logName}
+      </>
+    )}
+  </p>
+</div>

@@ -1,60 +1,35 @@
 ---
-// ProductPage.astro — the shared five-part skeleton from
-// trumandate-product-pages.md, in one component so that "every product page
-// uses this order, no page invents a new structure" is enforced by the code
-// rather than by three files agreeing to behave. /strategy, /execution and
-// /benefits each supply a `ProductPageCopy` object and one fragment; nothing
-// else about their structure is theirs to choose.
+// ProductPage.astro — redesign wave B. The shared five-part skeleton for
+// /strategy, /execution and /benefits (docs/design_handoff_website_redesign/
+// README.md §§2–4), replacing the pre-redesign version wholesale: the new
+// reference pages share a different shape (start-aligned hero with a
+// gradient key phrase, a bespoke fragment, a three-point argument grid, a
+// single hue-bordered AI card, a two-CTA handoff) from the old one (centred
+// argument paragraphs, `SuggestionCard.astro`), so "every product page uses
+// this order, no page invents a new structure" is re-enforced here against
+// the NEW order rather than the old one. Each of the three pages still
+// supplies only two things: which `ProductPageCopy` object (copy.ts) and
+// which fragment.
 //
-// The five parts:
-//   1. The question — eyebrow naming the chain link, then the headline.
-//   2. The argument — three to four paragraphs (ArgumentBlock).
-//   3. The fragment — ONE cropped SVG, its mask wipe, a two-line caption,
-//      and nothing else in the section.
-//   4. The AI moment — signal, evidence with a confidence value, then the
-//      accept/modify/reject gate with a named audit line (SuggestionCard).
-//   5. The handoff — one sentence promising the withheld item, then the CTA.
+// The five parts, four of which are self-contained sub-components (each
+// owns its own `<Section>`, matching `home/Hero.astro`/`ClosingCta.astro`'s
+// precedent): `ProductHero` (part 1) → the fragment, wrapped here directly
+// since it's the one part with no shared markup beyond the crop padding →
+// `ArgumentBlock` (part 3) → the AI moment (part 4, assembled here: a
+// `Section seam="up"` two-column grid pairing plain text with
+// `AiMomentCard`) → `Handoff` (part 5).
 //
-// Four <Section>s, not five: parts 1 and 2 share a section, because putting a
-// full section break between a page's <h1> and the first paragraph of the
-// argument it introduces would read as two unrelated blocks. The parts stay
-// five and their order is unchanged; only the wrapper count differs. Logged
-// in BUILD_FLAGS.md.
-//
-// Motion on these routes, deliberately short: the shared section reveal
-// (motion #2, via Reveal.astro), the fragment's mask wipe (motion #3, via
-// each fragment's own data-fragment hooks), the AI card's arrival and
-// confidence fill (motion #4, SuggestionCard's own script), and the global
-// header rule (motion #6). No pinned section and no scrubbed timeline —
-// CLAUDE.md allows one of each per route and the home page's chain is where
-// that budget is spent (spec §7: "Budget the ambition here"). No count-up
-// either (motion #5); see BUILD_FLAGS.md for why none of these three pages
-// has a number that can honestly be animated as a running total.
-//
-// No spine. The rail is the home page's signature device (PLAN.md §3) and
-// repeating it here would spend the signature on every route.
-//
-// P10 (DESIGN-ELEVATION.md §4.1): the ground/seam skeleton, applied to all
-// four <Section>s identically on every product page (never per-page — the
-// whole point of this file) —
-//   1+2. question + argument: `ink` + `ground-rise` (the same backdrop
-//        fragment the home hero wires, wired here instead since this
-//        skeleton — not a per-page file — owns the section).
-//   3. the fragment: `ground="deep" seam="down"` — the fragment's own
-//      `fill-surface` now separates from a genuinely darker ground (1.48:1
-//      vs. 1.33:1 on `ink`, §4.1).
-//   4. the AI moment: `seam="up"` back to `ink`.
-//   5. the handoff: `ink` (default), no seam.
-// No `texture` anywhere here — the drafting grid is the home page's
-// hero/closing-CTA bookend device and repeating it spends it (§4.1).
+// Motion: `.tm-load`/`.tm-boardload` (pure CSS, no script) for the hero and
+// fragment; `.tm-rise`/`.tm-grow` (IntersectionObserver + CSS transition,
+// scripts/redesignReveal.ts) for everything below the fold — the calling
+// page wires that one script tag once, matching `pages/en/index.astro`'s own
+// pattern. No pinned section, no scrubbed timeline, no count-up (CLAUDE.md's
+// one-pin-one-scrub-per-route budget is spent on the home page's chain).
 import Section from "../layout/Section.astro";
-import Reveal from "../ui/Reveal.astro";
-import Eyebrow from "../type/Eyebrow.astro";
-import Display from "../type/Display.astro";
-import Heading from "../type/Heading.astro";
+import ProductHero from "./ProductHero.astro";
 import ArgumentBlock from "./ArgumentBlock.astro";
+import AiMomentCard from "./AiMomentCard.astro";
 import Handoff from "./Handoff.astro";
-import SuggestionCard from "../ai/SuggestionCard.astro";
 import type { ProductPageCopy } from "./copy";
 import type { Language } from "../../i18n/types";
 
@@ -66,67 +41,38 @@ interface Props {
 const { lang, copy }: Props = Astro.props;
 ---
 
-{/* 1. The question + 2. the argument */}
-<Section>
-  <Fragment slot="backdrop">
-    <div class="absolute inset-0 bg-ground-rise"></div>
-  </Fragment>
+<ProductHero lang={lang} copy={copy} />
 
-  <Reveal as="div">
-    <Eyebrow>{copy.eyebrow}</Eyebrow>
-
-    <Display as="h1" class="mt-4 max-w-measure-head">
-      {copy.headline}
-    </Display>
-  </Reveal>
-
-  <ArgumentBlock paragraphs={copy.argument} class="mt-12" />
-</Section>
-
-{/* 3. The fragment. One cropped SVG and a two-line caption. Nothing else. */}
-<Section tight ground="deep" seam="down">
-  {/* Not wrapped in <Reveal>: the fragment carries motion #3's mask wipe of
-      its own, and stacking motion #2's translate/fade on the same element
-      would be two animations doing one job. The caption gets the reveal
-      instead, so the section still arrives rather than simply being there. */}
+{/* Part 3 (fragment half): one cropped fragment and a two-line-worth mono
+    caption, nothing else in the section. Bespoke bottom-only padding, no
+    padding-top — the reference sits this directly under the hero. */}
+<Section pad={false} style="padding-bottom: clamp(2rem, 4vh, 3rem);">
   <slot name="fragment" />
-
-  <Reveal as="div" class="mt-8 max-w-measure">
-    <p class="text-small font-light text-body">{copy.captionLead}</p>
-    <p class="mt-2 text-small font-light text-muted">{copy.captionSecond}</p>
-  </Reveal>
 </Section>
 
-{/* 4. The AI moment */}
+<ArgumentBlock argument={copy.argument} hue={copy.hue} />
+
+{/* Part 4: the AI moment. Text column + the hue-bordered card. */}
 <Section seam="up">
-  <div class="grid grid-cols-1 gap-gutter lg:grid-cols-2">
-    <Reveal as="div">
-      <Eyebrow>{copy.ai.eyebrow}</Eyebrow>
-      <Heading as="h2" class="mt-4 max-w-measure">
+  <div
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 4vw, 64px); align-items: center;"
+  >
+    <div class="tm-rise">
+      <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+        {copy.ai.eyebrow}
+      </p>
+      <h2
+        class="mt-4 font-sans text-h2 font-semi tracking-heading text-paper"
+        style={`max-width: ${copy.ai.headingMaxCh}ch; text-wrap: pretty;`}
+      >
         {copy.ai.heading}
-      </Heading>
-      <p class="mt-6 max-w-measure text-body font-light text-body">
+      </h2>
+      <p class="mt-6 text-body font-light text-body" style="max-width: 52ch;">
         {copy.ai.body}
       </p>
-    </Reveal>
-
-    <div>
-      <SuggestionCard
-        lang={lang}
-        badge={copy.ai.badge}
-        confidenceLabel={copy.ai.confidenceLabel}
-        confidence={copy.ai.confidence}
-        title={copy.ai.title}
-        detail={copy.ai.detail}
-        log={copy.ai.log}
-      />
     </div>
+    <AiMomentCard lang={lang} hue={copy.hue} ai={copy.ai} />
   </div>
 </Section>
 
-{/* 5. The handoff */}
-<Section>
-  <Reveal as="div">
-    <Handoff lang={lang} sentence={copy.handoff} />
-  </Reveal>
-</Section>
+<Handoff lang={lang} hue={copy.hue} handoff={copy.handoff} />

@@ -1,22 +1,9 @@
 ---
-// /ar/benefits — "تحقيق المنافع" (P6-AR). Composes the same
-// ProductPage.astro skeleton and the same BenefitCurve fragment as
-// /en/benefits; only `lang` differs, which selects the Arabic copy branch and
-// the fragment's mirrored geometry — including its time axis, which runs
-// right-to-left here.
+// /ar/benefits — "تحقيق المنافع". Same route, same skeleton and fragment as
+// /en/benefits; only `lang` differs.
 //
-// The Arabic is written, not translated: the argument — benefits are forecast
-// when optimism is rewarded and measured never; the same saving gets promised
-// three times because tracking stops at closure; TruMandate keeps the benefit
-// alive for 24 months past closure against the exact KPI it promised to move;
-// this is the part that decides whether the rest is worth anything — is
-// carried in four paragraphs of Arabic prose. Plain-prose version in
-// COPY-REVIEW.md.
-//
-// Curiosity ledger, identical to the English route: "سجل المنافع" (the benefit
-// register) occurs exactly once on this page, in the handoff sentence, and
-// nothing anywhere explains how a benefit is apportioned to the work that
-// produced it.
+// The Arabic is carried verbatim from `Benefits AR (redesign).dc.html`
+// (redesign wave B).
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProductPage from "../../components/product/ProductPage.astro";
 import BenefitCurve from "../../components/fragments/BenefitCurve.astro";
@@ -33,6 +20,8 @@ const copy = productCopy[lang].benefits;
   description={copy.documentDescription}
 >
   <ProductPage lang={lang} copy={copy}>
-    <BenefitCurve slot="fragment" lang={lang} />
+    <BenefitCurve slot="fragment" lang={lang} caption={copy.fragmentCaption} />
   </ProductPage>
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

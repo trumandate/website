@@ -1,21 +1,10 @@
 ---
-// /ar/strategy — "الاستراتيجية ومؤشرات الأداء" (P6-AR). Same route, same
-// five-part skeleton and the same shared components as /en/strategy: this file
-// differs from its English sibling only in the `lang` constant, which selects
-// the Arabic branch of `productCopy` and puts the fragment into its mirrored
-// geometry. No parallel Arabic component tree (PLAN.md §1's "keep one shared
-// component rather than creating a variant").
+// /ar/strategy — "الاستراتيجية ومؤشرات الأداء". Same route, same skeleton
+// and fragment as /en/strategy; only `lang` differs, selecting the Arabic
+// branch of `productCopy` and the fragment's mirrored crop.
 //
-// The Arabic is written, not translated (BUILD_FLAGS): the page's argument —
-// the objective tree is the easy part, the break happens at the KPI, the KPI
-// becomes the join, the baseline is non-negotiable — is carried in four
-// paragraphs of Arabic prose that are not sentence-for-sentence mirrors of the
-// English. Plain-prose version in COPY-REVIEW.md for review.
-//
-// Curiosity ledger, identical to the English route: the cascade and how
-// weighting works appear nowhere except the handoff sentence, which promises
-// them. Grep-checked over the rendered Arabic — تدرّج / وزن / موزون / ترجيح
-// occur only inside `handoff`.
+// The Arabic is carried verbatim from `Strategy AR (redesign).dc.html`
+// (redesign wave B), not translated from the English sentence-for-sentence.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProductPage from "../../components/product/ProductPage.astro";
 import KpiCard from "../../components/fragments/KpiCard.astro";
@@ -32,6 +21,8 @@ const copy = productCopy[lang].strategy;
   description={copy.documentDescription}
 >
   <ProductPage lang={lang} copy={copy}>
-    <KpiCard slot="fragment" lang={lang} />
+    <KpiCard slot="fragment" lang={lang} caption={copy.fragmentCaption} />
   </ProductPage>
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

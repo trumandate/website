@@ -1,24 +1,17 @@
 ---
-// /en/strategy — "Strategy and KPIs" (P6). Expands one link of the home
-// page's traceability chain: Objective → KPI. The one question it answers:
-// how does a national mandate become a number someone owns?
+// /en/strategy — "Strategy and KPIs". Redesign wave B (docs/design_handoff_
+// website_redesign/README.md §2, Strategy (redesign).dc.html — hue cyan).
+// Expands one link of the home page's traceability chain: Objective → KPI.
 //
-// Structure is not this file's to choose — ProductPage.astro owns the shared
-// five-part skeleton and all three product pages compose it identically
-// (trumandate-product-pages.md: "Every product page uses this order. No page
-// invents a new structure."). Copy is not this file's either any more: since
-// the Arabic landed (P6-AR) both languages live side by side in
-// `components/product/copy.ts`, so an English string cannot exist without an
-// Arabic one. This file supplies exactly two things: which copy object, and
-// which fragment.
+// Structure belongs to ProductPage.astro; copy to components/product/copy.ts
+// (rewritten this wave — see that file's own header for why the shape
+// changed). This file supplies the page key and the one fragment, exactly
+// like its two siblings.
 //
-// Curiosity ledger for this route:
-//   Reveals  — one KPI card, fully readable (KpiCard.astro).
+// Curiosity ledger for this route, unchanged from the pre-redesign version:
+//   Reveals  — one full KPI record, plus a half-visible second card.
 //   Withholds — the cascade editor and how weighting works.
-// The withheld pair appears nowhere on this page except inside `handoff`,
-// which is the sentence whose whole job is to promise it. Not in the
-// argument, not in the fragment, not in the fragment's aria-label, not in the
-// AI card. Same in Arabic on /ar/strategy — verified by grep, both languages.
+// Named only in `handoff` — verified by grep, both languages.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProductPage from "../../components/product/ProductPage.astro";
 import KpiCard from "../../components/fragments/KpiCard.astro";
@@ -35,6 +28,8 @@ const copy = productCopy[lang].strategy;
   description={copy.documentDescription}
 >
   <ProductPage lang={lang} copy={copy}>
-    <KpiCard slot="fragment" lang={lang} />
+    <KpiCard slot="fragment" lang={lang} caption={copy.fragmentCaption} />
   </ProductPage>
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

@@ -1156,3 +1156,103 @@ reserved-scrollbar artefact P10 wave 1's section already documented in the
 opposite direction). The Command Centre board fits via its own `zoom`
 fit-to-container script; the record chain's cards narrow to
 `min(78vw, 340px)` and stay fully legible.
+
+---
+
+## Redesign wave B (docs/design_handoff_website_redesign — Strategy/Execution/Benefits/Contact)
+
+**A first-pass typography mistake in all three new fragments — `KpiCard.astro`,
+`InitiativeRows.astro`, `BenefitCurve.astro` — was caught only by measured
+section-height comparison against the reference, not by eyeballing, and
+produced two different symptoms in the two languages.** The reference's
+dense fragment cards (KPI ref/at-risk/baseline-target-actual labels,
+initiative-row objective/slip/percentage, the benefit chart's header line)
+use bespoke literal pixel font-sizes (9/10/11px) in English, composed with
+the site's existing `tracking-eyebrow`/`tracking-datum` letter-spacing-only
+utilities — NOT the semantically-similar-sounding `text-eyebrow`/`text-datum`
+roles (11.2px/11.52px, each bundling a bigger size in with the same
+letter-spacing). First pass reached for the semantic role by habit. Found
+via `getBoundingClientRect` diffing against a working reference preview
+(see TODO.md's `_ds/` bundle note): `/en/strategy`'s fragment section
+measured 421px against the reference's 378px — the KPI card's "Carries"
+chip row had wrapped to two lines instead of one, because every chip's text
+was rendering ~28% larger than intended. Fixed EN-side by replacing every
+`text-eyebrow`/`text-datum` instance in these three files with the literal
+inline `font-size` the reference itself uses, paired with
+`tracking-eyebrow`/`tracking-datum` only where the reference's own markup
+keeps it.
+
+**The EN fix alone made `/ar/strategy`'s same fragment measure 15–29px
+*short* against ITS reference — the opposite direction — because the
+Arabic reference does the opposite thing.** `Strategy AR (redesign).dc.html`
+and its two siblings reach for the real `text-datum` role (no inline
+font-size at all) on these exact same labels, letting the sitewide
+`[dir=rtl] .text-datum → text-datum-ar` override (global.css) size Arabic
+~10% larger than the Latin figure — the same adjustment the pre-redesign
+`KpiCard.astro` made by hand with separate `.label`/`.label-ar` classes.
+Fixed by branching every one of these micro-label class/style pairs on
+`isAr`: EN keeps the literal-px pattern, AR reaches for `text-datum`/
+`tracking-datum` with no inline size. Re-verified after the fix:
+`/en/strategy` and `/en/execution`'s fragment sections now match the
+reference to the exact pixel (378px and 345px respectively); `/ar/benefits`
+(pure SVG, immune to this whole class of bug) matches on all five sections;
+`/ar/strategy` and `/ar/execution` closed from a 29px/12px gap to a
+residual 15px/12px, traced to an unrelated, pre-existing sitewide
+line-height cascade interaction (TODO.md's own new entry has the full
+root-cause) rather than this typography bug recurring.
+
+**Measured section-height comparison, all 8 routes, 1440×900, against a
+reconstructed working reference preview:** hero/argument/AI-moment/handoff
+match the reference to the pixel (±1–2px, the same header-height
+sub-pixel margin `tailwind.config.mjs`'s own `header` token comment
+documents) on every one of the 8 routes. The fragment section matches
+exactly on 6 of 8 (`/en/strategy`, `/en/execution`, `/en/benefits`,
+`/ar/benefits`, plus both `/contact` routes' form-card section, which
+differs from the reference by exactly the reserved per-field validation-
+error height CLAUDE.md's own "no CLS when errors appear" rule requires —
+27px on `/en/contact`, expected and not a defect) and within 12–15px on the
+remaining two (`/ar/strategy`, `/ar/execution`, both explained above).
+
+**Lighthouse (chrome-devtools MCP, mobile): accessibility, best-practices,
+SEO and agentic-browsing all 100/100/100/100** on every route sampled
+(`/en/strategy`, `/ar/strategy`, `/en/execution`, `/ar/benefits`,
+`/en/contact`). Zero console messages (errors or warnings) on all 8 built
+routes. Zero horizontal overflow at 375 on all 8 (`scrollWidth` 360 against
+`window.innerWidth` 375 throughout — the ~15px gap is the same reserved-
+scrollbar artefact prior sections already document, not real overflow).
+Opacity audit (every text-bearing leaf inside `<main>`, cumulative computed
+opacity across all ancestors, after a scripted full scroll-through with
+real per-step waits and a settle period — not an instant jump, which was
+tried first and produced a false "hung reveal" reading purely from taking
+the screenshot before the 850ms `.tm-rise` transition had finished):
+`/en/strategy` 49 leaves, `/en/contact` 12 leaves, zero offenders on both.
+
+**Contact form plumbing confirmed unchanged**: `action` still resolves to
+the Formspree endpoint (env-var overridable, same fallback), `method=POST`,
+the honeypot still carries `tabindex="-1"` + visually-hidden, `form.noValidate`
+still flips to `true` once `scripts/contactForm.ts` runs (proving the script
+took over from native constraint validation), and the new mono footnote
+("We reply from a named address, not a queue.") renders verbatim in both
+languages. Not submitted (no real POST sent), per this wave's own
+instruction.
+
+**A shared-browser-instance hazard confirmed empirically, distinct from the
+`resize_page` under-reporting TODO.md already carries forward**: this
+session's `chrome-devtools` MCP target was, for at least part of the
+session, genuinely shared with a concurrent process (another agent's own
+verification pass, visible as extra tabs on ports 4329–4331/4334 with an
+`isolatedContext=auditcheck` tag neither this session nor its prompt
+created). `select_page`'s own response confirmed a DIFFERENT page as
+"[selected]" immediately after this session explicitly selected page 9,
+and a subsequent `resize_page` call visibly resized the WRONG tab (a
+390px-ish mobile-like width where 1440 was requested) — the OS-level
+browser window is shared across every tab regardless of which one a given
+tool call names, so two sessions issuing viewport changes for their own
+different pages fight over one shared window. Switched to the Playwright
+MCP (a separate, unshared browser process) for all measured comparison
+work as soon as this was identified; `chrome-devtools`'s own `emulate`
+(CDP per-target viewport override, not an OS window resize) proved
+immune to the same interference and was used for the Lighthouse/
+performance-trace/screenshot work that specifically needed that MCP.
+A future session sharing this machine should expect the same and reach
+for `emulate` or a separate browser process rather than `resize_page`.
