@@ -3,6 +3,12 @@
 	// Dashboard Git import reads this; build command: npm run build, deploy: npx wrangler deploy
 	"name": "trumandate-website",
 	"compatibility_date": "2026-08-17",
+	// Build the site before uploading. Declared here so a deploy works even when
+	// the CI build command is unset — wrangler runs this itself, then uploads
+	// ./dist. Without it a bare `wrangler versions upload` fails: no dist/.
+	"build": {
+		"command": "npm run build"
+	},
 	"assets": {
 		"directory": "./dist"
 	},
