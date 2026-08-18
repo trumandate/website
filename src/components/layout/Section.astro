@@ -35,6 +35,13 @@ interface Props {
    * max-width/padding are dropped. The closing CTA (spec §3, home) is the
    * one section that breaks the 1180px column. */
   bleed?: boolean;
+  /** Redesign wave A: the reference's own hero section (Home (redesign)
+   * .dc.html §1) carries no `py-section` at all — only its own bespoke
+   * `padding-top: clamp(...)` and no bottom padding (the next section's
+   * hairline sits flush against it). `pad={false}` lets a caller opt out of
+   * this component's vertical rhythm entirely and supply its own, instead of
+   * the two stacking. Every other caller keeps the default. */
+  pad?: boolean;
   /** Page ground. Default "ink" emits no backdrop class of its own — body
    * ground already shows through. "deep" fills the section with
    * `surface-deep`, the one darker band per page (§3.9). */
@@ -56,6 +63,7 @@ const {
   ground = "ink",
   seam = "none",
   texture = false,
+  pad = true,
   class: className,
   id,
 }: Props = Astro.props;
@@ -69,7 +77,7 @@ const hasBackdrop =
   id={id}
   class:list={[
     "relative w-full",
-    tight ? "py-section-tight" : "py-section",
+    pad && (tight ? "py-section-tight" : "py-section"),
     className,
   ]}
 >

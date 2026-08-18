@@ -1,0 +1,131 @@
+---
+// ProofBand.astro — redesign wave A (Home (redesign).dc.html §3). Four
+// centered stats, count-up on view, hairline top+bottom + vertical hairline
+// separators between columns.
+//
+// Arabic renders "24" (counted) and "شهراً" as two separate spans rather
+// than one counted-plus-suffix span — a genuine structural asymmetry in
+// Home AR (redesign).dc.html, reproduced as-is (i18n/ui.ts's own comment on
+// `stat4UnitAr`).
+//
+// Each stat value <p> also carries `leading-arabic` in Arabic (`isAr` only —
+// English is unaffected): global.css's body-level reset (fontSize.body's
+// `line-height: 1.55`, `@apply`-ed onto `<body>` unconditionally) shadows the
+// site's `[dir=rtl]` line-height (1.80) for any element that isn't one of
+// the few roles that re-assert it (h1/h2/h3/.font-mono/.text-eyebrow/
+// .text-datum) — a generic `<p>` like this one is none of those, so it fell
+// through to the Latin value. Home AR (redesign).dc.html renders every stat
+// row at 133px (30*1.80 + 26px×2 padding + the 6px label gap + the label's
+// own line box); without this class the built row measured 125.5px
+// (30*1.55), a difference that showed up as a uniform vertical offset on
+// every section below the proof band at 1440×900 (chrome-devtools MCP,
+// getBoundingClientRect). Scoped to this component's own value paragraphs
+// rather than widening the global `[dir=rtl]` rule or body's reset, which
+// would move every other Arabic paragraph on the site — out of scope for a
+// home-page fidelity fix.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
+---
+
+<section class="relative w-full border-y border-hairline-soft">
+  <div
+    class="mx-auto max-w-content px-gutter"
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0;"
+  >
+    <div class="tm-rise text-center" style="padding: 26px 0;">
+      <p dir="ltr" class:list={["m-0", isAr && "leading-arabic"]}>
+        <span
+          data-count
+          data-to="142"
+          class="font-mono font-data text-paper"
+          style="font-size: 30px;">142</span
+        >
+      </p>
+      <p class="mt-1.5 font-mono text-datum font-data tracking-datum text-muted">
+        {t("home.proof.stat1Label")}
+      </p>
+    </div>
+
+    <div
+      class="tm-rise border-s border-hairline-soft text-center"
+      style="--d: 110ms; padding: 26px 0;"
+    >
+      <p dir="ltr" class:list={["m-0", isAr && "leading-arabic"]}>
+        <span
+          data-count
+          data-to="218"
+          data-prefix="AED "
+          data-suffix="M"
+          class="font-mono font-data text-paper"
+          style="font-size: 30px;">AED 218M</span
+        >
+      </p>
+      <p class="mt-1.5 font-mono text-datum font-data tracking-datum text-muted">
+        {t("home.proof.stat2Label")}
+      </p>
+    </div>
+
+    <div
+      class="tm-rise border-s border-hairline-soft text-center"
+      style="--d: 220ms; padding: 26px 0;"
+    >
+      <p dir="ltr" class:list={["m-0", isAr && "leading-arabic"]}>
+        <span
+          data-count
+          data-to="6"
+          class="font-mono font-data text-mint"
+          style="font-size: 30px;">6</span
+        >
+      </p>
+      <p class="mt-1.5 font-mono text-datum font-data tracking-datum text-muted">
+        {t("home.proof.stat3Label")}
+      </p>
+    </div>
+
+    <div
+      class="tm-rise border-s border-hairline-soft text-center"
+      style="--d: 330ms; padding: 26px 0;"
+    >
+      {
+        isAr ? (
+          <p dir="ltr" class:list={["m-0", isAr && "leading-arabic"]}>
+            <span
+              data-count
+              data-to="24"
+              class="font-mono font-data text-paper"
+              style="font-size: 30px;"
+            >
+              24
+            </span>{" "}
+            <span class="font-sans font-semi text-paper" style="font-size: 18px;">
+              {t("home.proof.stat4UnitAr")}
+            </span>
+          </p>
+        ) : (
+          <p dir="ltr" class:list={["m-0", isAr && "leading-arabic"]}>
+            <span
+              data-count
+              data-to="24"
+              data-suffix=" mo"
+              class="font-mono font-data text-paper"
+              style="font-size: 30px;"
+            >
+              24 mo
+            </span>
+          </p>
+        )
+      }
+      <p class="mt-1.5 font-mono text-datum font-data tracking-datum text-muted">
+        {t("home.proof.stat4Label")}
+      </p>
+    </div>
+  </div>
+</section>

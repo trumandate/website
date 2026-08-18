@@ -1,0 +1,233 @@
+---
+// RecordChain.astro — THE SIGNATURE (redesign wave A, Home (redesign).dc.html
+// §5 / README §5). 480vh section, sticky 100vh stage. Five record cards
+// orbit on an ellipse driven by scripts/recordChain.ts's scroll handler —
+// see that file for the exact math (x/z/y/opacity formulas, dwell-then-
+// glide easing, RTL rotation-sign reversal).
+//
+// This is the site's one pinned section + one scrubbed "timeline" per route
+// (CLAUDE.md's budget) — the pin is plain CSS `position: sticky` (same
+// choice the pre-redesign chain.ts made, and the same reasoning: a sticky
+// element's pinned range can never exceed its own containing block's
+// natural height, so nothing is manufactured), and the scrub is a scroll
+// handler writing transforms directly, not a GSAP ScrollTrigger tween — see
+// recordChain.ts's own header comment for why, and for the reduced-motion
+// contract (setup never runs under reduce; the five cards render in normal
+// document flow, stacked, fully legible, which is also exactly what a JS
+// failure produces).
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+
+interface Record {
+  name: string;
+  kicker: string;
+  title: string;
+  body: string;
+  row1Label: string;
+  row1Value: string;
+  row2Label: string;
+  row2Value: string;
+  dotClass: string;
+  row1ValueClass?: string;
+  row2ValueClass?: string;
+}
+
+const records: Record[] = [
+  {
+    name: t("home.chain.record1Name"),
+    kicker: t("home.chain.record1Kicker"),
+    title: t("home.chain.record1Title"),
+    body: t("home.chain.record1Body"),
+    row1Label: t("home.chain.record1Row1Label"),
+    row1Value: t("home.chain.record1Row1Value"),
+    row2Label: t("home.chain.record1Row2Label"),
+    row2Value: t("home.chain.record1Row2Value"),
+    dotClass: "bg-accent",
+  },
+  {
+    name: t("home.chain.record2Name"),
+    kicker: t("home.chain.record2Kicker"),
+    title: t("home.chain.record2Title"),
+    body: t("home.chain.record2Body"),
+    row1Label: t("home.chain.record2Row1Label"),
+    row1Value: t("home.chain.record2Row1Value"),
+    row2Label: t("home.chain.record2Row2Label"),
+    row2Value: t("home.chain.record2Row2Value"),
+    dotClass: "bg-cyan",
+    row2ValueClass: "text-cyan",
+  },
+  {
+    name: t("home.chain.record3Name"),
+    kicker: t("home.chain.record3Kicker"),
+    title: t("home.chain.record3Title"),
+    body: t("home.chain.record3Body"),
+    row1Label: t("home.chain.record3Row1Label"),
+    row1Value: t("home.chain.record3Row1Value"),
+    row2Label: t("home.chain.record3Row2Label"),
+    row2Value: t("home.chain.record3Row2Value"),
+    dotClass: "bg-accent",
+  },
+  {
+    name: t("home.chain.record4Name"),
+    kicker: t("home.chain.record4Kicker"),
+    title: t("home.chain.record4Title"),
+    body: t("home.chain.record4Body"),
+    row1Label: t("home.chain.record4Row1Label"),
+    row1Value: t("home.chain.record4Row1Value"),
+    row2Label: t("home.chain.record4Row2Label"),
+    row2Value: t("home.chain.record4Row2Value"),
+    dotClass: "bg-amber",
+    row1ValueClass: "text-gold",
+  },
+  {
+    name: t("home.chain.record5Name"),
+    kicker: t("home.chain.record5Kicker"),
+    title: t("home.chain.record5Title"),
+    body: t("home.chain.record5Body"),
+    row1Label: t("home.chain.record5Row1Label"),
+    row1Value: t("home.chain.record5Row1Value"),
+    row2Label: t("home.chain.record5Row2Label"),
+    row2Value: t("home.chain.record5Row2Value"),
+    dotClass: "bg-gold",
+  },
+];
+
+// Data handed to recordChain.ts via a JSON script tag rather than inline
+// `data-*` parsing — the record names double as the sticky counter's live
+// name swap, exactly like the reference's own `chainNames` array.
+const chainNames = records.map((r) => r.name);
+---
+
+<section
+  id="record"
+  data-chain
+  data-rtl={lang === "ar" ? "true" : "false"}
+  class="relative w-full"
+  style="height: 480vh;"
+>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-surface-deep"></div>
+  </div>
+
+  <div
+    class="relative z-10 flex min-h-screen flex-col justify-center overflow-hidden"
+    style="position: sticky; top: 0;"
+  >
+    <div class="mx-auto w-full max-w-content px-gutter">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+            {t("home.chain.eyebrow")}
+          </p>
+          <h2
+            class="mt-4 max-w-[26ch] font-sans text-h2 font-semi tracking-heading text-paper"
+            style="text-wrap: pretty;"
+          >
+            {t("home.chain.heading")}
+          </h2>
+          <p class="mt-4 max-w-measure-tight text-lede font-light text-body">
+            {t("home.chain.sub")}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative" style="margin-top: clamp(32px, 5vh, 56px);">
+      <div
+        aria-hidden="true"
+        class="relative text-center"
+        style="z-index: 5; margin-bottom: clamp(14px, 2.5vh, 24px);"
+      >
+        <p
+          dir="ltr"
+          data-chain-count
+          class="m-0 font-mono font-data tracking-datum text-muted"
+          style="font-size: 13px;"
+        >
+          01 / 05
+        </p>
+        <p
+          data-chain-name
+          class="text-mint font-sans text-h3 font-semi tracking-heading"
+          style="margin: 4px 0 0;"
+        >
+          {records[0].name}
+        </p>
+      </div>
+
+      <div style="perspective: 1500px; perspective-origin: 50% 42%;">
+        <div
+          data-chain-track
+          class="relative mx-auto"
+          style="width: min(78vw, 340px); min-height: 430px; transform-style: preserve-3d; will-change: transform;"
+        >
+          {
+            records.map((record) => (
+              <div
+                data-chain-card
+                class="relative"
+                style="width: min(78vw, 340px); padding-top: 26px;"
+              >
+                <span
+                  aria-hidden="true"
+                  data-chain-dot
+                  class:list={["absolute top-0 rounded-full", record.dotClass]}
+                  style="inset-inline-start: 0; width: 13px; height: 13px;"
+                />
+                <p class="font-mono text-datum font-data tracking-datum text-muted">
+                  {record.kicker}
+                </p>
+                <div class="mt-3 rounded-card border border-hairline bg-surface p-5 shadow-raised">
+                  <h3 class="font-sans text-h3 font-semi tracking-heading text-paper">
+                    {record.title}
+                  </h3>
+                  <p class="mt-2 text-small font-light text-body">{record.body}</p>
+                  <div class="mt-3.5">
+                    <div class="flex items-center justify-between gap-3 border-t border-hairline py-2">
+                      <span class="font-mono text-datum font-data tracking-datum text-muted">
+                        {record.row1Label}
+                      </span>
+                      <span
+                        dir="ltr"
+                        class:list={[
+                          "font-mono text-datum font-data tracking-datum",
+                          record.row1ValueClass ?? "text-paper",
+                        ]}
+                      >
+                        {record.row1Value}
+                      </span>
+                    </div>
+                    <div class="flex items-center justify-between gap-3 border-t border-hairline py-2">
+                      <span class="font-mono text-datum font-data tracking-datum text-muted">
+                        {record.row2Label}
+                      </span>
+                      <span
+                        dir="ltr"
+                        class:list={[
+                          "font-mono text-datum font-data tracking-datum",
+                          record.row2ValueClass ?? "text-paper",
+                        ]}
+                      >
+                        {record.row2Value}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" data-chain-names is:inline set:html={JSON.stringify(chainNames)} />
+<script src="../../scripts/recordChain.ts"></script>

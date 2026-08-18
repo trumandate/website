@@ -1,50 +1,23 @@
 ---
-// Hero.astro — type only, no card, no panel border (PLAN.md §3). Copy
-// verbatim from content brief §1. The eyebrow sits on the spine's first
-// node, unlit and hairline-outlined rather than accent — PLAN.md: "the
-// signature is the only place boldness is spent," and that's the chain,
-// not the hero. The hero data panel (content brief's objective record)
-// attaches as the spine's second node, at full text-column width rather
-// than a side gutter (the binding decision that keeps the home page's
-// product-surface count at two, not three).
+// Hero.astro — redesign wave A (Home (redesign).dc.html §1-2 / Home AR
+// (redesign).dc.html). Centered hero: eyebrow → H1 with a mint→cyan
+// gradient-clip key phrase → lede → two CTAs → the Command Centre board,
+// cropped and masked (the deliberate withholding mechanism, never the full
+// board — README §2).
 //
-// Node dots are positioned with `start-[-0.5rem]`, not `start-node-inset`,
-// because each node's wrapper is a direct child of the `ps-rail` div below —
-// whose own edge already sits at the `rail` token (54px) from the section's
-// true start edge. `rail (54px) - node-inset (46px) = 8px (0.5rem)`, so
-// walking back half a rem from a ps-rail child's own edge lands the node's
-// left edge exactly on the rail's line; `-translate-x-1/2` then centres the
-// 13px node on that point. Anchoring each node to its own row (rather than
-// computing a cumulative offset from the top of the hero) keeps this correct
-// under the fluid `clamp()` type scale, where the height above any given row
-// changes with viewport width.
+// Motion is the reference's own `.tm-load`/`.tm-boardload` load cascade
+// (global.css), not scripts/hero.ts's GSAP SplitText timeline — that script
+// (and Spine/ObjectiveRecord, this file's own former imports) belonged to
+// the pre-redesign hero and is deleted alongside it. `--d` inline custom
+// properties set each element's stagger delay, exactly per the reference.
 //
-// P10 (DESIGN-ELEVATION.md §3.3): `data-hero` scopes scripts/hero.ts's own
-// load-sequence timeline (eyebrow → SplitText headline lines → lede → CTA
-// row, then the objective-record rows on their own scroll trigger) — a
-// dedicated script rather than an addition to reveal.ts, since it's the one
-// place on the site SplitText runs. The lede is now two-tone (`ledeLead` in
-// `paper`, `ledeRest` in `body`, i18n/ui.ts) and the CTA row carries
-// `hero-cta-row` purely as hero.ts's query hook, not for styling.
-//
-// Each Button also carries `class="reveal"` — CLAUDE.md's "end state lives
-// in CSS, GSAP animates from an offset" contract, made explicit rather than
-// incidental: these anchors already have no opacity/transform of their own,
-// so `.reveal` (global.css: opacity 1, translateY 0) changes nothing
-// visually, but it states in markup — the same way ObjectiveRecord's rows
-// and FailureModes' group children do — that this is the served,
-// unconditional end state a JS failure or a hung tween must fall back to.
-// See hero.ts's own comment for the defect this addressed (a CSS
-// `transition` on these same buttons fighting GSAP's per-frame writes on a
-// staggered/delayed target) and its fix (neutralising the transition for
-// the tween's duration, restored after via `clearProps`).
-import Spine from "./Spine.astro";
-import ObjectiveRecord from "./ObjectiveRecord.astro";
-import Eyebrow from "../type/Eyebrow.astro";
-import Display from "../type/Display.astro";
-import Lede from "../type/Lede.astro";
+// The board sits in its own `max-width: 1280px` column, wider than the
+// site's usual `max-w-content` (1180px) — reproduced with `Section bleed`
+// (drops Section's own inner wrapper) plus two hand-authored wrapper divs,
+// matching the reference's own two-wrapper structure exactly.
+import Section from "../layout/Section.astro";
+import CommandCentreBoard from "../board/CommandCentreBoard.astro";
 import Button from "../ui/Button.astro";
-import Reveal from "../ui/Reveal.astro";
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
 
@@ -54,43 +27,76 @@ interface Props {
 
 const { lang }: Props = Astro.props;
 const t = useTranslations(lang);
+const isAr = lang === "ar";
 ---
 
-<div class="relative" data-hero>
-  <Spine variant="hairline" />
+<Section bleed texture pad={false}>
+  <Fragment slot="backdrop">
+    <div class="absolute inset-0 bg-ground-rise"></div>
+  </Fragment>
 
-  <Reveal as="div" class="ps-rail">
-    <div class="relative">
-      <span
-        aria-hidden="true"
-        class="absolute start-[-0.5rem] top-1 size-node -translate-x-1/2 rounded-full ring-1 ring-hairline"
-      ></span>
-      <Eyebrow>{t("home.hero.eyebrow")}</Eyebrow>
-    </div>
-
-    <Display class="mt-4 max-w-measure-head">
-      {t("home.hero.headline")}
-    </Display>
-
-    <Lede class="mt-6"
-      ><span class="text-paper">{t("home.hero.ledeLead")}</span>{" "}<span
-        class="text-body">{t("home.hero.ledeRest")}</span
-      ></Lede
+  <div
+    class="relative z-10 mx-auto max-w-content px-gutter text-center"
+    style="padding-top: clamp(3.5rem, 8vh, 6rem);"
+  >
+    <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+      {t("home.hero.eyebrow")}
+    </p>
+    <h1
+      class="tm-load mt-5 font-sans text-display font-semi tracking-display text-paper lg:tracking-display-lg"
+      style={`--d: 90ms; max-width: 17ch; margin-inline: auto; text-wrap: balance;`}
     >
-
-    <div class="hero-cta-row mt-8 flex flex-wrap items-center gap-4">
-      <Button class="reveal" href={`/${lang}/contact`}>{t("cta.primary")}</Button>
-      <Button class="reveal" variant="ghost" href="#chain">{t("cta.secondary")}</Button>
+      {t("home.hero.headlineLead")}<span
+        class:list={["gradient-text", isAr ? "bg-gradient-text-rtl" : "bg-gradient-text"]}
+        >{t("home.hero.headlineGradient")}</span
+      >{t("home.hero.headlineTail")}
+    </h1>
+    <p
+      class="tm-load mt-6 text-lede font-light text-body"
+      style="--d: 180ms; max-width: 54ch; margin-inline: auto;"
+    >
+      {t("home.hero.lede")}
+    </p>
+    <div
+      class="tm-load mt-8 flex flex-wrap items-center justify-center gap-4"
+      style="--d: 270ms;"
+    >
+      <Button
+        href={`/${lang}/contact`}
+        style="min-height: 46px; padding-inline: 24px;"
+      >
+        {t("cta.primary")}
+      </Button>
+      <Button
+        variant="ghost"
+        href="#record"
+        style="min-height: 46px; padding-inline: 24px;"
+      >
+        {t("cta.secondary")}
+      </Button>
     </div>
+  </div>
 
-    <div class="relative mt-16">
-      <span
-        aria-hidden="true"
-        class="absolute start-[-0.5rem] top-1 size-node -translate-x-1/2 rounded-full ring-1 ring-hairline"
-      ></span>
-      <ObjectiveRecord lang={lang} />
+  <div
+    class="relative z-10 mx-auto px-gutter"
+    style="max-width: 1280px; margin-top: clamp(36px, 5vh, 64px);"
+  >
+    <div class="tm-boardload relative" style="--d: 420ms;">
+      <div
+        data-board-fit
+        class="relative z-[1] overflow-hidden"
+        style="max-height: clamp(340px, 44vw, 580px); mask-image: linear-gradient(to bottom, black 0%, black 52%, rgba(0,0,0,0.35) 82%, transparent 99%); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 52%, rgba(0,0,0,0.35) 82%, transparent 99%);"
+      >
+        <CommandCentreBoard lang={lang} />
+      </div>
     </div>
-  </Reveal>
-</div>
+    <p
+      class="tm-load mt-0.5 text-center font-mono text-datum font-data tracking-datum text-muted"
+      style="--d: 700ms;"
+    >
+      {t("home.hero.boardCaption")}
+    </p>
+  </div>
+</Section>
 
-<script src="../../scripts/hero.ts"></script>
+<script src="../../scripts/board.ts"></script>

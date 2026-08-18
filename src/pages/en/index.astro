@@ -1,46 +1,17 @@
 ---
-// src/pages/en/index.astro — the real home page (P2). Replaces the P1
-// scaffold-verification harness at src/pages/index.astro, which now just
-// redirects here. English only for this build; the /ar route lands at P5
-// (see TODO.md — page-body copy below is not yet in i18n/ui.ts's typed,
-// bilingual dictionary, unlike the header/footer chrome, because there is
-// no second language tree to keep in sync with yet).
-//
-// Section order per spec §6 / PLAN.md §3: hero, three failure modes, the
-// traceability chain, one AI moment, the dimmed Command Centre CTA. No
-// module list, no inline contact form, no sovereignty band, no second full
-// Command Centre section — all four dropped by the P0-gate decisions in
-// BUILD_FLAGS.md.
-//
-// Motion (P4, spec §7 items 2–6): every section carries a <Reveal> around
-// its intro/text content (motion #2); the chain (motion #1) and the AI
-// card's arrival + confidence fill (motion #4) run from their own scripts;
-// the hero's "Benefit to date" counts up (motion #5) and its sparkline
-// fades in (the "drawn on scroll" brief language downgraded to a fade, an
-// ordinary <Reveal> instance, not a seventh animation); the chain's
-// stage-gate fragment reveals via a masked wipe (motion #3). Every one of
-// these is gated by motion.ts's whenMotionSafe, so the page's *served*
-// state — what a reduced-motion reader or a JS-disabled reader sees — is
-// still every section already in its final, correct, fully-legible state.
-//
-// P10 (DESIGN-ELEVATION.md §3.9): one ground change per page, direction
-// encoding the argument — hero lifts (`texture` + `ground-rise`), the page
-// darkens through failure modes and the chain (`ground="deep"`), then
-// returns to `ink` for the AI moment and lifts to light for the closing
-// CTA's board (`texture` + `ground-board`, wired inside
-// CommandCentreDim.astro). The AI moment's SuggestionCard is wrapped here in
-// the one glow this page is allowed (§3.6) — `data-ai-glow` behind the
-// opaque card, never inside it.
+// src/pages/en/index.astro — redesign wave A (docs/design_handoff_website_
+// redesign/README.md — Home). Replaces the pre-redesign home entirely:
+// board-led hero, proof band, AI decision queue, the signature 480vh
+// record chain, "without the record", closing CTA. Section order per
+// README §1: Hero → ProofBand → AiQueue → RecordChain → WithoutRecord →
+// ClosingCta.
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Section from "../../components/layout/Section.astro";
 import Hero from "../../components/home/Hero.astro";
-import FailureModes from "../../components/home/FailureModes.astro";
-import ChainSection from "../../components/chain/ChainSection.astro";
+import ProofBand from "../../components/home/ProofBand.astro";
+import AiQueue from "../../components/home/AiQueue.astro";
+import RecordChain from "../../components/chain/RecordChain.astro";
+import WithoutRecord from "../../components/home/WithoutRecord.astro";
 import ClosingCta from "../../components/home/ClosingCta.astro";
-import Eyebrow from "../../components/type/Eyebrow.astro";
-import Heading from "../../components/type/Heading.astro";
-import SuggestionCard from "../../components/ai/SuggestionCard.astro";
-import Reveal from "../../components/ui/Reveal.astro";
 import { useTranslations } from "../../i18n/utils";
 
 const lang = "en" as const;
@@ -53,64 +24,12 @@ const t = useTranslations(lang);
   title={t("meta.home.title")}
   description={t("meta.home.description")}
 >
-  <Section texture>
-    <Fragment slot="backdrop">
-      <div class="absolute inset-0 bg-ground-rise"></div>
-    </Fragment>
-    <Hero lang={lang} />
-  </Section>
-
-  <Section ground="deep" seam="down">
-    <FailureModes lang={lang} />
-  </Section>
-
-  <ChainSection lang={lang} />
-
-  <Section seam="up">
-    <div class="grid grid-cols-1 gap-gutter lg:grid-cols-2">
-      <div class="relative">
-        <!-- The spine continues out of the chain, into this section, and
-             stops at the suggestion card's inline-start edge (PLAN.md §3):
-             a full-height rail (matching this grid row's stretched height,
-             which follows the taller card column) plus a short tick
-             gesturing across toward the card. -->
-        <span
-          aria-hidden="true"
-          class="pointer-events-none absolute bottom-0 top-0 w-px start-node-inset bg-accent"
-        ></span>
-        <span
-          aria-hidden="true"
-          class="pointer-events-none absolute bottom-0 h-px w-6 start-node-inset bg-accent"
-        ></span>
-
-        <Reveal as="div" class="ps-rail">
-          <Eyebrow>{t("home.ai.eyebrow")}</Eyebrow>
-          <Heading as="h2" class="mt-4 max-w-measure">
-            {t("home.ai.heading")}
-          </Heading>
-          <p class="mt-6 max-w-measure text-body font-light text-body">
-            {t("home.ai.body")}
-          </p>
-        </Reveal>
-      </div>
-
-      <!-- P10 (DESIGN-ELEVATION.md §3.6): the one glow per page, always the
-           AI card, never anything else. The glow layer sits BEHIND the
-           opaque card and never inside it — the card's own accent-on-jade
-           and muted-on-jade pairs have zero contrast headroom. -->
-      <div class="relative">
-        <div
-          aria-hidden="true"
-          data-ai-glow
-          class="pointer-events-none absolute -inset-12 z-0 bg-spotlight-accent"
-        >
-        </div>
-        <SuggestionCard lang={lang} />
-      </div>
-    </div>
-  </Section>
-
-  <Section bleed texture>
-    <ClosingCta lang={lang} />
-  </Section>
+  <Hero lang={lang} />
+  <ProofBand lang={lang} />
+  <AiQueue lang={lang} />
+  <RecordChain lang={lang} />
+  <WithoutRecord lang={lang} />
+  <ClosingCta lang={lang} />
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

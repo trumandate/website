@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/elevation.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/radius.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/_ds_bundle.css">
+  <style>
+    body { margin: 0; background: #04241E; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; font-weight: 300; color: #C6DAD3; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: #19C39B; }
+    svg { display: block; max-width: 100%; }
+    @keyframes tm-enter { to { opacity: 1; transform: translateY(0) scale(1); } }
+    .tm-load { opacity: 0; transform: translateY(26px); animation: tm-enter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; animation-delay: var(--d, 0ms); }
+    .tm-boardload { opacity: 0; transform: translateY(70px) scale(0.975); animation: tm-enter 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; animation-delay: var(--d, 0ms); }
+    .tm-rise { opacity: 0; transform: translateY(30px); transition: opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms), transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms); }
+    .tm-fade { opacity: 0; transition: opacity 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms); }
+    .tm-grow { transform: scaleX(0); transform-origin: 100% 50%; transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 100ms); }
+    .tm-in { opacity: 1; transform: translateY(0) scaleX(1); }
+    @keyframes tm-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(75,239,196,0.45); } 50% { box-shadow: 0 0 0 7px rgba(75,239,196,0); } }
+    .tm-live { animation: tm-pulse 2.4s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .tm-load, .tm-boardload, .tm-rise, .tm-fade, .tm-grow { opacity: 1; transform: none; animation: none; transition: none; }
+      .tm-live { animation: none; }
+    }
+  </style>
+</helmet>
+<div dir="rtl" lang="ar" style="width: 100%; overflow-x: clip; line-height: 1.8;">
+  <dc-import name="SiteHeaderAR" hint-size="100%,95px"></dc-import>
+
+  <section data-screen-label="AR Hero" class="relative w-full" style="padding-top: clamp(3.5rem, 8vh, 6rem);">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-ground-rise"></div>
+      <div class="absolute inset-0 bg-grid-draft" style="mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%);"></div>
+    </div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter" style="text-align: center;">
+      <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">حَوكمة المحافظ · إنترتك سيستمز</p>
+      <h1 class="tm-load mt-5 font-sans text-display font-semi text-paper" style="--d: 90ms; max-width: 20ch; margin-inline: auto; text-wrap: balance; letter-spacing: 0; line-height: 1.32;">كل تكليف، متتبَّع حتى <span style="background: linear-gradient(268deg, #19C39B 0%, #59D8E6 100%); -webkit-background-clip: text; background-clip: text; color: transparent;">أثره المُقاس</span>.</h1>
+      <p class="tm-load mt-6 text-lede font-light text-body" style="--d: 180ms; max-width: 54ch; margin-inline: auto;">الاستراتيجية وعد، والتنفيذ برهانه. يُبقي TruMandate الخيط بينهما متصلاً بلا انقطاع، ويقرؤه الذكاء الاصطناعي بكامله.</p>
+      <div class="tm-load mt-8 flex flex-wrap items-center gap-4" style="--d: 270ms; justify-content: center;">
+        <a href="Contact AR (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control bg-accent text-small font-semi text-ink" style="min-height: 46px; padding-inline: 24px; transition: background 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);" style-hover="background: transparent; color: #19C39B; outline: 1px solid #19C39B;">احجز عرضاً توضيحياً</a>
+        <a href="#record" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control text-small font-semi text-paper" style="min-height: 46px; padding-inline: 24px; outline: 1px solid rgba(255,255,255,0.10);">تتبَّع سجلاً واحداً</a>
+      </div>
+    </div>
+
+    <div class="relative z-10 mx-auto px-gutter" style="max-width: 1280px; margin-top: clamp(36px, 5vh, 64px);">
+      <div class="tm-boardload" style="--d: 420ms; position: relative;">
+        <div data-board-fit style="position: relative; z-index: 1; max-height: clamp(340px, 44vw, 580px); overflow: hidden; mask-image: linear-gradient(to bottom, black 0%, black 52%, rgba(0,0,0,0.35) 82%, transparent 99%); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 52%, rgba(0,0,0,0.35) 82%, transparent 99%);">
+          <dc-import name="CommandCentreBoardAR" hint-size="100%,580px"></dc-import>
+        </div>
+      </div>
+      <p class="tm-load font-mono text-datum font-data tracking-datum text-muted" style="--d: 700ms; text-align: center; margin-top: 2px;">زاوية من مركز القيادة. العرض التوضيحي يُظهره كاملاً.</p>
+    </div>
+  </section>
+
+  <section data-screen-label="AR Proof band" class="relative w-full" style="border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="mx-auto max-w-content px-gutter" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0;">
+      <div class="tm-rise" style="padding: 26px 0; text-align: center;">
+        <p dir="ltr" style="margin: 0;"><span data-count data-to="142" class="font-mono font-data text-paper" style="font-size: 30px;">142</span></p>
+        <p class="font-mono text-datum font-data tracking-datum text-muted" style="margin: 6px 0 0;">مشروعاً تحت الحوكمة</p>
+      </div>
+      <div class="tm-rise" style="--d: 110ms; padding: 26px 0; text-align: center; border-inline-start: 1px solid rgba(255,255,255,0.06);">
+        <p dir="ltr" style="margin: 0;"><span data-count data-to="218" data-prefix="AED " data-suffix="M" class="font-mono font-data text-paper" style="font-size: 30px;">AED 218M</span></p>
+        <p class="font-mono text-datum font-data tracking-datum text-muted" style="margin: 6px 0 0;">ميزانية المحفظة</p>
+      </div>
+      <div class="tm-rise" style="--d: 220ms; padding: 26px 0; text-align: center; border-inline-start: 1px solid rgba(255,255,255,0.06);">
+        <p dir="ltr" style="margin: 0;"><span data-count data-to="6" class="font-mono font-data" style="font-size: 30px; color: #4BEFC4;">6</span></p>
+        <p class="font-mono text-datum font-data tracking-datum text-muted" style="margin: 6px 0 0;">قرارات بانتظار شخص</p>
+      </div>
+      <div class="tm-rise" style="--d: 330ms; padding: 26px 0; text-align: center; border-inline-start: 1px solid rgba(255,255,255,0.06);">
+        <p dir="ltr" style="margin: 0;"><span data-count data-to="24" class="font-mono font-data text-paper" style="font-size: 30px;">24</span> <span class="font-sans font-semi text-paper" style="font-size: 18px;">شهراً</span></p>
+        <p class="font-mono text-datum font-data tracking-datum text-muted" style="margin: 6px 0 0;">قياس المنافع بعد الإغلاق</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR AI queue" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-surface-deep"></div>
+      <div class="absolute inset-x-0 top-0 h-32 bg-seam-down"></div>
+    </div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(20px, 3vw, 48px); align-items: end;">
+        <div class="tm-rise">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">الذكاء الاصطناعي في المنصة</p>
+          <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="max-width: 28ch; text-wrap: pretty; line-height: 1.4;">الذكاء الاصطناعي يقترح، والإنسان يقرر، والسجل يحفظ الاسم.</h2>
+        </div>
+        <p class="tm-rise text-lede font-light text-body" style="--d: 120ms; max-width: 52ch;">خلال الليل قرأ النموذج 142 مشروعاً وعاد بستة أمور تستحق صباح إنسان. كل اقتراح يصل ومعه دليله ودرجة ثقته، ولا يدخل السجل شيء حتى يوقّع أحدهم باسمه.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 288px), 1fr)); gap: 16px; margin-top: clamp(32px, 4vw, 56px);">
+        <div class="tm-rise" style="position: relative; border-radius: 2px; background: #0B4A3D; border-block: 1px solid rgba(255,255,255,0.10); border-inline-end: 1px solid rgba(255,255,255,0.10); border-inline-start: 2px solid #19C39B; padding: 22px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(25,195,155,0.14), 0 14px 32px -10px rgba(2,24,19,0.55);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #4BEFC4;">مراقبة ذكية · التنفيذ</span>
+            <span dir="ltr" class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #4BEFC4;">0.74</span>
+          </div>
+          <div style="position: relative; height: 2px; width: 100%; background: rgba(255,255,255,0.10); margin-top: 14px;"><div class="tm-grow" style="position: absolute; inset-block: 0; inset-inline-start: 0; height: 2px; width: 74%; background: linear-gradient(270deg, #19C39B, #4BEFC4);"></div></div>
+          <h3 class="mt-5 font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">تبعية بين إدارتين معرَّضة للخطر</h3>
+          <p class="mt-3 text-body font-light text-body">تأخرت البوابة 3 في المبادرة 07، وشرط بدء المبادرة 21 يشير إليها. لم يصعّد أي من المالكَين.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" class="rounded-control border border-accent text-small font-semi text-accent" style="padding: 10px 16px; background: transparent;">قبول</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">تعديل</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">رفض</button>
+          </div>
+          <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">مقبول · <span dir="ltr">m.alfarsi · 08:15</span></p>
+        </div>
+
+        <div class="tm-rise" style="--d: 130ms; border-radius: 2px; background: #0A3B31; border-block: 1px solid rgba(255,255,255,0.10); border-inline-end: 1px solid rgba(255,255,255,0.10); border-inline-start: 2px solid #59D8E6; padding: 22px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(89,216,230,0.12), 0 10px 24px -8px rgba(2,24,19,0.55);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #59D8E6;">مراقبة ذكية · الاستراتيجية</span>
+            <span dir="ltr" class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #59D8E6;">0.81</span>
+          </div>
+          <div style="position: relative; height: 2px; width: 100%; background: rgba(255,255,255,0.10); margin-top: 14px;"><div class="tm-grow" style="position: absolute; inset-block: 0; inset-inline-start: 0; height: 2px; width: 81%; background: linear-gradient(270deg, #19C39B, #59D8E6);"></div></div>
+          <h3 class="mt-5 font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">مؤشران يحتسبان منفعة واحدة</h3>
+          <p class="mt-3 text-body font-light text-body">الهدف 2.1 والهدف 4.3 يتشاركان مقياس المصدر ومجموعة مبادرات متداخلة. ادمج، أو علّم أحدهما مقياساً مساهماً.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" class="rounded-control border border-accent text-small font-semi text-accent" style="padding: 10px 16px; background: transparent;">قبول</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">تعديل</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">رفض</button>
+          </div>
+          <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">معدَّل · <span dir="ltr">h.alsuwaidi · 11:07</span></p>
+        </div>
+
+        <div class="tm-rise" style="--d: 260ms; border-radius: 2px; background: #0A3B31; border-block: 1px solid rgba(255,255,255,0.10); border-inline-end: 1px solid rgba(255,255,255,0.10); border-inline-start: 2px solid #FFC95C; padding: 22px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(255,201,92,0.12), 0 10px 24px -8px rgba(2,24,19,0.55);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #FFC95C;">مراقبة ذكية · المنافع</span>
+            <span dir="ltr" class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #FFC95C;">0.69</span>
+          </div>
+          <div style="position: relative; height: 2px; width: 100%; background: rgba(255,255,255,0.10); margin-top: 14px;"><div class="tm-grow" style="position: absolute; inset-block: 0; inset-inline-start: 0; height: 2px; width: 69%; background: linear-gradient(270deg, #F2B441, #FFC95C);"></div></div>
+          <h3 class="mt-5 font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">تسرّب منفعة بعد الإغلاق</h3>
+          <p class="mt-3 text-body font-light text-body">المنفعة 4.2 أدنى من المتوقَّع بنسبة 18% بعد ربعين من الإغلاق. توقف المؤشر عن التحسّن حين سُرّح الفريق.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" class="rounded-control border border-accent text-small font-semi text-accent" style="padding: 10px 16px; background: transparent;">قبول</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">تعديل</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">رفض</button>
+          </div>
+          <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">مفتوح · مُسند إلى <span dir="ltr">s.alnuaimi</span></p>
+        </div>
+      </div>
+
+      <div class="tm-fade" style="--d: 200ms; margin-top: clamp(28px, 3vw, 44px); border-top: 1px solid rgba(255,255,255,0.10); padding-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <p class="font-mono text-datum font-data tracking-datum text-muted">التدقيق · أُغلقت 3 من 6 قرارات اليوم</p>
+        <p class="font-mono text-datum font-data tracking-datum text-muted">أعيد ترتيب البوابة 4 · <span dir="ltr">a.almarzooqi · 09:42</span></p>
+        <p class="font-mono text-datum font-data tracking-datum text-muted">رُوجعت التوقعات · <span dir="ltr">s.alnuaimi · 16:30</span></p>
+        <p class="font-mono text-datum font-data tracking-datum" style="color: #4BEFC4;">لم يدخل السجل أي مخرَج للنموذج دون اعتماد</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="record" data-chain data-screen-label="AR Record chain" class="relative w-full" style="height: 480vh;">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-0 bg-surface-deep"></div></div>
+    <div style="position: sticky; top: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; z-index: 1;">
+      <div class="mx-auto max-w-content px-gutter" style="width: 100%;">
+        <div>
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">التتبّع</p>
+          <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="max-width: 28ch; text-wrap: pretty; line-height: 1.4;">هوية واحدة، تُحمل من التكليف حتى المال.</h2>
+          <p class="mt-4 text-lede font-light text-body" style="max-width: 52ch;">تابع التمرير وتتحرك السلسلة. هدف واحد يقطع الطريق كله: من الجملة التي وُقّعت في الأعلى إلى الوفر الذي يشير إليه المكتب المالي.</p>
+        </div>
+      </div>
+
+      <div style="position: relative; margin-top: clamp(32px, 5vh, 56px);">
+        <div aria-hidden="true" style="position: relative; z-index: 5; text-align: center; margin-bottom: clamp(14px, 2.5vh, 24px);">
+          <p dir="ltr" data-chain-count class="font-mono font-data tracking-datum text-muted" style="font-size: 13px; margin: 0;">01 / 05</p>
+          <p data-chain-name class="font-sans text-h3 font-semi" style="margin: 4px 0 0; color: #4BEFC4;">الهدف</p>
+        </div>
+        <div style="perspective: 1500px; perspective-origin: 50% 42%;">
+          <div data-chain-track style="position: relative; width: min(78vw, 340px); min-height: 430px; margin-inline: auto; transform-style: preserve-3d; will-change: transform;">
+
+            <div data-chain-card style="width: min(78vw, 340px); padding-top: 26px; position: relative;">
+              <span aria-hidden="true" class="tm-live" style="position: absolute; top: 0; inset-inline-start: 0; width: 13px; height: 13px; border-radius: 50%; background: #19C39B;"></span>
+              <p class="font-mono text-datum font-data tracking-datum text-muted">01 · الهدف</p>
+              <div style="margin-top: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #0A3B31; padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55);">
+                <h3 class="font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">نضج الحكومة الرقمية</h3>
+                <p class="mt-2 text-small font-light text-body">مُصدَّر بنسخة معتمدة وموزون، وله مالك بالاسم.</p>
+                <div style="margin-top: 14px;">
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">المرجع</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">Objective 1.2</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">الخطة المعتمدة</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">v3</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div data-chain-card style="width: min(78vw, 340px); padding-top: 26px; position: relative;">
+              <span aria-hidden="true" style="position: absolute; top: 0; inset-inline-start: 0; width: 13px; height: 13px; border-radius: 50%; background: #59D8E6;"></span>
+              <p class="font-mono text-datum font-data tracking-datum text-muted">02 · مؤشر الأداء</p>
+              <div style="margin-top: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #0A3B31; padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55);">
+                <h3 class="font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">تبنّي الخدمات الرقمية</h3>
+                <p class="mt-2 text-small font-light text-body">يحمل الهدف 1.2. لا خط أساس، لا مؤشر.</p>
+                <div style="margin-top: 14px;">
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">خط الأساس ← المستهدف</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">42.0 → 75.0</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">الفعلي الحي</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum" style="color: #59D8E6;">61.4</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div data-chain-card style="width: min(78vw, 340px); padding-top: 26px; position: relative;">
+              <span aria-hidden="true" style="position: absolute; top: 0; inset-inline-start: 0; width: 13px; height: 13px; border-radius: 50%; background: #19C39B;"></span>
+              <p class="font-mono text-datum font-data tracking-datum text-muted">03 · المبادرة</p>
+              <div style="margin-top: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #0A3B31; padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55);">
+                <h3 class="font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">بوابة الخدمات الموحّدة</h3>
+                <p class="mt-2 text-small font-light text-body">مموّلة لتحريك المؤشر 1.2.3، وتعرف ذلك.</p>
+                <div style="margin-top: 14px;">
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">التمويل</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">AED 28M</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">التقدّم</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">74%</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div data-chain-card style="width: min(78vw, 340px); padding-top: 26px; position: relative;">
+              <span aria-hidden="true" style="position: absolute; top: 0; inset-inline-start: 0; width: 13px; height: 13px; border-radius: 50%; background: #F2B441;"></span>
+              <p class="font-mono text-datum font-data tracking-datum text-muted">04 · المعلم</p>
+              <div style="margin-top: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #0A3B31; padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55);">
+                <h3 class="font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">البوابة 4 · إيقاف الأنظمة القديمة</h3>
+                <p class="mt-2 text-small font-light text-body">التأخير عملية طرح، يظهر يوم وقوعه.</p>
+                <div style="margin-top: 14px;">
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">الأساس ← الفعلي</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum" style="color: #FFC95C;">14 Aug → 26 Aug</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">المالك</span><span class="font-mono text-datum font-data tracking-datum text-paper">ر. الهاشمي</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div data-chain-card style="width: min(78vw, 340px); padding-top: 26px; position: relative;">
+              <span aria-hidden="true" style="position: absolute; top: 0; inset-inline-start: 0; width: 13px; height: 13px; border-radius: 50%; background: #FFC95C;"></span>
+              <p class="font-mono text-datum font-data tracking-datum text-muted">05 · المنفعة</p>
+              <div style="margin-top: 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #0A3B31; padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55);">
+                <h3 class="font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">وفر تشغيلي سنوي</h3>
+                <p class="mt-2 text-small font-light text-body">تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر 1.2.3 لا الذاكرة.</p>
+                <div style="margin-top: 14px;">
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">المتوقَّع ← الفعلي</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">AED 50M → 41M</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); padding: 8px 0;"><span class="font-mono text-datum font-data tracking-datum text-muted">القياس حتى</span><span dir="ltr" class="font-mono text-datum font-data tracking-datum text-paper">Mar 2028</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR Without" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-x-0 top-0 h-32 bg-seam-up"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-rise">
+        <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">بدون السجل</p>
+        <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="max-width: 30ch; text-wrap: pretty; line-height: 1.4;">تُكتب الاستراتيجية مرة واحدة، ثم يُعاد نسخها طوال عام.</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: clamp(20px, 3vw, 48px); margin-top: clamp(32px, 4vw, 56px);">
+        <div class="tm-rise">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-sans font-semi" style="font-size: 30px; margin: 20px 0 0; color: #4BEFC4;">3 أيام</p>
+          <p class="mt-3 font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">التخطيط</p>
+          <p class="mt-3 text-body font-light text-body">لمعرفة أي مبادرة تحرّك أي هدف. يُجمَّع الجواب يدوياً في جدول، إن وصل أصلاً.</p>
+        </div>
+        <div class="tm-rise" style="--d: 130ms;">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-sans font-semi" style="font-size: 30px; margin: 20px 0 0; color: #FFC95C;">نهاية الشهر</p>
+          <p class="mt-3 font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">التنفيذ</p>
+          <p class="mt-3 text-body font-light text-body">قبل أن يصل التأخير إلى المكتب الذي موّل العمل، وبعد أن قُرّب الرقم بيد من سيُسأل عنه.</p>
+        </div>
+        <div class="tm-rise" style="--d: 260ms;">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-sans font-semi" style="font-size: 30px; margin: 20px 0 0; color: #FF9A90;">أبداً</p>
+          <p class="mt-3 font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">المنافع</p>
+          <p class="mt-3 text-body font-light text-body">تُقاس التوقعات بعد الإغلاق، وقد سُرّح الفريق الذي وعد بها قبل موعد ظهورها.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR Closing" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-grid-draft" style="mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);"></div>
+      <div class="absolute inset-0 bg-ground-board"></div>
+    </div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-rise" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 4vw, 64px); align-items: start;">
+        <div>
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #4BEFC4;">الدقائق الأربعون القادمة</p>
+          <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="max-width: 26ch; text-wrap: pretty; line-height: 1.4;">أحضر هدفاً واحداً، ونتتبّعه حتى المال.</h2>
+          <p class="mt-6 text-lede font-light text-body" style="max-width: 50ch;">أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات. لا بيانات تجريبية.</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="Contact AR (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control bg-accent text-small font-semi text-ink" style="min-height: 46px; padding-inline: 24px; transition: background 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);" style-hover="background: transparent; color: #19C39B; outline: 1px solid #19C39B;">احجز عرضاً توضيحياً</a>
+            <a href="mailto:trumandate@intertecsys.com" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control text-small font-semi text-paper" style="min-height: 46px; padding-inline: 24px; outline: 1px solid rgba(255,255,255,0.10);">راسلنا بدلاً من ذلك</a>
+          </div>
+        </div>
+        <div style="display: grid; gap: 0;">
+          <div style="border-top: 1px solid rgba(255,255,255,0.10); padding: 14px 0;">
+            <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">النشر</p>
+            <p class="mt-2 text-body font-light text-body">استضافة سيادية داخلية أو سحابية، داخل حدودكم.</p>
+          </div>
+          <div style="border-top: 1px solid rgba(255,255,255,0.10); padding: 14px 0;">
+            <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">اللغة</p>
+            <p class="mt-2 text-body font-light text-body">العربية والإنجليزية بمكانة واحدة، بما في ذلك التقارير.</p>
+          </div>
+          <div style="border-top: 1px solid rgba(255,255,255,0.10); border-bottom: 1px solid rgba(255,255,255,0.10); padding: 14px 0;">
+            <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">التشغيل</p>
+            <p class="mt-2 text-body font-light text-body">إنترتك سيستمز، دبي. تسليم حَوكمة لجهات الإمارات والسعودية.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooterAR" hint-size="100%,220px"></dc-import>
+</div>
+      
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  chainNames = ["الهدف", "مؤشر الأداء", "المبادرة", "المعلم", "المنفعة"];
+  componentDidMount() {
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("tm-in");
+        if (e.target.hasAttribute("data-count") && !reduced) this.runCounter(e.target);
+        this.io.unobserve(e.target);
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".tm-rise, .tm-fade, .tm-grow, [data-count]").forEach((el) => this.io.observe(el));
+
+    this.onScroll = () => {
+      const sec = document.querySelector("[data-chain]");
+      const track = document.querySelector("[data-chain-track]");
+      if (!sec || !track) return;
+      const r = sec.getBoundingClientRect();
+      const total = Math.max(1, r.height - innerHeight);
+      const p = Math.min(1, Math.max(0, -r.top / total));
+      const seg = p * 4;
+      const i = Math.min(3, Math.floor(seg));
+      const frac = seg - i;
+      const DWELL = 0.45;
+      const t = frac < DWELL ? 0 : (frac - DWELL) / (1 - DWELL);
+      const glide = t * t * (3 - 2 * t);
+      const eased = (i + glide) / 4;
+      const cards = track.querySelectorAll("[data-chain-card]");
+      const AX = 440, BZ = 560;
+      if (!this.ringInit) {
+        cards.forEach((c) => {
+          c.style.position = "absolute";
+          c.style.top = "0";
+          c.style.insetInlineStart = "0";
+          c.style.width = "100%";
+          c.style.willChange = "transform, opacity";
+        });
+        this.ringInit = true;
+      }
+      const rot = eased * 288; // rtl: orbit runs the other way
+      cards.forEach((c, n) => {
+        const a = (((n * 72 + rot) % 360 + 360) % 360) * Math.PI / 180;
+        const x = Math.sin(a) * AX;
+        const z = (Math.cos(a) - 1) * BZ;
+        const y = (1 - Math.cos(a)) * -46;
+        const v = Math.cos(a);
+        c.style.transform = `translateX(${x.toFixed(1)}px) translateY(${y.toFixed(1)}px) translateZ(${z.toFixed(1)}px)`;
+        c.style.opacity = (0.08 + 0.92 * Math.max(0, (v + 0.25) / 1.25)).toFixed(3);
+        c.style.zIndex = String(Math.round(100 + 100 * v));
+      });
+      const idx = Math.min(4, Math.round(eased * 4));
+      const count = document.querySelector("[data-chain-count]");
+      if (count) count.textContent = `0${idx + 1} / 05`;
+      const name = document.querySelector("[data-chain-name]");
+      if (name && name.textContent !== this.chainNames[idx]) name.textContent = this.chainNames[idx];
+    };
+    addEventListener("scroll", this.onScroll, { passive: true });
+    addEventListener("resize", this.onScroll);
+    this.onScroll();
+
+    this.fitBoard = () => {
+      const wrap = document.querySelector("[data-board-fit]");
+      const inner = wrap && wrap.querySelector('[role="img"]');
+      if (!wrap || !inner) return;
+      const z = Math.min(1, wrap.clientWidth / 1036);
+      if (inner.style.zoom !== String(z)) inner.style.zoom = z;
+    };
+    this.ro = new ResizeObserver(() => this.fitBoard());
+    let tries = 0;
+    this.fitTimer = setInterval(() => {
+      const wrap = document.querySelector("[data-board-fit]");
+      if (wrap) { this.ro.observe(wrap); this.fitBoard(); }
+      if (++tries > 20) clearInterval(this.fitTimer);
+    }, 200);
+  }
+  runCounter(el) {
+    const to = parseFloat(el.dataset.to || "0");
+    const prefix = el.dataset.prefix || "";
+    const suffix = el.dataset.suffix || "";
+    const t0 = performance.now();
+    const dur = 1300;
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = prefix + Math.round(ease(p) * to) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.ro) this.ro.disconnect();
+    removeEventListener("scroll", this.onScroll);
+    removeEventListener("resize", this.onScroll);
+  }
+}
+</script>
+</body>
+</html>

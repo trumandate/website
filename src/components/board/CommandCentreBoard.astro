@@ -1,0 +1,454 @@
+---
+// CommandCentreBoard.astro — redesign wave A (docs/design_handoff_website_
+// redesign/README.md §2, CommandCentreBoard.dc.html / CommandCentreBoardAR.
+// dc.html). DOM + inline SVG from tokens, one component, one `lang` branch —
+// same precedent as KpiCard.astro's isAr split rather than two files, since
+// the reference's own two files share nearly all of their structure and
+// only their text (plus a handful of direction pins) differ.
+//
+// 1000px internal design width (the `min-width: 1000px` wrapper below); the
+// caller (Hero.astro) fits it to its own container via `data-board-fit` +
+// `zoom = containerWidth / 1036` (scripts/board.ts), capped at 1, and crops
+// it with `max-height: clamp(340px, 44vw, 580px)` + a mask fading 52%→99% —
+// the deliberate withholding mechanism (README §2: "never show the full
+// board"). This component itself renders the board's full, uncropped
+// content; the crop and the caption live in the caller.
+//
+// Direction: the outer wrapper takes an explicit `dir` (mirrors the
+// reference's own `<div dir="rtl" lang="ar" role="img">`) rather than
+// inheriting silently, so the whole board's grid/flex layout mirrors
+// through ordinary CSS bidi semantics — logical classes throughout
+// (border-inline-end, margin-inline-start, inset-inline-start). The handful
+// of numeric/chart sub-trees that must NOT mirror (the budget bar, the two
+// confidence bars, the line/donut SVGs) pin `dir="ltr"` explicitly, exactly
+// where the AR reference does — same established pattern as
+// KpiCard.astro/StageGateQueue.astro pinning `direction` so physical
+// coordinates keep one fixed meaning. The Arabic AI-watch panel drops the
+// third "Escalation · Core ERP" critical item outright — CommandCentreBoardAR
+// .dc.html's own panel really does end after two items, not an omission on
+// this component's part.
+//
+// Two per-language sizing values, both verified against the reference files
+// directly (not just the rendered preview) since they're easy to miss:
+// the page title ("Performance Command Centre" / "مركز قيادة الأداء") is an
+// `<h3>`, 22px in English and 21px in Arabic (CommandCentreBoard.dc.html line
+// 62 vs CommandCentreBoardAR.dc.html line 61) — it was a `<p>` here
+// originally, which cost it the sitewide `[dir=rtl] h2, h3 { line-height:
+// heading-ar }` override (1.40) and fell back to the generic Arabic
+// paragraph line-height (1.80, global.css's `[dir=rtl]` rule), rendering
+// ~8.8px taller than the reference and pushing the whole board ~9px taller
+// than Home AR (redesign).dc.html (chrome-devtools MCP, getBoundingClientRect
+// at 1440×900 — invisible in English only because the KPI row's dept/period
+// filter pills happen to be the taller flex sibling there, so the extra
+// height was absorbed without shifting anything). The four KPI tile labels
+// (health/budget/risks/benefits) are 8.5px in English, 9px in Arabic in the
+// reference (CommandCentreBoardAR.dc.html lines 72/82/95/104) — this
+// component hardcoded 8.5px for both.
+import { boardCopy } from "./copy";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+  class?: string;
+}
+
+const { lang, class: className }: Props = Astro.props;
+const isAr = lang === "ar";
+const c = boardCopy(lang);
+const dir = isAr ? "rtl" : "ltr";
+---
+
+<div
+  dir={dir}
+  lang={lang}
+  role="img"
+  aria-label={c.ariaLabel}
+  class:list={["cc-board relative overflow-hidden", className]}
+  data-cc-board
+>
+  <div class="overflow-x-auto overflow-y-hidden">
+    <div style="min-width: 1000px;">
+      <!-- top bar -->
+      <div
+        class="flex items-center justify-between gap-4 border-b border-hairline"
+        style="height: 42px; padding-inline: 14px; background: rgba(11,74,61,0.6);"
+      >
+        <div class="flex items-center gap-[10px]">
+          <svg viewBox="0 0 100 100" style="width: 20px; height: 20px;" aria-hidden="true">
+            <rect width="100" height="100" rx="24" class="fill-paper"></rect>
+            <rect x="24" y="26" width="54" height="12" rx="6" class="fill-jade"></rect>
+            <rect x="24" y="46" width="38" height="12" rx="6" class="fill-accent"></rect>
+            <rect x="24" y="66" width="22" height="12" rx="6" class="fill-accent"></rect>
+          </svg>
+          <span dir="ltr" class="font-sans font-semi tracking-brand text-paper" style="font-size: 13px;">TruMandate</span>
+          <span aria-hidden="true" class="bg-hairline" style="width: 1px; height: 16px;"></span>
+          <span class:list={["text-muted", isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum"]} style="font-size: 10px;">
+            {c.workspaceLabel} {c.breadcrumbSep} <span class="text-paper">{c.pageTitle}</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-[14px]">
+          <span class="cc-chip" style="background: rgba(75,239,196,0.10);">
+            <span aria-hidden="true" class="tm-live" style="width: 6px; height: 6px; border-radius: 50%; background: theme('colors.mint');"></span>
+            <span dir="ltr" class:list={[isAr ? "font-sans font-semi" : "font-mono font-data", "text-mint"]} style="font-size: 9px;">{c.aiRunBadge}</span>
+          </span>
+          <span class="font-sans font-semi text-paper" style="font-size: 11px;">{c.langChipLabel}</span>
+          <span aria-hidden="true" class="cc-dot-grad" style="width: 18px; height: 18px; border-radius: 50%;"></span>
+        </div>
+      </div>
+
+      <!-- sidebar + content -->
+      <div class="grid" style="grid-template-columns: 176px minmax(0, 1fr);">
+        <div
+          class="flex flex-col gap-0.5 border-e border-hairline bg-ink"
+          style="padding: 14px 10px;"
+        >
+          <div style="padding: 8px 10px;">
+            <span class:list={[isAr ? "font-sans font-semi" : "font-sans", "text-body"]} style="font-size: 12px;">{c.nav.home}</span>
+          </div>
+          <div class="cc-nav-active" style="padding: 8px 10px;">
+            <span class="font-sans font-semi text-paper" style="font-size: 12px;">{c.nav.commandCentre}</span>
+          </div>
+          <div class="flex items-center" style="padding: 8px 10px;">
+            <span class:list={[isAr ? "font-sans font-semi" : "font-sans", "text-body"]} style="font-size: 12px;">{c.nav.aiDecisions}</span>
+            <span class="cc-chip ms-auto" style="background: rgba(75,239,196,0.12);">
+              <span dir="ltr" class="font-mono font-data text-mint" style="font-size: 9px;">6</span>
+            </span>
+          </div>
+          <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-eyebrow uppercase", "text-muted"]} style="font-size: 9px; margin: 16px 0 2px;">
+            {c.nav.deliverGroup}
+          </p>
+          <div style="padding: 8px 10px;">
+            <span class:list={[isAr ? "font-sans font-semi" : "font-sans", "text-body"]} style="font-size: 12px;">{c.nav.projectExecution}</span>
+          </div>
+          <div class="flex items-center" style="padding: 8px 10px;">
+            <span class:list={[isAr ? "font-sans font-semi" : "font-sans", "text-body"]} style="font-size: 12px;">{c.nav.stageGates}</span>
+            <span class="cc-chip ms-auto" style="background: rgba(255,201,92,0.14);">
+              <span dir="ltr" class="font-mono font-data text-gold" style="font-size: 9px;">4</span>
+            </span>
+          </div>
+          <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-eyebrow uppercase", "text-muted"]} style="font-size: 9px; margin: 16px 0 2px;">
+            {c.nav.proveGroup}
+          </p>
+          <div style="padding: 8px 10px;">
+            <span class:list={[isAr ? "font-sans font-semi" : "font-sans", "text-body"]} style="font-size: 12px;">{c.nav.benefitsRegister}</span>
+          </div>
+        </div>
+
+        <div style="padding: 16px 18px 24px;">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum", "text-muted"]} style="font-size: 10px; margin: 0;">{c.breadcrumb}</p>
+              <h3
+                class:list={[isAr ? "font-sans font-semi" : "font-sans font-semi tracking-heading", "text-paper"]}
+                style={`font-size: ${isAr ? "21px" : "22px"}; margin: 5px 0 0;`}
+              >
+                {c.pageTitle}
+              </h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="cc-select"><span class:list={[isAr && "font-sans", "text-paper"]} style="font-size: 11px;">{c.deptFilter}</span></span>
+              <span class="cc-select"><span class:list={[isAr && "font-sans", "text-paper"]} style="font-size: 11px;">{c.periodFilter}</span></span>
+            </div>
+          </div>
+
+          <!-- KPI tiles -->
+          <div class="grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px;">
+            <div class="cc-kpi">
+              <div>
+                <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-eyebrow uppercase", "text-muted"]} style={`font-size: ${isAr ? "9px" : "8.5px"}; margin: 0;`}>{c.kpi.healthLabel}</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">86% <span class="font-mono font-data text-mint" style="font-size: 10px;">▲ +4</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                <defs>
+                  <linearGradient id={`cc-k1-${lang}`} x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" class="[stop-color:theme(colors.accent)]"></stop>
+                    <stop offset="1" class="[stop-color:theme(colors.cyan)]"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M2 24 L15 21 L28 23 L41 15 L54 17 L67 9 L78 5" fill="none" stroke={`url(#cc-k1-${lang})`} stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+
+            <div class="cc-kpi">
+              <div>
+                <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-eyebrow uppercase", "text-muted"]} style={`font-size: ${isAr ? "9px" : "8.5px"}; margin: 0;`}>{c.kpi.budgetLabel}</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">71% <span class:list={[isAr && "font-sans", "font-mono font-data text-muted"]} style="font-size: 10px;">{c.kpi.budgetSuffix}</span></p>
+              </div>
+              <div style="width: 72px; flex-shrink: 0;">
+                <div dir="ltr" class="relative bg-hairline-08" style="height: 5px; border-radius: 3px;">
+                  <div class="absolute inset-y-0 bg-grad-cyan" style="inset-inline-start: 0; width: 71%; border-radius: 3px;"></div>
+                  <span aria-hidden="true" class="absolute bg-paper" style="top: -2px; bottom: -2px; left: 68%; width: 2px;"></span>
+                </div>
+                <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data", "text-muted"]} style="font-size: 8px; margin: 5px 0 0; text-align: end;">{c.kpi.budgetTarget}</p>
+              </div>
+            </div>
+
+            <div class="cc-kpi">
+              <div>
+                <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-eyebrow uppercase", "text-muted"]} style={`font-size: ${isAr ? "9px" : "8.5px"}; margin: 0;`}>{c.kpi.risksLabel}</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">48 <span class="font-mono font-data text-mint" style="font-size: 10px;">▼ 4</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                <path d="M2 7 L15 10 L28 9 L41 14 L54 13 L67 19 L78 23" fill="none" class="stroke-coral-dark" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+
+            <div class="cc-kpi">
+              <div>
+                <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-eyebrow uppercase", "text-muted"]} style={`font-size: ${isAr ? "9px" : "8.5px"}; margin: 0;`}>{c.kpi.benefitsLabel}</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 18px; margin: 6px 0 0; white-space: nowrap;">AED 1.32B <span class="font-mono font-data text-gold" style="font-size: 10px;">▲ 18%</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                <path d="M2 26 L15 24 L28 20 L41 20 L54 15 L67 10 L78 4" fill="none" class="stroke-gold" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- chart + AI panel -->
+          <div class="grid items-stretch" style="grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 12px; margin-top: 12px;">
+            <div class="cc-panel">
+              <div class="flex items-baseline justify-between gap-2">
+                <span class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 13px;">{c.chart.title}</span>
+                <span class="inline-flex gap-3">
+                  <span class:list={[isAr ? "font-sans font-semi" : "font-mono font-data", "text-muted"]} style="font-size: 9px;"><span class="text-mint">—</span> {c.chart.actualLegend}</span>
+                  <span class:list={[isAr ? "font-sans font-semi" : "font-mono font-data", "text-muted"]} style="font-size: 9px;">‑ ‑ {c.chart.targetLegend}</span>
+                </span>
+              </div>
+              <svg viewBox="0 0 460 210" style="width: 100%; margin-top: 8px; direction: ltr;" aria-hidden="true">
+                <defs>
+                  <linearGradient id={`cc-ga-${lang}`} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" class="[stop-color:theme(colors.accent)] [stop-opacity:0.3]"></stop>
+                    <stop offset="1" class="[stop-color:theme(colors.accent)] [stop-opacity:0]"></stop>
+                  </linearGradient>
+                  <linearGradient id={`cc-gas-${lang}`} x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" class="[stop-color:theme(colors.accent)]"></stop>
+                    <stop offset="1" class="[stop-color:theme(colors.cyan)]"></stop>
+                  </linearGradient>
+                </defs>
+                <line x1="10" y1="168" x2="450" y2="168" class="stroke-hairline-08"></line>
+                <line x1="10" y1="120" x2="450" y2="120" class="stroke-hairline-soft" stroke-dasharray="3 5"></line>
+                <line x1="10" y1="72" x2="450" y2="72" class="stroke-hairline-soft" stroke-dasharray="3 5"></line>
+                {
+                  isAr ? (
+                    <path d="M10 128 C60 122 90 110 140 104 S240 92 290 78 S400 52 450 40" fill="none" class="stroke-muted/[0.55]" stroke-width="1.5" stroke-dasharray="5 5"></path>
+                  ) : (
+                    <path d="M10 140 C60 134 100 124 150 116 S260 100 310 88 S400 62 450 50" fill="none" class="stroke-muted/[0.55]" stroke-width="1.5" stroke-dasharray="5 5"></path>
+                  )
+                }
+                <path d="M10 144 C50 140 90 132 130 122 C170 112 200 124 230 118 C280 108 330 76 380 58 C410 47 430 40 450 34 L450 168 L10 168 Z" fill={`url(#cc-ga-${lang})`}></path>
+                <path class="tm-spark" d="M10 144 C50 140 90 132 130 122 C170 112 200 124 230 118 C280 108 330 76 380 58 C410 47 430 40 450 34" fill="none" stroke={`url(#cc-gas-${lang})`} stroke-width="2.5" stroke-linecap="round"></path>
+                <line x1="215" y1="52" x2="215" y2="122" class="stroke-gold" stroke-width="1" stroke-dasharray="3 3"></line>
+                <circle cx="215" cy="121" r="4" class="fill-gold"></circle>
+                <circle cx="215" cy="121" r="8" class="fill-gold opacity-[0.22]"></circle>
+                <rect x="121" y="28" width="188" height="18" rx="9" class="fill-gold opacity-[0.12]"></rect>
+                <text x="215" y={isAr ? "41" : "40"} text-anchor="middle" class:list={[isAr ? "cc-svg-ar" : "cc-svg-mono", "fill-gold"]} style="font-size: 9px;">{c.chart.flagLabel}</text>
+                <circle cx="450" cy="34" r="4" class="fill-cyan"></circle>
+                <circle cx="450" cy="34" r="8" class="fill-cyan opacity-25"></circle>
+                <text x="10" y="192" class:list={[isAr ? "cc-svg-ar" : "cc-svg-mono", "fill-muted"]}>{c.chart.janLabel}</text>
+                <text x="230" y="192" text-anchor="middle" class:list={[isAr ? "cc-svg-ar" : "cc-svg-mono", "fill-muted"]}>{c.chart.julLabel}</text>
+                <text x="450" y="192" text-anchor="end" class:list={[isAr ? "cc-svg-ar" : "cc-svg-mono", "fill-muted"]}>{c.chart.decLabel}</text>
+              </svg>
+              <div class="flex items-center gap-[14px] border-t border-hairline-08" style="padding-top: 10px; margin-top: 4px;">
+                <svg viewBox="0 0 44 44" style="width: 40px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                  <circle cx="22" cy="22" r="17" fill="none" class="stroke-hairline-08" stroke-width="5"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" class="stroke-mint" stroke-width="5" stroke-dasharray="83.3 106.8" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" class="stroke-gold" stroke-width="5" stroke-dasharray="16 90.8" stroke-dashoffset="-85" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" class="stroke-coral-dark" stroke-width="5" stroke-dasharray="6.4 100.4" stroke-dashoffset="-102.5" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                </svg>
+                <span class:list={[isAr ? "font-sans font-semi" : "font-mono font-data", "text-muted"]} style="font-size: 9px;">
+                  {c.chart.donutPrefix}<span class="text-mint">{c.chart.onTrack}</span> · <span class="text-gold">{c.chart.atRisk}</span> · <span class="text-coral">{c.chart.offTrack}</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="cc-panel cc-ai-panel relative">
+              <div aria-hidden="true" class="pointer-events-none absolute -inset-8 bg-spotlight-accent"></div>
+              <div class="relative">
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 13px;">{c.aiPanel.title}</span>
+                  <span class="cc-chip" style="background: rgba(75,239,196,0.12);">
+                    <span aria-hidden="true" class="tm-live" style="width: 5px; height: 5px; border-radius: 50%; background: theme('colors.mint');"></span>
+                    <span class:list={[isAr ? "font-sans font-semi" : "font-mono font-data", "text-mint"]} style="font-size: 9px;">{c.aiPanel.waitingChip}</span>
+                  </span>
+                </div>
+
+                <div class="cc-ai-item" style="margin-top: 10px;">
+                  <div class="flex items-baseline justify-between gap-2">
+                    <span class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum uppercase", "text-muted"]} style="font-size: 9px;">{c.aiPanel.item1Dept}</span>
+                    {isAr ? (
+                      <span class="font-sans font-semi text-mint" style="font-size: 9px;">{c.aiPanel.confidenceLabel} <span dir="ltr">0.74</span></span>
+                    ) : (
+                      <span dir="ltr" class="font-mono font-data text-mint" style="font-size: 9px;">{c.aiPanel.confidenceLabel} 0.74</span>
+                    )}
+                  </div>
+                  <div dir="ltr" class="relative bg-hairline" style="height: 2px; margin-top: 8px;">
+                    <div class="absolute inset-y-0 bg-grad-cyan" style="inset-inline-start: 0; width: 74%;"></div>
+                  </div>
+                  <p class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 13px; margin: 10px 0 0;">{c.aiPanel.item1Title}</p>
+                  <p class:list={[isAr && "font-sans font-light", "text-body"]} style="font-size: 11px; margin: 6px 0 0;">{c.aiPanel.item1Detail}</p>
+                  <div class="flex gap-1.5" style="margin-top: 10px;">
+                    <span class="cc-btn-fill"><span class:list={[isAr && "font-sans", "font-semi text-ink"]} style="font-size: 10px;">{c.aiPanel.accept}</span></span>
+                    <span class="cc-btn-outline"><span class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 10px;">{c.aiPanel.modify}</span></span>
+                    <span class="cc-btn-outline"><span class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 10px;">{c.aiPanel.reject}</span></span>
+                  </div>
+                </div>
+
+                <div class="cc-ai-item" style="margin-top: 8px;">
+                  <div class="flex items-baseline justify-between gap-2">
+                    <span class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum uppercase", "text-muted"]} style="font-size: 9px;">{c.aiPanel.item2Dept}</span>
+                    {isAr ? (
+                      <span class="font-sans font-semi text-cyan" style="font-size: 9px;">{c.aiPanel.confidenceLabel} <span dir="ltr">0.81</span></span>
+                    ) : (
+                      <span dir="ltr" class="font-mono font-data text-cyan" style="font-size: 9px;">{c.aiPanel.confidenceLabel} 0.81</span>
+                    )}
+                  </div>
+                  <div dir="ltr" class="relative bg-hairline" style="height: 2px; margin-top: 8px;">
+                    <div class="absolute inset-y-0 bg-grad-cyan" style="inset-inline-start: 0; width: 81%;"></div>
+                  </div>
+                  <p class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 13px; margin: 10px 0 0;">{c.aiPanel.item2Title}</p>
+                </div>
+
+                {!isAr && (
+                  <div class="cc-ai-item cc-ai-item-critical" style="margin-top: 8px;">
+                    <div class="flex items-baseline justify-between gap-2">
+                      <span class="font-mono font-data tracking-datum uppercase text-muted" style="font-size: 9px;">{c.aiPanel.escalationDept}</span>
+                      <span class="cc-chip" style="background: rgba(255,122,110,0.16);">
+                        <span aria-hidden="true" class="tm-live-r" style="width: 5px; height: 5px; border-radius: 50%; background: theme('colors.coral-dark');"></span>
+                        <span class="font-mono font-data text-coral" style="font-size: 9px;">{c.aiPanel.escalationChip}</span>
+                      </span>
+                    </div>
+                    <p class="font-semi text-paper" style="font-size: 13px; margin: 8px 0 0;">{c.aiPanel.escalationTitle}</p>
+                  </div>
+                )}
+
+                <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum", "text-muted"]} style="font-size: 9px; margin: 10px 0 0;">{c.aiPanel.footerLine}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cc-board {
+    border: 1px solid theme("colors.hairline");
+    border-radius: theme("borderRadius.panel");
+    background: theme("colors.surface-deep");
+    box-shadow:
+      inset 0 1px 0 0 theme("colors.highlight"),
+      0 18px 44px -12px theme("colors.shade");
+  }
+
+  .cc-nav-active {
+    padding-inline: 10px;
+    border-radius: 3px;
+    background: linear-gradient(
+      90deg,
+      rgba(25, 195, 155, 0.18),
+      rgba(25, 195, 155, 0.03)
+    );
+    border-inline-start: 2px solid theme("colors.accent");
+  }
+
+  :global([dir="rtl"]) .cc-nav-active {
+    background: linear-gradient(
+      270deg,
+      rgba(25, 195, 155, 0.18),
+      rgba(25, 195, 155, 0.03)
+    );
+  }
+
+  .cc-select {
+    padding: 7px 12px;
+    border: 1px solid theme("colors.hairline");
+    border-radius: 3px;
+    background: theme("colors.surface");
+  }
+
+  .cc-kpi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid theme("colors.hairline");
+    border-radius: theme("borderRadius.panel");
+    background: linear-gradient(180deg, theme("colors.kpi-tile-top") 0%, theme("colors.surface") 100%);
+    box-shadow:
+      inset 0 1px 0 0 theme("colors.highlight"),
+      0 10px 24px -8px theme("colors.shade");
+  }
+
+  .cc-panel {
+    padding: 14px;
+    border: 1px solid theme("colors.hairline");
+    border-radius: theme("borderRadius.panel");
+    background: theme("colors.surface");
+    box-shadow:
+      inset 0 1px 0 0 theme("colors.highlight"),
+      0 10px 24px -8px theme("colors.shade");
+  }
+
+  .cc-ai-panel {
+    background: theme("colors.ai-panel-deep");
+    border-inline-start: 2px solid theme("colors.accent");
+    box-shadow:
+      inset 0 1px 0 0 theme("colors.highlight"),
+      0 0 0 1px rgba(25, 195, 155, 0.14),
+      0 14px 32px -10px theme("colors.shade");
+  }
+
+  .cc-ai-item {
+    padding: 12px;
+    border: 1px solid theme("colors.hairline");
+    border-radius: theme("borderRadius.card");
+    background: theme("colors.surface-deep");
+  }
+
+  .cc-ai-item-critical {
+    border-color: rgba(255, 122, 110, 0.25);
+  }
+
+  .cc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: theme("borderRadius.full");
+  }
+
+  .cc-btn-fill {
+    padding: 5px 12px;
+    border-radius: 3px;
+    background: theme("colors.accent");
+  }
+
+  .cc-btn-outline {
+    padding: 5px 12px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .cc-dot-grad {
+    background: linear-gradient(135deg, theme("colors.accent"), theme("colors.cyan"));
+  }
+
+  /* Board type roles, in the fragment's own pixel scale (not rem) — same
+     reasoning as KpiCard.astro's `.label`/`.name`/`.figure`: this board
+     scales as a whole via the caller's `zoom`, so rem (resolved against the
+     document root) would decouple type from the artwork. */
+  .cc-svg-mono {
+    font-family: theme("fontFamily.mono");
+    font-weight: theme("fontWeight.data");
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .cc-svg-ar {
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.semi");
+    font-size: 10px;
+  }
+</style>

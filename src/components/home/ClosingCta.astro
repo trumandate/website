@@ -1,32 +1,12 @@
 ---
-// ClosingCta.astro — the closing CTA, content brief §4's heading/sub/
-// eyebrow only (its four numbered callouts dropped, BUILD_FLAGS decisions
-// log). The one section that breaks the 1180px column: full-bleed is what
-// lets the page imply scale for the only time, and it solves the
-// composition's horizontal crop for free (spec §5) since the viewport
-// itself clips anything wider than it.
-//
-// The CTA text stays inline-start-aligned inside its own max-w-content
-// column, like every other section on the page — `corePlugins.textAlign`
-// is switched off (tailwind.config.mjs) and only `.text-start`/`.text-end`
-// are re-provided (global.css), a deliberate omission of `.text-center`
-// that this build respects rather than works around.
-//
-// No motion in this section (PLAN.md §3, §7's inventory has no "background
-// composition animates" entry) — this is the one place the page should stop
-// moving before asking for the demo request, so this file has no script tag
-// even once later prompts add motion elsewhere.
-//
-// The caption ("The whole board, in forty minutes.", spec §5's own line)
-// sits BELOW the composition as a caption, separate from the CTA text block
-// that overlays the composition's empty band — two distinct placements per
-// PLAN.md §3.
-import CommandCentreDim from "../fragments/CommandCentreDim.astro";
-import Eyebrow from "../type/Eyebrow.astro";
-import Heading from "../type/Heading.astro";
-import Lede from "../type/Lede.astro";
+// ClosingCta.astro — redesign wave A (Home (redesign).dc.html §7). Grid
+// ground + `bg-ground-board`, the closing heading, a CTA pair, and a right
+// column of three hairline rows (Deployment / Language / Operated by). No
+// Command Centre composition here any more — CommandCentreDim.astro (the
+// pre-redesign dimmed board) is deleted alongside the rest of the old home
+// tree; the redesign's own board already lives in the hero.
+import Section from "../layout/Section.astro";
 import Button from "../ui/Button.astro";
-import Reveal from "../ui/Reveal.astro";
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
 
@@ -36,31 +16,79 @@ interface Props {
 
 const { lang }: Props = Astro.props;
 const t = useTranslations(lang);
+
+const rows = [
+  { label: t("home.closingCta.row1Label"), body: t("home.closingCta.row1Body") },
+  { label: t("home.closingCta.row2Label"), body: t("home.closingCta.row2Body") },
+  { label: t("home.closingCta.row3Label"), body: t("home.closingCta.row3Body") },
+];
 ---
 
-<div class="relative w-full bg-ink">
-  <CommandCentreDim />
+<Section bleed>
+  <Fragment slot="backdrop">
+    <div
+      class="absolute inset-0 bg-grid-draft"
+      style="mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);"
+    >
+    </div>
+    <div class="absolute inset-0 bg-ground-board"></div>
+  </Fragment>
 
-  <div class="absolute inset-inline-0 top-[66%] -translate-y-1/2">
-    <div class="mx-auto max-w-content px-gutter">
-      <Reveal as="div" class="max-w-measure-tight">
-        <Eyebrow>{t("home.closingCta.eyebrow")}</Eyebrow>
-        <Heading as="h2" class="mt-4">
+  <div class="relative z-10 mx-auto max-w-content px-gutter">
+    <div
+      class="tm-rise items-start"
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 4vw, 64px);"
+    >
+      <div>
+        <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-mint">
+          {t("home.closingCta.eyebrow")}
+        </p>
+        <h2
+          class="mt-4 max-w-[24ch] font-sans text-h2 font-semi tracking-heading text-paper"
+          style="text-wrap: pretty;"
+        >
           {t("home.closingCta.heading")}
-        </Heading>
-        <Lede class="mt-4">
-          {t("home.closingCta.sub")}
-        </Lede>
-        <div class="mt-8">
-          <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
+        </h2>
+        <p
+          class="mt-6 max-w-[50ch] text-lede font-light text-body"
+        >
+          {t("home.closingCta.body")}
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <Button
+            href={`/${lang}/contact`}
+            style="min-height: 46px; padding-inline: 24px;"
+          >
+            {t("cta.primary")}
+          </Button>
+          <Button
+            variant="ghost"
+            href="mailto:trumandate@intertecsys.com"
+            style="min-height: 46px; padding-inline: 24px;"
+          >
+            {t("home.closingCta.secondaryLabel")}
+          </Button>
         </div>
-      </Reveal>
+      </div>
+
+      <div style="display: grid; gap: 0;">
+        {
+          rows.map((row, i) => (
+            <div
+              class:list={[
+                "border-t border-hairline",
+                i === rows.length - 1 && "border-b",
+              ]}
+              style="padding: 14px 0;"
+            >
+              <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+                {row.label}
+              </p>
+              <p class="mt-2 text-body font-light text-body">{row.body}</p>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
-</div>
-
-<div class="mx-auto mt-8 max-w-content px-gutter">
-  <p class="font-mono text-datum font-data tracking-datum text-muted">
-    {t("home.closingCta.caption")}
-  </p>
-</div>
+</Section>

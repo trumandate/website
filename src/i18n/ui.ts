@@ -28,9 +28,12 @@ export const ui: UiDictionary = {
       contact: "Contact",
     },
     cta: {
-      // content brief, Global — verbatim
-      primary: "Request a walkthrough",
-      secondary: "See the chain",
+      // Redesign wave A (README "Implementation Notes"): "CTA label is now
+      // 'Book a demo' … site-wide" — supersedes the content brief's
+      // "Request a walkthrough". `secondary` is the home hero's own ghost
+      // CTA only (Home (redesign).dc.html: "Follow one record", `#record`).
+      primary: "Book a demo",
+      secondary: "Follow one record",
     },
     langToggle: {
       // content brief, Global: "shows the target language in its own script"
@@ -38,89 +41,139 @@ export const ui: UiDictionary = {
       toEnglish: "English",
     },
     footer: {
-      // content brief, Global — verbatim, split at P9 into the logo's
-      // accessible name and the visible "Dubai" suffix (IntertecLogo.astro).
+      // Redesign wave A — SiteFooter.dc.html, the slim enterprise footer.
+      // `company`/`location`/`site` kept for any remaining reader; the four
+      // new keys below are what Footer.astro actually renders now.
       company: "Intertec Systems",
       location: "Dubai",
       site: "trumandate.com",
+      poweredByPrefix: "Powered by ",
+      poweredBySuffix: " · Dubai, UAE",
+      copyright: "© 2026 Intertec Systems. All rights reserved.",
+      trademark: "TruMandate™ · trumandate.com",
     },
     ragStatus: {
       onTrack: "Status: on track",
       atRisk: "Status: at risk",
       offTrack: "Status: off track",
     },
+    // Redesign wave A (docs/design_handoff_website_redesign/README.md —
+    // Home). Copy is verbatim from `Home (redesign).dc.html` — see that
+    // file and README's "Fidelity" note ("English AND Arabic copy are final
+    // drafts pending owner review"). Supersedes the content-brief-derived
+    // `home` table below this comment through P9; nothing outside the
+    // deleted home-only component tree (Hero/FailureModes/ChainSection/
+    // ClosingCta/StageGateQueue) ever read the old `problem`/`stageGate`/
+    // old-shaped `hero`/`chain`/`closingCta` keys (verified by grep before
+    // this change) — `ai` is untouched, still backing SuggestionCard's
+    // product-page defaults.
     home: {
-      // content brief §1 — verbatim
       hero: {
         eyebrow: "Portfolio governance · Intertec Systems",
-        headline: "Every mandate, traced to the outcome it promised.",
-        // P10 (DESIGN-ELEVATION.md §3.3): split verbatim from the former
-        // single `lede` string at its own clause boundary — `ledeLead + " "
-        // + ledeRest` reproduces the original sentence exactly.
-        ledeLead:
-          "TruMandate holds strategy, KPIs, initiatives and benefits in one record,",
-        ledeRest:
-          "so the office that sets direction can see what that direction produced.",
-        panelLabel: "Objective 1.2 · Digital government maturity",
-        row1Label: "Published plan",
-        row1Value: "v3",
-        row2Label: "Composite KPI",
-        row2Value: "68 / 75",
-        row3Label: "Initiatives linked",
-        row3Value: "14",
-        row4Label: "Benefit to date",
-        row4Prefix: "AED ",
-        row4Suffix: "M",
-        row4Value: "AED 41M",
+        headlineLead: "Every mandate, traced to its ",
+        headlineGradient: "measured benefit",
+        headlineTail: ".",
+        lede: "Strategy is a promise. Delivery is the proof. TruMandate keeps the thread between them unbroken, and its AI reads every inch of it.",
+        boardCaption:
+          "A corner of the Command Centre. The demo shows it whole.",
       },
-      // content brief §2 — verbatim
-      problem: {
-        eyebrow: "The problem",
-        heading: "Strategy is written once. Then it disappears.",
-        planningLabel: "Planning",
-        planningBody:
-          "Objectives sit in documents. Nobody can say which initiative serves which objective, or who owns the number.",
-        executionLabel: "Execution",
-        executionBody:
-          "Delivery data stays in project tools and never rolls up to the mandate that funded the work.",
-        reportingLabel: "Reporting",
-        reportingBody:
-          "The quarterly pack is assembled by hand, and it is already out of date on the day it is read.",
+      proof: {
+        stat1Label: "Projects governed",
+        stat2Label: "Portfolio budget",
+        stat3Label: "Decisions waiting on a person",
+        stat4Label: "Benefits measured after closure",
+        stat4UnitAr: "شهراً",
       },
-      // content brief §3 — verbatim
+      aiQueue: {
+        eyebrow: "AI in the platform",
+        heading: "AI proposes. A person decides. The record keeps the name.",
+        body: "Overnight, the model walked all 142 projects and came back with six things worth a person's morning. Each arrives carrying its evidence and its confidence. Nothing becomes the record until someone signs their name to it.",
+        card1Badge: "AI watch · execution",
+        card1Title: "Cross-department dependency at risk",
+        card1Detail:
+          "Gate 3 slipped on Initiative 07. Initiative 21's start condition references it. Neither owner has escalated.",
+        card1Log: "Accepted · m.alfarsi · 08:15",
+        card2Badge: "AI watch · strategy",
+        card2Title: "Two KPIs counting one benefit",
+        card2Detail:
+          "Objective 2.1 and 4.3 share a source measure and an overlapping initiative set. Merge, or mark one as contributing.",
+        card2Log: "Modified · h.alsuwaidi · 11:07",
+        card3Badge: "AI watch · benefits",
+        card3Title: "Benefit leakage after closure",
+        card3Detail:
+          "Benefit 4.2 is 18% below forecast two quarters after closure. The KPI stopped improving when the team was released.",
+        card3Log: "Open · assigned s.alnuaimi",
+        auditLine1: "Audit · 3 of 6 decisions closed today",
+        auditLine2: "Gate 4 re-sequenced · a.almarzooqi · 09:42",
+        auditLine3: "Forecast revised · s.alnuaimi · 16:30",
+        auditLine4: "No model output entered the record unapproved",
+      },
       chain: {
-        eyebrow: "How it holds together",
-        heading: "One chain, from objective to benefit, with no missing link.",
-        sub: "Scroll through the chain. Each link is a record in the platform, and each one carries the identity of the link above it.",
-        objectiveName: "Objective",
-        objectiveBody:
-          "Versioned and published, with a named owner and an assigned weight in the plan.",
-        kpiName: "KPI",
-        kpiBody:
-          "A composite measure with baseline, target and live actual, so movement is a fact rather than a claim.",
-        initiativeName: "Initiative",
-        initiativeBody:
-          "Funded, resourced and gated, and linked to the objective it exists to move.",
-        milestoneName: "Milestone",
-        milestoneBody:
-          "Baseline against actual, with a slip surfaced before the date passes, not after.",
-        benefitName: "Benefit",
-        benefitBody:
-          "Measured for 24 months after closure, against the exact KPI it promised to move.",
+        eyebrow: "Traceability",
+        heading:
+          "One identity, carried from the mandate down to the money.",
+        sub: "Keep scrolling and the chain moves. One objective travels the whole way down: from the sentence a minister signed to the saving a finance office can point at.",
+        record1Name: "Objective",
+        record1Kicker: "01 · Objective",
+        record1Title: "Digital government maturity",
+        record1Body: "Versioned, published, weighted. A named owner.",
+        record1Row1Label: "Ref",
+        record1Row1Value: "Objective 1.2",
+        record1Row2Label: "Published plan",
+        record1Row2Value: "v3",
+        record2Name: "KPI",
+        record2Kicker: "02 · KPI",
+        record2Title: "Digital service adoption",
+        record2Body: "Carries Objective 1.2. No baseline, no KPI.",
+        record2Row1Label: "Baseline → target",
+        record2Row1Value: "42.0 → 75.0",
+        record2Row2Label: "Live actual",
+        record2Row2Value: "61.4",
+        record3Name: "Initiative",
+        record3Kicker: "03 · Initiative",
+        record3Title: "Unified service portal",
+        record3Body: "Funded to move KPI 1.2.3, and it knows it.",
+        record3Row1Label: "Funded",
+        record3Row1Value: "AED 28M",
+        record3Row2Label: "Progress",
+        record3Row2Value: "74%",
+        record4Name: "Milestone",
+        record4Kicker: "04 · Milestone",
+        record4Title: "Gate 4 · decommission",
+        record4Body: "Slip is a subtraction, surfaced the day it happens.",
+        record4Row1Label: "Baseline → actual",
+        record4Row1Value: "14 Aug → 26 Aug",
+        record4Row2Label: "Owner",
+        record4Row2Value: "R. Al Hashimi",
+        record5Name: "Benefit",
+        record5Kicker: "05 · Benefit",
+        record5Title: "Annual operating saving",
+        record5Body:
+          "Measured for 24 months after closure, against KPI 1.2.3, not a memory.",
+        record5Row1Label: "Forecast → actual",
+        record5Row1Value: "AED 50M → 41M",
+        record5Row2Label: "Measured until",
+        record5Row2Value: "Mar 2028",
       },
-      // Invented fragment content (spec §5's "one stage gate queue item",
-      // no source text in the content brief) — English as authored at P3/P4.
-      stageGate: {
-        ariaLabel:
-          "Stage gate queue. Gate 4, owner R. Al Hashimi, due 14 August, one item queued behind it.",
-        gate1Label: "Stage gate · 04",
-        gate2Label: "Stage gate · 05",
-        ownerLabel: "Owner",
-        ownerValue: "R. Al Hashimi",
-        dueLabel: "Due",
-        dueValue: "14 Aug",
+      withoutRecord: {
+        eyebrow: "Without the record",
+        heading: "Strategy is written once. Then it is retyped for a year.",
+        col1Figure: "3 days",
+        col1Label: "Planning",
+        col1Body:
+          "To answer which initiative moves which objective. Assembled by hand, in a spreadsheet, if it arrives at all.",
+        col2Figure: "Month-end",
+        col2Label: "Execution",
+        col2Body:
+          "Before a slip reaches the office that funded the work. By then the number has been rounded by the person who will be asked about it.",
+        col3Figure: "Never",
+        col3Label: "Benefits",
+        col3Body:
+          "The forecast is measured after closure. The team that promised it was released before the benefit was due.",
       },
-      // content brief §5 — verbatim
+      // UNCHANGED — still backs SuggestionCard.astro's product-page
+      // defaults (`ProductPage.astro`, Strategy/Execution/Benefits). Not
+      // part of the redesigned home page any more.
       ai: {
         eyebrow: "AI in the platform",
         heading: "AI proposes. A person decides.",
@@ -135,14 +188,20 @@ export const ui: UiDictionary = {
         reject: "Reject",
         log: "Decision logged · a.almarzooqi · 09:42",
       },
-      // content brief §4 — eyebrow/heading/sub verbatim; the four callouts
-      // are dropped (BUILD_FLAGS decisions log) and the caption is spec §5's
-      // own line, not brief text.
       closingCta: {
-        eyebrow: "The Command Centre",
-        heading: "One screen the office runs the week on.",
-        sub: "Portfolio health rolled up from initiative level, KPI movement against target, and the decisions waiting on a person by name.",
-        caption: "The whole board, in forty minutes.",
+        eyebrow: "The next forty minutes",
+        heading: "Bring one objective. We will trace it to the money.",
+        body: "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions. Not a demo dataset.",
+        secondaryLabel: "Write to us instead",
+        row1Label: "Deployment",
+        row1Body:
+          "Sovereign on-premise or cloud, inside your own boundary.",
+        row2Label: "Language",
+        row2Body:
+          "Arabic and English, both first-class, including the reports.",
+        row3Label: "Operated by",
+        row3Body:
+          "Intertec Systems, Dubai. Governance delivery for UAE and KSA entities.",
       },
     },
     // Product-page fragment labels — English exactly as authored at P6 inside
@@ -262,112 +321,137 @@ export const ui: UiDictionary = {
       contact: "تواصل",
     },
     cta: {
-      // content brief, Global — verbatim
-      primary: "اطلب عرضاً توضيحياً",
-      secondary: "اطّلع على السلسلة",
+      // Redesign wave A — see the English side's comment.
+      primary: "احجز عرضاً توضيحياً",
+      secondary: "تتبَّع سجلاً واحداً",
     },
     langToggle: {
       toArabic: "العربية",
       toEnglish: "English",
     },
     footer: {
-      // content brief, Global — verbatim, split at P9 (see the English side).
+      // Redesign wave A — see the English side's comment.
       company: "إنترتك سيستمز",
       location: "دبي",
       site: "trumandate.com",
+      poweredByPrefix: "مشغَّل من ",
+      poweredBySuffix: " · دبي، الإمارات",
+      copyright: "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      trademark: "TruMandate™ · trumandate.com",
     },
     ragStatus: {
       onTrack: "الحالة: على المسار الصحيح",
       atRisk: "الحالة: في خطر",
       offTrack: "الحالة: خارج المسار",
     },
+    // Redesign wave A — copy verbatim from `Home AR (redesign).dc.html`
+    // (README: "Arabic is written, not machine-translated; keep it flowing
+    // through review, not re-translated"). See the English side's comment
+    // for what superseded what.
     home: {
-      // content brief §1 — verbatim. Numerals: the panel label keeps the
-      // brief's own Arabic-Indic digits ("١.٢"); the row values are not
-      // separately localised in the brief and stay Western per spec §8's
-      // "Western digits in both languages for KPI values and dates".
       hero: {
         eyebrow: "حَوكمة المحافظ · إنترتك سيستمز",
-        headline: "كل تكليف، متتبَّع حتى الأثر الذي وُعد به.",
-        // P10 (DESIGN-ELEVATION.md §3.3): split at the equivalent clause by
-        // meaning (not the same word index as the English) — `ledeLead + " "
-        // + ledeRest` reproduces the original sentence exactly.
-        ledeLead:
-          "يحتفظ TruMandate بالاستراتيجية ومؤشرات الأداء والمبادرات والمنافع في سجل واحد،",
-        ledeRest: "ليرى المكتب الذي يضع التوجّه ما أنتجه هذا التوجّه.",
-        panelLabel: "الهدف ١.٢ · نضج الحكومة الرقمية",
-        row1Label: "الخطة المعتمدة",
-        row1Value: "v3",
-        row2Label: "المؤشر المركّب",
-        row2Value: "68 / 75",
-        row3Label: "المبادرات المرتبطة",
-        row3Value: "14",
-        row4Label: "المنفعة المحققة",
-        row4Prefix: "AED ",
-        row4Suffix: "M",
-        row4Value: "AED 41M",
+        headlineLead: "كل تكليف، متتبَّع حتى ",
+        headlineGradient: "أثره المُقاس",
+        headlineTail: ".",
+        lede: "الاستراتيجية وعد، والتنفيذ برهانه. يُبقي TruMandate الخيط بينهما متصلاً بلا انقطاع، ويقرؤه الذكاء الاصطناعي بكامله.",
+        boardCaption: "زاوية من مركز القيادة. العرض التوضيحي يُظهره كاملاً.",
       },
-      // content brief §2 — verbatim
-      problem: {
-        eyebrow: "المشكلة",
-        heading: "الاستراتيجية تُكتب مرة واحدة، ثم تختفي.",
-        planningLabel: "التخطيط",
-        planningBody:
-          "الأهداف تبقى في مستندات، ولا أحد يستطيع تحديد أي مبادرة تخدم أي هدف، ولا من يملك الرقم.",
-        executionLabel: "التنفيذ",
-        executionBody:
-          "بيانات التنفيذ تبقى في أدوات المشاريع ولا تصعد إلى التكليف الذي مَوّل العمل.",
-        reportingLabel: "التقارير",
-        reportingBody:
-          "التقرير الربعي يُجمَّع يدوياً، ويصبح قديماً في اليوم الذي يُقرأ فيه.",
+      proof: {
+        stat1Label: "مشروعاً تحت الحوكمة",
+        stat2Label: "ميزانية المحفظة",
+        stat3Label: "قرارات بانتظار شخص",
+        stat4Label: "قياس المنافع بعد الإغلاق",
+        stat4UnitAr: "شهراً",
       },
-      // content brief §3 — verbatim. Benefit's "24 شهراً" is Western digits
-      // exactly as the brief writes it, sitting beside the AI card's
-      // Arabic-Indic "١٢ يوماً" for a like quantity — a real inconsistency
-      // in the source copy, shipped as-written and logged in
-      // known-issues.md rather than silently corrected (PLAN.md §4
-      // ambiguity 15).
+      aiQueue: {
+        eyebrow: "الذكاء الاصطناعي في المنصة",
+        heading: "الذكاء الاصطناعي يقترح، والإنسان يقرر، والسجل يحفظ الاسم.",
+        body: "خلال الليل قرأ النموذج 142 مشروعاً وعاد بستة أمور تستحق صباح إنسان. كل اقتراح يصل ومعه دليله ودرجة ثقته، ولا يدخل السجل شيء حتى يوقّع أحدهم باسمه.",
+        card1Badge: "مراقبة ذكية · التنفيذ",
+        card1Title: "تبعية بين إدارتين معرَّضة للخطر",
+        card1Detail:
+          "تأخرت البوابة 3 في المبادرة 07، وشرط بدء المبادرة 21 يشير إليها. لم يصعّد أي من المالكَين.",
+        card1Log: "مقبول · m.alfarsi · 08:15",
+        card2Badge: "مراقبة ذكية · الاستراتيجية",
+        card2Title: "مؤشران يحتسبان منفعة واحدة",
+        card2Detail:
+          "الهدف 2.1 والهدف 4.3 يتشاركان مقياس المصدر ومجموعة مبادرات متداخلة. ادمج، أو علّم أحدهما مقياساً مساهماً.",
+        card2Log: "معدَّل · h.alsuwaidi · 11:07",
+        card3Badge: "مراقبة ذكية · المنافع",
+        card3Title: "تسرّب منفعة بعد الإغلاق",
+        card3Detail:
+          "المنفعة 4.2 أدنى من المتوقَّع بنسبة 18% بعد ربعين من الإغلاق. توقف المؤشر عن التحسّن حين سُرّح الفريق.",
+        card3Log: "مفتوح · مُسند إلى s.alnuaimi",
+        auditLine1: "التدقيق · أُغلقت 3 من 6 قرارات اليوم",
+        auditLine2: "أعيد ترتيب البوابة 4 · a.almarzooqi · 09:42",
+        auditLine3: "رُوجعت التوقعات · s.alnuaimi · 16:30",
+        auditLine4: "لم يدخل السجل أي مخرَج للنموذج دون اعتماد",
+      },
       chain: {
-        eyebrow: "كيف يترابط",
-        heading: "سلسلة واحدة من الهدف إلى المنفعة، دون حلقة مفقودة.",
-        sub: "تابع السلسلة بالتمرير. كل حلقة سجل في المنصة، وتحمل هوية الحلقة التي تسبقها.",
-        objectiveName: "الهدف",
-        objectiveBody:
-          "مُصدَّر بنسخة معتمدة، له مالك محدَّد ووزن مُسند داخل الخطة.",
-        kpiName: "مؤشر الأداء",
-        kpiBody:
-          "مقياس مركّب بخط أساس وهدف وقيمة فعلية حيّة، لتكون الحركة واقعاً لا ادعاءً.",
-        initiativeName: "المبادرة",
-        initiativeBody:
-          "مموّلة ومزوّدة بالموارد ومحكومة ببوابات، ومرتبطة بالهدف الذي وُجدت لتحريكه.",
-        milestoneName: "المعلم",
-        milestoneBody:
-          "خط الأساس مقابل الفعلي، مع إظهار التأخير قبل انقضاء التاريخ لا بعده.",
-        benefitName: "المنفعة",
-        benefitBody:
-          "تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر ذاته الذي وُعدت بتحسينه.",
+        eyebrow: "التتبّع",
+        heading: "هوية واحدة، تُحمل من التكليف حتى المال.",
+        sub: "تابع التمرير وتتحرك السلسلة. هدف واحد يقطع الطريق كله: من الجملة التي وُقّعت في الأعلى إلى الوفر الذي يشير إليه المكتب المالي.",
+        record1Name: "الهدف",
+        record1Kicker: "01 · الهدف",
+        record1Title: "نضج الحكومة الرقمية",
+        record1Body: "مُصدَّر بنسخة معتمدة وموزون، وله مالك بالاسم.",
+        record1Row1Label: "المرجع",
+        record1Row1Value: "Objective 1.2",
+        record1Row2Label: "الخطة المعتمدة",
+        record1Row2Value: "v3",
+        record2Name: "مؤشر الأداء",
+        record2Kicker: "02 · مؤشر الأداء",
+        record2Title: "تبنّي الخدمات الرقمية",
+        record2Body: "يحمل الهدف 1.2. لا خط أساس، لا مؤشر.",
+        record2Row1Label: "خط الأساس ← المستهدف",
+        record2Row1Value: "42.0 → 75.0",
+        record2Row2Label: "الفعلي الحي",
+        record2Row2Value: "61.4",
+        record3Name: "المبادرة",
+        record3Kicker: "03 · المبادرة",
+        record3Title: "بوابة الخدمات الموحّدة",
+        record3Body: "مموّلة لتحريك المؤشر 1.2.3، وتعرف ذلك.",
+        record3Row1Label: "التمويل",
+        record3Row1Value: "AED 28M",
+        record3Row2Label: "التقدّم",
+        record3Row2Value: "74%",
+        record4Name: "المعلم",
+        record4Kicker: "04 · المعلم",
+        record4Title: "البوابة 4 · إيقاف الأنظمة القديمة",
+        record4Body: "التأخير عملية طرح، يظهر يوم وقوعه.",
+        record4Row1Label: "الأساس ← الفعلي",
+        record4Row1Value: "14 Aug → 26 Aug",
+        record4Row2Label: "المالك",
+        record4Row2Value: "ر. الهاشمي",
+        record5Name: "المنفعة",
+        record5Kicker: "05 · المنفعة",
+        record5Title: "وفر تشغيلي سنوي",
+        record5Body:
+          "تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر 1.2.3 لا الذاكرة.",
+        record5Row1Label: "المتوقَّع ← الفعلي",
+        record5Row1Value: "AED 50M → 41M",
+        record5Row2Label: "القياس حتى",
+        record5Row2Value: "Mar 2028",
       },
-      // Invented fragment content — written per BUILD_FLAGS ("Arabic is
-      // written, not machine-translated: keep the argument, not the
-      // sentence structure"), not translated from a brief source line.
-      // "R. Al Hashimi" is localised to an Arabic-script name rather than
-      // kept Latin, unlike the AI card's "a.almarzooqi" — that one is a
-      // system username/handle (brief keeps it Latin verbatim), this one is
-      // a display name in a UI list. The due date keeps Western digits with
-      // the Arabic month name, per spec §8's date rule.
-      stageGate: {
-        ariaLabel:
-          "قائمة انتظار بوابات المراحل. البوابة 04، المالك ر. الهاشمي، الاستحقاق 14 أغسطس، وعنصر واحد ينتظر الدور بعدها.",
-        gate1Label: "بوابة المرحلة · 04",
-        gate2Label: "بوابة المرحلة · 05",
-        ownerLabel: "المالك",
-        ownerValue: "ر. الهاشمي",
-        dueLabel: "الاستحقاق",
-        dueValue: "14 أغسطس",
+      withoutRecord: {
+        eyebrow: "بدون السجل",
+        heading: "تُكتب الاستراتيجية مرة واحدة، ثم يُعاد نسخها طوال عام.",
+        col1Figure: "3 أيام",
+        col1Label: "التخطيط",
+        col1Body:
+          "لمعرفة أي مبادرة تحرّك أي هدف. يُجمَّع الجواب يدوياً في جدول، إن وصل أصلاً.",
+        col2Figure: "نهاية الشهر",
+        col2Label: "التنفيذ",
+        col2Body:
+          "قبل أن يصل التأخير إلى المكتب الذي موّل العمل، وبعد أن قُرّب الرقم بيد من سيُسأل عنه.",
+        col3Figure: "أبداً",
+        col3Label: "المنافع",
+        col3Body:
+          "تُقاس التوقعات بعد الإغلاق، وقد سُرّح الفريق الذي وعد بها قبل موعد ظهورها.",
       },
-      // content brief §5 — verbatim, including its own Arabic-Indic digits
-      // (٠٫٧٧ confidence, ١٢ يوماً, ٠٩:٤٢ timestamp) and the Latin
-      // "a.almarzooqi" username.
+      // UNCHANGED — still backs SuggestionCard.astro's product-page
+      // defaults. See the English side's comment.
       ai: {
         eyebrow: "الذكاء الاصطناعي في المنصة",
         heading: "الذكاء الاصطناعي يقترح، والإنسان يقرر.",
@@ -382,14 +466,17 @@ export const ui: UiDictionary = {
         reject: "رفض",
         log: "القرار مسجَّل · a.almarzooqi · ٠٩:٤٢",
       },
-      // content brief §4 — eyebrow/heading/sub verbatim. The caption has no
-      // brief source (it's spec §5's own English line); written per
-      // BUILD_FLAGS rather than translated.
       closingCta: {
-        eyebrow: "مركز القيادة",
-        heading: "شاشة واحدة يُدار عليها الأسبوع.",
-        sub: "صحة المحفظة مجمَّعة من مستوى المبادرات، وحركة المؤشرات مقابل الهدف، والقرارات التي تنتظر شخصاً بالاسم.",
-        caption: "اللوحة كاملة، خلال أربعين دقيقة.",
+        eyebrow: "الدقائق الأربعون القادمة",
+        heading: "أحضر هدفاً واحداً، ونتتبّعه حتى المال.",
+        body: "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات. لا بيانات تجريبية.",
+        secondaryLabel: "راسلنا بدلاً من ذلك",
+        row1Label: "النشر",
+        row1Body: "استضافة سيادية داخلية أو سحابية، داخل حدودكم.",
+        row2Label: "اللغة",
+        row2Body: "العربية والإنجليزية بمكانة واحدة، بما في ذلك التقارير.",
+        row3Label: "التشغيل",
+        row3Body: "إنترتك سيستمز، دبي. تسليم حَوكمة لجهات الإمارات والسعودية.",
       },
     },
     // Product-page fragment labels — invented, anonymised product data with no

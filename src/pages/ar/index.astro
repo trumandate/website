@@ -1,40 +1,15 @@
 ---
-// src/pages/ar/index.astro — the Arabic home page (P5). Same section
-// composition and same shared components as src/pages/en/index.astro
-// (PLAN.md §1's "keep one shared component rather than creating a
-// variant"): every component below takes a `lang` prop and reads its own
-// copy from i18n/ui.ts's bilingual `home` table (moved there from hardcoded
-// English at this same prompt, TODO.md's P2 note), rather than this file
-// forking into a parallel Arabic-only tree.
-//
-// Copy is verbatim from trumandate-content-brief.md's Arabic (BUILD_FLAGS:
-// "Arabic for the product pages is produced only after English is
-// approved" — this is the home page, whose Arabic ships with English per
-// spec §8: "Both trees are built together"). Numerals follow spec §8 with
-// the brief's own verbatim exception where it already uses Arabic-Indic
-// digits — see i18n/ui.ts's inline comments and known-issues.md for the
-// one place the brief is internally inconsistent about it (chain link 5
-// vs. the AI card).
-//
-// RTL correctness for everything built at P2–P4: the chain rail and hero/
-// AI-section spine already mirror for free (inset-inline-start, spec §3);
-// StageGateQueue.astro carries a hand-mirrored geometry + Arabic text for
-// `lang="ar"` (its `<text>` rules out a blanket transform); CommandCentreDim
-// mirrors as a whole group (no `<text>` inside it, so a CSS scaleX(-1) is
-// legitimate); SuggestionCard's confidence-bar transform-origin flip and
-// the mono-to-sans/eyebrow-ar/datum-ar type-role swap (global.css) were
-// already verified against this page during the build. See PLAN.md and
-// known-issues.md for anything found and fixed.
+// src/pages/ar/index.astro — redesign wave A. Same composition as
+// src/pages/en/index.astro (every component below takes `lang` and reads
+// its own copy from i18n/ui.ts's bilingual tables) — see that file's own
+// comment for the section order and what it replaces.
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Section from "../../components/layout/Section.astro";
 import Hero from "../../components/home/Hero.astro";
-import FailureModes from "../../components/home/FailureModes.astro";
-import ChainSection from "../../components/chain/ChainSection.astro";
+import ProofBand from "../../components/home/ProofBand.astro";
+import AiQueue from "../../components/home/AiQueue.astro";
+import RecordChain from "../../components/chain/RecordChain.astro";
+import WithoutRecord from "../../components/home/WithoutRecord.astro";
 import ClosingCta from "../../components/home/ClosingCta.astro";
-import Eyebrow from "../../components/type/Eyebrow.astro";
-import Heading from "../../components/type/Heading.astro";
-import SuggestionCard from "../../components/ai/SuggestionCard.astro";
-import Reveal from "../../components/ui/Reveal.astro";
 import { useTranslations } from "../../i18n/utils";
 
 const lang = "ar" as const;
@@ -47,66 +22,12 @@ const t = useTranslations(lang);
   title={t("meta.home.title")}
   description={t("meta.home.description")}
 >
-  <Section texture>
-    <Fragment slot="backdrop">
-      <div class="absolute inset-0 bg-ground-rise"></div>
-    </Fragment>
-    <Hero lang={lang} />
-  </Section>
-
-  <Section ground="deep" seam="down">
-    <FailureModes lang={lang} />
-  </Section>
-
-  <ChainSection lang={lang} />
-
-  <Section seam="up">
-    <div class="grid grid-cols-1 gap-gutter lg:grid-cols-2">
-      <div class="relative">
-        <!-- The spine continues out of the chain, into this section, and
-             stops at the suggestion card's inline-start edge (PLAN.md §3):
-             a full-height rail (matching this grid row's stretched height,
-             which follows the taller card column) plus a short tick
-             gesturing across toward the card. Logical utilities only
-             (start-node-inset), so this mirrors to the card's new
-             inline-start edge under RTL with no separate markup. -->
-        <span
-          aria-hidden="true"
-          class="pointer-events-none absolute bottom-0 top-0 w-px start-node-inset bg-accent"
-        ></span>
-        <span
-          aria-hidden="true"
-          class="pointer-events-none absolute bottom-0 h-px w-6 start-node-inset bg-accent"
-        ></span>
-
-        <Reveal as="div" class="ps-rail">
-          <Eyebrow>{t("home.ai.eyebrow")}</Eyebrow>
-          <Heading as="h2" class="mt-4 max-w-measure">
-            {t("home.ai.heading")}
-          </Heading>
-          <p class="mt-6 max-w-measure text-body font-light text-body">
-            {t("home.ai.body")}
-          </p>
-        </Reveal>
-      </div>
-
-      <!-- P10 (DESIGN-ELEVATION.md §3.6): the one glow per page, always the
-           AI card, never anything else. The glow layer sits BEHIND the
-           opaque card and never inside it — the card's own accent-on-jade
-           and muted-on-jade pairs have zero contrast headroom. -->
-      <div class="relative">
-        <div
-          aria-hidden="true"
-          data-ai-glow
-          class="pointer-events-none absolute -inset-12 z-0 bg-spotlight-accent"
-        >
-        </div>
-        <SuggestionCard lang={lang} />
-      </div>
-    </div>
-  </Section>
-
-  <Section bleed texture>
-    <ClosingCta lang={lang} />
-  </Section>
+  <Hero lang={lang} />
+  <ProofBand lang={lang} />
+  <AiQueue lang={lang} />
+  <RecordChain lang={lang} />
+  <WithoutRecord lang={lang} />
+  <ClosingCta lang={lang} />
 </BaseLayout>
+
+<script src="../../scripts/redesignReveal.ts"></script>

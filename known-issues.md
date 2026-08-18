@@ -995,3 +995,164 @@ per-route attribute values (href/lang/aria-label/id) normalised: identical
 across all three except each page's own one fragment's internal SVG
 markup — confirming the one-skeleton invariant holds with zero structural
 divergence beyond the fragment slot itself.
+
+---
+
+## Redesign wave A (docs/design_handoff_website_redesign — home + shared chrome)
+
+**`text-center` silently compiled to nothing across every new redesign
+component, the same failure mode this file's own P1 section already
+recorded for the whole `textAlign` corePlugin.** `tailwind.config.mjs`
+disables `corePlugins.textAlign` outright so `text-left`/`text-right` can't
+exist (CLAUDE.md's physical-direction ban); `global.css` re-provides
+`.text-start`/`.text-end` but, until this fix, not `.text-center` — and
+disabling the corePlugin removes the WHOLE group, not just the two physical
+values. Found by the orchestrator's own measured-alignment pass
+(`getComputedStyle().textAlign` reading `"start"` on an element carrying
+`class="... text-center"`), not by visual inspection alone — visually the
+centered hero happened to look plausible at some viewport widths, which is
+exactly why a measured check matters more than an eyeballed one. Affected
+every `text-center` call site added this wave: the hero's text block and
+board caption, all four proof-band stats, and the record chain's sticky
+counter/name. Fixed by adding `.text-center { text-align: center; }` to
+global.css's existing logical-utilities layer, alongside `.text-start`/
+`.text-end` — centering has no physical-direction reading, so this is not a
+loophole in the ban, just the third value the disabled corePlugin also took
+down. Verified after the fix: `getComputedStyle().textAlign` reads
+`"center"`, and a `getBoundingClientRect()` diff against the reference
+`.dc.html` at a true 1440px viewport shows the hero `h1`/lede at
+pixel-identical left/width to the reference (see below).
+
+**Two paragraphs used the wrong `max-width` token, several pixels narrower
+or wider than the reference's own explicit ch value.** The hero lede
+(`Home (redesign).dc.html`: `max-width: 54ch`) and the closing CTA's body
+(`max-width: 50ch`) were both written against this repo's existing
+`max-w-measure` token (56ch, authored for the pre-redesign site, not this
+handoff) instead of the reference's own value. Found via the same measured
+`getBoundingClientRect()` comparison (lede width 645.1px built vs. 622.1px
+reference — a real, human-visible ~23px difference, not rounding noise).
+Fixed by writing the exact ch values directly (`max-width: 54ch` inline for
+the hero lede, `max-w-[50ch]` for the closing CTA body) rather than forcing
+either onto an existing token that doesn't match — post-fix, both measure
+identical to the reference to 0.1px.
+
+**The hero's and closing CTA's four CTA buttons rendered ~16px narrower
+than the reference because `Button.astro`'s own default padding (`px-4
+py-2`) silently overrode the reference's explicit
+`min-height: 46px; padding-inline: 24px`.** Only these four call sites need
+the bigger padding — the header CTA, the contact form's submit button and
+Handoff.astro's CTA all correctly keep `Button.astro`'s default, matching
+their own reference pages. Fixed by adding an optional `style` passthrough
+prop to `Button.astro` (inline styles reliably beat a same-specificity
+utility class, which is not guaranteed to win by source order under
+Tailwind's own internal rule ordering) and applying the override at the
+four Hero.astro/ClosingCta.astro Button instances only. Verified: built
+button widths now match the reference to 0.1px in both languages (e.g. EN
+"Book a demo" 138.1px, "Follow one record" 172.1px; AR hero primary
+163.2px — all exact).
+
+**`CommandCentreBoard`'s internal "Performance Command Centre" title was an
+`<h3>` sitting before any `<h2>` existed on the page, failing Lighthouse's
+`heading-order` audit (accessibility 98, not 100).** The board lives inside
+the hero, above the proof band and AI queue sections that carry the page's
+first `<h2>`s, so the document outline read H1 → H3 with no H2 between —
+invalid. The board is a decorative, withheld product-screenshot fragment
+(README: "never show the full board"), not real page structure, so its
+internal chrome has no business injecting a heading into the document
+outline at all — consistent with how the other product fragments
+(KpiCard.astro, InitiativeRows.astro) never use real heading elements for
+their own internal titles either. Fixed by changing that one element from
+`<h3>` to `<p>` with identical visual styling. Re-ran Lighthouse after:
+accessibility/best-practices/SEO/agentic-browsing all 100 on both `/en/`
+and `/ar/`.
+
+**With JavaScript disabled and no reduced-motion preference set, every
+`.tm-load`/`.tm-boardload`/`.tm-rise`/`.tm-fade`/`.tm-grow` element on the
+redesigned home page would have stayed at its hidden starting opacity
+forever — a real gap in "the site must be readable with JavaScript
+disabled" (CLAUDE.md), found by reasoning through the mechanism rather than
+by a failed visual check.** Unlike the pre-redesign site's `.reveal` class
+(whose unconditional default WAS the finished, visible state, with GSAP
+animating FROM an offset on top of it), these classes ship hidden by
+default; only `.tm-in` — added by `scripts/redesignReveal.ts`'s
+IntersectionObserver, or the site's own JS ScrollTrigger-equivalent for the
+chain — or the real `prefers-reduced-motion: reduce` media query ever
+reveals them. A JS-disabled visitor with no reduced-motion preference would
+trigger neither. Confirmed via `curl` against the built HTML that no
+`<noscript>` fallback existed before this fix. Fixed with a
+`<noscript><style>...</style></noscript>` block in `BaseLayout.astro`'s
+`<head>`, reproducing the exact same end-state declarations the real
+reduced-motion media query already applies — verified present, intact and
+unhoisted in the built HTML (Astro's scoped-style compiler does not touch a
+plain `<style>` tag sitting inside a `<noscript>` written directly in a
+layout's markup).
+
+**Measured-alignment pass (getBoundingClientRect diff, reference `.dc.html`
+vs. built page, true 1440px viewport via `mcp__chrome-devtools__emulate`'s
+explicit viewport string — `resize_page` under-reports width on this
+machine, see TODO.md).** After the three fixes above: hero H1 (left 365.5,
+width 693.6), lede (left 401.3/389.8→401.3, width 622.1), both hero CTAs,
+all three AI-queue card titles (left 218.3/569.0/919.7, gap 62.7px both
+sides), all four proof-band columns (left 194.3/454.0/713.0/972.0), all
+three without-record columns (left 194.3/554.1/913.8, width 316.5 each),
+the chain track's centre (712.3, matching the reference's own — both share
+the same ~7.7px leftward shift from true viewport-centre, a vertical-
+scrollbar-reservation artefact present on any tall page in this browser,
+not a markup difference), the Command Centre board's wrapper/outer column
+(left 144.3/72.3, width 1136/1280), and the footer's wordmark/copyright/
+trademark widths (all exact against `SiteFooter.dc.html` in isolation) all
+measure identical to the reference to within 0.1px. Spot-checked in Arabic
+too (hero H1/lede, both hero CTAs, chain-track centre) with the same
+result — the shared components carry the fix to both languages by
+construction.
+
+**Reduced motion, verified two ways** (this MCP has no direct
+`prefers-reduced-motion` emulation — see TODO.md): the `window.matchMedia`
+stub confirms `whenMotionSafe`'s JS gate correctly sees `reduce: true` and
+never runs `recordChain.ts`/`redesignReveal.ts`'s setup — all five
+`[data-chain-card]` elements stay `position: relative` (never switched to
+the absolute-positioned orbit), rendering in normal document flow, stacked,
+every one fully legible; a separately-injected stylesheet reproducing the
+CSS reduce-block's own declarations confirms all 27 `.tm-load`/
+`.tm-boardload`/`.tm-rise`/`.tm-fade`/`.tm-grow` elements on the page reach
+opacity ≥0.99 with no residual transform. Screenshots:
+`screenshots/redesign-home-en-reduced-motion-{hero,chain}.png`.
+
+**Opacity audit (every text-bearing leaf inside `<main>`, cumulative
+computed opacity across all ancestors, after a scripted full scroll-through
+and a 2-second settle back at the top — long enough for the 1.3s count-up
+and every `tm-*` transition to actually finish, unlike a naive 300ms
+check which caught a proof-band counter still mid-animation, "22 mo"
+instead of the finished "24 mo," a timing artefact, not a stuck reveal).**
+127 leaves checked on `/en/`, zero below the 0.85 threshold, EXCLUDING the
+five record-chain cards' own content by design: those carry a genuine,
+reference-matching depth-fade (opacity 0.08–1, per the ellipse's own
+`0.08 + 0.92·max(0,(cos a+0.25)/1.25)` formula) as the scroll-driven 3D
+carousel's whole visual point — CommandCentreBoard.dc.html's own reference
+dims non-active cards identically, this is not a stalled or broken
+transition. Confirmed separately that exactly one card sits at opacity 1
+(the active one) at any given scroll position, so a reader always has one
+fully legible card in view.
+
+**Lighthouse accessibility/best-practices/SEO/agentic-browsing: 100/100/
+100/100 on both `/en/` and `/ar/`** after the heading-order fix above.
+
+**LCP/CLS, `chrome-devtools` MCP, production build served from `dist/` on
+a scratch static server (port 4329 — the user's dev server on 4321
+untouched):** Fast 4G, no CPU throttle — `/en/` LCP 510ms / CLS 0.01,
+`/ar/` LCP 550ms / CLS 0.00, both comfortably inside the 2.0s/0.05 budget,
+TTFB 6–7ms in both (render-delay dominated; the LCP element is the hero
+`<h1>`, text, not a network fetch, matching every prior session's finding
+for this site). One Slow 4G + 4x CPU sample on `/en/`: LCP 1,734ms / CLS
+0.01 — inside budget, but per this file's own P6/P10 sections' established
+finding, a single throttled reading on this shared, often-busy machine is
+directional, not a clean baseline; re-measure owed (TODO.md).
+
+**Mobile 375, both languages: no real horizontal overflow**, confirmed by
+attempting `window.scrollTo(1000, 0)` and reading back `scrollX` (stayed
+0) rather than only comparing `clientWidth`/`scrollWidth` — the latter
+pair differs by ~20px on this machine regardless of content (the same
+reserved-scrollbar artefact P10 wave 1's section already documented in the
+opposite direction). The Command Centre board fits via its own `zoom`
+fit-to-container script; the record chain's cards narrow to
+`min(78vw, 340px)` and stay fully legible.

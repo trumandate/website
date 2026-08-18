@@ -97,16 +97,49 @@ const fontPreloads =
         />
       ))
     }
+    <!-- Redesign wave A: `.tm-load`/`.tm-boardload`/`.tm-rise`/`.tm-fade`/
+         `.tm-grow` (global.css) ship hidden by default — the CSS transition/
+         animation itself is what reveals them, driven by `.tm-in` (added by
+         scripts/redesignReveal.ts's IntersectionObserver) or by the real
+         `prefers-reduced-motion: reduce` media query. Neither fires when
+         JavaScript is disabled outright and the visitor has no reduced-
+         motion preference, which would leave every one of those elements at
+         its hidden starting opacity forever — CLAUDE.md's "the site must be
+         readable with JavaScript disabled" failing silently. This is the
+         fix: the same end-state declarations the reduced-motion media query
+         already applies, scoped to `<noscript>` so they only ever engage
+         when script did not run at all. -->
+    <noscript>
+      <style>
+        .tm-load,
+        .tm-boardload,
+        .tm-rise,
+        .tm-fade,
+        .tm-grow {
+          opacity: 1;
+          transform: none;
+          animation: none;
+          transition: none;
+        }
+        .tm-live,
+        .tm-live-r {
+          animation: none;
+        }
+        .tm-spark {
+          animation: none;
+          stroke-dashoffset: 0;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <SkipLink lang={lang} />
     <Header lang={lang} />
-    <!-- pt-header clears the fixed header's rendered height. Measured at P2
-         (TODO.md's "header height offset is an estimate" item, now resolved):
-         the header renders at 94.625px at both 375 and 1440 widths (chrome
-         devtools MCP, getBoundingClientRect), so `header` (104px,
-         tailwind.config.mjs) replaces the earlier pt-20 (80px) guess, which
-         left the top ~14.6px of Hero.astro's content under the fixed header. -->
+    <!-- pt-header clears the fixed header's rendered height (`header` token,
+         tailwind.config.mjs — 73px, re-measured for the redesign wave A home
+         fidelity fix: the header now renders at 71.3125px, both languages,
+         375 and 1440 widths). See that token's own comment for the P2 value
+         (94.625px) this replaces and why it shrank. -->
     <main id="main" class="pt-header">
       <slot />
     </main>

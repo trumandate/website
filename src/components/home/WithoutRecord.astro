@@ -1,0 +1,97 @@
+---
+// WithoutRecord.astro — redesign wave A (Home (redesign).dc.html §6).
+// Three columns, each a `.tm-grow` hairline rule drawing in, a big mono
+// figure in its own hue, an eyebrow label and one or two sentences.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang }: Props = Astro.props;
+const t = useTranslations(lang);
+const isAr = lang === "ar";
+// Home AR (redesign).dc.html sets these three figures at 30px, `font-sans
+// font-semi`, no `dir="ltr"` isolate (unlike the EN reference's 34px
+// `font-mono font-data dir="ltr"`) — a genuine per-language typographic
+// difference, not a bidi fix this build should add on top: `font-mono`
+// already swaps to sans/semi under `[dir=rtl]` via global.css regardless of
+// this element's own `dir`, so only the font-size and the `dir` attribute
+// itself need to branch here.
+const figureSize = isAr ? "30px" : "34px";
+// The figure also carries `leading-arabic` in Arabic: see ProofBand.astro's
+// own comment on the same fix — a plain `.font-mono` paragraph isn't one of
+// the roles (h1/h2/h3/.text-eyebrow/.text-datum) that re-assert the site's
+// `[dir=rtl]` line-height (1.80) over body's Latin reset (1.55), so without
+// this it rendered 7.5px short per column (30 × 1.55 vs Home AR
+// (redesign).dc.html's 30 × 1.80), pushing every section below this one
+// down by the same amount at 1440×900.
+
+const cols = [
+  {
+    delay: undefined,
+    figureColor: "text-mint",
+    figure: t("home.withoutRecord.col1Figure"),
+    label: t("home.withoutRecord.col1Label"),
+    body: t("home.withoutRecord.col1Body"),
+  },
+  {
+    delay: "130ms",
+    figureColor: "text-gold",
+    figure: t("home.withoutRecord.col2Figure"),
+    label: t("home.withoutRecord.col2Label"),
+    body: t("home.withoutRecord.col2Body"),
+  },
+  {
+    delay: "260ms",
+    figureColor: "text-coral",
+    figure: t("home.withoutRecord.col3Figure"),
+    label: t("home.withoutRecord.col3Label"),
+    body: t("home.withoutRecord.col3Body"),
+  },
+];
+---
+
+<section class="relative w-full py-section">
+  <div class="relative z-10 mx-auto max-w-content px-gutter">
+    <div class="tm-rise">
+      <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+        {t("home.withoutRecord.eyebrow")}
+      </p>
+      <h2
+        class="mt-4 max-w-[28ch] font-sans text-h2 font-semi tracking-heading text-paper"
+        style="text-wrap: pretty;"
+      >
+        {t("home.withoutRecord.heading")}
+      </h2>
+    </div>
+
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: clamp(20px, 3vw, 48px); margin-top: clamp(32px, 4vw, 56px);"
+    >
+      {
+        cols.map((col) => (
+          <div class="tm-rise" style={col.delay ? `--d: ${col.delay};` : undefined}>
+            <hr class="tm-grow m-0 border-0 border-t border-hairline" />
+            <p
+              dir={isAr ? undefined : "ltr"}
+              class:list={[
+                "font-mono font-data",
+                col.figureColor,
+                isAr && "leading-arabic",
+              ]}
+              style={`font-size: ${figureSize}; margin: 20px 0 0;`}
+            >
+              {col.figure}
+            </p>
+            <p class="mt-3 font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+              {col.label}
+            </p>
+            <p class="mt-3 text-body font-light text-body">{col.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

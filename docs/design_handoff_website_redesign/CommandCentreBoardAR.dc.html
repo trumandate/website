@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/_ds_bundle.css">
+  <style>
+    @keyframes tm-dash { to { stroke-dashoffset: 0; } }
+    .tm-spark { stroke-dasharray: 600; stroke-dashoffset: 600; animation: tm-dash 2.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards; }
+    @keyframes tm-pulse-a { 0%, 100% { box-shadow: 0 0 0 0 rgba(75,239,196,0.5); } 50% { box-shadow: 0 0 0 6px rgba(75,239,196,0); } }
+    .tm-live-a { animation: tm-pulse-a 2.4s ease-in-out infinite; }
+    .ar-kpi { border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: linear-gradient(180deg, #0C4237 0%, #0A3B31 100%); padding: 10px 14px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .ar-panel { border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: #0A3B31; padding: 14px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55); }
+    .ar-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 9999px; }
+    .ar-lbl { font-family: "IBM Plex Sans Arabic", sans-serif; font-weight: 600; }
+    @media (prefers-reduced-motion: reduce) { .tm-spark { animation: none; stroke-dashoffset: 0; } .tm-live-a { animation: none; } }
+  </style>
+</helmet>
+<div dir="rtl" lang="ar" role="img" aria-label="مركز قيادة الأداء: صحة المحفظة 86 بالمئة، واستخدام الميزانية 71 بالمئة، و48 خطراً نشطاً، ومنافع محققة 1.32 مليار درهم. رسم للأداء عبر الزمن يحمل علامة ذكاء اصطناعي، ولوحة مراقبة ذكية فيها ستة اقتراحات بانتظار شخص، مقصوصة عند حافة الإطار." style="position: relative; border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: #021813; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 18px 44px -12px rgba(2,24,19,0.55); overflow: hidden;">
+  <div style="overflow-x: auto; overflow-y: hidden;">
+    <div style="min-width: 1000px;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 42px; padding: 0 14px; background: rgba(11,74,61,0.6); border-bottom: 1px solid rgba(255,255,255,0.10);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg viewBox="0 0 100 100" style="width: 20px; height: 20px;" aria-hidden="true"><rect width="100" height="100" rx="24" class="fill-paper"></rect><rect x="24" y="26" width="54" height="12" rx="6" class="fill-jade"></rect><rect x="24" y="46" width="38" height="12" rx="6" class="fill-accent"></rect><rect x="24" y="66" width="22" height="12" rx="6" class="fill-accent"></rect></svg>
+          <span dir="ltr" class="font-sans font-semi tracking-brand text-paper" style="font-size: 13px;">TruMandate</span>
+          <span aria-hidden="true" style="width: 1px; height: 16px; background: rgba(255,255,255,0.10);"></span>
+          <span class="ar-lbl text-muted" style="font-size: 10px;">مساحة العمل / <span class="text-paper">مركز قيادة الأداء</span></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span class="ar-chip" style="background: rgba(75,239,196,0.10);"><span aria-hidden="true" class="tm-live-a" style="width: 6px; height: 6px; border-radius: 50%; background: #4BEFC4;"></span><span class="ar-lbl" style="font-size: 9px; color: #4BEFC4;">تشغيل الذكاء · <span dir="ltr">06:00</span></span></span>
+          <span class="font-sans font-semi text-paper" style="font-size: 11px;">English</span>
+          <span aria-hidden="true" style="width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #19C39B, #59D8E6);"></span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 176px minmax(0, 1fr);">
+        <div style="border-inline-end: 1px solid rgba(255,255,255,0.10); background: #04241E; padding: 14px 10px; display: flex; flex-direction: column; gap: 2px;">
+          <div style="padding: 8px 10px;"><span class="ar-lbl text-body" style="font-size: 12px; font-weight: 300;">الرئيسية</span></div>
+          <div style="padding: 8px 10px; border-radius: 3px; background: linear-gradient(90deg, rgba(25,195,155,0.18), rgba(25,195,155,0.03)); border-inline-start: 2px solid #19C39B;"><span class="ar-lbl text-paper" style="font-size: 12px;">مركز القيادة</span></div>
+          <div style="padding: 8px 10px; display: flex; align-items: center;"><span class="ar-lbl text-body" style="font-size: 12px; font-weight: 300;">قرارات الذكاء</span><span class="ar-chip" style="margin-inline-start: auto; background: rgba(75,239,196,0.12);"><span dir="ltr" class="font-mono font-data" style="font-size: 9px; color: #4BEFC4;">6</span></span></div>
+          <p class="ar-lbl text-muted" style="font-size: 9px; margin: 16px 10px 2px 0;">التنفيذ</p>
+          <div style="padding: 8px 10px;"><span class="ar-lbl text-body" style="font-size: 12px; font-weight: 300;">تنفيذ المشاريع</span></div>
+          <div style="padding: 8px 10px; display: flex; align-items: center;"><span class="ar-lbl text-body" style="font-size: 12px; font-weight: 300;">بوابات المراحل</span><span class="ar-chip" style="margin-inline-start: auto; background: rgba(255,201,92,0.14);"><span dir="ltr" class="font-mono font-data" style="font-size: 9px; color: #FFC95C;">4</span></span></div>
+          <p class="ar-lbl text-muted" style="font-size: 9px; margin: 16px 10px 2px 0;">الإثبات</p>
+          <div style="padding: 8px 10px;"><span class="ar-lbl text-body" style="font-size: 12px; font-weight: 300;">سجل المنافع</span></div>
+        </div>
+
+        <div style="padding: 16px 18px 24px;">
+          <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px;">
+            <div>
+              <p class="ar-lbl text-muted" style="font-size: 10px; margin: 0;">المشاريع › مركز القيادة</p>
+              <h3 class="ar-lbl text-paper" style="font-size: 21px; margin: 5px 0 0;">مركز قيادة الأداء</h3>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="padding: 7px 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 3px; background: #0A3B31;"><span class="ar-lbl text-paper" style="font-size: 11px; font-weight: 300;">كل الإدارات</span></span>
+              <span style="padding: 7px 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 3px; background: #0A3B31;"><span class="ar-lbl text-paper" style="font-size: 11px; font-weight: 300;">يناير – ديسمبر 2026</span></span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px;">
+            <div class="ar-kpi">
+              <div>
+                <p class="ar-lbl text-muted" style="font-size: 9px; margin: 0;">صحة المحفظة</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">86% <span class="ar-lbl" style="font-size: 10px; color: #4BEFC4;">▲ +4</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                <defs><linearGradient id="ak1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19C39B"></stop><stop offset="1" stop-color="#59D8E6"></stop></linearGradient></defs>
+                <path d="M2 24 L15 21 L28 23 L41 15 L54 17 L67 9 L78 5" fill="none" stroke="url(#ak1)" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <div class="ar-kpi">
+              <div>
+                <p class="ar-lbl text-muted" style="font-size: 9px; margin: 0;">استخدام الميزانية</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">71% <span class="ar-lbl text-muted" style="font-size: 10px;">من AED 218M</span></p>
+              </div>
+              <div style="width: 72px; flex-shrink: 0;">
+                <div dir="ltr" style="position: relative; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08);">
+                  <div style="position: absolute; top: 0; bottom: 0; left: 0; width: 71%; border-radius: 3px; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div>
+                  <span aria-hidden="true" style="position: absolute; top: -2px; bottom: -2px; left: 68%; width: 2px; background: #F1F5F3;"></span>
+                </div>
+                <p class="ar-lbl text-muted" style="font-size: 8px; margin: 5px 0 0;">المستهدف 68%</p>
+              </div>
+            </div>
+            <div class="ar-kpi">
+              <div>
+                <p class="ar-lbl text-muted" style="font-size: 9px; margin: 0;">المخاطر النشطة</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">48 <span class="ar-lbl" style="font-size: 10px; color: #4BEFC4;">▼ 4</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                <path d="M2 7 L15 10 L28 9 L41 14 L54 13 L67 19 L78 23" fill="none" stroke="#FF7A6E" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <div class="ar-kpi">
+              <div>
+                <p class="ar-lbl text-muted" style="font-size: 9px; margin: 0;">المنافع المحققة</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 18px; margin: 6px 0 0; white-space: nowrap;">AED 1.32B <span class="ar-lbl" style="font-size: 10px; color: #FFC95C;">▲ 18%</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                <path d="M2 26 L15 24 L28 20 L41 20 L54 15 L67 10 L78 4" fill="none" stroke="#FFC95C" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 12px; margin-top: 12px; align-items: stretch;">
+            <div class="ar-panel">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                <span class="ar-lbl text-paper" style="font-size: 13px;">الأداء عبر الزمن</span>
+                <span style="display: inline-flex; gap: 12px;">
+                  <span class="ar-lbl text-muted" style="font-size: 9px;"><span style="color: #4BEFC4;">—</span> الفعلي</span>
+                  <span class="ar-lbl text-muted" style="font-size: 9px;">‑ ‑ المستهدف</span>
+                </span>
+              </div>
+              <svg viewBox="0 0 460 210" style="width: 100%; margin-top: 8px; direction: ltr;" aria-hidden="true">
+                <defs><linearGradient id="aga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(25,195,155,0.30)"></stop><stop offset="1" stop-color="rgba(25,195,155,0)"></stop></linearGradient><linearGradient id="agas" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19C39B"></stop><stop offset="1" stop-color="#59D8E6"></stop></linearGradient></defs>
+                <line x1="10" y1="168" x2="450" y2="168" stroke="rgba(255,255,255,0.08)"></line>
+                <line x1="10" y1="120" x2="450" y2="120" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3 5"></line>
+                <line x1="10" y1="72" x2="450" y2="72" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3 5"></line>
+                <path d="M10 128 C60 122 90 110 140 104 S240 92 290 78 S400 52 450 40" fill="none" stroke="rgba(156,184,174,0.55)" stroke-width="1.5" stroke-dasharray="5 5"></path>
+                <path d="M10 144 C50 140 90 132 130 122 C170 112 200 124 230 118 C280 108 330 76 380 58 C410 47 430 40 450 34 L450 168 L10 168 Z" fill="url(#aga)"></path>
+                <path class="tm-spark" d="M10 144 C50 140 90 132 130 122 C170 112 200 124 230 118 C280 108 330 76 380 58 C410 47 430 40 450 34" fill="none" stroke="url(#agas)" stroke-width="2.5" stroke-linecap="round"></path>
+                <line x1="215" y1="52" x2="215" y2="122" stroke="#FFC95C" stroke-width="1" stroke-dasharray="3 3"></line>
+                <circle cx="215" cy="121" r="4" fill="#FFC95C"></circle>
+                <circle cx="215" cy="121" r="8" fill="rgba(255,201,92,0.22)"></circle>
+                <rect x="121" y="28" width="188" height="18" rx="9" fill="rgba(255,201,92,0.12)"></rect>
+                <text x="215" y="41" text-anchor="middle" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 10px;" fill="#FFC95C">علامة ذكاء · رُصد التأخير في يونيو</text>
+                <circle cx="450" cy="34" r="4" fill="#59D8E6"></circle>
+                <circle cx="450" cy="34" r="8" fill="rgba(89,216,230,0.25)"></circle>
+                <text x="10" y="192" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 9px;" class="fill-muted">يناير</text>
+                <text x="230" y="192" text-anchor="middle" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 9px;" class="fill-muted">يوليو</text>
+                <text x="450" y="192" text-anchor="end" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 9px;" class="fill-muted">ديسمبر</text>
+              </svg>
+              <div style="display: flex; align-items: center; gap: 14px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; margin-top: 4px;">
+                <svg viewBox="0 0 44 44" style="width: 40px; flex-shrink: 0; direction: ltr;" aria-hidden="true">
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="5"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="#4BEFC4" stroke-width="5" stroke-dasharray="83.3 106.8" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="#FFC95C" stroke-width="5" stroke-dasharray="16 90.8" stroke-dashoffset="-85" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="#FF7A6E" stroke-width="5" stroke-dasharray="6.4 100.4" stroke-dashoffset="-102.5" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                </svg>
+                <span class="ar-lbl text-muted" style="font-size: 9px;">142 مشروعاً · <span style="color: #4BEFC4;">78% على المسار</span> · <span style="color: #FFC95C;">15% في خطر</span> · <span style="color: #FF9A90;">7% خارج المسار</span></span>
+              </div>
+            </div>
+
+            <div class="ar-panel" style="position: relative; background: #082E26; border-inline-start: 2px solid #19C39B; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(25,195,155,0.14), 0 14px 32px -10px rgba(2,24,19,0.7);">
+              <div aria-hidden="true" class="pointer-events-none absolute bg-spotlight-accent" style="inset: -30px;"></div>
+              <div style="position: relative;">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                  <span class="ar-lbl text-paper" style="font-size: 13px;">مراقبة ذكية</span>
+                  <span class="ar-chip" style="background: rgba(75,239,196,0.12);"><span aria-hidden="true" class="tm-live-a" style="width: 5px; height: 5px; border-radius: 50%; background: #4BEFC4;"></span><span class="ar-lbl" style="font-size: 9px; color: #4BEFC4;">6 بانتظار شخص</span></span>
+                </div>
+
+                <div style="border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #021813; padding: 12px; margin-top: 10px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span class="ar-lbl text-muted" style="font-size: 9px;">التنفيذ · المبادرة 07</span>
+                    <span class="ar-lbl" style="font-size: 9px; color: #4BEFC4;">الثقة <span dir="ltr">0.74</span></span>
+                  </div>
+                  <div dir="ltr" style="position: relative; height: 2px; background: rgba(255,255,255,0.10); margin-top: 8px;"><div style="position: absolute; top: 0; bottom: 0; left: 0; width: 74%; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div></div>
+                  <p class="ar-lbl text-paper" style="font-size: 13px; margin: 10px 0 0;">تأخير متوقَّع في المعلم: 12 يوماً</p>
+                  <p class="ar-lbl text-body" style="font-size: 11px; font-weight: 300; margin: 6px 0 0;">تبعيتان غير محلولتين عند البوابة 3. يقترح إعادة ترتيب البوابة 4.</p>
+                  <div style="display: flex; gap: 6px; margin-top: 10px;">
+                    <span style="padding: 5px 12px; border-radius: 3px; background: #19C39B;"><span class="ar-lbl text-ink" style="font-size: 10px;">قبول</span></span>
+                    <span style="padding: 5px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.14);"><span class="ar-lbl text-paper" style="font-size: 10px;">تعديل</span></span>
+                    <span style="padding: 5px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.14);"><span class="ar-lbl text-paper" style="font-size: 10px;">رفض</span></span>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #021813; padding: 12px; margin-top: 8px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span class="ar-lbl text-muted" style="font-size: 9px;">الاستراتيجية · المؤشران 2.1 / 4.3</span>
+                    <span class="ar-lbl" style="font-size: 9px; color: #59D8E6;">الثقة <span dir="ltr">0.81</span></span>
+                  </div>
+                  <div dir="ltr" style="position: relative; height: 2px; background: rgba(255,255,255,0.10); margin-top: 8px;"><div style="position: absolute; top: 0; bottom: 0; left: 0; width: 81%; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div></div>
+                  <p class="ar-lbl text-paper" style="font-size: 13px; margin: 10px 0 0;">مؤشران يحتسبان منفعة واحدة</p>
+                </div>
+
+                <p class="ar-lbl text-muted" style="font-size: 9px; margin: 10px 0 0;">أُغلقت 3 اليوم · كل قرار مسجَّل باسم صاحبه</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/_ds_bundle.css">
+  <style>
+    body { margin: 0; background: #04241E; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; font-weight: 300; color: #C6DAD3; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: #19C39B; }
+    svg { display: block; max-width: 100%; }
+    @keyframes tm-enter { to { opacity: 1; transform: translateY(0) scale(1); } }
+    .tm-load { opacity: 0; transform: translateY(26px); animation: tm-enter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; animation-delay: var(--d, 0ms); }
+    .tm-boardload { opacity: 0; transform: translateY(70px) scale(0.975); animation: tm-enter 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; animation-delay: var(--d, 0ms); }
+    .tm-rise { opacity: 0; transform: translateY(30px); transition: opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms), transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms); }
+    .tm-grow { transform: scaleX(0); transform-origin: 0% 50%; transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 100ms); }
+    .tm-in { opacity: 1; transform: translateY(0) scaleX(1); }
+    @keyframes tm-dash { to { stroke-dashoffset: 0; } }
+    .tm-spark { stroke-dasharray: 420; stroke-dashoffset: 420; animation: tm-dash 2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s forwards; }
+    @keyframes tm-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(89,216,230,0.45); } 50% { box-shadow: 0 0 0 7px rgba(89,216,230,0); } }
+    .tm-live { animation: tm-pulse 2.4s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .tm-load, .tm-boardload, .tm-rise, .tm-grow { opacity: 1; transform: none; animation: none; transition: none; }
+      .tm-spark { animation: none; stroke-dashoffset: 0; } .tm-live { animation: none; }
+    }
+  </style>
+</helmet>
+<div style="width: 100%; overflow-x: clip;">
+  <dc-import name="SiteHeader" hint-size="100%,95px"></dc-import>
+
+  <section data-screen-label="Strategy hero" class="relative w-full" style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(2rem, 4vh, 3rem);">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-0 bg-ground-rise"></div><div class="absolute inset-0 bg-grid-draft" style="mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%);"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #59D8E6;">The chain · Objective → KPI</p>
+      <h1 class="tm-load mt-5 font-sans text-display font-semi tracking-display text-paper lg:tracking-display-lg" style="--d: 90ms; max-width: 22ch; text-wrap: balance;">A mandate is not a plan until someone <span style="background: linear-gradient(92deg, #19C39B 0%, #59D8E6 100%); -webkit-background-clip: text; background-clip: text; color: transparent;">owns a number</span>.</h1>
+      <p class="tm-load mt-6 text-lede font-light text-body" style="--d: 180ms; max-width: 54ch;">Every office can draw the objective tree. TruMandate makes the KPI the join: a baseline, a target, a named owner and a live actual, wired to the objective above it and the initiatives below it.</p>
+      <div class="tm-load mt-8 flex flex-wrap items-center gap-4" style="--d: 270ms;">
+        <a href="Contact (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control bg-accent text-small font-semi text-ink" style="min-height: 46px; padding-inline: 24px; transition: background 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);" style-hover="background: transparent; color: #19C39B; outline: 1px solid #19C39B;">Book a demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="KPI fragment" class="relative w-full" style="padding-bottom: clamp(2rem, 4vh, 3rem);">
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-boardload" style="--d: 380ms; position: relative; max-width: 880px;">
+        <div style="position: relative; overflow: hidden; mask-image: linear-gradient(to right, black 0%, black 78%, transparent 99%); -webkit-mask-image: linear-gradient(to right, black 0%, black 78%, transparent 99%);">
+          <div style="display: flex; gap: 14px; min-width: 980px;">
+            <div style="flex: 0 0 560px; border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: linear-gradient(180deg, #0C4237 0%, #0A3B31 100%); padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 14px 32px -10px rgba(2,24,19,0.6);">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span class="font-mono font-data tracking-datum text-muted" style="font-size: 10px; text-transform: uppercase;">KPI · 1.2.3</span>
+                <span style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 9999px; background: rgba(255,201,92,0.14);"><span aria-hidden="true" style="width: 5px; height: 5px; border-radius: 50%; background: #FFC95C;"></span><span class="font-mono font-data" style="font-size: 9px; color: #FFC95C;">At risk</span></span>
+              </div>
+              <p class="font-sans font-semi tracking-heading text-paper" style="font-size: 19px; margin: 8px 0 0;">Digital service adoption</p>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); margin-top: 14px; padding-top: 14px;">
+                <div><p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 0;">Baseline</p><p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">42.0</p></div>
+                <div><p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 0;">Target</p><p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">75.0</p></div>
+                <div><p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 0;">Live actual</p><p dir="ltr" class="font-mono font-data" style="font-size: 24px; margin: 6px 0 0; color: #59D8E6;">61.4</p></div>
+              </div>
+              <svg viewBox="0 0 500 54" style="width: 100%; margin-top: 14px;" aria-hidden="true">
+                <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19C39B"></stop><stop offset="1" stop-color="#59D8E6"></stop></linearGradient><linearGradient id="sga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(89,216,230,0.25)"></stop><stop offset="1" stop-color="rgba(89,216,230,0)"></stop></linearGradient></defs>
+                <path d="M2 44 L85 40 L168 42 L251 30 L334 24 L417 18 L498 10 L498 54 L2 54 Z" fill="url(#sga)"></path>
+                <path class="tm-spark" d="M2 44 L85 40 L168 42 L251 30 L334 24 L417 18 L498 10" fill="none" stroke="url(#sg)" stroke-width="2" stroke-linecap="round"></path>
+                <circle cx="498" cy="10" r="3.5" fill="#59D8E6"></circle>
+              </svg>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; border-top: 1px solid rgba(255,255,255,0.10); margin-top: 14px; padding-top: 12px;">
+                <span class="font-mono font-data text-muted" style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; align-self: center;">Carries</span>
+                <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(89,216,230,0.35);"><span class="font-mono font-data" style="font-size: 9px; color: #59D8E6;">Objective 1.2</span></span>
+                <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.14);"><span class="font-mono font-data text-paper" style="font-size: 9px;">Initiative 07</span></span>
+                <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.14);"><span class="font-mono font-data text-paper" style="font-size: 9px;">Initiative 12</span></span>
+                <span style="padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.14);"><span class="font-mono font-data text-paper" style="font-size: 9px;">Benefit 4.2</span></span>
+              </div>
+            </div>
+            <div style="flex: 0 0 400px; border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: #0A3B31; padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16);">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span class="font-mono font-data tracking-datum text-muted" style="font-size: 10px; text-transform: uppercase;">KPI · 1.2.4</span>
+              </div>
+              <p class="font-sans font-semi tracking-heading text-paper" style="font-size: 19px; margin: 8px 0 0;">Case processing time</p>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top: 1px solid rgba(255,255,255,0.10); margin-top: 14px; padding-top: 14px;">
+                <div><p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 0;">Baseline</p><p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">38.0</p></div>
+                <div><p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 0;">Target</p><p dir="ltr" class="font-mono font-data text-paper" style="font-size: 24px; margin: 6px 0 0;">21.0</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="tm-load font-mono text-datum font-data tracking-datum text-muted" style="--d: 650ms; margin-top: 14px;">One KPI record as the platform stores it. The status dot is computed from movement, never typed in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="The argument" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-surface-deep"></div>
+      <div class="absolute inset-x-0 top-0 h-32 bg-seam-down"></div>
+    </div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-rise">
+        <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">Where it breaks</p>
+        <h2 class="mt-4 font-sans text-h2 font-semi tracking-heading text-paper" style="max-width: 28ch; text-wrap: pretty;">The tree was never the hard part.</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: clamp(20px, 3vw, 48px); margin-top: clamp(32px, 4vw, 56px);">
+        <div class="tm-rise">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="margin: 20px 0 0; color: #59D8E6;">The break</p>
+          <p class="mt-3 text-body font-light text-body">Objectives are written by the people who set direction. KPIs are defined months later by the people who report. Nobody's job is to reconcile the two, so they drift apart quietly.</p>
+        </div>
+        <div class="tm-rise" style="--d: 130ms;">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="margin: 20px 0 0; color: #59D8E6;">The join</p>
+          <p class="mt-3 text-body font-light text-body">In TruMandate the KPI is the join, not a downstream artefact. Rescope an initiative and the consequence shows at the KPI it feeds, because the link is part of the record.</p>
+        </div>
+        <div class="tm-rise" style="--d: 260ms;">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="margin: 20px 0 0; color: #59D8E6;">The refusal</p>
+          <p class="mt-3 text-body font-light text-body">The platform will not accept a KPI without a baseline. A measure with no starting point is an opinion, and an opinion does not survive a minister asking what changed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AI moment" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-x-0 top-0 h-32 bg-seam-up"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 4vw, 64px); align-items: center;">
+        <div class="tm-rise">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">AI in the platform</p>
+          <h2 class="mt-4 font-sans text-h2 font-semi tracking-heading text-paper" style="max-width: 24ch; text-wrap: pretty;">Two KPIs, one benefit, counted twice.</h2>
+          <p class="mt-6 text-body font-light text-body" style="max-width: 52ch;">The model compares measure definitions and initiative links, not names, so it catches duplication that a tidy naming convention hides. It states what it found, how sure it is, and what it would do. A person chooses, and the choice is stored with their name.</p>
+        </div>
+        <div class="tm-rise" style="--d: 150ms; position: relative; border-radius: 2px; background: #0B4A3D; border-block: 1px solid rgba(255,255,255,0.10); border-inline-end: 1px solid rgba(255,255,255,0.10); border-inline-start: 2px solid #59D8E6; padding: 22px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(89,216,230,0.12), 0 14px 32px -10px rgba(2,24,19,0.55);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #59D8E6;">AI watch · strategy</span>
+            <span dir="ltr" class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #59D8E6;">confidence 0.81</span>
+          </div>
+          <div style="position: relative; height: 2px; width: 100%; background: rgba(255,255,255,0.10); margin-top: 14px;"><div class="tm-grow" style="position: absolute; inset-block: 0; inset-inline-start: 0; height: 2px; width: 81%; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div></div>
+          <h3 class="mt-5 font-sans text-h3 font-semi tracking-heading text-paper">Two KPIs counting the same benefit</h3>
+          <p class="mt-3 text-body font-light text-body">Objective 2.1 and Objective 4.3. Evidence: identical source measure and an overlapping initiative set. Suggested action: merge, or mark one as a contributing measure.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" class="rounded-control border border-accent text-small font-semi text-accent" style="padding: 10px 16px; background: transparent;">Accept</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">Modify</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">Reject</button>
+          </div>
+          <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">Decision logged · h.alsuwaidi · 11:07</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Handoff" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-0 bg-grid-draft" style="mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);"></div><div class="absolute inset-0 bg-ground-board"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-rise" style="max-width: 62ch;">
+        <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #59D8E6;">Held back from this page</p>
+        <h2 class="mt-4 font-sans text-h2 font-semi tracking-heading text-paper" style="text-wrap: pretty;">The cascade editor. Watch it built live, in about ten minutes.</h2>
+        <p class="mt-5 text-lede font-light text-body">A national framework document in at the top, weighted objectives out at the bottom.</p>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="Contact (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control bg-accent text-small font-semi text-ink" style="min-height: 46px; padding-inline: 24px; transition: background 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);" style-hover="background: transparent; color: #19C39B; outline: 1px solid #19C39B;">Book a demo</a>
+          <a href="Execution (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control text-small font-semi text-paper" style="min-height: 46px; padding-inline: 24px; outline: 1px solid rgba(255,255,255,0.10);">Next: Execution</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,220px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("tm-in");
+        this.io.unobserve(e.target);
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".tm-rise, .tm-grow").forEach((el) => this.io.observe(el));
+  }
+  componentWillUnmount() { if (this.io) this.io.disconnect(); }
+}
+</script>
+</body>
+</html>

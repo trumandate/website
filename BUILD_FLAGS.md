@@ -620,6 +620,9 @@ Log every such choice under "Decisions taken" below.
   all five fragments still match it, and the real-UI comparison is logged
   as still-owed in TODO.md.
 
+- 2026-08-18 (REDESIGN, user directive): docs/design_handoff_website_redesign/ (Claude Design handoff) is now the SOLE design source of truth — it supersedes DESIGN-ELEVATION.md, the P10 waves, and spec §§5–7's content/withholding rules ("tokens binding, content rules open" per the handoff README; the cropped board is the new withholding mechanism; owner-approved copy including its figures). Engineering invariants unchanged: tokens-only colour (4 new hue tokens approved: mint/cyan/gold/coral), logical properties, reduced-motion end states, one pin per route, whenMotionSafe, budgets §9, a11y 100. All work on main branch (preview split postponed).
+- 2026-08-18 (REDESIGN, user directive #2): exact fidelity to the .dc.html references overrides ALL repo conventions including token indirection and the no-hex rule — porting reference markup/CSS near-verbatim is the preferred approach. Still required (plumbing, not visuals): clean build, correct i18n routing, readable under reduced-motion/JS-off, performance budgets. Primary acceptance test: built-vs-reference side-by-side near-indistinguishable at 1440, both languages.
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)

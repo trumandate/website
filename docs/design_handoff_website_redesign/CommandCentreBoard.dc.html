@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/_ds_bundle.css">
+  <style>
+    @keyframes tm-dash { to { stroke-dashoffset: 0; } }
+    .tm-spark { stroke-dasharray: 600; stroke-dashoffset: 600; animation: tm-dash 2.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s forwards; }
+    @keyframes tm-pulse-r { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,122,110,0.55); } 50% { box-shadow: 0 0 0 6px rgba(255,122,110,0); } }
+    .tm-live-r { animation: tm-pulse-r 2.2s ease-in-out infinite; }
+    @keyframes tm-pulse-a { 0%, 100% { box-shadow: 0 0 0 0 rgba(75,239,196,0.5); } 50% { box-shadow: 0 0 0 6px rgba(75,239,196,0); } }
+    .tm-live-a { animation: tm-pulse-a 2.4s ease-in-out infinite; }
+    .tm-kpi { border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: linear-gradient(180deg, #0C4237 0%, #0A3B31 100%); padding: 10px 14px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .tm-panel { border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: #0A3B31; padding: 14px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 10px 24px -8px rgba(2,24,19,0.55); }
+    .tm-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 9999px; }
+    @media (prefers-reduced-motion: reduce) { .tm-spark { animation: none; stroke-dashoffset: 0; } .tm-live-r, .tm-live-a { animation: none; } }
+  </style>
+</helmet>
+<div role="img" aria-label="Performance Command Centre. Compact KPIs: portfolio health 86 per cent, budget utilisation 71 per cent, 48 active risks, AED 1.32B benefits realised. A performance-over-time chart carries an AI flag on the July dip; an AI watch panel holds six suggestions waiting on a named person, cropped at the frame edge." style="position: relative; border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: #021813; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 18px 44px -12px rgba(2,24,19,0.55); overflow: hidden;">
+  <div style="overflow-x: auto; overflow-y: hidden;">
+    <div style="min-width: 1000px;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 42px; padding: 0 14px; background: rgba(11,74,61,0.6); border-bottom: 1px solid rgba(255,255,255,0.10);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg viewBox="0 0 100 100" style="width: 20px; height: 20px;" aria-hidden="true"><rect width="100" height="100" rx="24" class="fill-paper"></rect><rect x="24" y="26" width="54" height="12" rx="6" class="fill-jade"></rect><rect x="24" y="46" width="38" height="12" rx="6" class="fill-accent"></rect><rect x="24" y="66" width="22" height="12" rx="6" class="fill-accent"></rect></svg>
+          <span class="font-sans font-semi tracking-brand text-paper" style="font-size: 13px;">TruMandate</span>
+          <span aria-hidden="true" style="width: 1px; height: 16px; background: rgba(255,255,255,0.10);"></span>
+          <span class="font-mono font-data tracking-datum text-muted" style="font-size: 10px;">Workspace / <span class="text-paper">Performance Command Centre</span></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span class="tm-chip" style="background: rgba(75,239,196,0.10);"><span aria-hidden="true" class="tm-live-a" style="width: 6px; height: 6px; border-radius: 50%; background: #4BEFC4;"></span><span class="font-mono font-data" style="font-size: 9px; color: #4BEFC4;">AI RUN · 06:00</span></span>
+          <span class="font-sans font-semi text-paper" style="font-size: 11px;">العربية</span>
+          <span aria-hidden="true" style="width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #19C39B, #59D8E6);"></span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 176px minmax(0, 1fr);">
+        <div style="border-inline-end: 1px solid rgba(255,255,255,0.10); background: #04241E; padding: 14px 10px; display: flex; flex-direction: column; gap: 2px;">
+          <div style="padding: 8px 10px;"><span class="font-sans text-body" style="font-size: 12px;">Home</span></div>
+          <div style="padding: 8px 10px; border-radius: 3px; background: linear-gradient(90deg, rgba(25,195,155,0.18), rgba(25,195,155,0.03)); border-inline-start: 2px solid #19C39B;"><span class="font-sans font-semi text-paper" style="font-size: 12px;">Command Centre</span></div>
+          <div style="padding: 8px 10px; display: flex; align-items: center;"><span class="font-sans text-body" style="font-size: 12px;">AI Decisions</span><span class="tm-chip" style="margin-inline-start: auto; background: rgba(75,239,196,0.12);"><span class="font-mono font-data" style="font-size: 9px; color: #4BEFC4;">6</span></span></div>
+          <p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 16px 0 2px 10px;">Deliver</p>
+          <div style="padding: 8px 10px;"><span class="font-sans text-body" style="font-size: 12px;">Project Execution</span></div>
+          <div style="padding: 8px 10px; display: flex; align-items: center;"><span class="font-sans text-body" style="font-size: 12px;">Stage Gates</span><span class="tm-chip" style="margin-inline-start: auto; background: rgba(255,201,92,0.14);"><span class="font-mono font-data" style="font-size: 9px; color: #FFC95C;">4</span></span></div>
+          <p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 9px; text-transform: uppercase; margin: 16px 0 2px 10px;">Prove</p>
+          <div style="padding: 8px 10px;"><span class="font-sans text-body" style="font-size: 12px;">Benefits Register</span></div>
+        </div>
+
+        <div style="padding: 16px 18px 24px;">
+          <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px;">
+            <div>
+              <p class="font-mono font-data tracking-datum text-muted" style="font-size: 10px; margin: 0;">Projects › Command Centre</p>
+              <h3 class="font-sans font-semi tracking-heading text-paper" style="font-size: 22px; margin: 5px 0 0;">Performance Command Centre</h3>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="padding: 7px 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 3px; background: #0A3B31;"><span class="font-sans text-paper" style="font-size: 11px;">All departments</span></span>
+              <span style="padding: 7px 12px; border: 1px solid rgba(255,255,255,0.10); border-radius: 3px; background: #0A3B31;"><span class="font-sans text-paper" style="font-size: 11px;">Jan – Dec 2026</span></span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px;">
+            <div class="tm-kpi">
+              <div>
+                <p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 8.5px; text-transform: uppercase; margin: 0;">Portfolio health</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">86% <span class="font-mono font-data" style="font-size: 10px; color: #4BEFC4;">▲ +4</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0;" aria-hidden="true">
+                <defs><linearGradient id="k1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19C39B"></stop><stop offset="1" stop-color="#59D8E6"></stop></linearGradient></defs>
+                <path d="M2 24 L15 21 L28 23 L41 15 L54 17 L67 9 L78 5" fill="none" stroke="url(#k1)" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <div class="tm-kpi">
+              <div>
+                <p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 8.5px; text-transform: uppercase; margin: 0;">Budget utilisation</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">71% <span class="font-mono font-data text-muted" style="font-size: 10px;">used</span></p>
+              </div>
+              <div style="width: 72px; flex-shrink: 0;">
+                <div style="position: relative; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.08);">
+                  <div style="position: absolute; inset-block: 0; inset-inline-start: 0; width: 71%; border-radius: 3px; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div>
+                  <span aria-hidden="true" style="position: absolute; top: -2px; bottom: -2px; inset-inline-start: 68%; width: 2px; background: #F1F5F3;"></span>
+                </div>
+                <p class="font-mono font-data text-muted" style="font-size: 8px; margin: 5px 0 0; text-align: end;">TARGET 68%</p>
+              </div>
+            </div>
+            <div class="tm-kpi">
+              <div>
+                <p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 8.5px; text-transform: uppercase; margin: 0;">Active risks</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 21px; margin: 4px 0 0; white-space: nowrap;">48 <span class="font-mono font-data" style="font-size: 10px; color: #4BEFC4;">▼ 4</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0;" aria-hidden="true">
+                <path d="M2 7 L15 10 L28 9 L41 14 L54 13 L67 19 L78 23" fill="none" stroke="#FF7A6E" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+            <div class="tm-kpi">
+              <div>
+                <p class="font-mono font-data tracking-eyebrow text-muted" style="font-size: 8.5px; text-transform: uppercase; margin: 0;">Benefits realised</p>
+                <p dir="ltr" class="font-mono font-data text-paper" style="font-size: 18px; margin: 6px 0 0; white-space: nowrap;">AED 1.32B <span class="font-mono font-data" style="font-size: 10px; color: #FFC95C;">▲ 18%</span></p>
+              </div>
+              <svg viewBox="0 0 80 30" style="width: 72px; flex-shrink: 0;" aria-hidden="true">
+                <path d="M2 26 L15 24 L28 20 L41 20 L54 15 L67 10 L78 4" fill="none" stroke="#FFC95C" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 12px; margin-top: 12px; align-items: stretch;">
+            <div class="tm-panel">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                <span class="font-sans font-semi text-paper" style="font-size: 13px;">Performance over time</span>
+                <span style="display: inline-flex; gap: 12px;">
+                  <span class="font-mono font-data text-muted" style="font-size: 9px;"><span style="color: #4BEFC4;">—</span> Actual</span>
+                  <span class="font-mono font-data text-muted" style="font-size: 9px;">‑ ‑ Target</span>
+                </span>
+              </div>
+              <svg viewBox="0 0 460 210" style="width: 100%; margin-top: 8px;" aria-hidden="true">
+                <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(25,195,155,0.30)"></stop><stop offset="1" stop-color="rgba(25,195,155,0)"></stop></linearGradient><linearGradient id="gas" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19C39B"></stop><stop offset="1" stop-color="#59D8E6"></stop></linearGradient></defs>
+                <line x1="10" y1="168" x2="450" y2="168" stroke="rgba(255,255,255,0.08)"></line>
+                <line x1="10" y1="120" x2="450" y2="120" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3 5"></line>
+                <line x1="10" y1="72" x2="450" y2="72" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3 5"></line>
+                <path d="M10 140 C60 134 100 124 150 116 S260 100 310 88 S400 62 450 50" fill="none" stroke="rgba(156,184,174,0.55)" stroke-width="1.5" stroke-dasharray="5 5"></path>
+                <path d="M10 144 C50 140 90 132 130 122 C170 112 200 124 230 118 C280 108 330 76 380 58 C410 47 430 40 450 34 L450 168 L10 168 Z" fill="url(#ga)"></path>
+                <path class="tm-spark" d="M10 144 C50 140 90 132 130 122 C170 112 200 124 230 118 C280 108 330 76 380 58 C410 47 430 40 450 34" fill="none" stroke="url(#gas)" stroke-width="2.5" stroke-linecap="round"></path>
+                <line x1="215" y1="52" x2="215" y2="122" stroke="#FFC95C" stroke-width="1" stroke-dasharray="3 3"></line>
+                <circle cx="215" cy="121" r="4" fill="#FFC95C"></circle>
+                <circle cx="215" cy="121" r="8" fill="rgba(255,201,92,0.22)"></circle>
+                <rect x="121" y="28" width="188" height="18" rx="9" fill="rgba(255,201,92,0.12)"></rect>
+                <text x="215" y="40" text-anchor="middle" style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.06em;" fill="#FFC95C">AI FLAG · SLIP CAUGHT IN JUN</text>
+                <circle cx="450" cy="34" r="4" fill="#59D8E6"></circle>
+                <circle cx="450" cy="34" r="8" fill="rgba(89,216,230,0.25)"></circle>
+                <text x="10" y="192" style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em;" class="fill-muted">JAN</text>
+                <text x="230" y="192" text-anchor="middle" style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em;" class="fill-muted">JUL</text>
+                <text x="450" y="192" text-anchor="end" style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em;" class="fill-muted">DEC</text>
+              </svg>
+              <div style="display: flex; align-items: center; gap: 14px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; margin-top: 4px;">
+                <svg viewBox="0 0 44 44" style="width: 40px; flex-shrink: 0;" aria-hidden="true">
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="5"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="#4BEFC4" stroke-width="5" stroke-dasharray="83.3 106.8" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="#FFC95C" stroke-width="5" stroke-dasharray="16 90.8" stroke-dashoffset="-85" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                  <circle cx="22" cy="22" r="17" fill="none" stroke="#FF7A6E" stroke-width="5" stroke-dasharray="6.4 100.4" stroke-dashoffset="-102.5" stroke-linecap="round" transform="rotate(-90 22 22)"></circle>
+                </svg>
+                <span class="font-mono font-data text-muted" style="font-size: 9px;">142 projects · <span style="color: #4BEFC4;">78% on track</span> · <span style="color: #FFC95C;">15% at risk</span> · <span style="color: #FF9A90;">7% off track</span></span>
+              </div>
+            </div>
+
+            <div class="tm-panel" style="position: relative; background: #082E26; border-inline-start: 2px solid #19C39B; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(25,195,155,0.14), 0 14px 32px -10px rgba(2,24,19,0.7);">
+              <div aria-hidden="true" class="pointer-events-none absolute bg-spotlight-accent" style="inset: -30px;"></div>
+              <div style="position: relative;">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                  <span class="font-sans font-semi text-paper" style="font-size: 13px;">AI watch</span>
+                  <span class="tm-chip" style="background: rgba(75,239,196,0.12);"><span aria-hidden="true" class="tm-live-a" style="width: 5px; height: 5px; border-radius: 50%; background: #4BEFC4;"></span><span class="font-mono font-data" style="font-size: 9px; color: #4BEFC4;">6 waiting on a person</span></span>
+                </div>
+
+                <div style="border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #021813; padding: 12px; margin-top: 10px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span class="font-mono font-data tracking-datum text-muted" style="font-size: 9px; text-transform: uppercase;">Execution · Initiative 07</span>
+                    <span dir="ltr" class="font-mono font-data" style="font-size: 9px; color: #4BEFC4;">confidence 0.74</span>
+                  </div>
+                  <div style="position: relative; height: 2px; background: rgba(255,255,255,0.10); margin-top: 8px;"><div style="position: absolute; inset-block: 0; inset-inline-start: 0; width: 74%; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div></div>
+                  <p class="font-sans font-semi text-paper" style="font-size: 13px; margin: 10px 0 0;">Milestone slip predicted: 12 days</p>
+                  <p class="font-sans text-body" style="font-size: 11px; margin: 6px 0 0;">Two dependencies unresolved at gate 3. Suggests re-sequencing gate 4.</p>
+                  <div style="display: flex; gap: 6px; margin-top: 10px;">
+                    <span style="padding: 5px 12px; border-radius: 3px; background: #19C39B;"><span class="font-sans font-semi text-ink" style="font-size: 10px;">Accept</span></span>
+                    <span style="padding: 5px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.14);"><span class="font-sans font-semi text-paper" style="font-size: 10px;">Modify</span></span>
+                    <span style="padding: 5px 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.14);"><span class="font-sans font-semi text-paper" style="font-size: 10px;">Reject</span></span>
+                  </div>
+                </div>
+
+                <div style="border: 1px solid rgba(255,255,255,0.10); border-radius: 4px; background: #021813; padding: 12px; margin-top: 8px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span class="font-mono font-data tracking-datum text-muted" style="font-size: 9px; text-transform: uppercase;">Strategy · KPI 2.1 / 4.3</span>
+                    <span dir="ltr" class="font-mono font-data" style="font-size: 9px; color: #59D8E6;">confidence 0.81</span>
+                  </div>
+                  <div style="position: relative; height: 2px; background: rgba(255,255,255,0.10); margin-top: 8px;"><div style="position: absolute; inset-block: 0; inset-inline-start: 0; width: 81%; background: linear-gradient(90deg, #19C39B, #59D8E6);"></div></div>
+                  <p class="font-sans font-semi text-paper" style="font-size: 13px; margin: 10px 0 0;">Two KPIs counting one benefit</p>
+                </div>
+
+                <div style="border: 1px solid rgba(255,122,110,0.25); border-radius: 4px; background: #021813; padding: 12px; margin-top: 8px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span class="font-mono font-data tracking-datum text-muted" style="font-size: 9px; text-transform: uppercase;">Escalation · Core ERP</span>
+                    <span class="tm-chip" style="background: rgba(255,122,110,0.16);"><span aria-hidden="true" class="tm-live-r" style="width: 5px; height: 5px; border-radius: 50%; background: #FF7A6E;"></span><span class="font-mono font-data" style="font-size: 9px; color: #FF9A90;">Critical</span></span>
+                  </div>
+                  <p class="font-sans font-semi text-paper" style="font-size: 13px; margin: 8px 0 0;">Delayed 34 days · overrun 18%</p>
+                </div>
+
+                <p class="font-mono font-data tracking-datum text-muted" style="font-size: 9px; margin: 10px 0 0;">3 closed today · every decision logged with a name</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

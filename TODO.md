@@ -669,3 +669,48 @@ and will be addressed as the pages that touch them get built (P2 onward).
   a future session on this machine should reach for `emulate`, not
   `resize_page`, and re-verify with a quick `window.innerWidth` read before
   trusting a viewport-dependent measurement.
+
+## From redesign wave A (docs/design_handoff_website_redesign — home + shared chrome)
+
+- **A Slow 4G + 4x CPU LCP pass on `/ar/` is still owed**, for the same
+  host-load-sensitivity reason earlier sections of this file already
+  record for `/en/`: this session's one throttled sample (`/en/`, 1,734ms,
+  inside the 2.0s budget) is a single reading on a shared, busy machine, not
+  a clean baseline. Re-measure both languages on an idle machine before
+  treating the throttled figure as either comfortably met or at risk.
+- **`chrome-devtools` MCP has no exposed way to emulate the real
+  `prefers-reduced-motion: reduce` CSS media feature** (only
+  `colorScheme`/`networkConditions`/`cpuThrottlingRate`/`geolocation`/
+  `viewport`/`userAgent` are in the `emulate` tool's schema). Stubbing
+  `window.matchMedia` in an `initScript` (the technique earlier sessions
+  used successfully) only fools JavaScript that calls `matchMedia()`
+  directly (this repo's own `whenMotionSafe` gate, confirmed working) — it
+  does **not** change what a real `@media (prefers-reduced-motion: reduce)`
+  CSS rule evaluates to, since the CSS engine reads the actual OS/browser
+  setting independently of the JS-patched function. Verified this
+  empirically: with the stub applied, `.tm-live`'s `animation-name` still
+  computed to `tm-pulse`, not `none`. This session's reduced-motion
+  verification therefore combined the matchMedia stub (proves the JS gate
+  correctly skips `recordChain.ts`/`redesignReveal.ts` setup) with a
+  separately-injected stylesheet reproducing the reduce block's own
+  declarations unconditionally (proves those declarations, if the real
+  media query were active, would render every `.tm-load`/`.tm-rise`/
+  `.tm-fade`/`.tm-grow`/chain-card element correctly) — not a substitute for
+  a genuine OS-level reduced-motion pass (real Chrome DevTools "Rendering"
+  panel, or a future MCP version that exposes
+  `Emulation.setEmulatedMedia`), which is still owed.
+- **`IntertecLogo.astro` (P9's currentColor SVG mark) is now unreferenced.**
+  The redesigned footer (`SiteFooter.dc.html`) draws "Intertec Systems" as
+  plain text, not a logo mark, so `Footer.astro`'s rewrite this wave dropped
+  the `<IntertecLogo>` call site to match the reference exactly. The
+  component file itself was deliberately NOT deleted — it is a distinct
+  footer-branding feature from an earlier, explicit session, not an
+  orphaned "old home component" — but it is dead code today. Piyush's call
+  whether to re-integrate it (e.g. inside the wordmark) or delete it
+  properly.
+- **WebKit-specific verification was not attempted this wave** (no
+  Playwright MCP invocation this session; the chrome-devtools MCP available
+  is Chromium-only, same constraint prior sessions recorded). The record
+  chain's `position: sticky` pin and its plain scroll-handler scrub (not a
+  GSAP ScrollTrigger) are new mechanics this wave that haven't had a WebKit
+  pass yet.

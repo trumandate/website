@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/fonts/fonts.css">
+  <link rel="stylesheet" href="_ds/trumandate-website-ds-f4b70156-88a9-4176-bb0f-9afd57cdfe2e/_ds_bundle.css">
+  <style>
+    body { margin: 0; background: #04241E; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; font-weight: 300; color: #C6DAD3; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: #19C39B; }
+    svg { display: block; max-width: 100%; }
+    @keyframes tm-enter { to { opacity: 1; transform: translateY(0) scale(1); } }
+    .tm-load { opacity: 0; transform: translateY(26px); animation: tm-enter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; animation-delay: var(--d, 0ms); }
+    .tm-boardload { opacity: 0; transform: translateY(70px) scale(0.975); animation: tm-enter 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; animation-delay: var(--d, 0ms); }
+    .tm-rise { opacity: 0; transform: translateY(30px); transition: opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms), transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms); }
+    .tm-grow { transform: scaleX(0); transform-origin: 100% 50%; transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 100ms); }
+    .tm-in { opacity: 1; transform: translateY(0) scaleX(1); }
+    @keyframes tm-dash { to { stroke-dashoffset: 0; } }
+    .tm-spark { stroke-dasharray: 620; stroke-dashoffset: 620; animation: tm-dash 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .tm-load, .tm-boardload, .tm-rise, .tm-grow { opacity: 1; transform: none; animation: none; transition: none; }
+      .tm-spark { animation: none; stroke-dashoffset: 0; }
+    }
+  </style>
+</helmet>
+<div dir="rtl" lang="ar" style="width: 100%; overflow-x: clip; line-height: 1.8;">
+  <dc-import name="SiteHeaderAR" hint-size="100%,95px"></dc-import>
+
+  <section data-screen-label="AR Benefits hero" class="relative w-full" style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(2rem, 4vh, 3rem);">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-0 bg-ground-rise"></div><div class="absolute inset-0 bg-grid-draft" style="mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 80%, transparent 100%);"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #FFC95C;">السلسلة · المنفعة</p>
+      <h1 class="tm-load mt-5 font-sans text-display font-semi text-paper" style="--d: 90ms; max-width: 22ch; text-wrap: balance; letter-spacing: 0; line-height: 1.32;">أُغلق المشروع. فهل <span style="background: linear-gradient(268deg, #F2B441 0%, #FFC95C 100%); -webkit-background-clip: text; background-clip: text; color: transparent;">وصلت المنفعة</span>؟</h1>
+      <p class="tm-load mt-6 text-lede font-light text-body" style="--d: 180ms; max-width: 54ch;">تُتوقَّع المنافع حين يُكافأ التفاؤل، وتُقاس بعد رحيل الفريق. يُبقي TruMandate كل منفعة حيّة 24 شهراً بعد الإغلاق، مرتبطةً بالمؤشر ذاته الذي وُعدت بتحريكه.</p>
+      <div class="tm-load mt-8 flex flex-wrap items-center gap-4" style="--d: 270ms;">
+        <a href="Contact AR (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control bg-accent text-small font-semi text-ink" style="min-height: 46px; padding-inline: 24px; transition: background 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);" style-hover="background: transparent; color: #19C39B; outline: 1px solid #19C39B;">احجز عرضاً توضيحياً</a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR Benefit curve" class="relative w-full" style="padding-bottom: clamp(2rem, 4vh, 3rem);">
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-boardload" style="--d: 380ms; position: relative; max-width: 880px;">
+        <div style="border: 1px solid rgba(255,255,255,0.10); border-radius: 6px; background: linear-gradient(180deg, #0C4237 0%, #0A3B31 100%); padding: 20px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 14px 32px -10px rgba(2,24,19,0.6); overflow: hidden; mask-image: linear-gradient(to left, black 0%, black 82%, transparent 99%); -webkit-mask-image: linear-gradient(to left, black 0%, black 82%, transparent 99%);">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px;">
+            <span class="font-mono text-datum font-data tracking-datum text-muted">المنفعة 4.2 · وفر تشغيلي سنوي</span>
+            <span style="display: inline-flex; gap: 14px;">
+              <span class="font-mono text-datum font-data text-muted"><span style="color: #4BEFC4;">—</span> الفعلي</span>
+              <span class="font-mono text-datum font-data text-muted">‑ ‑ المتوقَّع</span>
+            </span>
+          </div>
+          <svg viewBox="0 0 800 250" style="width: 100%; margin-top: 12px; direction: ltr;" aria-hidden="true">
+            <defs>
+              <linearGradient id="aba" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(25,195,155,0.28)"></stop><stop offset="1" stop-color="rgba(25,195,155,0)"></stop></linearGradient>
+              <linearGradient id="abs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19C39B"></stop><stop offset="1" stop-color="#4BEFC4"></stop></linearGradient>
+            </defs>
+            <rect x="380" y="16" width="420" height="184" fill="rgba(255,201,92,0.06)"></rect>
+            <line x1="380" y1="16" x2="380" y2="200" stroke="rgba(255,201,92,0.45)" stroke-width="1"></line>
+            <text x="390" y="32" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 11px;" fill="#FFC95C">نافذة القياس · 24 شهراً من الإغلاق</text>
+            <line x1="560" y1="52" x2="560" y2="200" stroke="rgba(156,184,174,0.6)" stroke-width="1" stroke-dasharray="3 3"></line>
+            <text x="560" y="222" text-anchor="middle" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 11px;" class="fill-muted">اليوم</text>
+            <line x1="10" y1="200" x2="790" y2="200" stroke="rgba(255,255,255,0.08)"></line>
+            <path d="M10 186 C120 178 240 160 380 138 C460 126 540 112 620 96 C680 84 740 72 800 60" fill="none" stroke="rgba(156,184,174,0.55)" stroke-width="1.5" stroke-dasharray="5 5"></path>
+            <path d="M10 186 C120 178 240 160 380 138 C440 130 500 128 560 132 L560 200 L10 200 Z" fill="url(#aba)"></path>
+            <path class="tm-spark" d="M10 186 C120 178 240 160 380 138 C440 130 500 128 560 132" fill="none" stroke="url(#abs)" stroke-width="2.5" stroke-linecap="round"></path>
+            <circle cx="560" cy="132" r="4" fill="#4BEFC4"></circle>
+            <circle cx="560" cy="132" r="9" fill="rgba(75,239,196,0.2)"></circle>
+            <rect x="574" y="96" width="168" height="34" rx="3" fill="#021813" stroke="rgba(255,122,110,0.35)"></rect>
+            <text x="584" y="110" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 11px;" fill="#FF9A90">−18% عن المتوقَّع</text>
+            <text x="584" y="124" style="font-family: 'IBM Plex Sans Arabic', sans-serif; font-weight: 600; font-size: 10px;" class="fill-muted">علامة ذكاء · الربع الثاني بعد الإغلاق</text>
+          </svg>
+        </div>
+        <p class="tm-load font-mono text-datum font-data tracking-datum text-muted" style="--d: 650ms; margin-top: 14px;">المتوقَّع والفعلي على المحور نفسه، وبوحدات دراسة الجدوى. التباعد يُظهر نفسه بنفسه.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR argument" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-surface-deep"></div>
+      <div class="absolute inset-x-0 top-0 h-32 bg-seam-down"></div>
+    </div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-rise">
+        <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">أين ينقطع الخيط</p>
+        <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="max-width: 32ch; text-wrap: pretty; line-height: 1.4;">أكبر فجوة مصداقية في حوكمة المحافظ.</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: clamp(20px, 3vw, 48px); margin-top: clamp(32px, 4vw, 56px);">
+        <div class="tm-rise">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="margin: 20px 0 0; color: #FFC95C;">الفجوة</p>
+          <p class="mt-3 text-body font-light text-body">تُتوقَّع عند الاعتماد، ولا تُقاس أبداً. الجميع يعرف أن الفجوة هناك، لكنها ببساطة ليست مسؤولية أحد بعد إغلاق المشروع.</p>
+        </div>
+        <div class="tm-rise" style="--d: 130ms;">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="margin: 20px 0 0; color: #FFC95C;">الوعد المتكرر</p>
+          <p class="mt-3 text-body font-light text-body">يَعِد ثلاثةُ برامج متعاقبة بالوفر ذاته، لأن الوعد الأسبق توقف تتبّعه يوم أُغلق مشروعه. لا أحد يكذب، ولا أحد يتحقق.</p>
+        </div>
+        <div class="tm-rise" style="--d: 260ms;">
+          <hr class="tm-grow" style="margin: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.10);">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="margin: 20px 0 0; color: #FFC95C;">الأشهر الأربعة والعشرون</p>
+          <p class="mt-3 text-body font-light text-body">يُبقي TruMandate المنفعة حيّة بعد الإغلاق، بمالك ما زال في دوره، مقاسةً على المؤشر الذي وُعدت بتحريكه. فترة الصمت هي بالضبط فترة المراقبة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR AI moment" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-x-0 top-0 h-32 bg-seam-up"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(24px, 4vw, 64px); align-items: center;">
+        <div class="tm-rise">
+          <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">الذكاء الاصطناعي في المنصة</p>
+          <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="max-width: 28ch; text-wrap: pretty; line-height: 1.4;">تسرّب، ظهر في الربع الذي لم يراقبه أحد.</h2>
+          <p class="mt-6 text-body font-light text-body" style="max-width: 52ch;">يراقب النموذج المقياس لا المشروع، فيستمر في المراقبة بعد أن يتوقف المشروع عن الوجود. حين تبتعد القيم الفعلية عن المتوقَّعة يذكر المقدار والمدة والسبب المرجَّح، ثم يقرر إنسان، وعلى السجل.</p>
+        </div>
+        <div class="tm-rise" style="--d: 150ms; position: relative; border-radius: 2px; background: #0B4A3D; border-block: 1px solid rgba(255,255,255,0.10); border-inline-end: 1px solid rgba(255,255,255,0.10); border-inline-start: 2px solid #FFC95C; padding: 22px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 0 0 1px rgba(255,201,92,0.12), 0 14px 32px -10px rgba(2,24,19,0.55);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #FFC95C;">مراقبة ذكية · المنافع</span>
+            <span class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #FFC95C;">الثقة <span dir="ltr">0.69</span></span>
+          </div>
+          <div style="position: relative; height: 2px; width: 100%; background: rgba(255,255,255,0.10); margin-top: 14px;"><div class="tm-grow" style="position: absolute; inset-block: 0; inset-inline-start: 0; height: 2px; width: 69%; background: linear-gradient(270deg, #F2B441, #FFC95C);"></div></div>
+          <h3 class="mt-5 font-sans text-h3 font-semi text-paper" style="line-height: 1.4;">تسرّب منفعة بعد الإغلاق</h3>
+          <p class="mt-3 text-body font-light text-body">المنفعة 4.2. الدليل: ابتعدت القيم الفعلية عن المتوقَّعة بنسبة 18% خلال الربعين التاليين للإغلاق، وتوقف المؤشر عن التحسّن حين سُرّح الفريق. الإجراء المقترح: إعادة إسناد الملكية ومراجعة التوقعات.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" class="rounded-control border border-accent text-small font-semi text-accent" style="padding: 10px 16px; background: transparent;">قبول</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">تعديل</button>
+            <button type="button" class="rounded-control border border-hairline text-small font-semi text-paper" style="padding: 10px 16px; background: transparent;">رفض</button>
+          </div>
+          <p class="mt-6 font-mono text-datum font-data tracking-datum text-muted">القرار مسجَّل · <span dir="ltr">s.alnuaimi · 16:30</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="AR handoff" class="relative w-full py-section">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0"><div class="absolute inset-0 bg-grid-draft" style="mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);"></div><div class="absolute inset-0 bg-ground-board"></div></div>
+    <div class="relative z-10 mx-auto max-w-content px-gutter">
+      <div class="tm-rise" style="max-width: 62ch;">
+        <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow" style="color: #FFC95C;">في العرض التوضيحي</p>
+        <h2 class="mt-4 font-sans text-h2 font-semi text-paper" style="text-wrap: pretty; line-height: 1.4;">سجل المنافع: كل وعد، وحالته، ومالكه. في قائمة واحدة.</h2>
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="Contact AR (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control bg-accent text-small font-semi text-ink" style="min-height: 46px; padding-inline: 24px; transition: background 150ms cubic-bezier(0.22, 1, 0.36, 1), color 150ms cubic-bezier(0.22, 1, 0.36, 1);" style-hover="background: transparent; color: #19C39B; outline: 1px solid #19C39B;">احجز عرضاً توضيحياً</a>
+          <a href="Home AR (redesign).dc.html" class="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-control text-small font-semi text-paper" style="min-height: 46px; padding-inline: 24px; outline: 1px solid rgba(255,255,255,0.10);">العودة إلى الرئيسية</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooterAR" hint-size="100%,220px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("tm-in");
+        this.io.unobserve(e.target);
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".tm-rise, .tm-grow").forEach((el) => this.io.observe(el));
+  }
+  componentWillUnmount() { if (this.io) this.io.disconnect(); }
+}
+</script>
+</body>
+</html>

@@ -109,8 +109,22 @@
 }
 
 /* ---- corePlugins.textAlign is switched off in tailwind.config.mjs so
- * text-left / text-right cannot exist. Only the two logical values a
- * disciplined type system needs are re-provided. ---- */
+ * text-left / text-right cannot exist. Re-provided here: the two logical
+ * values a disciplined type system needs, plus `.text-center` — centering
+ * has no physical-direction reading (same reasoning Section.astro's own
+ * comment gives for `mx-auto`/`px-gutter`: symmetric values are RTL-safe
+ * without being logical-property utilities themselves), so it is not a
+ * loophole in the ml-/mr-/text-left ban, just a third value the disabled
+ * corePlugin took down along with the two physical ones.
+ *
+ * Found in redesign wave A (docs/design_handoff_website_redesign): the
+ * centered hero, proof band and chain marker all carried a bare
+ * `text-center` class that silently compiled to nothing — the same failure
+ * mode known-issues.md's P1 section already recorded for the whole
+ * corePlugin (disabling `textAlign` removes text-left, text-right AND
+ * text-center as one group, not just the two physical ones) — verified via
+ * `getComputedStyle` showing `text-align: start` on a `.text-center`
+ * element before this fix. ---- */
 @layer utilities {
   .text-start {
     text-align: start;
@@ -118,6 +132,10 @@
 
   .text-end {
     text-align: end;
+  }
+
+  .text-center {
+    text-align: center;
   }
 }
 
@@ -168,5 +186,157 @@
     border-width: 0;
     padding: 0;
     margin: -1px;
+  }
+}
+
+/* ---- Redesign wave A (docs/design_handoff_website_redesign) — the home
+ * page's own motion vocabulary, ported class-for-class from the .dc.html
+ * reference's plain <style> block rather than reinvented as GSAP timelines.
+ * This sidesteps known-issues.md's P10 trap outright: there is no GSAP
+ * `.from()` staggering a target that also carries a CSS `transition`
+ * (Button.astro's own fix for that is unrelated and untouched) — these
+ * classes are toggled by a plain IntersectionObserver
+ * (scripts/recordChain.ts) that adds `.tm-in`, and the browser's ordinary
+ * CSS transition/animation engine does the rest. Every duration/ease is a
+ * tailwind.config.mjs token (`theme()`), matching this file's existing
+ * `[dir=rtl]` overrides above; every colour is a token too, including the
+ * two live-pulse ring rgba values (`mint-ring(-0)`, `coral-ring(-0)`).
+ *
+ * Reduced-motion contract, identical in shape to reveal.ts/chain.ts's own:
+ * the closing `@media (prefers-reduced-motion: reduce)` block is the one
+ * place these classes' serving end-state is guaranteed — opacity 1,
+ * transform none, no animation, no transition — so a reduced-motion reader
+ * or a JS failure (recordChain.ts never adds `.tm-in` if it never runs) sees
+ * the finished page either way. ---- */
+@layer utilities {
+  @keyframes tm-enter {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .tm-load {
+    opacity: 0;
+    transform: translateY(26px);
+    animation: tm-enter theme("transitionDuration.tm-load")
+      theme("transitionTimingFunction.standard") forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  .tm-boardload {
+    opacity: 0;
+    transform: translateY(70px) scale(0.975);
+    animation: tm-enter theme("transitionDuration.tm-board")
+      theme("transitionTimingFunction.standard") forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  .tm-rise {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity theme("transitionDuration.tm-rise")
+        theme("transitionTimingFunction.standard") var(--d, 0ms),
+      transform theme("transitionDuration.tm-rise")
+        theme("transitionTimingFunction.standard") var(--d, 0ms);
+  }
+
+  .tm-fade {
+    opacity: 0;
+    transition: opacity theme("transitionDuration.tm-fade")
+      theme("transitionTimingFunction.standard") var(--d, 0ms);
+  }
+
+  .tm-grow {
+    transform: scaleX(0);
+    transform-origin: 0% 50%;
+    transition: transform theme("transitionDuration.tm-grow")
+      theme("transitionTimingFunction.standard") var(--d, 100ms);
+  }
+
+  [dir="rtl"] .tm-grow {
+    transform-origin: 100% 50%;
+  }
+
+  .tm-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @keyframes tm-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 theme("colors.mint-ring");
+    }
+    50% {
+      box-shadow: 0 0 0 7px theme("colors.mint-ring-0");
+    }
+  }
+
+  .tm-live {
+    animation: tm-pulse theme("transitionDuration.tm-pulse") ease-in-out
+      infinite;
+  }
+
+  @keyframes tm-pulse-r {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 theme("colors.coral-ring");
+    }
+    50% {
+      box-shadow: 0 0 0 6px theme("colors.coral-ring-0");
+    }
+  }
+
+  .tm-live-r {
+    animation: tm-pulse-r theme("transitionDuration.tm-pulse-r") ease-in-out
+      infinite;
+  }
+
+  @keyframes tm-dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .tm-spark {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: tm-dash theme("transitionDuration.tm-spark")
+      theme("transitionTimingFunction.standard") 0.6s forwards;
+  }
+
+  /* Gradient-clip key phrase (hero H1's mint→cyan span). Angle is picked at
+   * the call site (`gradient-text` LTR / `gradient-text-rtl` RTL,
+   * tailwind.config.mjs) rather than flipped here, so no ancestor-selector
+   * override is needed at all. */
+  .gradient-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tm-load,
+    .tm-boardload,
+    .tm-rise,
+    .tm-fade,
+    .tm-grow {
+      opacity: 1;
+      transform: none;
+      animation: none;
+      transition: none;
+    }
+
+    .tm-live,
+    .tm-live-r {
+      animation: none;
+    }
+
+    .tm-spark {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
   }
 }

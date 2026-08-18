@@ -26,6 +26,16 @@ interface Props {
   href?: string;
   type?: "button" | "submit";
   class?: string;
+  /** Redesign wave A: the home hero's and closing CTA's four buttons carry
+   * the reference's own explicit `min-height: 46px; padding-inline: 24px`
+   * (Home (redesign).dc.html) — bigger than this component's default `px-4
+   * py-2` (still correct for the header/contact/handoff call sites the
+   * reference leaves at Tailwind's own padding). An inline style reliably
+   * overrides the class-based padding (higher specificity than a same-
+   * specificity utility class, which is not guaranteed to win by source
+   * order under Tailwind's own internal rule ordering) without adding a
+   * third variant for two call sites. */
+  style?: string;
 }
 
 const {
@@ -33,6 +43,7 @@ const {
   href,
   type = "button",
   class: className,
+  style,
 }: Props = Astro.props;
 
 // P10 (DESIGN-ELEVATION.md §3.8): the bare `transition` utility covers
@@ -57,11 +68,11 @@ const classes = [base, variants[variant], className].filter(Boolean).join(" ");
 
 {
   href ? (
-    <a href={href} class={classes}>
+    <a href={href} class={classes} style={style}>
       <slot />
     </a>
   ) : (
-    <button type={type} class={classes}>
+    <button type={type} class={classes} style={style}>
       <slot />
     </button>
   )

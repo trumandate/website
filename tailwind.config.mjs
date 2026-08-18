@@ -29,8 +29,43 @@ export default {
       hairline: "rgba(255,255,255,0.10)", // content-level borders, header rule
       // ---- P10 (DESIGN-ELEVATION.md §2.1) ----
       "hairline-soft": "rgba(255,255,255,0.06)", // chrome/decoration only: section rules, seam edges — never a control's only boundary
+      // Redesign wave A: the Command Centre board's own slightly-fainter
+      // chrome dividers/track backgrounds (CommandCentreBoard.dc.html),
+      // between `hairline-soft` (.06) and `hairline` (.10).
+      "hairline-08": "rgba(255,255,255,0.08)",
       highlight: "rgba(255,255,255,0.16)", // the top-edge light catch on a raised surface
       shade: "rgba(2,24,19,0.55)", // ambient depth layer; = surface-deep #021813 at 55%
+
+      // ---- Redesign wave A (docs/design_handoff_website_redesign/README.md
+      // §"Design Tokens") — four owner-approved companion hues. AI/domain
+      // accents, chart strokes, figure highlights and gradient pairs only;
+      // never body text on jade without checking AA first (README's own
+      // caveat), and the existing RAG discipline (amber/red) is unchanged. ----
+      mint: "#4BEFC4", // execution hue; AI/domain accent, gradient pair partner for `accent`
+      cyan: "#59D8E6", // strategy hue; gradient pair partner for `accent`
+      gold: "#FFC95C", // benefits hue; gradient pair partner for `amber`
+      coral: "#FF9A90", // critical/off-track hue, light step
+      "coral-dark": "#FF7A6E", // critical/off-track hue, dark step (strokes, dots)
+      // Live-pulse ring colours (box-shadow keyframes, global.css) — rgba
+      // tokens alongside hex ones, same convention as hairline/highlight/shade
+      // above: the alpha value is part of the token, not assembled at the
+      // call site.
+      "mint-ring": "rgba(75,239,196,0.45)",
+      "mint-ring-0": "rgba(75,239,196,0)",
+      "coral-ring": "rgba(255,122,110,0.55)",
+      "coral-ring-0": "rgba(255,122,110,0)",
+      // AI decision queue's per-card focal ring (strategy/benefits cards —
+      // the execution card reuses the existing `shadow-focal` token, whose
+      // accent ring is already this same shape at .14 alpha).
+      "cyan-ring-12": "rgba(89,216,230,0.12)",
+      "gold-ring-12": "rgba(255,201,92,0.12)",
+      // Command Centre board's own micro-shades (CommandCentreBoard.dc.html):
+      // the KPI tile's subtle top-to-`surface` gradient, and the AI-watch
+      // panel's slightly deeper ground than `surface`. Distinct enough from
+      // `jade`/`surface-deep` to warrant their own names rather than reusing
+      // either and drifting from the reference.
+      "kpi-tile-top": "#0C4237",
+      "ai-panel-deep": "#082E26",
     },
 
     fontFamily: {
@@ -120,10 +155,19 @@ export default {
       },
 
       spacing: {
-        header: "6.5rem", // 104px: clears the fixed header (measured 94.625px
-        // via chrome-devtools MCP at P2, both 375 and 1440 — see TODO.md's
-        // "header height offset is an estimate" item), with ~9px to spare
-        // against minor cross-browser font-metric differences.
+        header: "4.5625rem", // 73px: clears the fixed header. Re-measured for
+        // the redesign wave A home-page fidelity fix (chrome-devtools MCP,
+        // getBoundingClientRect, /en/ and /ar/, 375 and 1440): the header now
+        // renders at 71.3125px — smaller than the 94.625px this token was
+        // originally tuned against at P2 (TODO.md's "header height offset is
+        // an estimate" item), because the redesign's own type-scale tokens
+        // shrank the wordmark. The old 104px (6.5rem) value stacked with
+        // Hero.astro's own reference-exact `padding-top: clamp(...)` to sit
+        // the hero ~33px lower than Home (redesign).dc.html at 1440×900,
+        // scroll 0. 73px keeps a ~1.7px cross-browser safety margin over the
+        // measured height (just enough to absorb sub-pixel/font-metric
+        // drift, not a whole extra line) while landing the built hero within
+        // ~2px of the reference at every measured breakpoint.
         gutter: "clamp(1.25rem, 5vw, 4.5rem)", // inline padding, Section.astro only
         section: "clamp(4.5rem, 11vh, 8.25rem)", // block rhythm, Section.astro only
         "section-tight": "clamp(3rem, 7vh, 5rem)",
@@ -137,6 +181,9 @@ export default {
         control: "2px", // buttons, inputs, badges
         card: "4px", // fragment interiors only, matches the real UI
         full: "9999px",
+        // Redesign wave A: the Command Centre board's own panel/KPI-tile
+        // radius (README's CommandCentreBoard.dc.html `.tm-kpi`/`.tm-panel`).
+        panel: "6px",
       },
 
       borderWidth: {
@@ -191,6 +238,20 @@ export default {
         // every other magnitude lives too), it's named here instead — see
         // chain.ts's own comment and the wave-1 report for the discrepancy.
         copy: "400ms",
+
+        // ---- Redesign wave A — the .dc.html reference's own named motion
+        // durations (README "Interactions & Behavior"), carried over as
+        // tokens rather than bare numbers in global.css/component <style>
+        // blocks, same discipline as every duration above. ----
+        "tm-load": "900ms", // hero load cascade
+        "tm-board": "1250ms", // Command Centre board's own entrance
+        "tm-rise": "850ms", // .tm-rise scroll reveal
+        "tm-fade": "1100ms", // .tm-fade scroll reveal (audit strip)
+        "tm-grow": "1200ms", // .tm-grow scaleX draw (rules, confidence bars)
+        "tm-pulse": "2400ms", // live-pulse ring, mint
+        "tm-pulse-r": "2200ms", // live-pulse ring, coral (critical)
+        "tm-spark": "2200ms", // sparkline stroke-dashoffset draw
+        "tm-counter": "1300ms", // proof-band count-up
       },
 
       transitionDelay: {
@@ -231,6 +292,13 @@ export default {
         // Header, scrolled state only — separates chrome from content by
         // light, not just a line.
         chrome: `0 10px 28px -18px ${theme("colors.shade")}`,
+        // Redesign wave A — the AI decision queue's strategy/benefits cards
+        // (Home (redesign).dc.html §4): `shadow-raised`'s two-layer depth
+        // plus a hue-tinted ring, one per card colour. The execution card
+        // (mint accent, spotlighted) reuses `shadow-focal` above instead —
+        // its ring is the same shape at the same .14 accent alpha already.
+        "card-cyan": `inset 0 1px 0 0 ${theme("colors.highlight")}, 0 0 0 1px ${theme("colors.cyan-ring-12")}, 0 10px 24px -8px ${theme("colors.shade")}`,
+        "card-gold": `inset 0 1px 0 0 ${theme("colors.highlight")}, 0 0 0 1px ${theme("colors.gold-ring-12")}, 0 10px 24px -8px ${theme("colors.shade")}`,
       }),
 
       // ---- P10 (DESIGN-ELEVATION.md §2.6) — background layers ----
@@ -259,6 +327,22 @@ export default {
         // Four-edge vignette for the dimmed composition — replaces the hard
         // inline crop. rgba(4,36,30,…) is `ink`.
         "vignette-ink": `radial-gradient(72% 62% at 50% 46%, transparent 30%, rgba(4,36,30,0.55) 68%, ${theme("colors.ink")} 100%)`,
+
+        // ---- Redesign wave A — gradient text + confidence-bar pairs
+        // (README "Design Tokens": "gradient pairs (accent→mint, accent→cyan,
+        // amber→gold)"). Each pair ships an LTR and an RTL angle so a caller
+        // just switches the class by `lang` — no scoped `[dir=rtl]` style
+        // block needed (known-issues.md P5: that pattern silently fails to
+        // match inside Astro's per-component style scoping unless wrapped in
+        // `:global()`, so callers pick the class directly instead here). ----
+        "gradient-text": `linear-gradient(92deg, ${theme("colors.accent")} 0%, ${theme("colors.cyan")} 100%)`,
+        "gradient-text-rtl": `linear-gradient(268deg, ${theme("colors.accent")} 0%, ${theme("colors.cyan")} 100%)`,
+        "grad-mint": `linear-gradient(90deg, ${theme("colors.accent")}, ${theme("colors.mint")})`,
+        "grad-mint-rtl": `linear-gradient(270deg, ${theme("colors.accent")}, ${theme("colors.mint")})`,
+        "grad-cyan": `linear-gradient(90deg, ${theme("colors.accent")}, ${theme("colors.cyan")})`,
+        "grad-cyan-rtl": `linear-gradient(270deg, ${theme("colors.accent")}, ${theme("colors.cyan")})`,
+        "grad-gold": `linear-gradient(90deg, ${theme("colors.amber")}, ${theme("colors.gold")})`,
+        "grad-gold-rtl": `linear-gradient(270deg, ${theme("colors.amber")}, ${theme("colors.gold")})`,
       }),
 
       // ---- P10 (DESIGN-ELEVATION.md §2.7) ----

@@ -32,7 +32,14 @@ export interface UiStrings {
     contact: string;
   };
   cta: {
+    /** Site-wide primary CTA label. Redesign wave A (docs/design_handoff_
+     * website_redesign/README.md "Implementation Notes"): "Book a demo" /
+     * "احجز عرضاً توضيحياً" everywhere — header, every hero, every closing
+     * CTA, the contact form's own submit button (ContactForm.astro reuses
+     * this key rather than a bespoke submit label). */
     primary: string;
+    /** The home hero's ghost CTA only ("Follow one record" / "تتبَّع سجلاً
+     * واحداً", scrolling to `#record`) — no other call site uses this key. */
     secondary: string;
   };
   langToggle: {
@@ -42,18 +49,30 @@ export interface UiStrings {
     toEnglish: string;
   };
   footer: {
-    /** Accessible name for the Intertec Systems logo mark (IntertecLogo.astro's
-     * aria-label) — the company name half of the content brief's verbatim
-     * "Intertec Systems · Dubai" line. Split from `location` at P9's logo
-     * integration so the logo (which visually draws "Intertec" only, plus a
-     * globe mark and an accent dot — no literal "Systems" glyph) still
-     * carries the full two-word company name to assistive tech. */
+    /** The company name, plain text in the redesigned slim-enterprise footer
+     * (SiteFooter.dc.html) — P9's IntertecLogo.astro SVG swap is left in the
+     * codebase, unreferenced, rather than deleted (it is not an orphaned
+     * "old home component," it's a distinct footer-branding feature from an
+     * earlier session); the reference's own footer draws plain text here, so
+     * wave A matches it exactly rather than reintroducing a mark the
+     * reference never shows. */
     company: string;
-    /** The "Dubai" half of the same verbatim line, rendered as plain text next
-     * to the logo, joined by a presentational (aria-hidden) middot in
-     * Footer.astro rather than baked into either string. */
+    /** "Dubai" — no longer used standalone (see `poweredBySuffix`, which
+     * carries the redesign's own "· Dubai, UAE" clause); kept for backward
+     * compatibility with nothing else in this table that still reads it. */
     location: string;
     site: string;
+    /** "Powered by " / "مشغَّل من " — precedes `company` in the brand-credit
+     * line (SiteFooter.dc.html). */
+    poweredByPrefix: string;
+    /** " · Dubai, UAE" / " · دبي، الإمارات" — follows `company`. */
+    poweredBySuffix: string;
+    /** Bottom hairline row, left half. */
+    copyright: string;
+    /** Bottom hairline row, right half — Latin in both languages
+     * (SiteFooterAR.dc.html keeps "TruMandate™ · trumandate.com" un-mirrored,
+     * `dir="ltr"` pinned). */
+    trademark: string;
   };
   /** WCAG 1.4.1: the visually-hidden word every RAG dot carries alongside
    * its colour (PLAN.md §4 ambiguity 18). */
@@ -62,70 +81,126 @@ export interface UiStrings {
     atRisk: string;
     offTrack: string;
   };
+  /**
+   * Redesign wave A (docs/design_handoff_website_redesign/README.md — "Home"
+   * screen, `Home (redesign).dc.html` / `Home AR (redesign).dc.html`). This
+   * replaces the pre-redesign `home` shape wholesale: `hero`/`chain`/
+   * `closingCta` reuse the old key names with new content and a new shape
+   * (nothing outside the deleted home-only component tree ever read the old
+   * ones — verified by grep before this change); `problem` and `stageGate`
+   * are dropped outright (their one reader, FailureModes.astro/
+   * StageGateQueue.astro, is deleted in the same change). `ai` is UNCHANGED —
+   * SuggestionCard.astro's default props (`t("home.ai.badge")` etc.) still
+   * back every product page's own AI moment (ProductPage.astro), so this
+   * table keeps it exactly as authored. `aiQueue` is new and unrelated: the
+   * redesigned home page's three-card decision queue, a different component
+   * entirely (components/home/AiQueue.astro, not SuggestionCard).
+   */
   home: {
     hero: {
       eyebrow: string;
-      headline: string;
-      /** P10 (DESIGN-ELEVATION.md §3.3): the lede's two-tone split. Replaces
-       * the single `lede` string — `ledeLead` is the load-bearing clause
-       * (rendered `text-paper`), `ledeRest` is the remainder (`text-body`),
-       * joined by one space inside a single `<Lede>`. A markup/wiring change,
-       * not a copy change: concatenating `ledeLead + " " + ledeRest` must
-       * reproduce the original sentence byte-for-byte in both languages. The
-       * Arabic split lands at the equivalent clause by meaning, not the same
-       * word index. */
-      ledeLead: string;
-      ledeRest: string;
-      panelLabel: string;
-      row1Label: string;
-      row1Value: string;
-      row2Label: string;
-      row2Value: string;
-      row3Label: string;
-      row3Value: string;
-      row4Label: string;
-      row4Prefix: string;
-      row4Suffix: string;
-      row4Value: string;
+      /** The H1 splits around a gradient-clip span (mint→cyan): concatenating
+       * `headlineLead + headlineGradient + headlineTail` reproduces the
+       * reference's sentence, including the closing full stop living in
+       * `headlineTail`. */
+      headlineLead: string;
+      headlineGradient: string;
+      headlineTail: string;
+      lede: string;
+      boardCaption: string;
     };
-    problem: {
+    proof: {
+      stat1Label: string;
+      stat2Label: string;
+      stat3Label: string;
+      stat4Label: string;
+      /** Arabic renders "24" (counted) and "شهراً" as two separate spans
+       * (Home AR (redesign).dc.html) rather than one counted-plus-suffix
+       * span like the English "24 mo" — a genuine structural asymmetry in
+       * the reference, reproduced as-is rather than normalised. */
+      stat4UnitAr: string;
+    };
+    aiQueue: {
       eyebrow: string;
       heading: string;
-      planningLabel: string;
-      planningBody: string;
-      executionLabel: string;
-      executionBody: string;
-      reportingLabel: string;
-      reportingBody: string;
+      body: string;
+      card1Badge: string;
+      card1Title: string;
+      card1Detail: string;
+      card1Log: string;
+      card2Badge: string;
+      card2Title: string;
+      card2Detail: string;
+      card2Log: string;
+      card3Badge: string;
+      card3Title: string;
+      card3Detail: string;
+      card3Log: string;
+      auditLine1: string;
+      auditLine2: string;
+      auditLine3: string;
+      auditLine4: string;
     };
     chain: {
       eyebrow: string;
       heading: string;
       sub: string;
-      objectiveName: string;
-      objectiveBody: string;
-      kpiName: string;
-      kpiBody: string;
-      initiativeName: string;
-      initiativeBody: string;
-      milestoneName: string;
-      milestoneBody: string;
-      benefitName: string;
-      benefitBody: string;
+      /** The five record cards, in order — reused both for the card content
+       * and (via `name`) the sticky counter's live name swap
+       * (scripts/recordChain.ts). */
+      record1Name: string;
+      record1Kicker: string;
+      record1Title: string;
+      record1Body: string;
+      record1Row1Label: string;
+      record1Row1Value: string;
+      record1Row2Label: string;
+      record1Row2Value: string;
+      record2Name: string;
+      record2Kicker: string;
+      record2Title: string;
+      record2Body: string;
+      record2Row1Label: string;
+      record2Row1Value: string;
+      record2Row2Label: string;
+      record2Row2Value: string;
+      record3Name: string;
+      record3Kicker: string;
+      record3Title: string;
+      record3Body: string;
+      record3Row1Label: string;
+      record3Row1Value: string;
+      record3Row2Label: string;
+      record3Row2Value: string;
+      record4Name: string;
+      record4Kicker: string;
+      record4Title: string;
+      record4Body: string;
+      record4Row1Label: string;
+      record4Row1Value: string;
+      record4Row2Label: string;
+      record4Row2Value: string;
+      record5Name: string;
+      record5Kicker: string;
+      record5Title: string;
+      record5Body: string;
+      record5Row1Label: string;
+      record5Row1Value: string;
+      record5Row2Label: string;
+      record5Row2Value: string;
     };
-    /** StageGateQueue.astro — invented product-fragment content (not sourced
-     * from the content brief, which never gives this fragment's copy), so
-     * Arabic here is authored per BUILD_FLAGS' "written, not
-     * machine-translated" rule rather than translated verbatim from a
-     * source line. */
-    stageGate: {
-      ariaLabel: string;
-      gate1Label: string;
-      gate2Label: string;
-      ownerLabel: string;
-      ownerValue: string;
-      dueLabel: string;
-      dueValue: string;
+    withoutRecord: {
+      eyebrow: string;
+      heading: string;
+      col1Figure: string;
+      col1Label: string;
+      col1Body: string;
+      col2Figure: string;
+      col2Label: string;
+      col2Body: string;
+      col3Figure: string;
+      col3Label: string;
+      col3Body: string;
     };
     ai: {
       eyebrow: string;
@@ -143,8 +218,16 @@ export interface UiStrings {
     closingCta: {
       eyebrow: string;
       heading: string;
-      sub: string;
-      caption: string;
+      body: string;
+      /** The closing CTA's own ghost link ("Write to us instead" — a mailto,
+       * distinct from `cta.secondary`'s "Follow one record"). */
+      secondaryLabel: string;
+      row1Label: string;
+      row1Body: string;
+      row2Label: string;
+      row2Body: string;
+      row3Label: string;
+      row3Body: string;
     };
   };
   /**
