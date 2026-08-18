@@ -2,9 +2,11 @@
 // AiQueue.astro — redesign wave A (Home (redesign).dc.html §4). Three
 // hue-coded suggestion cards (execution mint, strategy cyan, benefits gold)
 // with a gradient confidence bar (scaleX draw via `.tm-grow`), Accept/
-// Modify/Reject, and a mono audit line each; an audit strip below. Distinct
-// from `SuggestionCard.astro` (components/ai/), which stays untouched and
-// still backs the product pages' own single AI moment.
+// Modify/Reject, and a mono audit line each; a single mint audit line below
+// the cards (user review fix, post-redesign — see that line's own comment
+// further down). Distinct from `SuggestionCard.astro` (components/ai/),
+// which stays untouched and still backs the product pages' own single AI
+// moment.
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
 
@@ -77,6 +79,13 @@ const hueGrad: Record<string, string> = {
   cyan: isAr ? "bg-grad-cyan-rtl" : "bg-grad-cyan",
   gold: isAr ? "bg-grad-gold-rtl" : "bg-grad-gold",
 };
+
+// Audit strip (user review fix, post-redesign, revised per the user's own
+// mockup): the four-item strip read as disconnected floating fragments no
+// matter how the columns were tightened, so it is cut to the one line that
+// actually carries weight — a single mint mono sentence under a hairline
+// rule, inline-start aligned, with generous room above and below rather than
+// packed against the cards.
 ---
 
 <section class="relative w-full py-section">
@@ -188,22 +197,11 @@ const hueGrad: Record<string, string> = {
       }
     </div>
 
-    <div
-      class="tm-fade border-t border-hairline pt-5"
-      style="--d: 200ms; margin-top: clamp(28px, 3vw, 44px); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;"
+    <p
+      class="tm-fade m-0 border-t border-hairline font-mono text-datum font-data tracking-datum text-mint"
+      style="--d: 200ms; margin-top: clamp(32px, 4vw, 48px); padding-top: clamp(20px, 2.5vw, 28px);"
     >
-      <p class="font-mono text-datum font-data tracking-datum text-muted">
-        {t("home.aiQueue.auditLine1")}
-      </p>
-      <p class="font-mono text-datum font-data tracking-datum text-muted">
-        {t("home.aiQueue.auditLine2")}
-      </p>
-      <p class="font-mono text-datum font-data tracking-datum text-muted">
-        {t("home.aiQueue.auditLine3")}
-      </p>
-      <p class="font-mono text-datum font-data tracking-datum text-mint">
-        {t("home.aiQueue.auditLine4")}
-      </p>
-    </div>
+      {t("home.aiQueue.auditLine")}
+    </p>
   </div>
 </section>

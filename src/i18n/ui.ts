@@ -103,16 +103,13 @@ export const ui: UiDictionary = {
         card3Detail:
           "Benefit 4.2 is 18% below forecast two quarters after closure. The KPI stopped improving when the team was released.",
         card3Log: "Open · assigned s.alnuaimi",
-        auditLine1: "Audit · 3 of 6 decisions closed today",
-        auditLine2: "Gate 4 re-sequenced · a.almarzooqi · 09:42",
-        auditLine3: "Forecast revised · s.alnuaimi · 16:30",
-        auditLine4: "No model output entered the record unapproved",
+        auditLine: "No model output has ever entered the record unapproved.",
       },
       chain: {
         eyebrow: "Traceability",
         heading:
           "One identity, carried from the mandate down to the money.",
-        sub: "Keep scrolling and the chain moves. One objective travels the whole way down: from the sentence a minister signed to the saving a finance office can point at.",
+        sub: "One objective travels the whole way down: from the sentence a minister signed to the saving a finance office can point at.",
         record1Name: "Objective",
         record1Kicker: "01 · Objective",
         record1Title: "Digital government maturity",
@@ -169,7 +166,7 @@ export const ui: UiDictionary = {
         col3Figure: "Never",
         col3Label: "Benefits",
         col3Body:
-          "The forecast is measured after closure. The team that promised it was released before the benefit was due.",
+          "Measured against the forecast after closure. The team that promised it was released before the benefit was due.",
       },
       // UNCHANGED — still backs SuggestionCard.astro's product-page
       // defaults (`ProductPage.astro`, Strategy/Execution/Benefits). Not
@@ -193,15 +190,16 @@ export const ui: UiDictionary = {
         heading: "Bring one objective. We will trace it to the money.",
         body: "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions. Not a demo dataset.",
         secondaryLabel: "Write to us instead",
+        essentialsEyebrow: "The essentials",
         row1Label: "Deployment",
         row1Body:
-          "Sovereign on-premise or cloud, inside your own boundary.",
+          "Sovereign. On-premise or in your own cloud tenancy, inside your boundary.",
         row2Label: "Language",
         row2Body:
-          "Arabic and English, both first-class, including the reports.",
+          "Arabic and English, both first-class, reports included.",
         row3Label: "Operated by",
         row3Body:
-          "Intertec Systems, Dubai. Governance delivery for UAE and KSA entities.",
+          "Intertec Systems, Dubai. Governance delivery for UAE and Saudi entities.",
       },
     },
     // Product-page fragment labels — English exactly as authored at P6 inside
@@ -262,17 +260,25 @@ export const ui: UiDictionary = {
     contact: {
       eyebrow: "Next step",
       heading: "See it against your own plan.",
-      sub: "Send this and we will run a walkthrough on a portfolio shaped like yours, not a demo dataset.",
+      // Redesign wave B (Contact (redesign).dc.html, carried verbatim over
+      // the pre-existing "run a walkthrough... not a demo dataset" phrasing).
+      sub: "Send this and we will run the demo on a portfolio shaped like yours, not a sample dataset.",
       emailNote: "Prefer email? Write to trumandate@intertecsys.com.",
       nameLabel: "Name",
       orgLabel: "Organisation",
       emailLabel: "Work email",
       interestLegend: "What you want to see",
-      interestOption1: "Full platform walkthrough",
+      // Redesign wave A/B: CTA label site-wide is "Book a demo" (README
+      // "Implementation Notes"), and the reference's own first interest
+      // option matches — "walkthrough" retired in favour of "demo" here too.
+      interestOption1: "Full platform demo",
       interestOption2: "Strategy and KPI cascade",
       interestOption3: "Benefits realisation",
       interestOption4: "Deployment and data sovereignty",
       messageLabel: "Anything we should know",
+      // Redesign wave B: the mono footnote under the submit button, carried
+      // verbatim from Contact (redesign).dc.html.
+      footnote: "We reply from a named address, not a queue.",
       honeypotLabel: "Leave this field blank",
       submittingLabel: "Sending…",
       requiredError: "This field is required.",
@@ -383,15 +389,12 @@ export const ui: UiDictionary = {
         card3Detail:
           "المنفعة 4.2 أدنى من المتوقَّع بنسبة 18% بعد ربعين من الإغلاق. توقف المؤشر عن التحسّن حين سُرّح الفريق.",
         card3Log: "مفتوح · مُسند إلى s.alnuaimi",
-        auditLine1: "التدقيق · أُغلقت 3 من 6 قرارات اليوم",
-        auditLine2: "أعيد ترتيب البوابة 4 · a.almarzooqi · 09:42",
-        auditLine3: "رُوجعت التوقعات · s.alnuaimi · 16:30",
-        auditLine4: "لم يدخل السجل أي مخرَج للنموذج دون اعتماد",
+        auditLine: "لم يدخل السجل قط أي مخرَج للنموذج دون اعتماد.",
       },
       chain: {
         eyebrow: "التتبّع",
         heading: "هوية واحدة، تُحمل من التكليف حتى المال.",
-        sub: "تابع التمرير وتتحرك السلسلة. هدف واحد يقطع الطريق كله: من الجملة التي وُقّعت في الأعلى إلى الوفر الذي يشير إليه المكتب المالي.",
+        sub: "هدف واحد يقطع الطريق كله: من الجملة التي وُقّعت في الأعلى إلى الوفر الذي يشير إليه المكتب المالي.",
         record1Name: "الهدف",
         record1Kicker: "01 · الهدف",
         record1Title: "نضج الحكومة الرقمية",
@@ -448,7 +451,7 @@ export const ui: UiDictionary = {
         col3Figure: "أبداً",
         col3Label: "المنافع",
         col3Body:
-          "تُقاس التوقعات بعد الإغلاق، وقد سُرّح الفريق الذي وعد بها قبل موعد ظهورها.",
+          "قياس الفعلي مقابل التوقع بعد الإغلاق، وقد سُرّح الفريق الذي وعد بها قبل موعد ظهورها.",
       },
       // UNCHANGED — still backs SuggestionCard.astro's product-page
       // defaults. See the English side's comment.
@@ -471,12 +474,13 @@ export const ui: UiDictionary = {
         heading: "أحضر هدفاً واحداً، ونتتبّعه حتى المال.",
         body: "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات. لا بيانات تجريبية.",
         secondaryLabel: "راسلنا بدلاً من ذلك",
+        essentialsEyebrow: "الأساسيات",
         row1Label: "النشر",
-        row1Body: "استضافة سيادية داخلية أو سحابية، داخل حدودكم.",
+        row1Body: "سيادي. داخل مقرّك أو في سحابتك الخاصة، ضمن حدودك.",
         row2Label: "اللغة",
-        row2Body: "العربية والإنجليزية بمكانة واحدة، بما في ذلك التقارير.",
+        row2Body: "العربية والإنجليزية، كلتاهما أساسية، بما في ذلك التقارير.",
         row3Label: "التشغيل",
-        row3Body: "إنترتك سيستمز، دبي. تسليم حَوكمة لجهات الإمارات والسعودية.",
+        row3Body: "إنترتك سيستمز، دبي. تنفيذ الحوكمة لجهات الإمارات والسعودية.",
       },
     },
     // Product-page fragment labels — invented, anonymised product data with no
@@ -542,7 +546,8 @@ export const ui: UiDictionary = {
     contact: {
       eyebrow: "الخطوة التالية",
       heading: "شاهدها على خطتك أنت.",
-      sub: "أرسل النموذج وسنقدّم عرضاً على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
+      // Redesign wave B (Contact AR (redesign).dc.html, carried verbatim).
+      sub: "أرسل النموذج ونقدّم العرض على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
       emailNote: "تفضّل البريد الإلكتروني؟ راسلنا على trumandate@intertecsys.com.",
       nameLabel: "الاسم",
       orgLabel: "الجهة",
@@ -553,6 +558,9 @@ export const ui: UiDictionary = {
       interestOption3: "تحقيق المنافع",
       interestOption4: "النشر وسيادة البيانات",
       messageLabel: "أي معلومة تودّ إضافتها",
+      // Redesign wave B: the mono footnote under the submit button, carried
+      // verbatim from Contact AR (redesign).dc.html.
+      footnote: "نرد من عنوان باسم صاحبه، لا من قائمة انتظار.",
       honeypotLabel: "اترك هذا الحقل فارغاً",
       submittingLabel: "جارٍ الإرسال…",
       requiredError: "هذا الحقل مطلوب.",

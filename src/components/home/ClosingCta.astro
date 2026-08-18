@@ -1,8 +1,12 @@
 ---
 // ClosingCta.astro — redesign wave A (Home (redesign).dc.html §7). Grid
 // ground + `bg-ground-board`, the closing heading, a CTA pair, and a right
-// column of three hairline rows (Deployment / Language / Operated by). No
-// Command Centre composition here any more — CommandCentreDim.astro (the
+// column of three hairline rows (Deployment / Language / Operated by), headed
+// by a mono "The essentials" eyebrow (user review fix, post-redesign: the
+// reference ran the three rows unframed next to the CTA, which read as
+// random facts — the eyebrow announces them as a spec list, and each row's
+// body is now a complete, self-contained statement rather than a fragment).
+// No Command Centre composition here any more — CommandCentreDim.astro (the
 // pre-redesign dimmed board) is deleted alongside the rest of the old home
 // tree; the redesign's own board already lives in the hero.
 import Section from "../layout/Section.astro";
@@ -72,6 +76,12 @@ const rows = [
       </div>
 
       <div style="display: grid; gap: 0;">
+        <p
+          class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted"
+          style="padding-block-end: 10px;"
+        >
+          {t("home.closingCta.essentialsEyebrow")}
+        </p>
         {
           rows.map((row, i) => (
             <div

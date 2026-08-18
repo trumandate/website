@@ -136,10 +136,13 @@ export interface UiStrings {
       card3Title: string;
       card3Detail: string;
       card3Log: string;
-      auditLine1: string;
-      auditLine2: string;
-      auditLine3: string;
-      auditLine4: string;
+      /** The single mint mono line under the cards' hairline rule (user
+       * review fix, post-redesign, revised per the user's own mockup): a
+       * four-item strip previously lived here and read as disconnected
+       * fragments no matter how the columns were tightened, so it was cut
+       * to this one sentence — "has ever" carries the emphasis the old
+       * final item's plain present tense didn't. */
+      auditLine: string;
     };
     chain: {
       eyebrow: string;
@@ -222,6 +225,10 @@ export interface UiStrings {
       /** The closing CTA's own ghost link ("Write to us instead" — a mailto,
        * distinct from `cta.secondary`'s "Follow one record"). */
       secondaryLabel: string;
+      /** Mono eyebrow above the Deployment/Language/Operated-by column (user
+       * review fix, post-redesign): announces the three rows as a spec list
+       * rather than three unframed fragments next to the CTA. */
+      essentialsEyebrow: string;
       row1Label: string;
       row1Body: string;
       row2Label: string;
@@ -324,6 +331,10 @@ export interface UiStrings {
     interestOption3: string;
     interestOption4: string;
     messageLabel: string;
+    /** Mono footnote under the submit button (Contact (redesign).dc.html —
+     * redesign wave B, carried verbatim): "We reply from a named address,
+     * not a queue." / "نرد من عنوان باسم صاحبه، لا من قائمة انتظار." */
+    footnote: string;
     /** Visually hidden (aria-hidden) — decorative only; a real `<label>`
      * exists because the field is real markup, but no assistive-technology
      * user ever reaches it. */
