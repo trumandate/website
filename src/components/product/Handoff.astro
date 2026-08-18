@@ -15,6 +15,24 @@
 // section on a product page to anchor to — so it is not rendered here, and
 // the handoff sentence is left as the single thing competing with the button
 // for attention.
+//
+// P10 (DESIGN-ELEVATION.md §4.4): adopts the shape SovereigntyBand.astro
+// already uses on `/contact` (`border-t border-hairline pt-8`) rather than a
+// card — cards are for product surfaces, and reusing an existing shape is
+// consistency, not invention. It also makes /contact and the three product
+// pages rhyme, which they didn't before. The sentence moves to `text-paper`
+// (Lede's new `tone` prop) — "the one sentence on the page that names the
+// withheld item... should be the brightest thing in its section."
+//
+// Choreography: ProductPage.astro's existing <Reveal> still wraps this
+// component for its own whole-block arrival (unchanged); this root div is
+// ALSO a `data-reveal-group` (stagger 0.06, reveal.ts's `data-stagger`
+// override) so the sentence and the button arrive in that order rather than
+// as one simultaneous fade — a second, nested ScrollTrigger on the same
+// element/position as the outer Reveal, matching the literal "existing
+// Reveal stays; sentence → button stagger" instruction rather than removing
+// the wrapper. Reduced motion: both visible, rule present (global.css's
+// `[data-reveal-group] > *` end state, identical to `.reveal`'s).
 import Lede from "../type/Lede.astro";
 import Button from "../ui/Button.astro";
 import { useTranslations } from "../../i18n/utils";
@@ -29,8 +47,12 @@ const { lang, sentence }: Props = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div>
-  <Lede>{sentence}</Lede>
+<div
+  class="max-w-measure border-t border-hairline pt-8"
+  data-reveal-group
+  data-stagger="0.06"
+>
+  <Lede tone="paper">{sentence}</Lede>
 
   <div class="mt-8">
     <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>

@@ -19,6 +19,12 @@
 // Native `required`/`type="email"` stay on the element regardless of
 // JavaScript — see ContactForm.astro's comment on `form.noValidate` for why
 // this is what keeps a JS-disabled submission validated at all.
+//
+// P10 (DESIGN-ELEVATION.md §4.5): the border/outline transition moves from
+// the content-motion pair (`transition-colors duration-state ease-standard`)
+// to the micro tier (`transition duration-micro ease-micro`) — the states
+// themselves (the `aria-invalid:border-red` cue, the `:focus-visible` accent
+// outline) are unchanged, both information rather than motion, per spec.
 interface Props {
   id: string;
   name: string;
@@ -61,7 +67,7 @@ const errorId = `${id}-error`;
         autocomplete={autocomplete}
         aria-describedby={errorId}
         aria-invalid="false"
-        class="mt-2 w-full resize-y border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition-colors duration-state ease-standard placeholder:text-muted aria-invalid:border-red focus:border-accent"
+        class="mt-2 w-full resize-y border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition duration-micro ease-micro placeholder:text-muted aria-invalid:border-red focus:border-accent"
       />
     ) : (
       <input
@@ -72,7 +78,7 @@ const errorId = `${id}-error`;
         autocomplete={autocomplete}
         aria-describedby={errorId}
         aria-invalid="false"
-        class="mt-2 w-full border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition-colors duration-state ease-standard placeholder:text-muted aria-invalid:border-red focus:border-accent"
+        class="mt-2 w-full border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition duration-micro ease-micro placeholder:text-muted aria-invalid:border-red focus:border-accent"
       />
     )
   }

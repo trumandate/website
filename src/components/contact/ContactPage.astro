@@ -17,6 +17,15 @@
 // motion posture as the three product pages (section reveal + header rule
 // only), because a contact form has nothing that should look alive while a
 // reader is trying to fill it in.
+//
+// P10 (DESIGN-ELEVATION.md §4.1): "form section on ink; the sovereignty band
+// on a seam-up band. No glow" — the question section and the form section
+// stay plain `ink` (no `ground-rise`; that treatment is the product-page
+// skeleton's own, not this page's), and only the sovereignty band's section
+// gets `seam="up"`. `grep spotlight` must return 0 hits in this tree — spec
+// §4's per-page AI-moment table gives `/contact` no AI moment, and the
+// one-glow rule (§3.6) is tied to the AI card, so its absence here is the
+// rule working, not a gap.
 import Section from "../layout/Section.astro";
 import Reveal from "../ui/Reveal.astro";
 import Eyebrow from "../type/Eyebrow.astro";
@@ -72,7 +81,7 @@ const emailNoteHtml = t("contact.emailNote").replace(
   </div>
 </Section>
 
-<Section tight>
+<Section tight seam="up">
   <Reveal as="div">
     <SovereigntyBand lang={lang} />
   </Reveal>

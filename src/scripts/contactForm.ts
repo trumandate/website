@@ -153,8 +153,13 @@ if (form) {
     statusEl.replaceChildren();
 
     const isPositive = kind === "success";
+    // P10 (DESIGN-ELEVATION.md §4.5): this REPLACES the class list wholesale
+    // on every call, so the shadow/transition classes ContactForm.astro's
+    // static markup carries have to be repeated here, or they'd be dropped
+    // the first time any status is shown.
     statusEl.className = [
       "mb-8 rounded-control border-y border-e border-s-marker border-hairline bg-jade p-5",
+      "shadow-raised motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit",
       isPositive ? "border-s-accent" : "border-s-red",
     ].join(" ");
 
@@ -191,6 +196,22 @@ if (form) {
     }
 
     statusEl.hidden = false;
+    // P10 (DESIGN-ELEVATION.md §4.5): fade the region in (and re-fade it on
+    // every replacement — error-summary → success, etc.) via the
+    // `motion-safe:transition-opacity` class the markup/className above
+    // always carries. Reset to 0 first so a repeated call (content already
+    // visible, being replaced) fades again rather than snapping. One frame's
+    // wait (rAF) so the browser registers the 0 before animating to 1 — a
+    // synchronous `style.opacity` flip to 1 in the same tick would never
+    // transition. Purely a CSS opacity toggle, not a GSAP tween, so this
+    // needs no whenMotionSafe gate of its own: `motion-safe:` on the class
+    // already removes the transition property entirely under
+    // `prefers-reduced-motion: reduce`, and the assertive announcement/focus
+    // move below are unaffected either way.
+    statusEl.style.opacity = "0";
+    requestAnimationFrame(() => {
+      statusEl.style.opacity = "1";
+    });
     // Assertive `role="alert"` announces the content change on its own in
     // every browser/AT combination tested (P7 QA); the explicit focus move
     // is the belt-and-braces guarantee, and it's what actually delivers a

@@ -64,13 +64,26 @@ const interestOptions = [
       of the reader's own submit click, which the CLS metric explicitly
       excludes (`hadRecentInput`), so this doesn't cost the budget the way an
       unrelated layout jump would. Verified in the P7 QA pass. */}
+  {
+    /* P10 (DESIGN-ELEVATION.md §4.5): a real-DOM card gets `shadow-raised` —
+       "it is the one surface on the page that appears in direct response to
+       the reader's own action." Its show/replace transition adopts
+       `ease-exit` (the site's first real use of that token) via
+       scripts/contactForm.ts's `style.opacity` toggle — `motion-safe:` gates
+       it, so under `prefers-reduced-motion: reduce` the property never
+       enters the cascade and the region simply appears, matching every
+       other CSS-only motion-safe transition on the site (Button.astro,
+       Nav.astro). The class list here is also the JS-side default:
+       scripts/contactForm.ts's `showStatus()` REPLACES this attribute
+       wholesale on every call, so these classes are repeated there too. */
+  }
   <div
     id="form-status"
     data-form-status
     role="alert"
     tabindex="-1"
     hidden
-    class="mb-8 rounded-control border-y border-e border-s-marker border-hairline bg-jade p-5"
+    class="mb-8 rounded-control border-y border-e border-s-marker border-hairline bg-jade p-5 shadow-raised motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit"
   >
   </div>
 

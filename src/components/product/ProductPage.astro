@@ -33,6 +33,20 @@
 //
 // No spine. The rail is the home page's signature device (PLAN.md §3) and
 // repeating it here would spend the signature on every route.
+//
+// P10 (DESIGN-ELEVATION.md §4.1): the ground/seam skeleton, applied to all
+// four <Section>s identically on every product page (never per-page — the
+// whole point of this file) —
+//   1+2. question + argument: `ink` + `ground-rise` (the same backdrop
+//        fragment the home hero wires, wired here instead since this
+//        skeleton — not a per-page file — owns the section).
+//   3. the fragment: `ground="deep" seam="down"` — the fragment's own
+//      `fill-surface` now separates from a genuinely darker ground (1.48:1
+//      vs. 1.33:1 on `ink`, §4.1).
+//   4. the AI moment: `seam="up"` back to `ink`.
+//   5. the handoff: `ink` (default), no seam.
+// No `texture` anywhere here — the drafting grid is the home page's
+// hero/closing-CTA bookend device and repeating it spends it (§4.1).
 import Section from "../layout/Section.astro";
 import Reveal from "../ui/Reveal.astro";
 import Eyebrow from "../type/Eyebrow.astro";
@@ -54,19 +68,23 @@ const { lang, copy }: Props = Astro.props;
 
 {/* 1. The question + 2. the argument */}
 <Section>
+  <Fragment slot="backdrop">
+    <div class="absolute inset-0 bg-ground-rise"></div>
+  </Fragment>
+
   <Reveal as="div">
     <Eyebrow>{copy.eyebrow}</Eyebrow>
 
     <Display as="h1" class="mt-4 max-w-measure-head">
       {copy.headline}
     </Display>
-
-    <ArgumentBlock paragraphs={copy.argument} class="mt-12" />
   </Reveal>
+
+  <ArgumentBlock paragraphs={copy.argument} class="mt-12" />
 </Section>
 
 {/* 3. The fragment. One cropped SVG and a two-line caption. Nothing else. */}
-<Section tight>
+<Section tight ground="deep" seam="down">
   {/* Not wrapped in <Reveal>: the fragment carries motion #3's mask wipe of
       its own, and stacking motion #2's translate/fade on the same element
       would be two animations doing one job. The caption gets the reveal
@@ -80,7 +98,7 @@ const { lang, copy }: Props = Astro.props;
 </Section>
 
 {/* 4. The AI moment */}
-<Section>
+<Section seam="up">
   <div class="grid grid-cols-1 gap-gutter lg:grid-cols-2">
     <Reveal as="div">
       <Eyebrow>{copy.ai.eyebrow}</Eyebrow>

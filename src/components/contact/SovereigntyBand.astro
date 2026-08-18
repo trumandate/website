@@ -67,7 +67,13 @@ const { lang }: Props = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div class="max-w-measure border-t border-hairline pt-8">
+{
+  /* P10 (DESIGN-ELEVATION.md §4.5): the top rule becomes a `highlight` edge
+     rather than `hairline` — "so the band reads as a raised credential
+     rather than a stray paragraph." Decoration only, never text, so the
+     lower-contrast token carries no AA obligation. */
+}
+<div class="max-w-measure border-t border-highlight pt-8">
   <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
     {t("contact.sovereigntyEyebrow")}
   </p>

@@ -155,6 +155,12 @@ const ariaLabel = `${t("fragment.initiativeRows.ariaLabelLead")} ${rows
       rx="4"
       class="fill-surface stroke-hairline"
       stroke-width="1"></rect>
+    {
+      /* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset within
+        the card. Symmetric about the viewBox centre like the container rect
+        itself, so it needs no mirrored variant either. */
+    }
+    <rect x="9" y="11" width="442" height="1" class="fill-highlight"></rect>
 
     {
       isAr ? (

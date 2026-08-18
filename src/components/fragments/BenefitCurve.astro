@@ -93,6 +93,9 @@ const tick = isAr ? "tick-ar" : "tick";
             class="fill-surface stroke-hairline"
             stroke-width="1"
           />
+          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
+              within the card. */}
+          <rect x="-47" y="11" width="498" height="1" class="fill-highlight" />
 
           <text x="434" y="32" class={`${label} fill-muted`}>
             {t("fragment.benefitCurve.recordLabel")}
@@ -209,6 +212,9 @@ const tick = isAr ? "tick-ar" : "tick";
             class="fill-surface stroke-hairline"
             stroke-width="1"
           />
+          {/* P10 (DESIGN-ELEVATION.md §4.2): 1px top-edge highlight, inset
+              within the card. */}
+          <rect x="9" y="11" width="498" height="1" class="fill-highlight" />
 
           <text x="26" y="32" class={`${label} fill-muted`}>
             {t("fragment.benefitCurve.recordLabel")}

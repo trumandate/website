@@ -1,16 +1,23 @@
 ---
 // Lede.astro — the body role (spec §3) set at the lede size step, capped to
 // the measure width so a paragraph never runs the full 1180px column.
+//
+// `tone` (DESIGN-ELEVATION.md §4.4): the product-page/contact handoff
+// sentence is "the one sentence on the page that names the withheld item,
+// and it should be the brightest thing in its section" — `paper` rather
+// than the default `body`. An optional prop rather than a second component
+// (every other call site stays at the default and is unaffected) — the
+// same "keep one shared component" bias Rule.astro's `soft` prop follows.
 interface Props {
   as?: "p" | "div";
+  tone?: "body" | "paper";
   class?: string;
 }
 
-const { as: Tag = "p", class: className }: Props = Astro.props;
+const { as: Tag = "p", tone = "body", class: className }: Props = Astro.props;
+const toneClass = tone === "paper" ? "text-paper" : "text-body";
 ---
 
-<Tag
-  class:list={["max-w-measure text-lede font-light text-body", className]}
->
+<Tag class:list={["max-w-measure text-lede font-light", toneClass, className]}>
   <slot />
 </Tag>

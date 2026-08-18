@@ -540,6 +540,86 @@ Log every such choice under "Decisions taken" below.
 
 - 2026-08-18 (P10, user directive): design-elevation phase opened. The user judges the shipped motion too sparse and not smooth enough; spec §7's "complete list" cap on the motion inventory is RELAXED by user instruction. Unchanged and still binding: transforms/opacity only, reduced-motion real branch, accessibility 100, spec §9 budgets, token-only colour, curiosity ledger, no photography. Research dossier from best-in-class product sites (firecrawl + chrome-devtools) feeds a written elevation spec before any implementation. shadcn MCP added to .mcp.json at user request (reference/registry use; shadcn React components are NOT imported into this zero-React Astro site — see P10 scope note).
 
+- 2026-08-18 (P10 wave 2 — product pages and contact): `ProductPage.astro`'s
+  first `<Section>` (parts 1+2, the question + argument) is restructured so
+  the `<Reveal>` wraps only the eyebrow/h1, with `ArgumentBlock` rendered as
+  a sibling after it — matching `FailureModes.astro`'s established
+  intro-`<Reveal>`-plus-sibling-`data-reveal-group` shape (P10 wave 1)
+  rather than nesting a staggered group inside the standard reveal. The
+  ground-rise backdrop is wired via the same `Fragment slot="backdrop"`
+  pattern the home hero uses, inside `ProductPage.astro` itself (not a
+  per-page file), since this shared skeleton — not `/strategy` /
+  `/execution` / `/benefits`'s own thin wrapper files — is what "owns" the
+  section per this file's own P6 decision above.
+- 2026-08-18 (P10 wave 2): `scripts/reveal.ts`'s `data-reveal-group` handler
+  gained an optional `data-stagger` attribute (seconds, e.g. `"0.08"`) read
+  off the group element, overriding the existing 0.06/0.03 default derived
+  from child count. Chosen over hard-coding a second magic number or forking
+  a second group-handler function — one function, one new optional input,
+  backward compatible with `FailureModes.astro`'s existing (attribute-less)
+  group, which keeps its default. `ArgumentBlock.astro`'s paragraph stack
+  uses `data-stagger="0.08"` (§4.3c's own value, "longer... because these
+  are long blocks and the reader dwells"); `Handoff.astro`'s sentence→button
+  group uses `data-stagger="0.06"` (the canonical stagger token, stated
+  explicitly rather than left to the default for the same value).
+- 2026-08-18 (P10 wave 2): `Rule.astro` gained an optional `soft` prop
+  (`border-hairline-soft` instead of `border-hairline`) and `Lede.astro`
+  gained an optional `tone` prop (`"body"` default, `"paper"` opt-in) rather
+  than either being forked into a second component or a one-off inline
+  element duplicating their markup. Per BUILD_FLAGS' "keep one shared
+  component rather than creating a variant" — every existing call site
+  (`FailureModes.astro`'s three rules, `ContactPage.astro`'s/`Hero.astro`'s
+  ledes) is unaffected, since both props default to today's behaviour.
+- 2026-08-18 (P10 wave 2): `Handoff.astro`'s sentence→button stagger is
+  implemented as a `data-reveal-group` on Handoff's OWN root div, left
+  NESTED inside `ProductPage.astro`'s pre-existing `<Reveal>` wrapper —
+  read literally from §4.4's "Existing `<Reveal>` stays; sentence → button
+  stagger at 0.06," rather than replacing the wrapper with the group (the
+  alternative — dropping the outer `<Reveal>` and letting the group's own
+  first child carry the arrival — was rejected because the spec's own words
+  say the Reveal "stays," and because it would diverge from every other
+  file's precedent of adding the group as a plain sibling rather than
+  reusing the exact wrapper). Verified: two independent ScrollTriggers at
+  the same effective position, both firing once, no visible fighting
+  (nested opacity/translate compose normally in the render tree).
+- 2026-08-18 (P10 wave 2): `ContactForm.astro`'s status region's `ease-exit`
+  adoption is scoped to a symmetric show/replace opacity fade
+  (`motion-safe:transition-opacity duration-state ease-exit`, toggled via
+  `scripts/contactForm.ts` resetting `style.opacity` to `0` then rAF-ing to
+  `1` on every `showStatus()` call) rather than a true asymmetric
+  dismiss-then-reveal sequence. Per the ambiguity order's "remove rather
+  than add" and "fewer kilobytes": building the literal dismiss-then-show
+  behaviour would require delaying the actual `replaceChildren()` content
+  swap and the assertive `role="alert"` re-announcement/focus-move behind a
+  timer, risking the exact keyboard/AT behaviour P7 and P8 spent two
+  sessions verifying, for a visual difference no reader would actually see
+  (the old content's pixels are already gone by the time any fade could
+  render, since the swap happens synchronously). Logged in TODO.md as a
+  scoping decision, not a silent partial implementation.
+- 2026-08-18 (P10 wave 2): `SovereigntyBand.astro`'s top rule changes from
+  `border-hairline` to `border-highlight` per §4.5's literal instruction
+  ("becomes a `highlight` top edge") — a full replacement, not an addition
+  of a second rule layered on the first, since the section's own prose
+  states the treatment supersedes rather than joins the hairline.
+- 2026-08-18 (P10 wave 2, tooling note): the task's fragment-fidelity
+  mandate named a "DesignSync" tool, loadable via `ToolSearch`, to fetch the
+  real platform UI kit from Claude Design project
+  `c14a7f00-8160-4bca-9370-fda4d8f05d0a` for a genuine side-by-side fidelity
+  check against `KpiCard.astro`/`InitiativeRows.astro`/`BenefitCurve.astro`/
+  `StageGateQueue.astro`/`CommandCentreDim.astro`. No such tool surfaced via
+  `ToolSearch` in this session (tried `select:DesignSync`, keyword
+  variants, and `mcp__design`-prefixed searches) — confirmed unavailable,
+  not merely unused. This repo's own `.design-sync/config.json` (a
+  DIFFERENT, unrelated sync target — its own note: "never sync this repo
+  into" the product design system) proves the DesignSync integration exists
+  in principle on this machine, which is why this is logged as a tooling
+  gap rather than a misnamed tool. Per CLAUDE.md's "if a spec contradicts
+  the code, stop and say so": the fidelity check was NOT silently skipped
+  or silently faked — it fell back to the only available ground truth
+  (`trumandate-product-pages.md`'s curiosity ledger, spec §5), confirmed
+  all five fragments still match it, and the real-UI comparison is logged
+  as still-owed in TODO.md.
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)

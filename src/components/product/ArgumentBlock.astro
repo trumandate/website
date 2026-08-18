@@ -13,6 +13,33 @@
 // Capped at `measure` (56ch, tailwind.config.mjs) rather than the 1180px
 // column, so the line length stays readable at 1440 — the same cap
 // Lede.astro applies.
+//
+// P10 (DESIGN-ELEVATION.md §4.3), three moves, none of them a new type role:
+//   (a) a full-width `hairline-soft` <Rule> between the page's <h1> (rendered
+//       by ProductPage.astro, immediately above this component) and the
+//       first paragraph — "acknowledges the column change" from the wide
+//       header to the narrow measure-capped prose, rather than leaving the
+//       inline-end half of the viewport looking like text that failed to
+//       fill its space. Rendered at this component's own root, OUTSIDE the
+//       `max-w-measure` wrapper below, so it spans the full content column
+//       (1180px) rather than the 56ch measure.
+//   (b) the first paragraph takes the `lede` size step in `text-paper`
+//       (critique finding #4's fix, applied where the site has the most
+//       text); paragraphs 2–n stay at `body`/`text-body`.
+//   (c) the paragraph stack becomes a `data-reveal-group` staggered at 0.08s
+//       (longer than the 0.06 default — "these are long blocks and the
+//       reader dwells," §4.3c) via reveal.ts's `data-stagger` override,
+//       separate from the eyebrow+h1's own standard <Reveal> in
+//       ProductPage.astro (that Reveal wraps only the eyebrow/h1 now; this
+//       group is its own sibling trigger, matching FailureModes.astro's
+//       established intro-Reveal / group-stagger split).
+//
+// Reduced motion: `[data-reveal-group] > *` (global.css) is the group's
+// unconditional CSS end state — every paragraph visible at full opacity,
+// the rule present, the first paragraph at its larger size — identical with
+// JS disabled.
+import Rule from "../ui/Rule.astro";
+
 interface Props {
   paragraphs: string[];
   class?: string;
@@ -21,12 +48,22 @@ interface Props {
 const { paragraphs, class: className }: Props = Astro.props;
 ---
 
-<div class:list={["max-w-measure", className]}>
-  {
-    paragraphs.map((paragraph, index) => (
-      <p class:list={["text-body font-light text-body", index > 0 && "mt-6"]}>
-        {paragraph}
-      </p>
-    ))
-  }
+<div class:list={[className]}>
+  <Rule soft class="mb-8" />
+  <div class="max-w-measure" data-reveal-group data-stagger="0.08">
+    {
+      paragraphs.map((paragraph, index) => (
+        <p
+          class:list={[
+            index === 0
+              ? "text-lede font-light text-paper"
+              : "text-body font-light text-body",
+            index > 0 && "mt-6",
+          ]}
+        >
+          {paragraph}
+        </p>
+      ))
+    }
+  </div>
 </div>

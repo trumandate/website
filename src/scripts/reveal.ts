@@ -39,8 +39,20 @@ whenMotionSafe(() => {
     if (blocks.length === 0) return;
 
     // The dossier's own ceiling: beyond ~8 children a 60ms step reads
-    // laggy, so longer groups halve it.
-    const stagger = blocks.length > 8 ? 0.03 : 0.06; // transitionDelay.stagger, or its stated half
+    // laggy, so longer groups halve it. A group can name its own step via
+    // `data-stagger` (seconds) when its content warrants a different value —
+    // e.g. ArgumentBlock.astro (DESIGN-ELEVATION.md §4.3c) uses 0.08s for its
+    // long paragraph blocks, "longer than the 0.06 default because these are
+    // long blocks and the reader dwells." Omit the attribute to keep the
+    // default 0.06/0.03 behaviour (FailureModes.astro, unchanged).
+    const overridden = group.dataset.stagger
+      ? Number.parseFloat(group.dataset.stagger)
+      : NaN;
+    const stagger = Number.isFinite(overridden)
+      ? overridden
+      : blocks.length > 8
+        ? 0.03
+        : 0.06; // transitionDelay.stagger, or its stated half
 
     const tl = gsap.timeline({
       scrollTrigger: {

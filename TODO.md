@@ -235,15 +235,37 @@ and will be addressed as the pages that touch them get built (P2 onward).
   the inline-start edge by itself AND mixed strings such as "آخر 6 فترات" get
   their natural Arabic bidi order instead of being laid out in an LTR
   paragraph. See the new item below about aligning StageGateQueue with this.
-- **The three fragments are specifications, not transcriptions.** Spec §5's
-  fidelity rule says that where the real Echelons UI exists the SVG is
-  authored against a screenshot of it, and where it does not, "the fragment is
-  a specification the UI must be built toward, not licence for marketing to
-  invent a nicer product". No screenshot of the real KPI card, portfolio list
-  or benefit curve was available this session, so all three were authored from
-  the field lists in `trumandate-product-pages.md` and spec §5. Each needs a
-  side-by-side check against the actual product before launch — flagged for
-  the reviewer in COPY-REVIEW.md too.
+- ~~**The three fragments are specifications, not transcriptions.**~~
+  Re-attempted at P10 wave 2, per the wave's explicit fragment-fidelity
+  mandate — **still not closeable against the real product**, for a
+  documented reason rather than a skipped step. The task named a Claude
+  Design "TruMandate Design System" project (id
+  `c14a7f00-8160-4bca-9370-fda4d8f05d0a`) holding the real platform's
+  `ui_kits/trumandate-platform/` component files and instructed loading a
+  "DesignSync" tool via `ToolSearch` to fetch them read-only. `ToolSearch`
+  (tried against `DesignSync`, `design sync get_file`, `mcp__design`, and
+  keyword variants) surfaced no such tool in this session — it is not
+  available to call, regardless of the fact that this repo's own
+  `.design-sync/config.json` proves a DesignSync integration exists for
+  *this* project (a different, unrelated sync target — that config's own
+  note is explicit: "the separate pre-existing project 'TruMandate Design
+  System' ... is the PRODUCT design system — never sync this repo into it").
+  With no reference imagery reachable, the only available ground truth
+  remained what P6 already had: `trumandate-product-pages.md`'s curiosity
+  ledger and spec §5's fidelity rule. Re-checked line by line against
+  `KpiCard.astro`, `InitiativeRows.astro` and `BenefitCurve.astro` as they
+  stand today — label/baseline/target/actual/RAG-dot/sparkline (KPI card),
+  three RAG-dotted progress rows cropped mid-list with one row red
+  (initiative rows), and the forecast-vs-actual curve with measurement
+  window and today marker, no value/time axis (benefit curve) — all three
+  still match their ledger entries exactly, which is what spec §5 sanctions
+  when no real-UI screenshot exists ("the fragment is a specification the UI
+  must be built toward"). Per §4.2's elevation recipe, each fragment's card
+  `<rect>` gained a 1px `fill-highlight` top-edge sibling this wave (the
+  ledger-sanctioned chrome/light-catch change, not a data change), verified
+  inset within the existing crop in every case. **Verdict: spec-consistent,
+  not verified against the real UI — re-attempt when the DesignSync tool (or
+  direct access to project `c14a7f00-…`) is actually callable.**
 - **Fragment type is small at 375px.** The three fragments are `w-full
   max-w-[560px]` over a 460-unit viewBox, so at a 375 viewport their 10–11px
   user-space labels render at roughly 7–8px. That is the same band
@@ -334,12 +356,23 @@ and will be addressed as the pages that touch them get built (P2 onward).
   now depend on `direction: rtl` resolving `text-anchor` inside SVG `<text>`,
   which is precisely the kind of thing that diverges. The English siblings are
   unaffected either way.
-- **The fragments' side-by-side check against the real product now covers two
-  languages.** Carried from P6: no screenshot of the real KPI card, portfolio
-  list or benefit curve was available, so all three are specifications rather
-  than transcriptions (spec §5). The Arabic adds a second question to that
-  review — whether the real Arabic UI mirrors these surfaces at all, and
-  whether its own column order and labels match what is drawn here.
+- ~~**The fragments' side-by-side check against the real product now covers two
+  languages.**~~ Re-attempted at P10 wave 2 alongside the P6 item above, same
+  outcome for the same reason: the DesignSync tool named in the wave's own
+  fidelity mandate did not surface via `ToolSearch` in this session (see the
+  P6 item's fuller writeup), so the Arabic question this item raises — whether
+  the real Arabic UI mirrors these surfaces, and whether its column order and
+  labels match what's drawn here — could not be checked against real Arabic
+  reference imagery either. The Arabic geometry itself was re-confirmed
+  internally consistent with its own English sibling (same field set, same
+  RTL mirror rules, `known-issues.md`'s P5/P6-AR entries) and gained the same
+  §4.2 highlight-rect treatment, mirrored where the fragment's own geometry
+  is mirrored (KpiCard's two RTL card rects; InitiativeRows' single container
+  rect is symmetric and needs no mirrored variant; BenefitCurve's one
+  mirrored plot-card rect). Closing this as "checked, blocked on tooling" per
+  the wave's own instruction to report the fidelity verdict honestly rather
+  than silently marking it done or silently dropping it — not closing it as
+  "verified against the real product," which remains untrue.
 
 ## From P7 (`/contact`, both languages)
 
@@ -559,3 +592,80 @@ and will be addressed as the pages that touch them get built (P2 onward).
   this was not re-measured against the untouched baseline for a clean
   before/after — worth doing in wave 3's full re-verification pass if frame
   performance becomes a concern.
+
+## From P10 wave 2 (design elevation — product pages and contact)
+
+- **The DesignSync fragment-fidelity mandate could not be completed as
+  instructed — the tool is not callable in this session.** Full writeup
+  under this file's P6/P6-AR sections (now closed with that caveat rather
+  than silently). Re-attempt once `ToolSearch` actually surfaces a
+  `DesignSync`-named tool (or once Piyush can supply screenshots/exports of
+  `ui_kits/trumandate-platform/` from Claude Design project
+  `c14a7f00-8160-4bca-9370-fda4d8f05d0a` some other way) — at that point the
+  check is a straightforward side-by-side against `KpiCard.astro`,
+  `InitiativeRows.astro`, `BenefitCurve.astro`, `StageGateQueue.astro` and
+  `CommandCentreDim.astro`, all five of which are otherwise unchanged this
+  wave beyond the §4.2 highlight-rect elevation (the first three) and were
+  left alone entirely (the last two — no wave-1 rework, per this wave's own
+  instruction).
+- **`ContactForm.astro`'s `ease-exit` adoption (§4.5) is scoped to the
+  status region's show/replace fade-in, not a true asymmetric
+  dismiss-then-show sequence.** DESIGN-ELEVATION.md's own prose calls
+  `ease-exit` "ease-IN only... dismiss/hide," which argues for a visible
+  fade-OUT of old content before new content replaces it — but the region's
+  content is replaced synchronously (`replaceChildren()`) in the same tick a
+  fresh `showStatus()` call runs, so there is no old-content pixel for a
+  reader to see fade away regardless of timing; building a real staged
+  fade-out-then-swap would mean delaying the actual content swap (and the
+  assertive `role="alert"` re-announcement + focus move) behind a timer,
+  which risks the exact focus/tab-order/re-announcement behaviour P7/P8
+  spent two sessions verifying. Implemented instead: `motion-safe:
+  transition-opacity duration-state ease-exit` on the region, with
+  `scripts/contactForm.ts` resetting `style.opacity` to `0` and rAF-ing it
+  to `1` on every `showStatus()` call, so first-appearance AND
+  content-replacement both fade in with the new token — the safer half of
+  the recipe, logged here as a scoping decision rather than silently
+  claimed as the full asymmetric behaviour the spec's prose describes.
+- **No WebKit pass on the four wave-2 routes.** Same standing constraint
+  carried from every prior phase (P4 onward) — still Chromium-bound this
+  session. None of these routes has a pin or a scrub, so the historical
+  Safari risk is lower than the home page's, but the fragment wipe (an SVG
+  `<mask>` moved by `transform`) and the new `ease-exit`/`motion-safe`
+  CSS-only transitions are worth a real Safari pass in wave 3.
+- **A clean throttled (Slow 4G + 4× CPU) LCP re-measure is still owed**,
+  the standing item carried since P6. This session measured Fast 4G with no
+  CPU throttle only (chrome-devtools MCP, production build, scratch server
+  port 4326): every wave-2 route's LCP fell between 115–170ms, CLS 0.00 on
+  all ten routes checked (the four wave-2 routes + home, both languages) —
+  comfortably inside every budget, but not the heavier profile the standing
+  item asks for.
+- **A shared-browser interference source was identified and worked around,
+  not eliminated.** This machine runs an autonomous DesignSync-adjacent
+  watcher (`.design-sync/` config confirms a "TruMandate Website DS" sync
+  project exists for this repo) that opens and navigates pages in the SAME
+  chrome-devtools MCP browser instance concurrently with this session's own
+  verification — confirmed by watching page IDs cycle through exactly the
+  component names being edited this session (`Button`, `Section`, `KpiCard`,
+  `FormField`, `CommandCentreDim`, …) at a URL neither this session nor its
+  task opened. It silently corrupted the FIRST opacity-audit run on
+  `/en/strategy` (transient near-zero readings on the AI card's Accept/
+  Modify/Reject buttons that did not reproduce in an isolated browser
+  context with an href-unchanged integrity check) — a false alarm, chased
+  down empirically (a `git stash` pre/post comparison and direct inline-
+  style inspection both cleared the component) rather than assumed. Every
+  browser-driven check after that point used a dedicated
+  `isolatedContext` per page plus a `location.href` sameness check woven
+  into each script, and all 20 opacity-audit runs (10 routes × 2 viewports)
+  came back clean. Flagging the root cause here rather than only the
+  workaround: a future session's browser automation on this machine should
+  expect the same interference and budget for it.
+- **`resize_page` does not reliably produce the requested CSS viewport width
+  on this machine** (Windows, 150% OS display scaling) — measured
+  `window.innerWidth` values of 501px and 1283px after requesting 375 and
+  1440 respectively. `mcp__chrome-devtools__emulate`'s explicit `viewport`
+  string (e.g. `"375x812x2,mobile,touch"`, `"1440x900x1"`) produced the
+  exact requested width reliably instead and was used for every measurement
+  this session from the point of discovery onward. Worth carrying forward:
+  a future session on this machine should reach for `emulate`, not
+  `resize_page`, and re-verify with a quick `window.innerWidth` read before
+  trusting a viewport-dependent measurement.

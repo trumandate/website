@@ -851,3 +851,147 @@ layer, whose `-inset-12` intentionally bleeds past the card's edges but is
 enlarge the document's own scrollable area (confirmed:
 `document.documentElement.scrollWidth === window.innerWidth` exactly at
 375/768/1440, both languages). No real overflow at any checked breakpoint.
+
+## P10 wave 2
+
+**A shared-browser interference source produced a false-positive "hung
+tween" reading identical in shape to the wave-1 defect, and was chased down
+empirically rather than assumed to be a repeat of the same bug.** The first
+full-scroll opacity audit on `/en/strategy` (this wave's own methodology,
+carried from wave 1) showed the AI moment's Accept/Modify/Reject buttons at
+opacity 0–0.35 after a scripted scroll-to-bottom-and-back — the same visual
+signature as the wave-1 CSS-transition-fights-GSAP-stagger bug. It is NOT a
+repeat: those three buttons carry `transition-colors` (Tailwind's
+`color`/`background-color`/`border-color`/`text-decoration-color`/`fill`/
+`stroke` set, confirmed via `getComputedStyle().transitionProperty` — no
+`opacity`, no `transform`), which is exactly the property list wave 1's own
+finding said was immune. Isolated in a dedicated browser context
+(`isolatedContext`, chrome-devtools MCP) with a `location.href`-unchanged
+integrity check woven into the test script, the same scroll sequence
+produced zero offenders, repeatably, across every route/language/viewport
+combination checked afterward. Root cause: this machine runs an autonomous
+DesignSync-adjacent watcher for this repo (`.design-sync/config.json`
+confirms a "TruMandate Website DS" sync project exists here) that opens and
+navigates pages in the SAME chrome-devtools MCP browser instance
+concurrently with this session — confirmed directly by watching page IDs
+cycle through exactly the component names being edited this session
+(`Button`, `Section`, `KpiCard`, `FormField`, `CommandCentreDim`, …) at
+URLs neither this session nor its task ever requested, including one
+instance where a page THIS session had just created (by ID) was silently
+re-navigated to an unrelated component-preview URL between two tool calls.
+A long-running, multi-second `evaluate_script` (the scroll-and-settle
+pattern) run on a shared, non-isolated page is exactly the shape of
+operation vulnerable to this: if the watcher navigates the same tab away
+and back mid-script, in-flight `await sleep()` continuations resume against
+a different `document`/`window than the one the tween was created against,
+producing exactly the "some elements mid-flight, values that don't fit a
+clean before/after" pattern seen here. Every measurement after this
+diagnosis used a dedicated `isolatedContext` per page and confirmed
+`location.href` sameness inside the same script that reads the audit
+result — 20/20 opacity-audit runs (5 routes × 2 languages × 2 viewports)
+came back clean under that protocol. Not treated as "wave 2 has no
+defects" on faith — the isolation and the integrity check are exactly what
+would have caught a genuine regression, and did not.
+
+**`resize_page` does not reliably produce the requested CSS viewport width
+on this machine (Windows, 150% OS display scaling); `emulate`'s explicit
+viewport string does.** Requesting 375×812 via `resize_page` measured
+`window.innerWidth` at 501px in one context and 391–403px in another
+(inconsistent, both wrong); requesting 1440×900 the same way measured
+1283px. Switching to `mcp__chrome-devtools__emulate` with an explicit
+`"<width>x<height>x<dpr>[,mobile,touch]"` viewport string produced the
+exact requested width every time, verified directly via
+`window.innerWidth` before trusting any further measurement. One residual,
+already-precedented artefact even with `emulate`: at 375-emulated width,
+`window.innerWidth`/`scrollWidth` sometimes read ~16px wider than
+`document.documentElement.clientWidth` (which reads exactly 375) — the
+same desktop-Chrome reserved-scrollbar discrepancy this file's P10-wave-1
+section already documented in the opposite direction, not a new defect and
+not something wave 2 introduced (reproduced on the untouched home page,
+which this wave did not modify).
+
+**The full wave-1 opacity-audit methodology, re-run on all four wave-2
+routes plus home (regression), both languages, 1440 and 375 — 20 runs, zero
+offenders in every one.** Every text-bearing leaf inside `<main>`
+(`aria-hidden` excluded), cumulative computed opacity across every
+ancestor, measured after a scripted full scroll-through and back to top:
+`/en/strategy` 34 elements, `/en/execution` 36, `/en/benefits` 26,
+`/en/contact` 17 — identical counts on the Arabic siblings — and `/en/`
+59 / `/ar/` 59 (matching wave 1's own recorded baseline exactly, confirming
+no regression from wave 2's shared-component changes to `Rule.astro`,
+`Lede.astro`, `scripts/reveal.ts`).
+
+**LCP/CLS, Fast 4G, no CPU throttle, production build served from `dist/`
+on the scratch static server (port 4326 — the user's dev server on 4321
+untouched), 1440×900, chrome-devtools MCP:**
+
+| Route | LCP | CLS |
+| --- | --- | --- |
+| `/en/strategy` | 144 ms | 0.00 |
+| `/en/execution` | 138 ms | 0.00 |
+| `/en/benefits` | 134 ms | 0.00 |
+| `/en/contact` | 115 ms | 0.00 |
+| `/ar/strategy` | 163 ms | 0.00 |
+| `/ar/execution` | 160 ms | 0.00 |
+| `/ar/benefits` | 158 ms | 0.00 |
+| `/ar/contact` | 121 ms | 0.00 |
+| `/en/` (regression) | 154 ms | 0.00 |
+| `/ar/` (regression) | 170 ms | 0.00 |
+
+Every route's LCP element is text (the page's own `<h1>`, per every prior
+session's finding), TTFB 2–3ms in every run, comfortably inside spec §9's
+2.0s budget and DESIGN-ELEVATION.md §6.2's carried-forward figures. Not a
+substitute for the still-owed Slow 4G + 4× CPU pass on an idle machine
+(carried since P6).
+
+**Lighthouse accessibility 100 on both sampled routes.** `/en/strategy`:
+accessibility/best-practices/SEO/agentic-browsing all 100, 51/51 audits
+passed. `/ar/contact`: same four categories all 100, 54/54 audits passed.
+
+**Reduced motion verified on `/en/execution`** by stubbing `matchMedia`
+before any script ran (the established technique, corrected this session —
+the first stub attempt threw `Cannot set property matches of
+#<MediaQueryList> which has only a getter` from trying to `Object.assign`
+onto a real `MediaQueryList`; fixed by returning a plain object literal
+implementing the same interface instead of cloning the real one): all 12
+`<main> p` elements at `opacity: 1`, the argument rule at `opacity: 1` /
+`transform: none`, the fragment's wipe mask at `transform: none` (fully
+open), the AI card, its confidence bar and all three Accept/Modify/Reject
+buttons at `opacity: 1` / `transform: none`, and the Handoff button at
+`opacity: 1` — every wave-2 addition already in its served end state, JS
+failure and reduced motion producing the identical page. The two-tone
+argument paragraph was confirmed correct in the same pass: first paragraph
+19.2px / `rgb(241,245,243)` (`text-lede`/`text-paper`), second 16px /
+`rgb(198,218,211)` (`text-body`/`text-body`), rule colour
+`rgba(255,255,255,0.06)` (`hairline-soft`) — all three exactly the tokens
+§4.3 specifies.
+
+**Keyboard tab order on `/en/contact` re-verified unchanged after touching
+`ContactForm.astro` and `FormField.astro`.** Walked the DOM/tabindex order
+programmatically: 8 header stops, then the mailto link, then the three
+text fields, then the four interest radios (native one-stop-group
+behaviour unaffected), then the message field, then submit — identical
+shape to the P7/P8 finding. The honeypot input (`tabindex="-1"`) does not
+appear in the walk, confirming it is still excluded.
+
+**Standing greps re-run clean, with two nuances worth recording rather than
+just the raw counts.** `grep -c data-fragment` naively returns "2" per
+product-page route because the substring also matches
+`data-fragment-wipe`; the exact-attribute count (`data-fragment(=|>|\s)`)
+is 1 per product page and 1 on home (both languages), matching the
+curiosity ledger exactly. `grep spotlight` on the built contact pages also
+returns a nonzero count at first glance — but that hit is the
+`.bg-spotlight-accent` CSS utility RULE ITSELF, present in every route's
+inlined stylesheet because `astro.config.mjs`'s `inlineStylesheets:
+'always'` (P4) ships one shared bundle into every page regardless of
+whether that page uses every class in it. Neither `data-ai-glow` nor any
+`class="…spotlight…"` usage appears anywhere in the built
+`/en/contact`/`/ar/contact` markup — confirmed by grepping for the class
+usage specifically, not the bare substring — so "no glow on /contact"
+holds. Physical-direction and hex-outside-config greps: zero real hits,
+same pre-existing comment-prose matches as every prior section. Built
+`/en/{strategy,execution,benefits}` HTML, tag/class structure diffed with
+per-route attribute values (href/lang/aria-label/id) normalised: identical
+across all three except each page's own one fragment's internal SVG
+markup — confirming the one-skeleton invariant holds with zero structural
+divergence beyond the fragment slot itself.

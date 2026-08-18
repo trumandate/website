@@ -11,17 +11,25 @@
 // `:global([dir="rtl"])` scoped-style pattern SuggestionCard.astro already
 // established at P5. Harmless on every other Rule instance that never
 // animates: an unused transform-origin has no visible effect.
+//
+// `soft` (DESIGN-ELEVATION.md §4.3a): the product-page argument column's
+// rule is decoration acknowledging a layout change, not a content-level
+// boundary, so it uses `hairline-soft` (§2.1: "chrome/decoration only")
+// rather than `hairline`. An optional prop rather than a second component —
+// BUILD_FLAGS' "keep one shared component rather than creating a variant."
 interface Props {
   dashed?: boolean;
+  soft?: boolean;
   class?: string;
 }
 
-const { dashed = false, class: className }: Props = Astro.props;
+const { dashed = false, soft = false, class: className }: Props = Astro.props;
 ---
 
 <hr
   class:list={[
-    "m-0 border-0 border-t border-hairline",
+    "m-0 border-0 border-t",
+    soft ? "border-hairline-soft" : "border-hairline",
     dashed ? "border-dashed" : "border-solid",
     className,
   ]}
