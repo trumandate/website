@@ -3,5 +3,6 @@
   "projectName": "TruMandate Website DS",
   "shape": "package",
   "pkg": ".",
+  "readmeHeader": ".design-sync/conventions.md",
   "notes": "Off-script sync: this repo is a zero-React static Astro site. Components are .astro templates and are NOT bundled as executable React (no _ds_bundle.js of real components — shipping fake ones was ruled out with the user 2026-08-18). The sync carries: tokens (from tailwind.config.mjs, emitted as CSS custom properties), self-hosted IBM Plex fonts, compiled site CSS reachable from styles.css, per-component doc cards (.html preview + .prompt.md) authored from the real site markup, README with conventions header. No _ds_sync.json anchor is emitted (off-script generation; next sync re-verifies everything — the honest choice per the skill). The separate pre-existing project 'TruMandate Design System' (c14a7f00-8160-4bca-9370-fda4d8f05d0a) is the PRODUCT design system — never sync this repo into it."
 }

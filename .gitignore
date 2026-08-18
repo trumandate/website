@@ -32,5 +32,14 @@ screenshots/
 # firecrawl CLI scratch output (signed URLs, no durable content)
 .firecrawl/
 
+# Claude Design sync — generated bundle output and machine state. The
+# durable set (config.json, NOTES.md, conventions.md, previews/, overrides/)
+# is NOT covered by this and stays committed.
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+
 # design-sync local bundle output (uploaded via DesignSync, not site source)
 ds-bundle/
