@@ -6,8 +6,10 @@
 //
 // Posts to Formspree via the `action` attribute (spec §6's own line: "Posts
 // to Formspree with fetch"), reading the endpoint from
-// `PUBLIC_FORMSPREE_ENDPOINT` (BUILD_FLAGS default; `.env`'s placeholder
-// value ships as-is, logged in TODO.md). The `action` attribute is not
+// `PUBLIC_FORMSPREE_ENDPOINT`, falling back to the live endpoint so a build
+// without the env var (e.g. Cloudflare CI) still posts somewhere real — the
+// endpoint is public by design, it ships in this very attribute. The env var
+// remains the override for staging/testing. The `action` attribute is not
 // decorative: it is the entire submission path for a reader with JavaScript
 // disabled, since `<form action method>` needs no script to POST. See
 // scripts/contactForm.ts for how the two paths (native POST vs. fetch)
@@ -50,7 +52,8 @@ const interestOptions = [
 <form
   id="contact-form"
   data-contact-form
-  action={import.meta.env.PUBLIC_FORMSPREE_ENDPOINT}
+  action={import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ??
+    "https://formspree.io/f/meajpeja"}
   method="POST"
 >
   {/* Assertive, focus-moved status region for BOTH a failed-validation
