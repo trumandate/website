@@ -77,7 +77,7 @@ const dir = isAr ? "rtl" : "ltr";
   aria-label={c.ariaLabel}
   class:list={["cc-board relative overflow-hidden", className]}
   data-cc-board
-  style="-webkit-text-size-adjust: none; text-size-adjust: none;"
+  style="-webkit-text-size-adjust: 100%; text-size-adjust: 100%;"
 >
   <div class="overflow-hidden">
     <div style="min-width: 1000px;">
@@ -359,15 +359,25 @@ const dir = isAr ? "rtl" : "ltr";
        overflow their tiles" symptom on real devices). `html`'s own
        `text-size-adjust: 100%` (global.css) is a no-op already, but pin it
        explicitly here so nothing upstream can re-enable boosting for this
-       one fragment — as an inline style on the root div below, not here:
-       the build's CSS minifier collapses a same-value
+       one fragment.
+
+       The value is `100%`, NOT `none`. That distinction is the whole bug:
+       iOS WebKit deliberately treats `-webkit-text-size-adjust: none` as
+       `auto` — Apple does not let a page switch text scaling off that way
+       — so declaring `none` here silently *re-enabled* boosting on iPhone
+       by overriding the inherited `100%` that was already suppressing it.
+       Reported from a real iPhone 15 Pro Max: every board label inflated
+       ~2x and wrapped, while Chrome device emulation looked correct
+       (Chromium's device mode does not emulate WebKit autosizing at all,
+       so this class of bug is invisible there by construction).
+
+       Declared as an inline style on the root div below, not here: the
+       build's CSS minifier collapses a same-value
        `-webkit-text-size-adjust` + `text-size-adjust` pair in a stylesheet
-       down to just the unprefixed one, and Chromium's actual boosting
-       behavior only reads the `-webkit-` form, so the rule as authored
-       here would look correct in source but do nothing after build
-       (verified: dist HTML keeps only `text-size-adjust:none`, computed
-       `-webkit-text-size-adjust` stayed the inherited 100%). An inline
-       `style` attribute isn't touched by that pass, so both survive. */
+       down to just the unprefixed one, and WebKit's boosting behaviour
+       reads the `-webkit-` form, so the rule as authored here would look
+       correct in source but do nothing after build. An inline `style`
+       attribute isn't touched by that pass, so both survive. */
   }
 
   .cc-nav-active {
