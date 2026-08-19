@@ -319,6 +319,16 @@ export default {
         // its ring is the same shape at the same .14 accent alpha already.
         "card-cyan": `inset 0 1px 0 0 ${theme("colors.highlight")}, 0 0 0 1px ${theme("colors.cyan-ring-12")}, 0 10px 24px -8px ${theme("colors.shade")}`,
         "card-gold": `inset 0 1px 0 0 ${theme("colors.highlight")}, 0 0 0 1px ${theme("colors.gold-ring-12")}, 0 10px 24px -8px ${theme("colors.shade")}`,
+        // Record-chain scroll-down nudge (RecordChain.astro's travelling
+        // bead, USER REQUEST "make the nudging more prominent"): a static
+        // halo, not an animated one — the only things ever animated on the
+        // bead are its own opacity/transform (motion doctrine's "transforms
+        // and opacity only"), so this shadow never itself transitions; it
+        // just rides along, fading with the element's own opacity keyframe.
+        // Reuses the existing `mint-ring` live-pulse token rather than
+        // inventing a new alpha, so the glow reads as the same accent
+        // language as the chain's own live dot, not a new visual idiom.
+        "hint-glow": `0 0 18px 4px ${theme("colors.mint-ring")}`,
       }),
 
       // ---- P10 (DESIGN-ELEVATION.md §2.6) — background layers ----

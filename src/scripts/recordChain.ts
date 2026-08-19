@@ -17,10 +17,11 @@
 // Reduced-motion contract, via motion.ts's whenMotionSafe: under
 // `prefers-reduced-motion: reduce`, `setup` never runs at all, so the five
 // `[data-chain-card]` elements are never switched from their served
-// `position: relative` (RecordChain.astro) to `position: absolute` — they
-// stay in normal document flow, stacked vertically, every one fully
-// legible, opacity 1. A JS failure produces the identical page for the
-// identical reason (none of that switch is server-rendered). This is a
+// `position: relative` (RecordChain.astro) into the CSS-grid overlay
+// `armRing` below builds — they stay in normal document flow, stacked
+// vertically, every one fully legible, opacity 1. A JS failure produces the
+// identical page for the identical reason (none of that switch is
+// server-rendered). This is a
 // stronger guarantee than the reference's own demo, which never special-
 // cases the chain's scroll handler for reduced motion at all — CLAUDE.md's
 // "reduced motion is a real branch" wins here per this build's own
@@ -64,18 +65,33 @@ whenMotionSafe(() => {
   const hintEl = document.querySelector<HTMLElement>("[data-chain-hint]");
   let hintDismissed = false;
 
-  // One-time switch to absolute positioning, exactly like the reference's
-  // own `ringInit` guard — done here (JS-driven) rather than server-
-  // rendered, so a reduced-motion or JS-disabled reader never sees the
-  // cards leave normal document flow.
+  // One-time switch to a CSS-grid overlay, exactly like the reference's own
+  // `ringInit` guard — done here (JS-driven) rather than server-rendered, so
+  // a reduced-motion or JS-disabled reader never sees the cards leave normal
+  // document flow (RecordChain.astro's cards are served `position: relative`
+  // and `armRing` is the only thing that ever changes that, and it never
+  // runs under reduced motion — see whenMotionSafe above).
+  //
+  // Grid, not `position: absolute` (this file's previous approach): all five
+  // cards get `grid-row-start: 1; grid-column-start: 1`, i.e. the same
+  // single cell, which CSS auto-sizes to the TALLEST card actually
+  // rendered — track's own `min-height` (RecordChain.astro) is then only a
+  // cosmetic lower bound for short viewports, never the thing that could
+  // clip a card: whichever record's copy is longest, in whichever language,
+  // at whatever zoom or font-scaling, the track is guaranteed at least that
+  // tall because the browser measured it, not because a clamp() constant
+  // guessed right. (Absolute positioning couldn't offer that: an absolutely
+  // positioned child never contributes to its parent's auto height, which is
+  // exactly the mismatch the short-viewport bugfix had to design around.)
+  // Transforms/opacity below are unaffected either way — translate and
+  // opacity apply the same regardless of how a box is positioned.
   let ringInit = false;
   function armRing() {
     if (ringInit) return;
+    track!.style.display = "grid";
     cards.forEach((card) => {
-      card.style.position = "absolute";
-      card.style.top = "0";
-      card.style.insetInlineStart = "0";
-      card.style.width = "100%";
+      card.style.gridRowStart = "1";
+      card.style.gridColumnStart = "1";
       card.style.willChange = "transform, opacity";
     });
     ringInit = true;

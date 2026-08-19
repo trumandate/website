@@ -363,7 +363,15 @@
    * `.is-dismissed` is never removed afterwards, so scrolling back up cannot
    * resurrect it. A JS failure or a reduced-motion reader therefore only
    * ever sees the served, fully hidden state — never a stuck or
-   * half-animated artefact. ---- */
+   * half-animated artefact.
+   *
+   * Prominence pass (USER FEEDBACK "very subtle"): the visible window was
+   * widened without shortening `tm-hint`'s own 2600ms loop (a longer-visible
+   * cue, not a faster one) — peak dwell went from 55% of the cycle (15–70%)
+   * to 75% (10–85%), the dead invisible gap after reset shrank from 8% to
+   * 2%, and peak opacity rose 0.85→1 (RecordChain.astro's own `.is-visible`
+   * still multiplies on top, unchanged). The 92%→36px travel keyframe is now
+   * 98%→72px, matching the rail's own doubled height (RecordChain.astro). ---- */
   [data-chain-hint] {
     opacity: 0;
     transition: opacity theme("transitionDuration.state")
@@ -383,14 +391,14 @@
       transform: translateY(0);
       opacity: 0;
     }
-    15% {
-      opacity: 0.85;
+    10% {
+      opacity: 1;
     }
-    70% {
-      opacity: 0.85;
+    85% {
+      opacity: 1;
     }
-    92% {
-      transform: translateY(36px);
+    98% {
+      transform: translateY(72px);
       opacity: 0;
     }
     100% {

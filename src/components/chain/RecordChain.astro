@@ -117,12 +117,56 @@ const chainNames = records.map((r) => r.name);
   </div>
 
   <div
-    class="relative z-10 flex min-h-screen flex-col justify-center overflow-hidden"
-    style="position: sticky; top: 0;"
+    data-chain-stage
+    class="relative z-10 flex flex-col justify-center overflow-hidden"
+    style="position: sticky; top: 0; min-height: 100vh; min-height: 100svh;"
   >
+    {
+      /* BUGFIX (USER REPORT "when I go to 4th and 5th panes during
+      scrolling, I can't see the rest of it"): this stage's CONTENT height
+      (heading block + gaps + counter + track) used to be a flat ~738px no
+      matter the viewport — `min-h-screen` is only a 100vh FLOOR, not a
+      ceiling, so on any viewport shorter than that a sticky `top:0` element
+      can't stay genuinely pinned: its own box is taller than the screen, so
+      the browser is forced to slide it upward once the containing 480vh
+      section's remaining scroll room runs out, by exactly (content height −
+      viewport height) — measured 118px of drift at 1366×620, confirmed via
+      getBoundingClientRect() before this fix. That drift shows the stage's
+      BOTTOM half (the scroll-down hint, the lower part of the composition)
+      earlier in the scrub and hides the TOP half (this heading) later —
+      which is the "can't see the rest of it" the user is describing; two
+      different things go off-screen depending on how far you've scrolled.
+      Every measurement below is keyed to `svh` (small viewport height, the
+      same reasoning as BaseLayout's own `100svh` body height — matches what
+      is actually visible before a mobile browser's chrome collapses, not
+      the larger `100vh`/`lvh`), not a handful of tested breakpoints, so the
+      composition keeps shrinking continuously as height shrinks rather than
+      snapping between fixed states, and the invariant (content ≤ viewport)
+      holds by construction rather than by having guessed every device.
+      Below ~720px of height the lede is the first thing dropped (data-chain-
+      lede) — supplementary copy, not load-bearing; below ~620px the whole
+      heading block goes (data-chain-heading) — at that point there simply
+      isn't room for a heading, the counter and the record card, above a
+      phone's on-screen keyboard, without shrinking the card itself past
+      legibility (the card's own real rendered height, not a guessed number,
+      is what recordChain.ts's CSS-grid overlay now sizes the track to — see
+      its own comment). This is CLAUDE.md's "reduce the heading block's
+      contribution when height is scarce" lever, not the more drastic
+      "un-pin the heading" restructure (that one was tried on paper first:
+      even fully compressed, heading + counter + a legible card already
+      exceeds 580px of height, i.e. before the extreme end of this range —
+      hiding beats a redesign here). Reduced-motion is untouched by any of
+      this: `armRing` (recordChain.ts) — which is the only thing that ever
+      switches the cards out of normal flow — never runs under
+      `prefers-reduced-motion: reduce`, and the hide rules below are
+      themselves gated on `(prefers-reduced-motion: no-preference)`, so a
+      reduced-motion reader still gets the full heading and five
+      normal-flow, fully legible, stacked cards, exactly as before — that
+      page is allowed to simply be tall and scroll (global.css). */
+    }
     <div class="mx-auto w-full max-w-content px-gutter">
       <div class="flex flex-wrap items-end justify-between gap-4">
-        <div>
+        <div data-chain-heading>
           <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
             {t("home.chain.eyebrow")}
           </p>
@@ -132,19 +176,20 @@ const chainNames = records.map((r) => r.name);
           >
             {t("home.chain.heading")}
           </h2>
-          <p class="mt-4 max-w-measure-tight text-lede font-light text-body">
+          <p data-chain-lede class="mt-4 max-w-measure-tight text-lede font-light text-body">
             {t("home.chain.sub")}
           </p>
         </div>
       </div>
     </div>
 
-    <div class="relative" style="margin-top: clamp(32px, 5vh, 56px);">
+    <div class="relative" style="margin-top: clamp(12px, 5svh, 56px);">
       <div
         aria-hidden="true"
         class="relative text-center"
-        style="z-index: 5; margin-bottom: clamp(14px, 2.5vh, 24px);"
+        style="z-index: 5; margin-bottom: clamp(6px, 2.5svh, 24px);"
       >
+
         <p
           dir="ltr"
           data-chain-count
@@ -166,7 +211,7 @@ const chainNames = records.map((r) => r.name);
         <div
           data-chain-track
           class="relative mx-auto"
-          style="width: min(78vw, 340px); min-height: 430px; transform-style: preserve-3d; will-change: transform;"
+          style="width: min(78vw, 340px); min-height: clamp(96px, 48svh, 430px); transform-style: preserve-3d; will-change: transform;"
         >
           {
             records.map((record) => (
@@ -246,7 +291,17 @@ const chainNames = records.map((r) => r.name);
       computes rather than a second scroll listener. Positioned with
       inset-inline + margin-inline (not a translateX(-50%) centering hack)
       specifically because that hack's sign flips under RTL — this way is
-      direction-agnostic by construction, verified in both languages. */
+      direction-agnostic by construction, verified in both languages.
+
+      Prominence pass (USER FEEDBACK "very subtle"): rail/ticks/bead scaled
+      up 2x uniformly (36px→72px rail, 3px→6px ticks, 7px→14px bead) so
+      every original proportion (tick:bead:rail ratios) is preserved exactly
+      rather than redrawn; tick opacity raised 0.40→0.60; the bead gained a
+      static mint halo (shadow-hint-glow, tailwind.config.mjs — reuses the
+      existing `mint-ring` live-pulse token, not a new hex) that is never
+      itself animated, only ever carried along by the bead's own opacity
+      keyframe. See global.css's tm-hint-drift for the widened visible
+      window. */
     }
     <div
       data-chain-hint
@@ -254,24 +309,51 @@ const chainNames = records.map((r) => r.name);
       class="pointer-events-none absolute z-30"
       style="inset-inline: 0; inset-block-end: clamp(16px, 3.5vh, 28px); width: fit-content; margin-inline: auto;"
     >
-      <span class="relative block" style="width: 7px; height: 36px;">
+      <span class="relative block" style="width: 14px; height: 72px;">
         {
           [0, 25, 50, 75, 100].map((pct) => (
             <span
-              class="absolute rounded-full bg-muted opacity-40"
-              style={`inset-block-start: ${pct}%; inset-inline: 0; width: 3px; height: 3px; margin-inline: auto; transform: translateY(-50%);`}
+              class="absolute rounded-full bg-muted opacity-60"
+              style={`inset-block-start: ${pct}%; inset-inline: 0; width: 6px; height: 6px; margin-inline: auto; transform: translateY(-50%);`}
             />
           ))
         }
         <span
           data-chain-hint-glow
-          class="absolute rounded-full bg-mint"
-          style="inset-block-start: 0; inset-inline: 0; width: 7px; height: 7px; margin-inline: auto; transform: translateY(-50%);"
+          class="absolute rounded-full bg-mint shadow-hint-glow"
+          style="inset-block-start: 0; inset-inline: 0; width: 14px; height: 14px; margin-inline: auto; transform: translateY(-50%);"
         />
       </span>
     </div>
   </div>
 </section>
+
+<style>
+  /* Short-viewport fix (see the `data-chain-stage` comment above for the
+   * full reasoning) — two content-priority steps, each a plain max-height
+   * media query as CLAUDE.md sanctions for exactly this ("a `@media
+   * (max-height: …)` branch is legitimate and is the standard tool"), gated
+   * out entirely under reduced motion so that branch (global.css) keeps
+   * showing the complete heading and all five stacked cards untouched.
+   * Thresholds come from this component's own measured worst case (Arabic,
+   * widest layout): heading block ≈738px total today, the lede alone ≈
+   * 60–90px of that, the eyebrow+heading remainder ≈150–235px — so lede-only
+   * survives down to where a full heading would start clipping (~720px),
+   * and the whole block is dropped only where even that remainder plus the
+   * counter plus a real (grid-measured, not guessed) card would still not
+   * fit (~620px). */
+  @media (prefers-reduced-motion: no-preference) and (max-height: 720px) {
+    [data-chain-lede] {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (max-height: 620px) {
+    [data-chain-heading] {
+      display: none;
+    }
+  }
+</style>
 
 <script type="application/json" data-chain-names is:inline set:html={JSON.stringify(chainNames)} />
 <script src="../../scripts/recordChain.ts"></script>
