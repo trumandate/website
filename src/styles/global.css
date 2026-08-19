@@ -195,6 +195,21 @@
   }
 }
 
+/* ---- P11 (USER REPORT fix) — mobile nav drawer body-scroll lock
+ * (scripts/mobileNav.ts toggles `.nav-open` on `<html>` while the drawer is
+ * open). `overflow-y`, not the `overflow` shorthand: the shorthand would
+ * also set `overflow-x`, clobbering the `overflow-x: clip` rule the base
+ * layer above depends on for the record chain's `position: sticky` pin (see
+ * that rule's own comment — `clip`, not `hidden`, is load-bearing there).
+ * Declared on both `html` and `body`, same reasoning as that rule: setting
+ * it on the root alone does not reliably stop body scroll in every engine. ---- */
+@layer base {
+  html.nav-open,
+  html.nav-open body {
+    overflow-y: hidden;
+  }
+}
+
 /* visually-hidden, but announced — RAG status words, skip-link resting state */
 @layer utilities {
   .visually-hidden {
@@ -329,6 +344,66 @@
       theme("transitionTimingFunction.standard") 0.6s forwards;
   }
 
+  /* ---- Record-chain scroll-down nudge (mini-feature, RecordChain.astro).
+   * The chain's 3D ellipse moves cards through space horizontally enough
+   * that nothing signals *scrolling down* is what drives it. Five static
+   * ticks (one per record, echoing the "01 / 05" counter above them) sit on
+   * a short vertical rail; one travelling highlight drifts from the first
+   * tick to the last and fades — never a pulse, never a bounce (the site's
+   * motion doctrine forbids overshoot easing) — then resets to the top
+   * while fully transparent, so the reset itself is never seen.
+   *
+   * Served hidden (`opacity: 0`) for every reader by default. recordChain.ts's
+   * own onScroll handler — already gated by motion.ts's whenMotionSafe, so it
+   * never runs at all under `prefers-reduced-motion: reduce` or before JS
+   * executes — adds `.is-visible` once the pinned stage becomes the reader's
+   * context, reusing the scroll-progress value it already computes rather
+   * than a second listener, and adds `.is-dismissed` permanently the first
+   * time the reader actually advances the chain past a small threshold;
+   * `.is-dismissed` is never removed afterwards, so scrolling back up cannot
+   * resurrect it. A JS failure or a reduced-motion reader therefore only
+   * ever sees the served, fully hidden state — never a stuck or
+   * half-animated artefact. ---- */
+  [data-chain-hint] {
+    opacity: 0;
+    transition: opacity theme("transitionDuration.state")
+      theme("transitionTimingFunction.standard");
+  }
+
+  [data-chain-hint].is-visible {
+    opacity: 1;
+  }
+
+  [data-chain-hint].is-dismissed {
+    opacity: 0;
+  }
+
+  @keyframes tm-hint-drift {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.85;
+    }
+    70% {
+      opacity: 0.85;
+    }
+    92% {
+      transform: translateY(36px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+  }
+
+  [data-chain-hint-glow] {
+    animation: tm-hint-drift theme("transitionDuration.tm-hint") ease-in-out
+      infinite;
+  }
+
   /* Gradient-clip key phrase (hero H1's mint→cyan span). Angle is picked at
    * the call site (`gradient-text` LTR / `gradient-text-rtl` RTL,
    * tailwind.config.mjs) rather than flipped here, so no ancestor-selector
@@ -359,6 +434,14 @@
     .tm-spark {
       animation: none;
       stroke-dashoffset: 0;
+    }
+
+    [data-chain-hint] {
+      transition: none;
+    }
+
+    [data-chain-hint-glow] {
+      animation: none;
     }
   }
 }

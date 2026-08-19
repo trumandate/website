@@ -26,6 +26,9 @@ export const ui: UiDictionary = {
       execution: "Execution",
       benefits: "Benefits",
       contact: "Contact",
+      // P11 (USER REPORT fix) — see types.ts's doc comment on this pair.
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
     },
     cta: {
       // Redesign wave A (README "Implementation Notes"): "CTA label is now
@@ -343,6 +346,9 @@ export const ui: UiDictionary = {
       execution: "التنفيذ",
       benefits: "المنافع",
       contact: "تواصل",
+      // P11 (USER REPORT fix) — see types.ts's doc comment on this pair.
+      openMenu: "افتح القائمة",
+      closeMenu: "أغلق القائمة",
     },
     cta: {
       // Redesign wave A — see the English side's comment.

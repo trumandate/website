@@ -27,6 +27,7 @@ import type { Language } from "../../i18n/types";
 import Nav from "./Nav.astro";
 import LangToggle from "./LangToggle.astro";
 import Button from "../ui/Button.astro";
+import NavDrawer from "./NavDrawer.astro";
 
 interface Props {
   lang: Language;
@@ -45,6 +46,7 @@ const t = useTranslations(lang);
   >
     <a
       href={`/${lang}/`}
+      data-header-brand
       class="flex items-center gap-3"
       aria-label={t("brand.name")}
     >
@@ -68,12 +70,78 @@ const t = useTranslations(lang);
       <Nav lang={lang} />
     </div>
 
-    <div class="flex items-center gap-6">
+    <div class="hidden items-center gap-6 lg:flex">
       <LangToggle lang={lang} />
       <Button href={`/${lang}/contact`}>{t("cta.primary")}</Button>
     </div>
+
+    <!-- P11 (USER REPORT fix): below `lg` the two blocks above are
+         `display:none`, so without this trigger Strategy/Execution/Benefits/
+         Contact — and, until now, the language toggle and CTA too — had no
+         way into the header at all on phones and most tablets. This button
+         is the only new element in the `lg`+ layout's DOM; it's `lg:hidden`,
+         so it renders nothing there and the desktop header is byte-for-byte
+         the same markup as before this change. `aria-expanded`/`aria-label`
+         are toggled by scripts/mobileNav.ts; the two label strings travel as
+         data attributes so that script never hardcodes copy in either
+         language (same contract scripts/recordChain.ts already uses for
+         `data-chain-names`). -->
+    <button
+      type="button"
+      data-nav-trigger
+      aria-expanded="false"
+      aria-controls="mobile-nav-panel"
+      aria-label={t("nav.openMenu")}
+      data-label-open={t("nav.openMenu")}
+      data-label-close={t("nav.closeMenu")}
+      class="nav-trigger -m-3 inline-flex items-center justify-center rounded-control p-3 text-paper transition-colors duration-state ease-standard hover:text-accent lg:hidden"
+    >
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+        <path
+          data-bar="top"
+          d="M4 7h16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+        <path
+          data-bar="mid"
+          d="M4 12h16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+        <path
+          data-bar="bottom"
+          d="M4 17h16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+      </svg>
+    </button>
+
+    <!-- CLAUDE.md: "the site must be readable with JavaScript disabled." The
+         drawer this button opens is entirely JS-driven (open/close, focus
+         trap, inert toggling) — a no-JS reader who saw it would find a
+         button that does nothing, with no other way to reach Strategy/
+         Execution/Benefits from the header. Hiding it here (same
+         BaseLayout.astro `<noscript>` idiom already used for the `.tm-*`
+         motion classes) removes the dead control; Footer.astro's own four
+         links (never conditional on JS) are the real no-JS path to those
+         routes, verified by reading that component — it renders plain
+         `<a>` tags unconditionally. -->
+    <noscript>
+      <style>
+        [data-nav-trigger] {
+          display: none !important;
+        }
+      </style>
+    </noscript>
   </div>
 </header>
+
+<NavDrawer lang={lang} />
 
 <style>
   [data-header] {
@@ -105,6 +173,40 @@ const t = useTranslations(lang);
   [data-header].is-scrolled::after {
     opacity: 1;
   }
+
+  /* Hamburger → X, driven off the trigger's own `aria-expanded` — reading
+   * real state instead of a duplicate `.is-open` class, same economy as
+   * `[data-nav-drawer].is-open` in NavDrawer.astro (that one needs a class
+   * because a CSS attribute selector can't reach across into a *different*
+   * element's state; this one doesn't need to, so it doesn't get one).
+   * Transform + opacity only, no layout properties, per CLAUDE.md. */
+  .nav-trigger path {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav-trigger path {
+      transition:
+        transform theme("transitionDuration.micro")
+          theme("transitionTimingFunction.micro"),
+        opacity theme("transitionDuration.micro")
+          theme("transitionTimingFunction.micro");
+    }
+  }
+
+  .nav-trigger[aria-expanded="true"] path[data-bar="top"] {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .nav-trigger[aria-expanded="true"] path[data-bar="mid"] {
+    opacity: 0;
+  }
+
+  .nav-trigger[aria-expanded="true"] path[data-bar="bottom"] {
+    transform: translateY(-5px) rotate(-45deg);
+  }
 </style>
 
 <script src="../../scripts/header.ts"></script>
+<script src="../../scripts/mobileNav.ts"></script>

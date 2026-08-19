@@ -181,12 +181,28 @@ const dir = isAr ? "rtl" : "ltr";
           <div class="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum", "text-muted"]} style="font-size: 10px; margin: 0;">{c.breadcrumb}</p>
-              <h3
+              {/*
+                A <p>, not an <h3>. This board sits inside a `role="img"`
+                element, so none of its internal text reaches assistive
+                technology at all — the aria-label carries the meaning — and
+                an <h3> here is therefore pure visual styling that buys no
+                semantics. It does cost something, though: it lands before
+                the page's first <h2>, so axe/Lighthouse flag `heading-order`
+                and site-wide accessibility drops 100 → 98.
+
+                The reason it was an <h3> is real and must be preserved: the
+                sitewide `[dir=rtl] h2, h3` rule supplies the Arabic heading
+                line-height (1.40); as a bare <p> it inherited the body 1.80
+                and inflated the board ~9px in Arabic only. So the value is
+                applied directly here instead of being inherited from an
+                element type chosen for its side effects.
+              */}
+              <p
                 class:list={[isAr ? "font-sans font-semi" : "font-sans font-semi tracking-heading", "text-paper"]}
-                style={`font-size: ${isAr ? "21px" : "22px"}; margin: 5px 0 0;`}
+                style={`font-size: ${isAr ? "21px" : "22px"}; margin: 5px 0 0;${isAr ? " line-height: 1.4;" : ""}`}
               >
                 {c.pageTitle}
-              </h3>
+              </p>
             </div>
             <div class="flex items-center gap-2">
               <span class="cc-select"><span class:list={[isAr && "font-sans", "text-paper"]} style="font-size: 11px;">{c.deptFilter}</span></span>

@@ -226,6 +226,50 @@ const chainNames = records.map((r) => r.name);
         </div>
       </div>
     </div>
+
+    {
+      /* Scroll-down nudge (USER REQUEST): the ellipse above moves cards
+      horizontally through 3D space, so nothing else on this stage signals
+      that continuing to scroll *down* is what advances it — a reader can
+      stall on the first card. Five static ticks (one per record, echoing
+      the "01 / 05" counter/name block just above) plus one travelling
+      highlight that drifts from the first tick to the last and fades: a
+      quiet wayfinding cue, not a bare arrow, and never a pulse or a bounce
+      (see global.css's tm-hint-drift comment for the full motion contract).
+
+      Decorative only — aria-hidden, no i18n string, nothing an assistive-
+      tech reader would need (the chain's own content is already exposed in
+      normal document flow). Served hidden (global.css); recordChain.ts's
+      existing onScroll handler reveals it once the pinned stage becomes the
+      reader's context and permanently dismisses it once they've actually
+      advanced the chain, reusing the scroll-progress value it already
+      computes rather than a second scroll listener. Positioned with
+      inset-inline + margin-inline (not a translateX(-50%) centering hack)
+      specifically because that hack's sign flips under RTL — this way is
+      direction-agnostic by construction, verified in both languages. */
+    }
+    <div
+      data-chain-hint
+      aria-hidden="true"
+      class="pointer-events-none absolute z-30"
+      style="inset-inline: 0; inset-block-end: clamp(16px, 3.5vh, 28px); width: fit-content; margin-inline: auto;"
+    >
+      <span class="relative block" style="width: 7px; height: 36px;">
+        {
+          [0, 25, 50, 75, 100].map((pct) => (
+            <span
+              class="absolute rounded-full bg-muted opacity-40"
+              style={`inset-block-start: ${pct}%; inset-inline: 0; width: 3px; height: 3px; margin-inline: auto; transform: translateY(-50%);`}
+            />
+          ))
+        }
+        <span
+          data-chain-hint-glow
+          class="absolute rounded-full bg-mint"
+          style="inset-block-start: 0; inset-inline: 0; width: 7px; height: 7px; margin-inline: auto; transform: translateY(-50%);"
+        />
+      </span>
+    </div>
   </div>
 </section>
 

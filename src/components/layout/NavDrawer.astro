@@ -1,0 +1,160 @@
+---
+// NavDrawer.astro — the mobile nav drawer's panel + backdrop (P11, USER
+// REPORT fix). Header.astro's own `hidden ... lg:flex` container is the
+// desktop-only inline nav (Nav.astro); below `lg` it renders nothing at all,
+// which was the reported defect — Strategy/Execution/Benefits (and, until
+// this change, the language toggle and CTA) had no way into the header on
+// phones and most tablets. Header.astro now also renders a hamburger trigger
+// below `lg` (its own `<button data-nav-trigger>`); this component is the
+// panel that button opens, wired by `aria-controls="mobile-nav-panel"` on
+// one side and this file's own `id` on the other. scripts/mobileNav.ts
+// drives the open/close behaviour, the focus trap, and the `inert` toggling
+// on the rest of the page; this file only renders markup and the motion CSS.
+//
+// docs/design_handoff_website_redesign/SiteHeader.dc.html and
+// SiteHeaderAR.dc.html are the Claude Design reference for the header — read
+// in full before building this. Both files render exactly one nav: the
+// `hidden items-center gap-gutter lg:flex` desktop row. Neither has a second
+// breakpoint, a hamburger element, a second `<nav>`, or any `sm:`/`md:` class
+// anywhere in the markup — checked by reading the two files end to end, not
+// by grep alone. The reference is silent on mobile chrome; this drawer's
+// interaction and visual design is therefore original work for this build,
+// informed by the ui-ux-pro-max skill (dark-surface B2B SaaS drawer
+// guidance: slide from the side the trigger sits on, dim rather than blur
+// the content behind it, 44px+ touch targets, focus trap, transform/
+// opacity-only motion) rather than matched against a reference that doesn't
+// cover this surface.
+//
+// The four links are the same list Footer.astro already keeps as its own
+// independent array rather than importing Nav.astro's (that file's own
+// comment: "no <nav><ul> wrapper... this footer's links are plain") — this
+// is now a third independent copy for the same reason: three small call
+// sites, each shaped differently (Nav.astro's `<ul>`, Footer.astro's flat
+// row, this panel's full-height list), don't need one shared source for four
+// hrefs.
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+import LangToggle from "./LangToggle.astro";
+import Button from "../ui/Button.astro";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const links = [
+  { href: `/${lang}/strategy`, label: t("nav.strategy") },
+  { href: `/${lang}/execution`, label: t("nav.execution") },
+  { href: `/${lang}/benefits`, label: t("nav.benefits") },
+  { href: `/${lang}/contact`, label: t("nav.contact") },
+];
+---
+
+<div data-nav-drawer class="fixed inset-x-0 top-header bottom-0 z-nav-drawer lg:hidden">
+  <div
+    data-nav-backdrop
+    class="nav-backdrop absolute inset-0 bg-shade backdrop-blur-veil"
+  >
+  </div>
+  <nav
+    id="mobile-nav-panel"
+    data-nav-panel
+    aria-label="Primary"
+    inert
+    class="nav-panel absolute inset-y-0 start-0 end-0 ms-auto flex w-full max-w-nav-panel flex-col overflow-y-auto border-s border-hairline bg-jade shadow-raised"
+  >
+    <ul class="flex flex-col gap-1 px-gutter py-6">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              data-nav-link
+              class="block rounded-control py-3 text-h3 font-semi text-paper transition-colors duration-state ease-standard hover:text-accent"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div
+      class="mt-auto flex flex-col items-start gap-6 border-t border-hairline-soft px-gutter py-6"
+    >
+      <!-- Neither LangToggle.astro nor Button.astro spreads arbitrary props
+           onto the element it renders (both destructure a fixed, typed
+           `Props` list — read before writing this), so `data-nav-link` has
+           to land on a wrapper instead of the prop list. `contents` keeps
+           each wrapper out of the box model entirely (no extra flex child,
+           no layout change) while still giving scripts/mobileNav.ts's
+           `[data-nav-link]` query a node to find, since the click event
+           bubbles from the real `<a>` up through it regardless. Both close
+           the drawer on click for the same reason the four links do — each
+           is a full-page navigation, so the drawer's own visual state stops
+           mattering the instant the click lands anyway, but it's still
+           polite not to leave it visibly open through the moment before the
+           page unloads. -->
+      <div data-nav-link class="contents">
+        <LangToggle lang={lang} />
+      </div>
+      <div data-nav-link class="contents">
+        <Button href={`/${lang}/contact`} class="w-full">
+          {t("cta.primary")}
+        </Button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  /* Same reduced-motion contract as Nav.astro's/LangToggle.astro's own
+   * hover underline (this file's header comment) — `transition` only enters
+   * the cascade under `(prefers-reduced-motion: no-preference)`, so a
+   * reduced-motion reader gets the open/closed end state instantly, with no
+   * animated step, the moment `.is-open` is toggled. Transform + opacity
+   * only, nothing that touches layout.
+   *
+   * RTL: `end-0`/`ms-auto` above already place the panel on the correct
+   * logical edge (inline-end — the same side the trigger sits on in
+   * Header.astro's own `justify-between` row, in both directions). The
+   * slide itself is a `translateX`, which has no logical form, so its SIGN
+   * is flipped under `[dir=rtl]` instead — the exact "horizontal motion
+   * mirrors under RTL" pattern Nav.astro/LangToggle.astro already use for
+   * their hover underline's `transform-origin`, applied here to a
+   * `translateX` instead. */
+  [data-nav-backdrop] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-nav-panel] {
+    transform: translateX(100%);
+  }
+
+  :global([dir="rtl"]) [data-nav-panel] {
+    transform: translateX(-100%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-nav-backdrop] {
+      transition: opacity theme("transitionDuration.header")
+        theme("transitionTimingFunction.standard");
+    }
+
+    [data-nav-panel] {
+      transition: transform theme("transitionDuration.header")
+        theme("transitionTimingFunction.standard");
+    }
+  }
+
+  [data-nav-drawer].is-open [data-nav-backdrop] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  [data-nav-drawer].is-open [data-nav-panel] {
+    transform: translateX(0);
+  }
+</style>

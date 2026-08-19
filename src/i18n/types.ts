@@ -30,6 +30,18 @@ export interface UiStrings {
     execution: string;
     benefits: string;
     contact: string;
+    /** Mobile nav drawer trigger's accessible name while closed (P11, USER
+     * REPORT fix: Strategy/Execution/Benefits vanish below `lg` because
+     * Nav.astro's own container is desktop-only — the hamburger + drawer in
+     * Header.astro/MobileNavDrawer.ts answers that). No reference source
+     * (docs/design_handoff_website_redesign's SiteHeader(AR).dc.html has no
+     * mobile breakpoint at all — checked, see NavDrawer.astro's own
+     * comment), so written directly per BUILD_FLAGS' "written, not
+     * machine-translated" rule, same as fragment/contact's invented strings. */
+    openMenu: string;
+    /** Same button's accessible name once the drawer is open — the name
+     * changes with state (WAI-ARIA disclosure pattern), not a static label. */
+    closeMenu: string;
   };
   cta: {
     /** Site-wide primary CTA label. Redesign wave A (docs/design_handoff_

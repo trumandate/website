@@ -152,6 +152,14 @@ export default {
         measure: "56ch", // lede
         "measure-tight": "52ch",
         "measure-head": "24ch",
+        // Mobile nav drawer (P11, USER REPORT fix): the panel's own inline-
+        // size cap, named here rather than left as an arbitrary bracket
+        // value in NavDrawer.astro per this file's own "tokens only"
+        // discipline. min(), not a bare vw or rem: at ≤375 it reads as 85% of
+        // the viewport (never edge-to-edge, backdrop stays visible past it);
+        // above ~414px it settles at 22rem (352px) so the panel stops
+        // growing once it's comfortably a one-hand reach.
+        "nav-panel": "min(85vw, 22rem)",
       },
 
       spacing: {
@@ -252,6 +260,11 @@ export default {
         "tm-pulse-r": "2200ms", // live-pulse ring, coral (critical)
         "tm-spark": "2200ms", // sparkline stroke-dashoffset draw
         "tm-counter": "1300ms", // proof-band count-up
+        // Mini-feature: the record chain's scroll-down nudge
+        // (RecordChain.astro/recordChain.ts) — one drift-and-reset loop of
+        // the travelling highlight. Deliberately slow and continuous: a
+        // quiet wayfinding cue, not a pulse.
+        "tm-hint": "2600ms",
       },
 
       transitionDelay: {
@@ -270,6 +283,13 @@ export default {
 
       zIndex: {
         header: "50",
+        // Mobile nav drawer (P11): above the fixed header's own z-header so
+        // the panel/backdrop always paint over it if the two ever overlap
+        // (the panel is positioned to start below the header's rendered
+        // height, not stacked on top of it, so this is a safety margin, not
+        // load-bearing); below `skip` so a focused skip-link still shows
+        // through if it's ever mid-transition when the drawer opens.
+        "nav-drawer": "65",
         progress: "60",
         skip: "70",
       },

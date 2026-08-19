@@ -31,6 +31,13 @@ import { whenMotionSafe } from "./motion";
 const AX = 440;
 const BZ = 560;
 const DWELL = 0.45;
+// Scroll-down nudge (USER REQUEST, RecordChain.astro's `[data-chain-hint]`):
+// once the reader has advanced this far into the pinned stage's own scroll
+// progress `p` (below — the same value the ellipse's dwell-then-glide math
+// already computes, not a second measurement), they've demonstrated they
+// understand scrolling moves the chain. The hint is dismissed permanently at
+// that point and never re-shown, including on scroll-back.
+const HINT_DISMISS = 0.06;
 
 whenMotionSafe(() => {
   const section = document.querySelector<HTMLElement>("[data-chain]");
@@ -54,6 +61,8 @@ whenMotionSafe(() => {
 
   const countEl = document.querySelector<HTMLElement>("[data-chain-count]");
   const nameEl = document.querySelector<HTMLElement>("[data-chain-name]");
+  const hintEl = document.querySelector<HTMLElement>("[data-chain-hint]");
+  let hintDismissed = false;
 
   // One-time switch to absolute positioning, exactly like the reference's
   // own `ringInit` guard — done here (JS-driven) rather than server-
@@ -110,6 +119,23 @@ whenMotionSafe(() => {
 
     const dots = track!.querySelectorAll<HTMLElement>("[data-chain-dot]");
     dots.forEach((dot, n) => dot.classList.toggle("tm-live", n === idx));
+
+    // Scroll-down nudge: reuses `rect`/`total`/`p` computed above rather
+    // than a second scroll listener. "Active" mirrors the sticky pin's own
+    // range (rect.top in (-total, 0]) so the hint only ever shows while the
+    // stage is actually pinned — i.e. while it is the reader's context —
+    // never before the section is reached and never after the pin ends.
+    // `hintDismissed` is a plain closure variable, not re-derived from `p`,
+    // so once it flips true no later scroll-back can undo it.
+    if (hintEl && !hintDismissed) {
+      const active = rect.top <= 0 && rect.top > -total;
+      hintEl.classList.toggle("is-visible", active && p < HINT_DISMISS);
+      if (p >= HINT_DISMISS) {
+        hintDismissed = true;
+        hintEl.classList.remove("is-visible");
+        hintEl.classList.add("is-dismissed");
+      }
+    }
   }
 
   addEventListener("scroll", onScroll, { passive: true });
