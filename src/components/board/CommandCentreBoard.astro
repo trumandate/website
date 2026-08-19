@@ -70,6 +70,36 @@ const c = boardCopy(lang);
 const dir = isAr ? "rtl" : "ltr";
 ---
 
+{/*
+  iOS text-inflation guard. WebKit's Text Autosizer inflates type inside any
+  block laid out wider than the viewport — and this board is a deliberate
+  1000px-wide layout shrunk by `zoom`, so on an iPhone every label was
+  rendering ~2x too large for its (zoomed) box and wrapping, wrecking the
+  internal layout. Chromium's device emulation does not implement WebKit
+  autosizing, so it looks perfect there; only a real device shows it.
+
+  Two things this block does that the earlier attempts did not:
+  1. `is:inline`, so Astro's CSS pipeline never processes it. A normal
+     scoped <style> gets minified, and the minifier collapses the
+     `-webkit-text-size-adjust` / `text-size-adjust` pair to the unprefixed
+     property alone — which is precisely the one WebKit does not read.
+  2. It targets every descendant, not just the root. Inheritance of this
+     property is unreliable across WebKit versions when the autosizer runs
+     per-block, so each text-bearing element is pinned directly.
+
+  The value is `100%`, never `none`: iOS treats `none` as `auto` (Apple
+  does not let a page disable text scaling outright), so `none` re-enables
+  the very boosting it appears to switch off. `100%` means "authored size",
+  which is already every other engine's behaviour — a no-op off iOS.
+*/}
+<style is:inline>
+  [data-cc-board],
+  [data-cc-board] * {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+</style>
+
 <div
   dir={dir}
   lang={lang}
