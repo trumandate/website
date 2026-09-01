@@ -46,8 +46,12 @@ const t = useTranslations(lang);
   data-header
   class="fixed inset-x-0 top-0 z-header bg-ink/veil backdrop-blur-veil"
 >
+  <!-- gap-6 between the three groups, not gap-gutter (USER REPORT 2026-09-01,
+       known-issues.md): justify-between already spreads the groups, so the
+       gap is only a collision floor — at 72px it helped the five-link nav
+       overflow the grid. 24px keeps the floor without ever binding at lg+. -->
   <div
-    class="mx-auto flex max-w-content items-center justify-between gap-gutter px-gutter py-4"
+    class="mx-auto flex max-w-content items-center justify-between gap-6 px-gutter py-4"
   >
     <a
       href={`/${lang}/`}

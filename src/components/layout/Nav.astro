@@ -24,7 +24,14 @@ const links = [
 ---
 
 <nav aria-label="Primary">
-  <ul class="flex items-center gap-gutter">
+  <!-- gap-10, not gap-gutter (USER REPORT 2026-09-01, known-issues.md): with
+       the Blog link the five labels plus four 72px gutter gaps overflowed the
+       header grid by 34.4px at every lg+ width, pushing the CTA past the
+       content edge on every route (and putting the whole row into negative
+       flex space — the pressure behind the vanishing brand mark). Four 40px
+       gaps keep the row inside its 1036px budget with room for both
+       languages' label widths. -->
+  <ul class="flex items-center gap-10">
     {
       links.map((link) => (
         <li>
