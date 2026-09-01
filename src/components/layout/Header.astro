@@ -3,11 +3,16 @@
 // spec §7). Bilingual-ready (reads strings and direction from `lang`), but
 // only /en exists as a real route until P5.
 //
-// The mark: re-authored from assets/logo.png as inline SVG, tokens only —
-// three rounded bars, descending width, top bar in the darker token green,
-// the lower two in the brighter accent green, on a light rounded tile. The
-// PNG (and assets/TruMandate_Product_deck_2pager.pptx) are reference-only
-// and never ship.
+// The mark: the authoritative Echelons geometry (2026-08-19 user directive,
+// BUILD_FLAGS.md decision log), re-authored as inline SVG from the product's
+// own EchelonsLogo.tsx, measured against the 1173×1174 master — three
+// start-aligned pill bars, descending width, top bar in the literal brand
+// teal, the lower two in the literal brand green, on a light rounded tile.
+// Colours are the dedicated brand-teal/brand-green/brand-tile tokens
+// (tailwind.config.mjs), deliberately NOT jade/accent/paper — the brand doc
+// treats this mark as a fixed asset, never restyled to site tokens. The PNG
+// (and assets/TruMandate_Product_deck_2pager.pptx) are reference-only and
+// never ship.
 //
 // The wordmark is two-tone per the product deck's brand direction, expressed
 // in tokens rather than the deck's own hexes: "Tru" in `accent`, "Mandate"
@@ -50,13 +55,13 @@ const t = useTranslations(lang);
       class="flex items-center gap-3"
       aria-label={t("brand.name")}
     >
-      <svg viewBox="0 0 100 100" class="h-8 w-8" role="img" aria-hidden="true">
-        <rect width="100" height="100" rx="24" class="fill-paper"></rect>
-        <rect x="24" y="24" width="54" height="12" rx="6" class="fill-jade"
+      <svg viewBox="0 0 48 48" class="h-8 w-8" role="img" aria-hidden="true">
+        <rect width="48" height="48" rx="8.87" class="fill-brand-tile"></rect>
+        <rect x="11.15" y="12.79" width="25.59" height="4.77" rx="2.385" class="fill-brand-teal"
         ></rect>
-        <rect x="24" y="44" width="38" height="12" rx="6" class="fill-accent"
+        <rect x="11.2" y="21.57" width="18.27" height="4.78" rx="2.39" class="fill-brand-green"
         ></rect>
-        <rect x="24" y="64" width="22" height="12" rx="6" class="fill-accent"
+        <rect x="11.2" y="30.37" width="11.15" height="4.77" rx="2.385" class="fill-brand-green"
         ></rect>
       </svg>
       <span class="hidden font-sans text-h3 font-semi tracking-brand sm:inline">

@@ -656,6 +656,9 @@ Log every such choice under "Decisions taken" below.
   (fetched this session) rather than a live-tool pass — worth a real
   Rich Results Test run once this ships. TODO.md's P9 item closed.
 
+- 2026-08-19 (user directive): the authoritative TruMandate mark is the Echelons geometry the user supplied (EchelonsLogo.tsx, measured from the 1173×1174 master on 2026-08-04): start-aligned pill bars at x≈11.2/48, y 12.79/21.57/30.37, widths 25.59/18.27/11.15, h≈4.77, rx≈2.385; tile rx 8.87 fill #F1F4F3; top bar #0E7E6D (former accent teal, deliberately unchanged), lower bars #21B586. Brand colours stay LITERAL per the brand doc ("a logo is an asset rather than a token") — carried as dedicated brand-* tokens in tailwind.config.mjs for grep cleanliness, never restyled to site accents. The mark does NOT mirror in RTL. This supersedes both the P1 token-coloured mark AND the P9-era favicon "optical correction" (thicker bars), which the brand doc explicitly forbids — the pill radius is what keeps 16px legible.
+- 2026-08-19 (user directive): blog section added for SEO and LLM discoverability (GEO) — content collections under src/content/blog/{en,ar}, no invented statistics or personas, authored Arabic, Article JSON-LD, RSS, sitemap inclusion.
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)

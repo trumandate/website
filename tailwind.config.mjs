@@ -66,6 +66,20 @@ export default {
       // either and drifting from the reference.
       "kpi-tile-top": "#0C4237",
       "ai-panel-deep": "#082E26",
+
+      // ---- 2026-08-19 (user directive, BUILD_FLAGS.md decision log): the
+      // authoritative Echelons brand-mark geometry, measured from the
+      // product's own EchelonsLogo.tsx against the 1173×1174 master. These
+      // three are deliberately NOT aliases of jade/accent/paper above — the
+      // brand doc treats the mark as a fixed asset, not a themeable
+      // composition, so its colours are literal brand values that happen to
+      // live here (rather than as bare hex in component markup) purely for
+      // this repo's own "no hex outside this file" grep hygiene. Never
+      // restyle the mark to jade/accent/paper, and never reuse these three
+      // for anything that isn't the mark itself. ----
+      "brand-teal": "#0E7E6D", // mark's top bar only — the former accent teal, kept on purpose
+      "brand-green": "#21B586", // mark's middle + bottom bars
+      "brand-tile": "#F1F4F3", // mark's tile ground (distinct literal from `paper`'s #F1F5F3)
     },
 
     fontFamily: {

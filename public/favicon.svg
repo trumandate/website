@@ -1,38 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="TruMandate">
-  <!-- The mark: three rounded bars, two token greens, flat fills, on a
-       rounded light tile (BUILD_FLAGS.md decision log) — same brand identity
-       and same tailwind.config.mjs colour tokens as Header.astro's inline
-       SVG and public/og/*.png's lockup, but NOT the same geometry as of this
-       change. Header.astro (and the large lockup generally) keeps the
-       original 100-unit proportions; this file's proportions are deliberately
-       different, for the reason below. If you're hunting for why the two
-       don't match pixel-for-pixel, this is why — it's intentional, not drift.
+  <!-- The mark: the authoritative Echelons geometry (2026-08-19 user
+       directive, BUILD_FLAGS.md decision log) — re-authored as inline SVG
+       from the product's own EchelonsLogo.tsx, measured against the
+       1173×1174 master. This SUPERSEDES the P9-era "optically corrected"
+       favicon this file used to carry (thicker bars, tighter padding, a
+       looser tile radius), which the brand doc explicitly forbids: the pill
+       radius is what keeps the mark legible at 16px, not a hand-tuned
+       reproportioning. This file, Header.astro/Footer.astro/
+       CommandCentreBoard.astro's own inline marks, and public/og/*.png's
+       lockup now all share one exact geometry — nothing to keep in sync by
+       hand, and nothing optically diverges from the large lockup any more.
 
-       Geometry here is OPTICALLY CORRECTED for small-size legibility, not a
-       downscale of the large lockup. Favicon.svg is realistically only ever
-       rendered small (browser tabs at 16-32px, Google search results at
-       16-48px) — there is no large-display use case to preserve — so this
-       is the one master, tuned for that reality:
-         - viewBox is 48x48 (Google's preferred favicon grid multiple), every
-           coordinate below is a whole unit so it also lands on exact pixel
-           boundaries when rasterised at 48px.
-         - tile corner radius 6/48 = 12.5% (was 24/100 = 24%): a tighter
-           radius keeps more of the tile as a legible rounded-square field
-           instead of eating the corners at a size where rounding reads as
-           blur.
-         - bar height 10/48 = 20.8% (was 12/100 = 12%) and inline inset
-           7/48 = 14.6% (was 24/100 = 24%): thicker bars, tighter padding, so
-           the three-bar structure survives anti-aliasing at 16px instead of
-           collapsing into three ~2px smudges inside a 24%-padded frame.
-         - inter-bar gap 4/48 = 8.3% (was 8/100 = 8%): close to the original
-           ratio, kept just wide enough that a real background-colour sliver
-           still separates the bars at 16px.
-       See public/favicon-48.png / -96.png / -192.png (same geometry,
-       rasterised) and public/favicon.ico (16/32/48, same geometry) — all
-       four files and this SVG now share one master, so there's nothing to
-       keep in sync by hand. -->
-  <rect width="48" height="48" rx="6" fill="#F1F5F3"/>
-  <rect x="7" y="5" width="34" height="10" rx="5" fill="#0B4A3D"/>
-  <rect x="7" y="19" width="24" height="10" rx="5" fill="#19C39B"/>
-  <rect x="7" y="33" width="14" height="10" rx="5" fill="#19C39B"/>
+       Colours are the literal brand hexes (tailwind.config.mjs's
+       brand-teal/brand-green/brand-tile tokens, spelled out here since this
+       is a standalone SVG file, not an Astro component with class="fill-*"
+       available) — deliberately not the site's jade/accent/paper tokens, and
+       never restyled to them. -->
+  <rect width="48" height="48" rx="8.87" fill="#F1F4F3"/>
+  <rect x="11.15" y="12.79" width="25.59" height="4.77" rx="2.385" fill="#0E7E6D"/>
+  <rect x="11.2" y="21.57" width="18.27" height="4.78" rx="2.39" fill="#21B586"/>
+  <rect x="11.2" y="30.37" width="11.15" height="4.77" rx="2.385" fill="#21B586"/>
 </svg>
