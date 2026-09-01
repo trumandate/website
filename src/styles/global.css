@@ -45,10 +45,22 @@
     overflow-x: clip; /* see the html rule above for why clip, not hidden */
   }
 
-  img,
-  svg {
+  img {
     display: block;
     max-width: 100%;
+  }
+
+  /* USER REPORT (2026-09-01): the header/footer brand mark vanished on wide
+     screens. `max-width: 100%` on svg was the cause: inside a content-sized
+     flex container (the brand anchor sizes itself from its children) the
+     percentage is a circular reference, and newer Chromium resolves it to 0,
+     collapsing the mark — but only once the wordmark span joins the row at
+     ≥640px, hence "fine on phones, gone on monitors". Every svg in this
+     codebase is explicitly sized (width and height utilities or attributes),
+     so svg keeps only display:block and the responsive guard
+     stays on img, which genuinely needs it. */
+  svg {
+    display: block;
   }
 
   a {

@@ -80,6 +80,10 @@ export default {
       "brand-teal": "#0E7E6D", // mark's top bar only — the former accent teal, kept on purpose
       "brand-green": "#21B586", // mark's middle + bottom bars
       "brand-tile": "#F1F4F3", // mark's tile ground (distinct literal from `paper`'s #F1F5F3)
+      // 2026-09-01 (user directive): "our brand green is phthalo green
+      // #123524" — the brand's deep ground green, distinct from the mark's
+      // bar colours above. First surface: the blog's editorial ground.
+      phthalo: "#123524",
     },
 
     fontFamily: {
