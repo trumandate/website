@@ -319,7 +319,14 @@ export const ui: UiDictionary = {
       // chars) — also retires "walkthrough" language the redesign's own CTA
       // rename (`cta.primary`, "Book a demo") superseded.
       home: {
-        title: "TruMandate — Every mandate, traced to its measured benefit.",
+        // 2026-09-01 (user directive): SERP heading must lead with what the
+        // product IS, not the tagline — "Strategic Portfolio Management
+        // Software" is the category buyers search, brand last like every
+        // other page. Em-dash separator kept (not the "-" in the user's
+        // message) because llms.txt.ts's stripBrandSuffix and JsonLd.astro
+        // both key on the site-wide " — TruMandate" suffix. The hero H1 on
+        // the page itself is unchanged; this is the <title>/og:title only.
+        title: "Strategic Portfolio Management Software — TruMandate",
         description:
           "Strategy is a promise. Delivery is the proof. TruMandate keeps the thread between them unbroken, and its AI reads every inch of it.",
       },
@@ -650,7 +657,10 @@ export const ui: UiDictionary = {
       // from those already-authored strings, not translated from the
       // English side of this table.
       home: {
-        title: "TruMandate — كل تكليف، متتبَّع حتى أثره المُقاس.",
+        // 2026-09-01 (user directive) — Arabic counterpart of the EN
+        // category-first title: "strategic portfolio management software",
+        // brand last, same em-dash suffix convention.
+        title: "برنامج إدارة المحافظ الاستراتيجية — TruMandate",
         description:
           "الاستراتيجية وعد، والتنفيذ برهانه. يُبقي TruMandate الخيط بينهما متصلاً بلا انقطاع، ويقرؤه الذكاء الاصطناعي بكامله.",
       },
