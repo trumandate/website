@@ -1,10 +1,42 @@
 ---
-// BlogIndex.astro — the /en/blog and /ar/blog index. Reuses the same visual
-// vocabulary as the redesign's product-page idiom (ProductHero.astro/
-// ProductPage.astro): a plain start-aligned hero (eyebrow, H1, lede) — no
-// hue, no gradient key-phrase, since the blog section has no per-page hue
-// the way Strategy/Execution/Benefits do — followed by a hairline-divided
-// list, each row a full-row link (title, description, byline, tags).
+// BlogIndex.astro — the /en/blog and /ar/blog index.
+//
+// ---- 2026-09-01 redesign (USER REPORT) ----
+// The owner reviewed the shipped index on a laptop and rejected it: "the
+// blogs home page … looks really bad with bad design … the font on blog home
+// page is really big … it looks bad in laptop." Three separate defects, all
+// reproduced at 1440×900 before this rewrite:
+//
+//   1. The H1 carried `text-display`, the site's MARKETING hero clamp, which
+//      tops out at 68px above `lg`. An index page is a way in to reading, not
+//      a hero; it now uses the blog-only `text-blog-index-heading` (36px at
+//      1440), one of eight blog-scoped fontSize tokens added to
+//      tailwind.config.mjs in the same change. See that file's own comment
+//      for why the blog does not share the marketing scale.
+//   2. Everything was start-aligned inside a narrow column, leaving the whole
+//      inline-end half of a 1440 screen empty. The header is now a two-column
+//      lockup at `lg` (heading against standfirst), and the posts below fill
+//      the content width as a featured panel plus a two-column grid.
+//   3. The posts were a flat, undifferentiated list — every entry the same
+//      size, each ending in bordered mono tag chips that read as unfinished
+//      UI rather than editorial furniture. There is now real hierarchy: the
+//      newest post is a featured panel on `phthalo`, the rest are a grid of
+//      smaller entries, and tags are plain subdued text (three at most here;
+//      every tag still renders in full on the post page itself).
+//
+// `phthalo` (#123524, the owner's 2026-09-01 "our brand green" directive) is
+// the blog's one new surface: the header band and the featured panel. It sits
+// between `ink` and `jade` in luminance, so it reads as the same room lit
+// slightly differently rather than as a foreign section. Contrast on it was
+// computed, not eyeballed — see the token's comment in tailwind.config.mjs.
+//
+// No photography, no raster, no stock: CLAUDE.md's standing invariant, and
+// the reason this is a typography-led composition rather than a card grid
+// with images. The one drawn mark is the read affordance's chevron, inline
+// SVG, whose path is chosen by `lang` rather than mirrored with a transform
+// (same precedent as tailwind.config.mjs's `gradient-text`/`gradient-text-rtl`
+// pair: pick the asset at the call site, never write a `[dir=rtl]` override
+// inside an Astro `<style>` block — known-issues.md P5).
 //
 // Deliberately no `.tm-rise`/reveal script: the blog is reading-focused
 // content, not a marketing surface, and CLAUDE.md's own "the site must be
@@ -12,11 +44,18 @@
 // JS-free" instruction are both satisfied more simply by never gating
 // visibility behind IntersectionObserver in the first place, rather than by
 // adding the noscript/reduced-motion escape hatches every `.tm-rise` call
-// site elsewhere on the site needs.
+// site elsewhere on the site needs. Every state below is a colour
+// transition — no transform, so there is nothing for
+// `prefers-reduced-motion` to switch off.
 import Section from "../layout/Section.astro";
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
-import { formatPostDate, type BlogPost } from "../../lib/blog";
+import {
+  formatPostDate,
+  formatReadingTime,
+  readingTime,
+  type BlogPost,
+} from "../../lib/blog";
 
 interface Props {
   lang: Language;
@@ -25,56 +64,216 @@ interface Props {
 
 const { lang, posts }: Props = Astro.props;
 const t = useTranslations(lang);
+
+const readingTimeTemplates = {
+  few: t("blog.readingTimeFew"),
+  other: t("blog.readingTimeOther"),
+};
+
+/** "date · N min read" — derived once per post here rather than inline in
+ * two places below, so the featured panel and the grid entries cannot drift
+ * to different meta lines. */
+const entries = posts.map((post: BlogPost) => ({
+  post,
+  href: `/${lang}/blog/${post.data.translationKey}/`,
+  iso: post.data.pubDate.toISOString(),
+  date: formatPostDate(post.data.pubDate, lang),
+  read: formatReadingTime(
+    readingTime(post.body ?? "", lang),
+    lang,
+    readingTimeTemplates,
+  ),
+  // Three at most on the index (the schema allows three to five). The full
+  // set still renders on the post page itself, so nothing is lost — this is
+  // the owner's own "tags subdued, fewer shown" instruction, and five
+  // kebab-case labels under every entry was most of why the old list read as
+  // raw UI rather than an index.
+  tags: post.data.tags.slice(0, 3),
+}));
+
+// `getPublishedPosts` sorts newest first, so the featured slot is simply the
+// head of the list — no separate `featured: true` frontmatter flag, which
+// would be one more thing for an author to forget to move.
+const [featured, ...rest] = entries;
+
+// The read affordance's chevron. Two literal paths rather than one path and a
+// scaleX flip: a transform here would also need a reduced-motion story it
+// does not deserve, and the `[dir=rtl]` selector that would drive it silently
+// fails inside Astro's scoped styles (known-issues.md P5).
+const chevron = lang === "ar" ? "M7 1 2 6.5 7 12" : "M2 1l5 5.5L2 12";
 ---
 
-<Section pad={false} style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(1.5rem, 3vh, 2rem);">
-  <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
-    {t("blog.eyebrow")}
-  </p>
-  <h1
-    class="mt-5 font-sans text-display font-semi tracking-heading text-paper lg:tracking-display-lg"
-    style="max-width: 18ch; text-wrap: balance;"
-  >
-    {t("blog.heading")}
-  </h1>
-  <p class="mt-6 text-lede font-light text-body" style="max-width: 54ch;">
-    {t("blog.sub")}
-  </p>
+<Section
+  pad={false}
+  class="border-b border-hairline"
+  style="padding-block: clamp(2.75rem, 7vh, 4.5rem) clamp(2.25rem, 5vh, 3.25rem);"
+>
+  <div slot="backdrop" class="absolute inset-0 bg-phthalo"></div>
+
+  <div class="lg:flex lg:items-end lg:justify-between lg:gap-16">
+    <div>
+      <p
+        class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted"
+      >
+        {t("blog.eyebrow")}
+      </p>
+      <h1
+        class="mt-4 font-sans text-blog-index-heading font-semi text-paper"
+        style="max-width: 22ch; text-wrap: balance;"
+      >
+        {t("blog.heading")}
+      </h1>
+    </div>
+    <p
+      class="mt-6 max-w-measure-standfirst text-lede font-light text-body lg:mt-0 lg:shrink-0"
+    >
+      {t("blog.sub")}
+    </p>
+  </div>
 </Section>
 
-<Section tight>
-  <ul class="border-t border-hairline">
-    {
-      posts.map((post) => (
-        <li class="border-b border-hairline">
-          <a
-            href={`/${lang}/blog/${post.data.translationKey}/`}
-            class="group block py-8 transition-colors duration-state ease-standard"
+{
+  featured && (
+    <Section
+      pad={false}
+      style="padding-block: clamp(2.25rem, 5vh, 3.5rem) 0;"
+    >
+      <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+        {t("blog.latestLabel")}
+      </p>
+
+      <article class="mt-4">
+        <a
+          href={featured.href}
+          class="group block rounded-panel border border-hairline bg-phthalo transition-colors duration-state ease-standard hover:border-accent hover:bg-phthalo-lift"
+          style="padding: clamp(1.5rem, 3.5vw, 2.5rem);"
+        >
+          <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+            <time datetime={featured.iso}>{featured.date}</time>
+            {" · "}
+            {featured.read}
+          </p>
+
+          <h2
+            class="mt-4 font-sans text-blog-featured-title font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent"
+            style="max-width: 26ch; text-wrap: balance;"
           >
-            <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
-              <time datetime={post.data.pubDate.toISOString()}>
-                {formatPostDate(post.data.pubDate, lang)}
-              </time>
-            </p>
-            <h2 class="mt-3 font-sans text-h3 font-semi tracking-heading text-paper transition-colors duration-state ease-standard group-hover:text-accent">
-              {post.data.title}
-            </h2>
-            <p class="mt-3 text-body font-light text-body" style="max-width: 62ch;">
-              {post.data.description}
-            </p>
+            {featured.post.data.title}
+          </h2>
+
+          <p
+            class="mt-4 text-lede font-light text-body"
+            style="max-width: 58ch;"
+          >
+            {featured.post.data.description}
+          </p>
+
+          <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
             <ul
-              class="mt-4 flex flex-wrap gap-2"
+              class="tag-list flex flex-wrap items-center font-mono text-datum font-data tracking-datum text-muted"
               aria-label={t("blog.tagsLabel")}
             >
-              {post.data.tags.map((tag) => (
-                <li class="rounded-control border border-hairline px-2 py-1 font-mono text-datum font-data tracking-datum text-muted">
-                  {tag}
-                </li>
+              {featured.tags.map((tag) => (
+                <li>{tag}</li>
               ))}
             </ul>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-</Section>
+
+            <span class="inline-flex items-center gap-2 text-small font-semi text-accent">
+              {t("blog.readLabel")}
+              <svg
+                width="9"
+                height="13"
+                viewBox="0 0 9 13"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  d={chevron}
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </a>
+      </article>
+    </Section>
+  )
+}
+
+{
+  rest.length > 0 && (
+    <Section
+      pad={false}
+      style="padding-block: clamp(2.5rem, 6vh, 4rem) clamp(3rem, 8vh, 5.5rem);"
+    >
+      <h2 class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+        {t("blog.moreHeading")}
+      </h2>
+
+      <ul class="mt-5 grid gap-x-12 sm:grid-cols-2">
+        {rest.map((entry) => (
+          <li class="border-t border-hairline">
+            {/* An article element per entry, matching the featured panel
+                above and BlogPostArticle.astro's own wrapper: each row is a
+                self-contained item, and AI crawlers chunk on that structure
+                rather than on class names. It replaces no div — before this
+                the list item held a bare anchor and nothing named the entry
+                as an entry. */}
+            <article>
+              <a href={entry.href} class="group block py-7">
+                <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+                  <time datetime={entry.iso}>{entry.date}</time>
+                  {" · "}
+                  {entry.read}
+                </p>
+
+                <h3 class="mt-3 font-sans text-blog-card-title font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
+                  {entry.post.data.title}
+                </h3>
+
+                <p class="mt-3 text-small font-light text-body">
+                  {entry.post.data.description}
+                </p>
+
+                <ul
+                  class="tag-list mt-4 flex flex-wrap items-center font-mono text-datum font-data tracking-datum text-muted"
+                  aria-label={t("blog.tagsLabel")}
+                >
+                  {entry.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </a>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
+<style>
+  /* The tag separator. A pseudo-element rather than a literal character
+   * between items, because a `<ul>` may only contain `<li>` children and a
+   * separator `<span>` between them would be invalid markup that assistive
+   * tech announces as content.
+   *
+   * No `:global()` needed and no colour declared: both `li` elements are
+   * authored in THIS file (unlike BlogPostArticle.astro's `.blog-prose`
+   * rules, which reach slotted Markdown and therefore do need it), so Astro's
+   * scope attribute lands on both sides of the combinator; and the dot
+   * inherits `text-muted` from the list itself, so no token has to be
+   * threaded in.
+   *
+   * `margin-inline`, not `margin-left`/`margin-right` — CLAUDE.md's
+   * logical-properties invariant applies to hand-written CSS exactly as it
+   * does to utility classes. */
+  .tag-list li + li::before {
+    content: "·";
+    margin-inline: 0.5rem;
+  }
+</style>

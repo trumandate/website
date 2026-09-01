@@ -694,3 +694,90 @@ Then the button: **اطلب عرضاً توضيحياً**.
   morphology, not lost content: all nineteen content slots per page are present
   in both languages and the claims were checked one by one. Arabic carrying
   fewer words is fine. Arabic carrying less is not, and it does not.
+
+## Blog redesign (2026-09-01) — new strings
+
+Nine new UI strings, English and Arabic, all in `src/i18n/ui.ts` under `blog`.
+Nothing here states a number, a customer, a result or a timescale achieved; no
+banned word from the English list, and no Arabic calque of one.
+
+**English**
+
+- **Latest** — the label over the newest post's featured panel on the index.
+- **More posts** — the heading over the grid of the remaining posts.
+- **Read this post** — the featured panel's own read affordance.
+- **{minutes} min read** — the reading-time datum, shown after the date on
+  every index entry and in the post byline. The figure is a plain word count
+  divided by 230 words a minute (English) or 180 (Arabic); the two rates
+  differ so a translation pair does not report the Arabic version as a shorter
+  read purely because Arabic says the same thing in fewer words. The three
+  current pairs come out at 7/7, 7/7 and 7/8 minutes.
+- **Topics** — was already in the dictionary as an `aria-label` only; it is now
+  also visible, as the label over the tag list in the post's footer.
+- **See this on your own portfolio.** — the end-of-post CTA heading.
+- **Forty minutes, on a portfolio shaped like yours: your departments, your
+  period, your names on the decisions.** — the CTA body. Deliberately a
+  one-sentence restatement of the home page's own closing offer rather than a
+  second, differently-worded promise; a post should end with the offer the
+  site already makes, not a new one.
+
+**Arabic**
+
+- **الأحدث** — Latest.
+- **مقالات أخرى** — More posts.
+- **اقرأ المقال** — Read this post.
+- **قراءة في {minutes} دقائق** / **قراءة في {minutes} دقيقة** — the reading-time
+  datum in two forms, because Arabic agrees the counted noun with the number:
+  the plural دقائق for 3–10, the singular دقيقة for everything else.
+  `Intl.PluralRules` picks between them (`lib/blog.ts`), so the rule is not a
+  hand-written range check. **Reviewer's call:** the "other" bucket also
+  catches 2, where formal Arabic would want the dual دقيقتان. Two forms rather
+  than five was a deliberate trade; say if the dual is worth a third string.
+- **المواضيع** — Topics.
+- **شاهد هذا على محفظتك أنت.** — the CTA heading.
+- **أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات.**
+  — the CTA body, matching the English one-for-one.
+
+The index heading, standfirst, eyebrow and the prev/next/all-posts labels are
+unchanged in both languages; only their type sizes moved.
+
+## Contact form redesign, 2026-09-01 — three new strings
+
+Written directly in both languages, not translated. None of them makes a
+claim, states a number, or promises a response time. Everything else on
+/contact — the heading, standfirst, mailto note, every field label, the four
+interest options, the validation and submission messages and the "We reply
+from a named address, not a queue." footnote — is unchanged in both languages.
+The footnote only changed typeface: it was set in tracked-out mono, which
+read as a system notice on the new light card, and is now in the body face.
+
+**English**
+
+- **Demo request** — the heading on the form card. The card is a distinct
+  surface now rather than a bare region under the H1, so it names the document
+  the reader is filling in. Deliberately the plain noun and not a second
+  sales line; the page already has its headline.
+- **Fields marked \* are required.** — the legend for the asterisks. They
+  existed before this change with nothing anywhere explaining them, and were
+  hidden from assistive technology, so the requirement was inferable only by
+  submitting and failing.
+- **Optional** — sits beside "Anything we should know", the one field that is
+  not required. Naming the exception is shorter and clearer than marking the
+  other three as the rule twice over.
+
+**Arabic**
+
+- **طلب عرض توضيحي** — Demo request. Uses the same wording as the site-wide
+  CTA (احجز عرضاً توضيحياً, "Book a demo") without repeating the verb.
+- **الحقول المعلَّمة بـ \* مطلوبة.** — Fields marked \* are required.
+- **اختياري** — Optional.
+
+### Wide-screen pass, same day — one more string
+
+- **On this page** / **في هذه الصفحة** — the label over the post page's
+  table-of-contents rail, which appears at `lg` and up only. It is both the
+  visible label and, through `aria-labelledby`, the accessible name of the
+  rail's `nav` landmark, so screen-reader users hear the same words a sighted
+  reader sees rather than a second, invented one. The entries under it are the
+  post's own H2 headings verbatim — nothing is rewritten or shortened for the
+  rail, in either language.

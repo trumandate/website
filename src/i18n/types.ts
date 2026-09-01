@@ -344,6 +344,21 @@ export interface UiStrings {
     nameLabel: string;
     orgLabel: string;
     emailLabel: string;
+    /** ---- 2026-09-01 contact-form redesign. Three strings the old form did
+     * without, each answering a question its markup already raised but never
+     * spelled out. Written directly in both languages (BUILD_FLAGS'
+     * "written, not machine-translated"), and neither states a claim, a
+     * number or a promise. ---- */
+    /** The light card's own header — names the document the reader is
+     * filling in, now that the card is a distinct surface rather than a bare
+     * region under the H1. */
+    formTitle: string;
+    /** Legend for the `*` markers. They were `aria-hidden` decoration with
+     * nothing anywhere explaining them; this is the explanation. */
+    requiredNote: string;
+    /** Marks the one field that is NOT required (`message`), so "optional"
+     * is stated rather than inferred from an absent asterisk. */
+    optionalLabel: string;
     interestLegend: string;
     interestOption1: string;
     interestOption2: string;
@@ -433,6 +448,34 @@ export interface UiStrings {
     nextLabel: string;
     /** "All posts" — the back-to-index link on every post page. */
     indexLabel: string;
+    /** ---- 2026-09-01 blog redesign (USER REPORT: the index read as a flat
+     * undifferentiated list and the post pages as an unfinished column).
+     * Everything below exists to give both pages a hierarchy: a named
+     * newest-post slot, a heading over the rest, a reading-time datum, and a
+     * quiet closing CTA so a post ends somewhere rather than just stopping. ---- */
+    /** Label over the newest post's featured panel on the index. */
+    latestLabel: string;
+    /** The featured panel's own read affordance. */
+    readLabel: string;
+    /** Heading over the grid of remaining posts. */
+    moreHeading: string;
+    /** Reading-time datum, `{minutes}` substituted at the call site. Two
+     * forms because Arabic agrees the counted noun with the number: `few`
+     * is the Arabic 3–10 plural (دقائق), `other` covers every other count
+     * (دقيقة). English uses the same wording for both. See
+     * `formatReadingTime` in lib/blog.ts, which picks between them with
+     * `Intl.PluralRules`. */
+    readingTimeFew: string;
+    readingTimeOther: string;
+    /** End-of-post CTA. Deliberately not a second copy of the home page's
+     * closing CTA: shorter, one link, no essentials table — a post ends with
+     * an offer, not a landing page. */
+    ctaHeading: string;
+    ctaBody: string;
+    /** 2026-09-01 wide-screen pass: names the post page's table-of-contents
+     * rail, both as the visible label and (via `aria-labelledby`) as the
+     * accessible name of its `nav` landmark. */
+    tocLabel: string;
   };
 }
 

@@ -268,6 +268,11 @@ export const ui: UiDictionary = {
       // the pre-existing "run a walkthrough... not a demo dataset" phrasing).
       sub: "Send this and we will run the demo on a portfolio shaped like yours, not a sample dataset.",
       emailNote: "Prefer email? Write to trumandate@intertecsys.com.",
+      // ---- 2026-09-01 contact-form redesign — see types.ts for what each
+      // of these three is for. ----
+      formTitle: "Demo request",
+      requiredNote: "Fields marked * are required.",
+      optionalLabel: "Optional",
       nameLabel: "Name",
       orgLabel: "Organisation",
       emailLabel: "Work email",
@@ -348,6 +353,19 @@ export const ui: UiDictionary = {
       previousLabel: "Previous",
       nextLabel: "Next",
       indexLabel: "All posts",
+      // 2026-09-01 blog redesign — see types.ts for what each of these is
+      // for. Same "no invented statistics or personas" discipline as the
+      // strings above; the CTA restates the home page's own forty-minute
+      // offer in one sentence rather than inventing a second one.
+      latestLabel: "Latest",
+      readLabel: "Read this post",
+      moreHeading: "More posts",
+      readingTimeFew: "{minutes} min read",
+      readingTimeOther: "{minutes} min read",
+      ctaHeading: "See this on your own portfolio.",
+      ctaBody:
+        "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions.",
+      tocLabel: "On this page",
     },
   },
   ar: {
@@ -592,6 +610,11 @@ export const ui: UiDictionary = {
       // Redesign wave B (Contact AR (redesign).dc.html, carried verbatim).
       sub: "أرسل النموذج ونقدّم العرض على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
       emailNote: "تفضّل البريد الإلكتروني؟ راسلنا على trumandate@intertecsys.com.",
+      // ---- 2026-09-01 contact-form redesign — written directly in Arabic,
+      // matching the English side one-for-one. ----
+      formTitle: "طلب عرض توضيحي",
+      requiredNote: "الحقول المعلَّمة بـ * مطلوبة.",
+      optionalLabel: "اختياري",
       nameLabel: "الاسم",
       orgLabel: "الجهة",
       emailLabel: "البريد المؤسسي",
@@ -652,6 +675,19 @@ export const ui: UiDictionary = {
       previousLabel: "السابق",
       nextLabel: "التالي",
       indexLabel: "كل المقالات",
+      // 2026-09-01 blog redesign — written in Arabic, not translated, same
+      // as the block above. `readingTimeFew` is the 3–10 plural (دقائق),
+      // `readingTimeOther` the singular the language takes for 1, 2 and 11+
+      // (دقيقة); lib/blog.ts picks between them with Intl.PluralRules.
+      latestLabel: "الأحدث",
+      readLabel: "اقرأ المقال",
+      moreHeading: "مقالات أخرى",
+      readingTimeFew: "قراءة في {minutes} دقائق",
+      readingTimeOther: "قراءة في {minutes} دقيقة",
+      ctaHeading: "شاهد هذا على محفظتك أنت.",
+      ctaBody:
+        "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات.",
+      tocLabel: "في هذه الصفحة",
     },
   },
 };

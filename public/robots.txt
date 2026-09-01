@@ -1,4 +1,37 @@
 User-agent: *
 Allow: /
 
+# Generative-engine crawlers, named explicitly. A crawler that finds its own
+# group obeys ONLY that group and ignores `*`, so each of these must carry its
+# own Allow — an empty or partial group here would silently block the bot the
+# site's GEO strategy depends on. (Cloudflare's own AI-crawler blocking and
+# managed robots.txt are both switched off in the dashboard, 2026-08-19.)
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://www.trumandate.com/sitemap.xml

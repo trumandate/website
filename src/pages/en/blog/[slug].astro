@@ -31,7 +31,16 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+// `headings` is the second thing `render()` hands back: the Markdown
+// pipeline's own list of every heading it emitted, each with the `slug` it
+// wrote into that heading's `id` attribute. Taken from there rather than
+// re-parsing `post.body` with a regex (which lib/blog.ts's `parseFaq` has to
+// do, because IT needs the raw source) — the ids in this list are by
+// construction the ids in the rendered HTML, so a TOC anchor cannot drift
+// from its target. Depth 2 only: the h3s are FAQ questions inside a section,
+// not sections, and a two-level rail would be a site map rather than a way in.
+const { Content, headings } = await render(post);
+const tocHeadings = headings.filter((heading) => heading.depth === 2);
 
 const posts = await getPublishedPosts(lang);
 const index = posts.findIndex((p) => p.id === post.id);
@@ -39,16 +48,26 @@ const prevPost = index > 0 ? posts[index - 1] : null;
 const nextPost = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 
 const faq = parseFaq(post.body ?? "", lang);
+
+// The <title> tag and og:title, NOT the on-page H1 (2026-09-01, SEO pass).
+// `seoTitle` is the optional ≤60-character short form in the post's own
+// frontmatter — content.config.ts requires one whenever `title` exceeds 60
+// characters, so this fallback only ever resolves to a `title` that already
+// fits a SERP untruncated. The editorial headline keeps its full length on
+// the page and in the BlogPosting `headline` below; only the two title
+// strings that Google truncates get the short form.
+const metaTitle = post.data.seoTitle ?? post.data.title;
 ---
 
 <BaseLayout
   lang={lang}
   path={`/blog/${post.data.translationKey}`}
-  title={`${post.data.title} — TruMandate`}
+  title={`${metaTitle} — TruMandate`}
   description={post.data.description}
   rssHref={`/${lang}/blog/rss.xml`}
 >
   <BlogPostJsonLd
+    slot="head"
     lang={lang}
     slug={post.data.translationKey}
     title={post.data.title}
@@ -56,7 +75,13 @@ const faq = parseFaq(post.body ?? "", lang);
     pubDate={post.data.pubDate}
     faq={faq}
   />
-  <BlogPostArticle lang={lang} post={post} prevPost={prevPost} nextPost={nextPost}>
+  <BlogPostArticle
+    lang={lang}
+    post={post}
+    prevPost={prevPost}
+    nextPost={nextPost}
+    headings={tocHeadings}
+  >
     <Content />
   </BlogPostArticle>
 </BaseLayout>

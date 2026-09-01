@@ -84,6 +84,56 @@ export default {
       // #123524" — the brand's deep ground green, distinct from the mark's
       // bar colours above. First surface: the blog's editorial ground.
       phthalo: "#123524",
+      // 2026-09-01 blog redesign: the hover/raised step above `phthalo`, so
+      // a whole-panel link (the index's featured post, the end-of-post CTA)
+      // can change ground on hover without borrowing `jade`, which is much
+      // lighter (relative luminance 0.053 vs phthalo's 0.028) and would read
+      // as a different surface rather than the same one lit. Measured
+      // contrast on this ground stays comfortably AA for all three text
+      // roles used on it: body #C6DAD3 9.4:1, muted #9CB8AE 6.3:1,
+      // accent #19C39B 6.0:1 (computed against phthalo, the darker of the
+      // pair, so the lift only improves them).
+      "phthalo-lift": "#17402C",
+
+      // ---- 2026-09-01 contact-form redesign (USER DIRECTIVE: "make it
+      // modern and use good design and color, not everything needs to be too
+      // dark themed"). The site's ONE light surface: the /contact request
+      // card, treated as a paper document laid on the dark ground — which is
+      // the brand's own records/registry story rather than a theme break for
+      // its own sake. Every token below exists because the dark palette
+      // above inverts badly: `paper`/`body`/`muted` are text colours tuned
+      // for a dark ground and become invisible on a light one, and `accent`
+      // (#19C39B) measures 2.13:1 on this card, i.e. it can be a fill or a
+      // 3:1 graphical element here but never text.
+      //
+      // Measured contrast (WCAG 2.1 relative-luminance formula, computed —
+      // not eyeballed — and re-verified in-browser against the built page):
+      //   form-ink   on form-paper 14.5:1  · on form-field 15.3:1
+      //   form-body  on form-paper  7.1:1  · on form-field  7.5:1
+      //   form-muted on form-paper  5.7:1  · on form-field  6.0:1
+      //   accent-deep on form-paper 5.0:1  · on form-field  5.3:1
+      //   red-deep   on form-paper  6.2:1  · on form-alert  5.7:1
+      //   form-field on accent-deep 5.3:1  (submit label)
+      //   form-field on accent-deeper 8.0:1 (submit label, hover)
+      //   form-line  vs form-field  3.3:1  · vs form-paper  3.1:1 (1.4.11)
+      // Nothing on this card is carried by colour alone: every error pairs a
+      // red dot with red-deep text, and the chosen interest option carries a
+      // filled radio mark as well as a tinted ground.
+      "form-paper": "#F7F9F8", // the card itself
+      "form-field": "#FFFFFF", // input/textarea interiors, and text ON accent-deep
+      "form-ink": "#0B2A22", // labels, entered values, headings on the card
+      "form-body": "#3E5A52", // running text on the card
+      "form-muted": "#52685F", // helper text, the footnote, optional markers
+      "form-line": "#7C9389", // resting input/choice border — a 3:1 boundary, not a hairline
+      "form-line-strong": "#5F7A6E", // hover border, disabled submit ground
+      "form-rule": "#DCE6E1", // decorative rules inside the card only, never a control's boundary
+      "form-tint": "#E4F6F0", // chosen-option ground, success ground
+      "form-alert": "#FCECEA", // error-summary and submit-error ground
+      "accent-deep": "#0A7A61", // `accent` taken down to an AA text/focus colour on light
+      "accent-deeper": "#075C49", // submit hover only
+      "accent-deep-ring": "rgba(10,122,97,0.16)", // the soft halo behind the focus outline
+      "shade-deep": "rgba(2,24,19,0.72)", // the light card's drop shadow on the dark ground
+      "red-deep": "#B3261E", // error text/dot on light — `red` (#E0574C) is 3.5:1 here, under the 4.5:1 text floor
     },
 
     fontFamily: {
@@ -129,11 +179,106 @@ export default {
       // Arabic counterparts for the two mono roles, which swap face and drop tracking
       "eyebrow-ar": ["0.80rem", { lineHeight: "1.50", letterSpacing: "0" }],
       "datum-ar": ["0.82rem", { lineHeight: "1.60", letterSpacing: "0" }],
+
+      // CAUTION for anything added below: `body` is a key in BOTH this map and
+      // `colors` above, so `text-body` emits a font-size rule as well as a
+      // colour rule, and Tailwind orders the generated fontSize utilities
+      // ALPHABETICALLY. `.text-body` therefore lands after every `.text-blog-*`
+      // in the stylesheet, and an element written as
+      // `class="text-blog-lede … text-body"` silently renders at 1rem. Measured
+      // in the built CSS during the 2026-09-01 blog redesign, not assumed. The
+      // existing `text-lede`/`text-small` call sites happen to be safe only
+      // because "lede" and "small" sort AFTER "body". Anything that needs one
+      // of the sizes below together with the body colour must let the colour
+      // inherit (global.css applies `text-body` to the `body` element itself)
+      // rather than restate it as a utility. See known-issues.md.
+      //
+      // ---- 2026-09-01 blog redesign (USER REPORT: "the font on blog home
+      // page is really big… it looks bad in laptop"). The blog was reusing
+      // `display` for the index H1 (68px at ≥1440) and `h2`/`h3` for
+      // in-article headings (44px H2 against a 44px H1), so an index page
+      // shouted like a marketing hero and an article had no internal
+      // hierarchy left. A marketing hero and a 1,700-word article need
+      // different scales: the hero's job is to arrest, the article's is to
+      // be read for six minutes without fatigue, which means a shallower
+      // ratio, a longer line-height and a bounded measure (see
+      // `maxWidth.measure-prose` below).
+      //
+      // These eight are blog-only and deliberately NOT aliases of the site
+      // scale above — a future change to the marketing display clamp must
+      // not silently resize an article. Ratio is ~1.18 between adjacent
+      // article steps (body 18 → h3 19 → h2 26 → title 44 at 1440), which
+      // keeps H2 unmistakably subordinate to the title while still reading
+      // as a section break.
+      //
+      // Arabic line-height is overridden per role in BlogPostArticle.astro
+      // and by global.css's existing `[dir=rtl] h1,h2,h3` base rules, same
+      // as every other size token here; letter-spacing is likewise zeroed
+      // for Arabic by global.css.
+      "blog-index-heading": [
+        "clamp(1.6rem, 2.6vw, 2.25rem)", // 25.6 → 36px
+        { lineHeight: "1.16", letterSpacing: "-0.015em" },
+      ],
+      "blog-featured-title": [
+        "clamp(1.4rem, 2.2vw, 1.85rem)", // 22.4 → 29.6px
+        { lineHeight: "1.22", letterSpacing: "-0.012em" },
+      ],
+      "blog-card-title": [
+        "clamp(1.125rem, 1.5vw, 1.3rem)", // 18 → 20.8px
+        { lineHeight: "1.30", letterSpacing: "-0.01em" },
+      ],
+      "blog-title": [
+        "clamp(1.9rem, 3.4vw, 2.75rem)", // 30.4 → 44px
+        { lineHeight: "1.12", letterSpacing: "-0.018em" },
+      ],
+      // The three article-body steps below were each raised one notch in the
+      // 2026-09-01 wide-screen pass (second USER REPORT: "blogs' content is
+      // not increasing width wise on large screens"). The article column grew
+      // from 576px to 704px there, and a wider column at the same size is how
+      // you get a 90-character line — so the type grew with it, which is what
+      // holds characters-per-line inside the readable band. Measured after:
+      // 77.4 and 76.7 characters per line at 1440 across the two longest
+      // posts (max 85/86), unchanged at 1920 and 2560 because the content box
+      // stops growing. Below `lg` nothing moved: the
+      // clamps' floors are unchanged, so 375 renders exactly as before.
+      "blog-h2": [
+        "clamp(1.35rem, 1.9vw, 1.7rem)", // 21.6 → 27.2px
+        { lineHeight: "1.25", letterSpacing: "-0.01em" },
+      ],
+      "blog-h3": [
+        "clamp(1.1rem, 1.35vw, 1.28rem)", // 17.6 → 20.5px
+        { lineHeight: "1.35", letterSpacing: "-0.005em" },
+      ],
+      // 17px at 375, ~19.5px at 1024, 20px from ~1235 up. Written as an
+      // explicit `min + vw` sum rather than a bare `vw` preferred value
+      // because a bare `1.1vw` never exceeds the 17px floor until ~1550px,
+      // i.e. the token would silently never reach its own maximum on a
+      // laptop. The 0.35vw slope is deliberately shallow: the floor must stay
+      // exactly 17px at 375 (it is what the phone measure was tuned against)
+      // while the ceiling has to reach ~19.5px to keep the wide column's
+      // characters-per-line under 80.
+      "blog-body": [
+        "clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem)", // 17 → 20px
+        { lineHeight: "1.70", letterSpacing: "0" },
+      ],
+      "blog-lede": [
+        "clamp(1.125rem, 1.5vw, 1.35rem)", // 18 → 21.6px
+        { lineHeight: "1.60", letterSpacing: "0" },
+      ],
     },
 
     lineHeight: {
       latin: "1.55",
       arabic: "1.80",
+      // 2026-09-01 blog redesign: long-form running text only. 1.55/1.80 are
+      // tuned for the marketing pages' short paragraphs; a 1,700-word
+      // article wants a looser leading (the widely-cited 1.5–1.75 band for
+      // body copy, taken to its upper end here because the measure is long
+      // and the ground is dark, where tight leading reads as heavier).
+      // Arabic goes further again for the same reason its base line-height
+      // is already 1.80 — ascenders/descenders and diacritics need the room.
+      prose: "1.70",
+      "prose-ar": "1.90",
       tight: "1.06",
       heading: "1.14",
       "heading-ar": "1.40",
@@ -170,6 +315,32 @@ export default {
         measure: "56ch", // lede
         "measure-tight": "52ch",
         "measure-head": "24ch",
+        // ---- 2026-09-01 blog redesign, article reading column. Two values,
+        // one per composition, because the blog has two: a single centred
+        // column below `lg`, and a rail-plus-column grid at `lg` and up (the
+        // second USER REPORT: "blogs' content is not increasing width wise on
+        // large screens … lot of empty space both sides in big monitor
+        // screen").
+        //
+        // `rem`, not `ch`: `ch` resolves against the ELEMENT's font-size, and
+        // `.blog-prose` itself inherits 16px while its paragraphs set their
+        // own (now fluid) size — so a `ch` cap silently stopped tracking the
+        // text it was supposed to measure the moment `blog-body` became
+        // fluid. Both values were tuned by measuring real
+        // characters-per-line at 1440 rather than picked off a ratio.
+        "measure-prose": "38rem", // 608px — the centred column below `lg`
+        // 704px. The grid at `lg` is 16.5rem rail + 4.25rem gap + this,
+        // which sums to exactly 1036px: the inner width of the site's own
+        // `max-w-content` + `px-gutter` wrapper, i.e. the header's own
+        // content box. So the rail's start edge lands on the brand mark's
+        // start edge and this column's end edge on the CTA's end edge, with
+        // no dead rail on either side. Change any one of the three and the
+        // other two must change with it.
+        "measure-prose-wide": "44rem",
+        // The index header's standfirst, sitting beside the H1 at ≥lg rather
+        // than under it. Narrower than `measure` so the two-column header
+        // keeps a real gutter instead of two columns meeting in the middle.
+        "measure-standfirst": "46ch",
         // Mobile nav drawer (P11, USER REPORT fix): the panel's own inline-
         // size cap, named here rather than left as an arbitrary bracket
         // value in NavDrawer.astro per this file's own "tokens only"
@@ -201,6 +372,41 @@ export default {
         node: "0.8125rem", // 13px: chain node diameter
         "node-inset": "2.875rem", // 46px: node centre back from the content edge
         "rag-dot": "0.5625rem", // 9px: RAG status dot diameter (PLAN.md §3, hero panel)
+
+        // ---- 2026-09-01 blog wide-screen pass ----
+        // Gap between the post page's table-of-contents rail and its article
+        // column at `lg` and up. Load-bearing arithmetic, not taste: 16.5rem
+        // rail + 4.25rem gap + 44rem column = 1036px = the inner width of
+        // `max-w-content` minus two `px-gutter`s at any viewport from ~1324px
+        // up, where that wrapper stops growing. See `maxWidth.measure-prose-wide`.
+        "blog-gap": "4.25rem",
+        // Block-start offset for the sticky TOC, and the matching
+        // `scroll-margin-block-start` on in-article headings so an anchor jump
+        // does not land the heading underneath the fixed header. `header`
+        // (73px) plus 24px of air.
+        "sticky-top": "6.0625rem",
+      },
+
+      // 2026-09-01 blog wide-screen pass — the post page's only grid. Rail is
+      // a fixed 16.5rem (264px): wide enough that a long section heading wraps
+      // to two lines rather than five, narrow enough to leave the article the
+      // 44rem it needs. Column two is `minmax(0, 1fr)` rather than a second
+      // fixed track so it collapses gracefully between `lg` (1024px, where the
+      // content box is narrower than 1036px) and ~1324px, where everything
+      // reaches its final size. `minmax(0, …)`, not a bare `1fr`: a bare `1fr`
+      // has an `auto` minimum, so one long unbreakable token in the prose
+      // would blow the track past the container and reintroduce the horizontal
+      // overflow this project greps for.
+      gridTemplateColumns: {
+        blog: "16.5rem minmax(0, 1fr)",
+      },
+
+      maxHeight: {
+        // The sticky TOC's own scroll cap: a post with more sections than fit
+        // beside the reader's viewport scrolls inside the rail rather than
+        // pushing the rail past the fold where the sticky offset can never
+        // bring it back.
+        toc: "70vh",
       },
 
       borderRadius: {
@@ -210,6 +416,15 @@ export default {
         // Redesign wave A: the Command Centre board's own panel/KPI-tile
         // radius (README's CommandCentreBoard.dc.html `.tm-kpi`/`.tm-panel`).
         panel: "6px",
+        // ---- 2026-09-01 contact-form redesign ----
+        // The light request card and its controls. Two values rather than
+        // reusing `panel` (6px) because the relationship has to be concentric:
+        // a 6px card holding 8px fields reads as a mistake (inner radius
+        // larger than outer). `paper` is the outer corner, `field` every
+        // control inside it — inputs, choice cards, the status region and the
+        // submit button, so the card has exactly one control shape.
+        paper: "14px",
+        field: "8px",
       },
 
       borderWidth: {
@@ -347,6 +562,28 @@ export default {
         // inventing a new alpha, so the glow reads as the same accent
         // language as the chain's own live dot, not a new visual idiom.
         "hint-glow": `0 0 18px 4px ${theme("colors.mint-ring")}`,
+
+        // ---- 2026-09-01 contact-form redesign ----
+        // `shadow-raised` above is built for a dark surface on a dark ground,
+        // where an inset white highlight is the only thing that reads as
+        // raised. The light card is the opposite case: on the dark ground a
+        // real cast shadow reads immediately, and an inset white highlight on
+        // white is invisible. Hence a two-layer cast shadow, contact card
+        // only.
+        paper: `0 2px 6px -2px ${theme("colors.shade")}, 0 28px 64px -28px ${theme("colors.shade-deep")}`,
+        // Inputs and choice cards at rest: a 1px inset top shade, so a field
+        // reads as a well cut into the paper rather than a flat outlined box.
+        field: `inset 0 1px 2px 0 rgba(11,42,34,0.06)`,
+        // Focus halo, paired with (never instead of) the 2px accent-deep
+        // outline — the outline is what carries the 3:1 indicator contrast,
+        // the halo is only there to soften it.
+        "field-focus": `0 0 0 4px ${theme("colors.accent-deep-ring")}`,
+        // The chosen interest option's radio mark: one element, no nested
+        // dot span. The inset ring punches a `form-field` circle out of an
+        // `accent-deep` filled disc, which is a classic radio, and it
+        // survives a `peer-checked:` variant (a nested dot would not — the
+        // `~` sibling combinator cannot reach into a sibling's descendants).
+        "radio-dot": `inset 0 0 0 3px ${theme("colors.form-field")}`,
       }),
 
       // ---- P10 (DESIGN-ELEVATION.md §2.6) — background layers ----

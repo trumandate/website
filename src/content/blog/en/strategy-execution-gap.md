@@ -1,5 +1,6 @@
 ---
 title: "The strategy execution gap: why strategy dies between the mandate and the money"
+seoTitle: "What is the strategy execution gap?"
 description: "The strategy execution gap is a records problem, not a motivation problem. Three mechanisms that open it, and what closing it actually requires."
 pubDate: 2026-08-19
 author: "TruMandate team, Intertec Systems"

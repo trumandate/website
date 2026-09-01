@@ -37,6 +37,82 @@ export function formatPostDate(date: Date, lang: Language): string {
   }).format(date);
 }
 
+/**
+ * Words a reader gets through in a minute, per language. Not a design token
+ * (nothing in tailwind.config.mjs renders at this value) — a reading-research
+ * constant, so it lives beside the function that uses it.
+ *
+ * The two differ on purpose. Silent-reading rates for English prose are
+ * commonly measured around 220–260 wpm; published Arabic rates sit lower,
+ * around 140–180 wpm. Using one number for both would have reported the
+ * Arabic translation of the same article as materially shorter than the
+ * English original purely because Arabic says the same thing in fewer words
+ * — the opposite of true. Measured on the built pages with these two rates,
+ * the three current translation pairs report 7/7, 7/7 and 7/8 minutes — i.e.
+ * a translation pair lands on the same figure or within a minute of it,
+ * which is the right answer for the same article told twice.
+ */
+const WORDS_PER_MINUTE: Record<Language, number> = {
+  en: 230,
+  ar: 180,
+};
+
+/**
+ * Whole minutes to read a post's body, floored at 1. Plain word count off the
+ * raw Markdown (`entry.body`, which the glob loader hands over without
+ * frontmatter) with the syntax characters stripped, so a heading's `##` and a
+ * link's URL are not counted as words. No dependency: CLAUDE.md's "no new
+ * dependencies", and a reading-time package would be ~30 lines of this.
+ *
+ * `\s+` splits Arabic exactly as it splits English — Arabic is space-
+ * separated — so no per-script branch is needed here, only the per-language
+ * rate above.
+ */
+export function readingTime(body: string, lang: Language): number {
+  const words = body
+    // Fenced code, then inline code: never prose, and a code block would
+    // otherwise inflate the estimate badly. (No current post carries either;
+    // this keeps the estimate honest for one that does.)
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    // A link's visible label is prose, its URL is not.
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    // Leading Markdown furniture: heading hashes, list bullets, blockquote
+    // marks, emphasis. Anchored per line so a hyphen inside a word survives.
+    .replace(/^[>#\s]*[-*+]?\s*/gm, " ")
+    .replace(/[*_]/g, "")
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+  return Math.max(1, Math.round(words / WORDS_PER_MINUTE[lang]));
+}
+
+/**
+ * Picks between the two reading-time strings in the UI dictionary and fills
+ * the count in, formatted in the reading language's own numerals (Arabic gets
+ * Arabic-Indic digits, matching `formatPostDate` above, which already does).
+ *
+ * Two forms, not one, because Arabic agrees the counted noun with the number:
+ * 3–10 takes the plural (دقائق), everything else the singular (دقيقة).
+ * `Intl.PluralRules` — built in, no dependency — is what decides which,
+ * rather than a hand-written `n >= 3 && n <= 10`, so the rule stays correct
+ * if a third language is ever added. English maps both categories to the same
+ * template, since "1 min read" and "7 min read" share a form.
+ */
+export function formatReadingTime(
+  minutes: number,
+  lang: Language,
+  templates: { few: string; other: string },
+): string {
+  const locale = lang === "ar" ? "ar" : "en-GB";
+  const category = new Intl.PluralRules(locale).select(minutes);
+  const template = category === "few" ? templates.few : templates.other;
+  return template.replace(
+    "{minutes}",
+    new Intl.NumberFormat(locale).format(minutes),
+  );
+}
+
 export interface FaqItem {
   question: string;
   answer: string;

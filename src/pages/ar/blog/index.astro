@@ -20,6 +20,7 @@ const posts = await getPublishedPosts(lang);
   rssHref={`/${lang}/blog/rss.xml`}
 >
   <BlogIndexJsonLd
+    slot="head"
     lang={lang}
     title={t("blog.metaTitle")}
     description={t("blog.metaDescription")}

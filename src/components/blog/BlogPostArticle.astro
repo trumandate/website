@@ -1,19 +1,70 @@
 ---
-// BlogPostArticle.astro — the reading-focused post shell: title, byline,
-// tags, the rendered Markdown body (styled by hand below — no
-// @tailwindcss/typography, per this build's own hard constraint), and a
-// quiet prev/next/back-to-index footer. `<slot />` carries the post's
-// rendered `<Content />` — passed as a child from the calling page, since an
-// Astro component factory (the return of `render()`) can only be composed
-// as markup at the call site, not threaded through as a plain prop.
+// BlogPostArticle.astro — the reading-focused post shell: a `phthalo` header
+// band (breadcrumb, meta line, title, standfirst), the rendered Markdown body
+// (styled by hand below — no @tailwindcss/typography, per this build's own
+// hard constraint), the post's topics, a quiet CTA, and a prev/next/back-to-
+// index footer. `<slot />` carries the post's rendered `<Content />` — passed
+// as a child from the calling page, since an Astro component factory (the
+// return of `render()`) can only be composed as markup at the call site, not
+// threaded through as a plain prop.
+//
+// ---- 2026-09-01 redesign (USER REPORT) ----
+// The owner rejected the shipped post page on a laptop. Four defects, all
+// reproduced at 1440×900 before this rewrite, and what each one is now:
+//
+//   1. The reading column was `max-w-measure` (56ch) START-ALIGNED inside the
+//      1180px content wrapper, so the whole inline-end half of a 1440 screen
+//      was dead space. It is now `mx-auto max-w-measure-prose` — centred, and
+//      widened to 64ch, which renders around 70 typeset characters per line
+//      (inside the 50–75 band every readability source names).
+//   2. In-article H2s used `text-h2`, the site's MARKETING section clamp —
+//      44px at 1440, against a 44px H1. There was no hierarchy left inside an
+//      article at all. H2/H3/body/lede now use the four blog-scoped fontSize
+//      tokens added to tailwind.config.mjs in the same change (26/19/18/20px
+//      at 1440 against a 44px title), so a section break reads as subordinate
+//      to the title instead of competing with it.
+//   3. A large awkward gap sat between the tag chips and the first paragraph
+//      — the header section's own bottom padding, the next section's
+//      `py-section-tight`, and the first paragraph's margin all stacking.
+//      Both sections now carry explicit `padding-block` pairs, and
+//      the first block of the article has its own block-start margin zeroed.
+//   4. The tags read raw and unfinished: bordered mono chips wedged between
+//      the title and the body, i.e. UI furniture interrupting the read. They
+//      are now plain subdued text in the article's own footer, where a
+//      reader who has finished the piece is actually looking for them.
+//
+// `phthalo` (#123524, the owner's 2026-09-01 "our brand green" directive) is
+// the blog's one new surface — the header band here and the closing CTA
+// panel, matching BlogIndex.astro so index and post read as one room. The
+// running text stays on `ink`: a long read wants the site's darkest, flattest
+// ground behind it, not a tinted panel.
+//
+// CAUTION, found while measuring this redesign in the browser: `body` is BOTH
+// a `fontSize` key and a `colors` key in tailwind.config.mjs, so `text-body`
+// emits a font-size rule as well as a colour rule. Tailwind orders the
+// generated fontSize utilities alphabetically, which puts `.text-body` after
+// every `.text-blog-*` — so a `class="text-blog-lede … text-body"` element
+// silently renders at 1rem, not at the blog token. Measured, not assumed: the
+// standfirst below rendered at 16px instead of 20px until the colour utility
+// was dropped. Anything that needs a blog size AND the body colour must let
+// the colour inherit (global.css applies it to the `body` element) rather than
+// restate it. Logged in known-issues.md.
 //
 // No `.tm-rise`/reveal script here either — see BlogIndex.astro's own header
 // comment for why the blog section skips the site's scroll-reveal mechanism
-// outright rather than gating it per element.
+// outright rather than gating it per element. Nothing here transforms, so
+// there is no `prefers-reduced-motion` branch to write: every state is a
+// colour transition, which is information rather than motion.
 import Section from "../layout/Section.astro";
+import Button from "../ui/Button.astro";
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
-import { formatPostDate, type BlogPost } from "../../lib/blog";
+import {
+  formatPostDate,
+  formatReadingTime,
+  readingTime,
+  type BlogPost,
+} from "../../lib/blog";
 import tailwindConfig from "../../../tailwind.config.mjs";
 
 interface Props {
@@ -21,10 +72,23 @@ interface Props {
   post: BlogPost;
   prevPost: BlogPost | null;
   nextPost: BlogPost | null;
+  /** The post's own h2 headings, already filtered to depth 2 by the calling
+   * route, straight out of `render(post)` — `slug` is by construction the
+   * `id` the Markdown pipeline wrote onto that heading, so a rail link cannot
+   * point at an anchor that is not there. An empty array is a valid state
+   * (a post with no sections): the rail then renders nothing at all rather
+   * than an empty labelled landmark. */
+  headings: { depth: number; slug: string; text: string }[];
 }
 
-const { lang, post, prevPost, nextPost }: Props = Astro.props;
+const { lang, post, prevPost, nextPost, headings }: Props = Astro.props;
 const t = useTranslations(lang);
+
+const minutes = readingTime(post.body ?? "", lang);
+const readLabel = formatReadingTime(minutes, lang, {
+  few: t("blog.readingTimeFew"),
+  other: t("blog.readingTimeOther"),
+});
 
 // The rendered Markdown body arrives through `<slot />` from another
 // component tree entirely (the post's `<Content />`), so the `.blog-prose
@@ -38,6 +102,15 @@ const t = useTranslations(lang);
 // AiMomentCard.astro already use for values Tailwind's own utility classes
 // can't express, just handed to CSS through custom properties instead of an
 // inline `style` string, since these rules must reach slotted content.
+//
+// The four size entries below are the BLOG-scoped tokens, not the site's
+// `h2`/`h3`/`body`/`lede` — see this file's header comment, defect 2. Each
+// fontSize token is `[size, { lineHeight, letterSpacing }]`, and unlike a
+// Tailwind `text-*` utility (which emits all three), a bare `font-size` in
+// hand-written CSS brings neither companion value with it. So the
+// line-heights are pulled out and declared explicitly too; skipping that is
+// exactly how the old rules ended up inheriting the body's 1.55 onto a 44px
+// heading.
 const theme = (
   tailwindConfig as unknown as {
     theme: {
@@ -47,106 +120,294 @@ const theme = (
       fontSize: Record<string, [string, Record<string, string>]>;
       lineHeight: Record<string, string>;
       letterSpacing: Record<string, string>;
-      extend: { borderWidth: Record<string, string> };
+      extend: {
+        borderWidth: Record<string, string>;
+        spacing: Record<string, string>;
+      };
     };
   }
 ).theme;
 
+// ---- 2026-09-01 wide-screen pass (second USER REPORT: "blogs' content is
+// not increasing width wise on large screens, at least it should stretch till
+// width of nav bar content … lot of empty space both sides in big monitor
+// screen"). ----
+//
+// The fix is a composition, not a wider paragraph. Inflating the single
+// column to the full 1036px content box would have put ~115 characters on a
+// line, which trades a layout complaint for a worse reading one. Instead the
+// page becomes a two-track grid at `lg` that spans the whole content box: a
+// sticky table-of-contents rail in track one, the article in track two, and
+// the three widths (16.5rem + 4.25rem + 44rem) sum to exactly the 1036px the
+// header's own `max-w-content`/`px-gutter` wrapper gives its brand mark and
+// CTA. The article column itself grew 576px → 704px and the body type grew
+// with it, so characters-per-line stayed inside the readable band.
+//
+// These two class strings are declared once and reused by the three blocks
+// that have to line up on that grid — the article body, the topics footer and
+// the closing CTA/nav. Written out at each call site instead, three copies
+// would silently drift the moment one of them changed. The header band is
+// deliberately NOT one of them: it spans the whole content box on the owner's
+// own instruction, so its start edge matches the rail's rather than the
+// article column's. See its own comment in the template below.
+//
+// `col-start-2` and `grid-cols-*` are direction-agnostic: CSS grid places
+// tracks along the INLINE axis in writing order, so track one is the start
+// side in both languages and the rail mirrors to the other edge under
+// `dir="rtl"` with no override. Same reason `border-s`/`ps-*` are used inside
+// the rail rather than a physical pair.
+// `lg:w-full` is load-bearing, not belt-and-braces. A grid item only STRETCHES
+// to its track when its inline size is `auto` AND neither inline margin is
+// `auto` — and `mx-auto` (needed for the centred single column below `lg`)
+// sets both. So without an explicit width these blocks shrink to fit their own
+// content and centre inside the track: measured 540px for the topics footer
+// and 543px for the CTA panel against a 704px column, while the prose itself
+// happened to look correct only because a paragraph's max-content width
+// exceeds the cap anyway. `w-full` gives a definite inline size, the auto
+// margins resolve to 0, and all four blocks land on the same 704px column.
+const gridClass = "lg:grid lg:grid-cols-blog lg:gap-x-blog-gap";
+const columnClass =
+  "mx-auto max-w-measure-prose lg:col-start-2 lg:w-full lg:max-w-measure-prose-wide";
+
 const proseVars = {
   proseFontSans: theme.fontFamily.sans.join(", "),
   proseWeightSemi: theme.fontWeight.semi,
-  proseH2Size: theme.fontSize.h2[0],
-  proseH3Size: theme.fontSize.h3[0],
-  proseBodySize: theme.fontSize.body[0],
-  proseLedeSize: theme.fontSize.lede[0],
-  proseLineHeightLatin: theme.lineHeight.latin,
-  proseLineHeightArabic: theme.lineHeight.arabic,
+  proseH2Size: theme.fontSize["blog-h2"][0],
+  proseH2Leading: theme.fontSize["blog-h2"][1].lineHeight,
+  proseH2Tracking: theme.fontSize["blog-h2"][1].letterSpacing,
+  proseH3Size: theme.fontSize["blog-h3"][0],
+  proseH3Leading: theme.fontSize["blog-h3"][1].lineHeight,
+  proseH3Tracking: theme.fontSize["blog-h3"][1].letterSpacing,
+  proseBodySize: theme.fontSize["blog-body"][0],
+  proseLedeSize: theme.fontSize["blog-lede"][0],
+  proseLineHeightLatin: theme.lineHeight.prose,
+  proseLineHeightArabic: theme.lineHeight["prose-ar"],
+  proseLineHeadingArabic: theme.lineHeight["heading-ar"],
   proseLetterSpacingNone: theme.letterSpacing.none,
   proseColorPaper: theme.colors.paper,
   proseColorBody: theme.colors.body,
   proseColorAccent: theme.colors.accent,
+  proseColorHairline: theme.colors.hairline,
   proseMarkerWidth: theme.extend.borderWidth.marker,
+  // Anchor landing offset for the TOC's own links — see the `scroll-margin`
+  // declaration in the style block below.
+  proseAnchorOffset: theme.extend.spacing["sticky-top"],
 };
 ---
 
-<Section pad={false} style="padding-top: clamp(3rem, 7vh, 5rem); padding-bottom: clamp(1rem, 2vh, 1.5rem);">
-  <div class="max-w-measure">
-    <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
-      <time datetime={post.data.pubDate.toISOString()}>
-        {formatPostDate(post.data.pubDate, lang)}
-      </time>
-      {" · "}{post.data.author}
-    </p>
-    <h1
-      class="mt-4 font-sans text-h2 font-semi tracking-heading text-paper"
-      style="text-wrap: pretty;"
-    >
-      {post.data.title}
-    </h1>
-    <ul class="mt-5 flex flex-wrap gap-2" aria-label={t("blog.tagsLabel")}>
-      {
-        post.data.tags.map((tag) => (
-          <li class="rounded-control border border-hairline px-2 py-1 font-mono text-datum font-data tracking-datum text-muted">
-            {tag}
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-</Section>
-
-<Section tight>
-  <div class="blog-prose max-w-measure">
-    <slot />
-  </div>
-
-  <nav
-    aria-label={t("blog.indexLabel")}
-    class="mt-16 flex flex-col gap-6 border-t border-hairline pt-8 max-w-measure"
+{/* One article element per post, wrapping the header band and the body: the
+    two together are the self-contained, syndicatable thing the element means,
+    so the H1 has to be inside it, and it therefore has to sit outside both
+    Sections rather than inside either. The CTA and the prev/next nav are
+    deliberately left outside it — neither is part of the post. Section
+    renders a section element, and an article containing sections is valid
+    HTML, so this adds no generic wrapper; it names a region that was
+    previously unnamed (the built pages carried zero article elements, which
+    is what the SEO pass flagged). */}
+<article>
+  <Section
+    pad={false}
+    class="border-b border-hairline"
+    style="padding-block: clamp(2.25rem, 6vh, 3.75rem) clamp(1.75rem, 4.5vh, 2.75rem);"
   >
-    <a
-      href={`/${lang}/blog/`}
-      class="text-small font-semi text-accent transition-colors duration-state ease-standard hover:text-paper"
+    <div slot="backdrop" class="absolute inset-0 bg-phthalo"></div>
+
+    {/* The header band is the one block that is NOT on the article grid
+        (owner, 2026-09-01, after seeing the first wide-screen build: "use this
+        heading in the wide format to match the width of 'On this page'
+        section"). It runs the full content box, so the eyebrow, H1, standfirst
+        and byline all start on the same grid line the table-of-contents rail
+        starts on rather than on the article column's line — the masthead sets
+        the page's full width, and the rail plus column composition begins
+        underneath it. `Section` already supplies that box
+        (`mx-auto max-w-content px-gutter`), so this needs no wrapper class of
+        its own; the plain div is here only to keep the four blocks grouped. */}
+    <div>
+      <div>
+        <a
+          href={`/${lang}/blog/`}
+          class="font-mono text-datum font-data uppercase tracking-datum text-muted transition-colors duration-state ease-standard hover:text-accent"
+        >
+          {t("nav.blog")}
+        </a>
+
+        <h1
+          class="mt-5 font-sans text-blog-title font-semi text-paper"
+          style="text-wrap: pretty;"
+        >
+          {post.data.title}
+        </h1>
+
+        {/* The standfirst keeps a bounded measure while still STARTING on the
+            band's own start edge — a 1036px line of 21.6px text would be
+            ~104 characters, which is exactly the reading defect the article
+            column below exists to avoid. `max-w-*` with no `mx-auto` caps the
+            width without moving the block, so it grows from the same grid
+            line as the H1 above it.
+
+            No `text-body` colour utility here, deliberately — see this file's
+            header note on the fontSize/colour name collision. The colour is
+            inherited: global.css's base layer applies `text-body` to the
+            `body` element itself, so every descendant already renders in that
+            colour unless something overrides it. */}
+        <p class="mt-5 max-w-measure-prose-wide text-blog-lede font-light">
+          {post.data.description}
+        </p>
+
+        <p
+          class="mt-6 font-mono text-datum font-data uppercase tracking-datum text-muted"
+        >
+          <time datetime={post.data.pubDate.toISOString()}>
+            {formatPostDate(post.data.pubDate, lang)}
+          </time>
+          {" · "}{post.data.author}{" · "}{readLabel}
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section pad={false} style="padding-block: clamp(1.75rem, 4.5vh, 2.75rem) 0;">
+    <div class={gridClass}>
+      {
+        headings.length > 0 && (
+          /* The rail. `lg:self-start` is what makes `lg:sticky` work here: a
+             stretched grid item is already as tall as its area, so it has
+             nowhere to stick to — shrunk to its own height, it sticks inside
+             the area instead, and because the article body and this nav are
+             pinned to the SAME grid row, the rail travels with the prose and
+             stops at the topics footer rather than following the reader into
+             the closing CTA.
+
+             `hidden lg:block`: on a phone the rail would be a second copy of
+             the article's own headings pushed above the first paragraph —
+             clutter, and it costs a reader the opening of the piece. The
+             headings themselves are still in the document either way.
+
+             No JavaScript, and no scroll-behaviour of any kind: these are
+             plain in-page anchors, so they work with scripting off and the
+             jump is instant, which is already the correct behaviour under
+             `prefers-reduced-motion: reduce`. Nothing here needs a
+             reduced-motion branch because nothing here animates. */
+          <nav
+            aria-labelledby="blog-toc-label"
+            class="hidden lg:sticky lg:top-sticky-top lg:col-start-1 lg:row-start-1 lg:block lg:max-h-toc lg:self-start lg:overflow-y-auto"
+          >
+            <p
+              id="blog-toc-label"
+              class="font-mono text-datum font-data uppercase tracking-datum text-muted"
+            >
+              {t("blog.tocLabel")}
+            </p>
+            <ol class="mt-4 flex flex-col gap-3 border-s border-hairline">
+              {headings.map((heading) => (
+                <li>
+                  <a
+                    href={`#${heading.slug}`}
+                    class="block ps-4 text-small font-light text-muted transition-colors duration-state ease-standard hover:text-paper"
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <div class:list={["blog-prose", columnClass, "lg:row-start-1"]}>
+        <slot />
+      </div>
+
+      <footer class:list={[columnClass, "mt-12 border-t border-hairline pt-8"]}>
+        <p
+          id="blog-topics-label"
+          class="font-mono text-datum font-data uppercase tracking-datum text-muted"
+        >
+          {t("blog.tagsLabel")}
+        </p>
+        <ul
+          aria-labelledby="blog-topics-label"
+          class="tag-list mt-3 flex flex-wrap items-center font-mono text-datum font-data tracking-datum text-muted"
+        >
+          {post.data.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
+      </footer>
+    </div>
+  </Section>
+</article>
+
+<Section
+  pad={false}
+  style="padding-block: clamp(2.5rem, 6vh, 3.5rem) clamp(3rem, 8vh, 5.5rem);"
+>
+  <div class={gridClass}>
+    <aside
+      class:list={[
+        columnClass,
+        "rounded-panel border border-hairline bg-phthalo",
+      ]}
+      style="padding: clamp(1.5rem, 3.5vw, 2.25rem);"
     >
-      {t("blog.indexLabel")}
-    </a>
-    {
-      (prevPost || nextPost) && (
-        <div class="flex flex-wrap items-start justify-between gap-6">
-          <div>
-            {prevPost && (
-              <a
-                href={`/${lang}/blog/${prevPost.data.translationKey}/`}
-                class="group block"
-              >
-                <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
-                  {t("blog.previousLabel")}
-                </p>
-                <p class="mt-2 text-small font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
-                  {prevPost.data.title}
-                </p>
-              </a>
-            )}
+      <h2 class="font-sans text-blog-h2 font-semi text-paper">
+        {t("blog.ctaHeading")}
+      </h2>
+      <p class="mt-3 text-small font-light text-body" style="max-width: 52ch;">
+        {t("blog.ctaBody")}
+      </p>
+      <Button href={`/${lang}/contact/`} class="mt-6">{t("cta.primary")}</Button>
+    </aside>
+
+    <nav
+      aria-label={t("blog.indexLabel")}
+      class:list={[
+        columnClass,
+        "mt-12 flex flex-col gap-6 border-t border-hairline pt-8",
+      ]}
+    >
+      <a
+        href={`/${lang}/blog/`}
+        class="text-small font-semi text-accent transition-colors duration-state ease-standard hover:text-paper"
+      >
+        {t("blog.indexLabel")}
+      </a>
+      {
+        (prevPost || nextPost) && (
+          <div class="flex flex-wrap items-start justify-between gap-6">
+            <div>
+              {prevPost && (
+                <a
+                  href={`/${lang}/blog/${prevPost.data.translationKey}/`}
+                  class="group block"
+                >
+                  <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+                    {t("blog.previousLabel")}
+                  </p>
+                  <p class="mt-2 text-small font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
+                    {prevPost.data.title}
+                  </p>
+                </a>
+              )}
+            </div>
+            <div class="text-end">
+              {nextPost && (
+                <a
+                  href={`/${lang}/blog/${nextPost.data.translationKey}/`}
+                  class="group block"
+                >
+                  <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+                    {t("blog.nextLabel")}
+                  </p>
+                  <p class="mt-2 text-small font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
+                    {nextPost.data.title}
+                  </p>
+                </a>
+              )}
+            </div>
           </div>
-          <div class="text-end">
-            {nextPost && (
-              <a
-                href={`/${lang}/blog/${nextPost.data.translationKey}/`}
-                class="group block"
-              >
-                <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
-                  {t("blog.nextLabel")}
-                </p>
-                <p class="mt-2 text-small font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
-                  {nextPost.data.title}
-                </p>
-              </a>
-            )}
-          </div>
-        </div>
-      )
-    }
-  </nav>
+        )
+      }
+    </nav>
+  </div>
 </Section>
 
 <style define:vars={proseVars}>
@@ -161,30 +422,53 @@ const proseVars = {
    * second hardcoded literal — CSS custom properties inherit normally down
    * the DOM regardless of Astro's own scoping mechanism, so the values
    * declared on this component's root elements reach the slotted content
-   * exactly like any other inherited CSS property.
-   *
-   * h2/h3 get no explicit [dir=rtl] line-height/letter-spacing override:
-   * global.css's own base-layer rules (`[dir="rtl"] h2, h3 { line-height:
-   * ... }` / `[dir="rtl"] h1, h2, h3, .font-display, .tracking-brand {
-   * letter-spacing: ... }`) already apply to every h2/h3 in the document
-   * regardless of which component rendered them, so re-declaring the same
-   * override here would just be dead weight. Paragraphs/lists/blockquotes
-   * get their own explicit RTL rule below because THIS file, not global.css,
-   * is what sets their (Latin) line-height in the first place — see that
-   * rule's own comment. */
+   * exactly like any other inherited CSS property. */
+
+  /* The first block of the article sits directly under the header band's own
+   * bottom padding plus this section's own top padding. Its own margin on top
+   * of those two is the third of the three stacked gaps the owner reported as
+   * "a large awkward vertical gap" before the first paragraph. Zeroed here
+   * rather than by shaving one of the paddings, because the paddings are what
+   * set the band's proportions and the margin is the one that carries no
+   * information at all in first position. */
+  .blog-prose > :global(:first-child) {
+    margin-block-start: 0;
+  }
+
+  /* `margin-block: <start> <end>`, with a deliberately large start value: the
+   * space ABOVE a section heading is what tells a reader a new section has
+   * begun. A heading that is merely bigger, with even space on both sides,
+   * reads as an emphasised paragraph. */
+  /* The table-of-contents rail's links are in-page anchors, and the site
+   * header is `position: fixed` — so without this the browser scrolls the
+   * targeted heading to y=0, directly underneath the header, and the reader
+   * lands on the paragraph after the section they asked for.
+   * `scroll-margin-block-start`, not the physical `scroll-margin-top`:
+   * logical properties throughout, same rule as everywhere else here. The
+   * value is the `sticky-top` token (header height plus air), the same one
+   * that positions the rail itself, so the two cannot drift. */
+  .blog-prose :global(h2),
+  .blog-prose :global(h3) {
+    scroll-margin-block-start: var(--proseAnchorOffset);
+  }
+
   .blog-prose :global(h2) {
-    margin-block: clamp(2rem, 4vw, 2.75rem) 1rem;
+    margin-block: clamp(2.5rem, 5vw, 3.25rem) 0.75rem;
     font-family: var(--proseFontSans);
     font-weight: var(--proseWeightSemi);
     font-size: var(--proseH2Size);
+    line-height: var(--proseH2Leading);
+    letter-spacing: var(--proseH2Tracking);
     color: var(--proseColorPaper);
   }
 
   .blog-prose :global(h3) {
-    margin-block: clamp(1.5rem, 3vw, 2rem) 0.75rem;
+    margin-block: clamp(1.75rem, 3.5vw, 2.25rem) 0.5rem;
     font-family: var(--proseFontSans);
     font-weight: var(--proseWeightSemi);
     font-size: var(--proseH3Size);
+    line-height: var(--proseH3Leading);
+    letter-spacing: var(--proseH3Tracking);
     color: var(--proseColorPaper);
   }
 
@@ -217,13 +501,19 @@ const proseVars = {
   }
 
   .blog-prose :global(blockquote) {
-    margin-block: 1.5em;
+    margin-block: 1.75em;
     margin-inline: 0;
     padding-inline-start: 1.25em;
     border-inline-start: var(--proseMarkerWidth) solid var(--proseColorAccent);
     font-size: var(--proseLedeSize);
     line-height: var(--proseLineHeightLatin);
     color: var(--proseColorPaper);
+  }
+
+  .blog-prose :global(hr) {
+    margin-block: 2.5em;
+    border: 0;
+    border-block-start: 1px solid var(--proseColorHairline);
   }
 
   .blog-prose :global(strong) {
@@ -244,12 +534,44 @@ const proseVars = {
    * which would require `[dir="rtl"]` (set on `<html>`) to ALSO carry this
    * component's scope attribute — never true — and the whole rule would
    * silently never match. Verified against this exact bug in the built
-   * output before writing this comment. */
+   * output before writing this comment.
+   *
+   * h2/h3 ARE listed here now, unlike before this redesign. The old file's
+   * comment argued they could be left out because global.css's base-layer
+   * `[dir="rtl"] h2, h3 { line-height: … }` rule already covered them — true
+   * only while these rules declared no line-height of their own. They now do
+   * (see the frontmatter comment on why a bare `font-size` in hand-written
+   * CSS brings neither of a fontSize token's companion values with it), and
+   * an Astro component `<style>` block is UNLAYERED while global.css's rule
+   * sits inside `@layer base`, so unlayered wins outright regardless of
+   * specificity or source order — Arabic headings would have silently
+   * inherited the Latin 1.25/1.35 leading. Letter-spacing is overridden for
+   * the same reason. */
+  :global([dir="rtl"]) .blog-prose :global(h2),
+  :global([dir="rtl"]) .blog-prose :global(h3) {
+    line-height: var(--proseLineHeadingArabic);
+    letter-spacing: var(--proseLetterSpacingNone);
+  }
+
+  /* Paragraphs/lists/blockquotes get their own explicit RTL rule because THIS
+   * file, not global.css, is what sets their (Latin) line-height in the first
+   * place. */
   :global([dir="rtl"]) .blog-prose :global(p),
   :global([dir="rtl"]) .blog-prose :global(ul),
   :global([dir="rtl"]) .blog-prose :global(ol),
   :global([dir="rtl"]) .blog-prose :global(blockquote) {
     line-height: var(--proseLineHeightArabic);
     letter-spacing: var(--proseLetterSpacingNone);
+  }
+
+  /* The topics list's separator — same rule, same reasoning, as
+   * BlogIndex.astro's own copy (a `<ul>` may only contain `<li>`, so the dot
+   * is a pseudo-element rather than a `<span>` assistive tech would read
+   * out). Duplicated rather than lifted into global.css: two components, one
+   * short rule each, and a global utility for it would be a third place to
+   * look for four lines of CSS. `margin-inline`, not left/right. */
+  .tag-list li + li::before {
+    content: "·";
+    margin-inline: 0.5rem;
   }
 </style>

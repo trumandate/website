@@ -1329,3 +1329,103 @@ Not fixed here — `AiQueue.astro` is a different component, outside this
 session's board-only brief — carried to TODO.md instead. Resolves to 0 at
 768px and 1440px in both languages (2-column card grid gives the first
 card enough margin).
+
+## Blog redesign (2026-09-01) — two platform traps found by measurement
+
+**1. `text-body` silently overrides any `text-blog-*` font size.** `body` is a
+key in BOTH `theme.fontSize` and `theme.colors` in `tailwind.config.mjs`, so
+Tailwind's `text-body` utility emits a `font-size` rule (1rem/1.55) as well as
+the colour rule it is almost always written for. Tailwind orders the generated
+fontSize utilities ALPHABETICALLY, so `.text-body` lands after every
+`.text-blog-*` in the stylesheet, and an element written as
+`class="text-blog-lede font-light text-body"` renders at 16px, not at the
+token. Found on the post page's standfirst (`getComputedStyle` reported 16px
+where 20px was expected) and confirmed by reading the byte offsets of the
+compiled rules in `dist/en/blog/what-is-portfolio-governance/index.html`:
+`.text-blog-lede` at 26006, `.text-body`'s font-size rule at 26190.
+
+The site's existing `text-lede`/`text-small` call sites are safe only by
+accident of the alphabet — "lede" and "small" sort after "body", so their
+rules land later and win. Nothing in the config expresses that dependency.
+
+Fixed at the one affected call site by dropping the colour utility and letting
+the colour inherit (global.css applies `text-body` to the `body` element
+itself, so every descendant already has it). Not fixed generally: renaming the
+`body` fontSize key would touch the whole site, and relying on alphabetical
+utility ordering is an implementation detail either way. Anything that needs a
+`blog-*` size together with the body colour must inherit the colour.
+
+**2. An unmatched `<` or `>` inside a frontmatter `//` comment breaks Astro's
+props inference for the whole component.** `BlogPostArticle.astro` failed
+`astro check` with `ts(2739): Type 'Record<string, any>' is missing the
+following properties from type 'Props'` on its `Astro.props` destructuring line
+— an error pointing at code that had not changed. Bisected one comment line at
+a time to:
+
+```
+//      `.blog-prose > :first-child` has its block-start margin zeroed.
+```
+
+Reproduced from a clean file with `// a > b`, `` // `a > b` `` and `// x < y`
+(all fail); `// \`<slot />\` carries it` and `// 5 > 3 but 2 < 4` both pass, so
+it is an unbalanced angle bracket, not the character itself — the compiler
+appears to start reading a tag and never generates the typed props for the
+component. The build still succeeds; only `astro check` reports it, and the
+message names the wrong cause. Avoid a stray `<`/`>` in frontmatter comments;
+write "a child combinator" rather than the operator.
+
+## The header row overflows its own grid column at `lg` and up
+
+**Found:** 2026-09-01, while measuring /contact against the shared grid after
+the owner's report that "the nav bar and content in screen are not aligned".
+**Where:** `src/components/layout/Header.astro`, the
+`mx-auto flex max-w-content ... gap-gutter px-gutter` row. Site-wide, every
+route — not a /contact defect.
+
+Measured at 1440 and again at 1920 (`getBoundingClientRect`, built page):
+
+| | 1440 | 1920 |
+|---|---|---|
+| grid content edges (`max-w-content` minus `px-gutter`) | 194.3 → 1230.3 | 434.3 → 1470.3 |
+| header brand start edge | 194.3 ✓ | 434.3 ✓ |
+| header CTA end edge | 1264.7 ✗ | 1504.7 ✗ |
+
+The row's three flex children (brand 188.2 + nav 554.3 + language/CTA group
+183.9 = 926.4) plus its two `gap-gutter` gaps (2 × 72 = 144) total 1070.4px
+against the 1036px the padded row actually offers, so `justify-between`
+resolves the 34.4px deficit by pushing the end group past the content edge.
+The overshoot is the same 34.4px at both widths because `max-w-content` and
+`px-gutter` have both topped out by 1440 — it is a fixed shortfall, not a
+proportional one.
+
+Consequence: any page content that is correctly flush to the grid's end edge
+(the /contact form card, and every blog route's column) sits 34.4px short of
+where the header's CTA appears to end, which reads as a misalignment even
+though the page content is the side that is right.
+
+The fix belongs in the header, not in page content: give the row back the
+~35px it is short (a smaller gap step between the three groups, or letting the
+nav group shrink). Do NOT "fix" it by widening page content past
+`max-w-content` — that would move every route off the shared grid to chase a
+header bug.
+
+**RESOLVED, 2026-09-01, same day**, in `Header.astro` by the session that owns
+that file. Re-measured on the built page at 1440 after the fix landed: grid
+content edges 194.3 → 1230.3, header brand start **194.3**, header CTA end
+**1230.3**, /contact intro start **194.3**, /contact form card end
+**1230.3** — all four agree, overhang 0. Kept here as the record of what the
+symptom was and why page content was not the thing to change.
+
+**3. `mx-auto` silently defeats CSS grid stretch.** Added during the same
+day's wide-screen pass. A grid item only stretches to fill its track when its
+inline size is `auto` AND neither inline margin is `auto` — and `mx-auto`,
+which the blog's blocks carry so they centre in the single-column layout below
+`lg`, sets both margins to `auto`. On the grid at `lg` those blocks therefore
+shrank to their own content and centred inside the track instead of filling
+it: measured 540px for the post's topics footer and 543px for its CTA panel
+against a 704px column, while the article body happened to look correct only
+because a paragraph's max-content width exceeds the cap anyway — i.e. the bug
+was invisible on the one block anyone would have eyeballed. Fixed by adding
+`lg:w-full` alongside the `max-w-*` cap, which gives a definite inline size so
+the auto margins resolve to 0. Worth knowing before adding a fifth block to
+that grid.

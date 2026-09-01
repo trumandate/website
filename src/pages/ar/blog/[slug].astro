@@ -27,7 +27,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+// See src/pages/en/blog/[slug].astro's own comment on why the TOC's headings
+// come from `render()` rather than from re-parsing the Markdown.
+const { Content, headings } = await render(post);
+const tocHeadings = headings.filter((heading) => heading.depth === 2);
 
 const posts = await getPublishedPosts(lang);
 const index = posts.findIndex((p) => p.id === post.id);
@@ -35,16 +38,22 @@ const prevPost = index > 0 ? posts[index - 1] : null;
 const nextPost = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
 
 const faq = parseFaq(post.body ?? "", lang);
+
+// See src/pages/en/blog/[slug].astro's own comment: `seoTitle` is the
+// optional ≤60-character short form used for the <title> tag and og:title
+// only, never for the on-page H1 or the BlogPosting `headline`.
+const metaTitle = post.data.seoTitle ?? post.data.title;
 ---
 
 <BaseLayout
   lang={lang}
   path={`/blog/${post.data.translationKey}`}
-  title={`${post.data.title} — TruMandate`}
+  title={`${metaTitle} — TruMandate`}
   description={post.data.description}
   rssHref={`/${lang}/blog/rss.xml`}
 >
   <BlogPostJsonLd
+    slot="head"
     lang={lang}
     slug={post.data.translationKey}
     title={post.data.title}
@@ -52,7 +61,13 @@ const faq = parseFaq(post.body ?? "", lang);
     pubDate={post.data.pubDate}
     faq={faq}
   />
-  <BlogPostArticle lang={lang} post={post} prevPost={prevPost} nextPost={nextPost}>
+  <BlogPostArticle
+    lang={lang}
+    post={post}
+    prevPost={prevPost}
+    nextPost={nextPost}
+    headings={tocHeadings}
+  >
     <Content />
   </BlogPostArticle>
 </BaseLayout>

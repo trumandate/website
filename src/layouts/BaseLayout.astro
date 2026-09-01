@@ -84,6 +84,15 @@ const fontPreloads =
       ogImageAlt={t("meta.ogImageAlt")}
     />
     <JsonLd lang={lang} path={path} title={title} description={description} />
+    <!-- Per-route head content (2026-09-01). The blog's structured data was
+         being composed as ordinary page children, so its ld+json blocks
+         landed in the body — valid HTML, read fine by Google, but this file's
+         own rule is that every head tag is assembled here, and some AI
+         crawlers only read structured data from the head. The named slot
+         keeps both: the page still owns WHICH structured data its route
+         emits, this layout still owns WHERE it lands. Routes that pass
+         nothing are unchanged, same as the optional rssHref prop above. -->
+    <slot name="head" />
     {
       rssHref && (
         <link
