@@ -59,43 +59,162 @@ const emailNoteHtml = t("contact.emailNote").replace(
     </div>
   </Fragment>
 
+  {/* ---- 2026-09-01, USER REPORT: "the nav bar and content in screen are
+      not aligned and not coherent … if you wanna make them centre align
+      should be case everywhere". ----
+
+      The page used to be TWO sections: an intro band, then a second section
+      holding a 760px card. Both sat on the shared grid, but the card was
+      capped at 760px inside an 1180px column and start-aligned, so at 1440
+      it left ~420px of empty ground on the inline-end side and the page read
+      as two differently-shaped things rather than one composition.
+
+      One section now, one grid, one alignment logic. The wrapper is the same
+      `mx-auto max-w-content px-gutter` container Header.astro's own row uses
+      (`max-w-content` + `px-gutter`, measured identical at every breakpoint),
+      so the intro's start edge is the brand lockup's start edge and — at
+      `lg` and up — the card's end edge is the header CTA's end edge. Nothing
+      is centred and nothing is capped short of the grid: below `lg` the two
+      stack and BOTH span the full column, at `lg` and up they are the two
+      columns of it. There is no width at which one is centred and the other
+      is not.
+
+      The 1fr/1.3fr split, rather than a half-and-half: the card is the
+      page's actual job and needs the room (its own field grid wants ~250px
+      per column plus the card's `clamp()` padding), while the intro is three
+      short blocks that read better on a narrower measure anyway. */}
   <div
     class="relative z-10 mx-auto max-w-content px-gutter"
-    style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(1.5rem, 3vh, 2.5rem);"
+    style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(3rem, 6vh, 5rem);"
   >
-    <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow text-mint">
-      {t("contact.eyebrow")}
-    </p>
-    <h1
-      class="tm-load mt-5 font-sans text-display font-semi tracking-display text-paper lg:tracking-display-lg"
-      style={`--d: 90ms; max-width: ${isAr ? 20 : 18}ch; text-wrap: balance;`}
-    >
-      {isAr ? (
-        <>
-          شاهدها على <span style={gradientStyle}>خطتك أنت</span>.
-        </>
-      ) : (
-        <>
-          See it against <span style={gradientStyle}>your own plan</span>.
-        </>
-      )}
-    </h1>
-    <p class="tm-load mt-6 text-lede font-light text-body" style="--d: 180ms; max-width: 54ch;">
-      {t("contact.sub")}
-    </p>
-    <p
-      class="tm-load mt-4 text-small font-light text-muted"
-      style="--d: 260ms;"
-      set:html={emailNoteHtml}
-    />
+    <div class="grid grid-cols-1 items-start gap-x-gutter gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+      {/* ---- 2026-09-01, USER REQUEST: "the two pane contact form looks good
+          but left side text should stick like the nav bar while scrolling the
+          form down." ----
+
+          `lg:self-start` is the load-bearing half of this, not decoration. A
+          grid item defaults to `align-self: stretch`, which makes the item box
+          exactly as tall as its grid area — and a sticky box with no room to
+          travel inside its containing block never engages at all. `self-start`
+          shrinks the box to its content while the grid AREA stays the full row
+          height, and that difference (row height minus intro height) is the
+          entire scroll distance the pin gets. The grid already sets
+          `items-start`; this states it on the element that depends on it, so a
+          later change to the container cannot silently unpin this column.
+
+          Sticky sits on the grid item itself rather than on an inner wrapper.
+          Both are valid patterns, but they are alternatives, not a pair: the
+          inner-wrapper version needs the OUTER column stretched to have any
+          travel, which is the exact opposite of the `self-start` this one
+          needs. One box, one rule, nothing to keep in sync.
+
+          The offset and the breakpoint are both composed from tokens in the
+          scoped block at the foot of this file — `spacing.header` is the
+          measured fixed-header clearance and `spacing.6` the breathing gap, so
+          a future re-measure of the header carries here automatically. */}
+      <div class="tm-contact-intro lg:self-start">
+        <p class="tm-load font-mono text-eyebrow font-data uppercase tracking-eyebrow text-mint">
+          {t("contact.eyebrow")}
+        </p>
+        {/* The display clamp (up to 68px) was authored for a headline that
+            owned the full 1180px column. In the start column of a two-column
+            grid it would wrap to four cramped lines, so this page gets its
+            own smaller clamp: unchanged at 375 (36px, the display token's own
+            floor, so the stacked mobile view is byte-identical to before) and
+            topping out at 49.6px instead of 68px, which is the size at which
+            "See it against your own plan." sets to three balanced lines in
+            the measured 496px column at 1440. `tracking-display-lg` goes with
+            it — that tighter tracking exists specifically for the 68px step
+            this page no longer reaches. */}
+        <h1
+          class="tm-load mt-5 font-sans font-semi tracking-display text-paper"
+          style={`--d: 90ms; font-size: clamp(2.25rem, 3.4vw, 3.1rem); line-height: ${isAr ? "1.32" : "1.08"}; text-wrap: balance;`}
+        >
+          {isAr ? (
+            <>
+              شاهدها على <span style={gradientStyle}>خطتك أنت</span>.
+            </>
+          ) : (
+            <>
+              See it against <span style={gradientStyle}>your own plan</span>.
+            </>
+          )}
+        </h1>
+        <p
+          class="tm-load mt-6 text-lede font-light text-body"
+          style="--d: 180ms; max-width: 54ch;"
+        >
+          {t("contact.sub")}
+        </p>
+        <p
+          class="tm-load mt-4 text-small font-light text-muted"
+          style="--d: 260ms; max-width: 54ch;"
+          set:html={emailNoteHtml}
+        />
+      </div>
+
+      {/* 2026-09-01 contact-form redesign (USER DIRECTIVE: "not everything
+          needs to be too dark themed"). The card was a dark `kpi-tile-top →
+          surface` gradient with an inset highlight — the same raised-on-dark
+          treatment as every other panel on the site, which is exactly why the
+          form read as severe: a dark panel on a dark ground can only
+          distinguish its fields with hairlines.
+
+          It is now the site's one light surface, and the licence is spent
+          deliberately rather than generally: this is the page whose single
+          job is to be filled in, and a paper document laid on the dark ground
+          is the brand's own records/registry idea rather than a theme break.
+          The dark intro beside it is untouched, so the card reads as a change
+          of material at the point the reader is asked to do something.
+
+          Inline styles here rather than utilities for the same reason the
+          previous version used them — the values come straight from the
+          imported token table, so this is still "no hex outside
+          tailwind.config.mjs". The `max-width: 760px` cap the reference gave
+          this card is gone with the two-section layout that needed it: the
+          card is now exactly its grid column, at every width. */}
+      <div
+        class="tm-load"
+        style={`--d: 320ms; border: 1px solid ${colors["form-rule"]}; border-radius: 14px; background: ${colors["form-paper"]}; padding: clamp(22px, 4vw, 40px); box-shadow: 0 2px 6px -2px ${colors.shade}, 0 28px 64px -28px ${colors["shade-deep"]};`}
+      >
+        <ContactForm lang={lang} />
+      </div>
+    </div>
   </div>
 </Section>
 
-<Section style="padding-block: clamp(2rem, 4vh, 3rem) clamp(3rem, 6vh, 5rem);" pad={false}>
-  <div
-    class="tm-load"
-    style={`--d: 320ms; max-width: 760px; border: 1px solid ${colors.hairline}; border-radius: 6px; background: linear-gradient(180deg, ${colors["kpi-tile-top"]} 0%, ${colors.surface} 100%); padding: clamp(22px, 4vw, 40px); box-shadow: inset 0 1px 0 0 ${colors.highlight}, 0 14px 32px -10px rgba(2,24,19,0.6);`}
-  >
-    <ContactForm lang={lang} />
-  </div>
-</Section>
+<style>
+  /* The pinned intro column (USER REQUEST, 2026-09-01: "left side text should
+     stick like the nav bar while scrolling the form down"). Written here
+     rather than as `lg:sticky lg:top-[...]` utilities so both magnitudes stay
+     token references instead of an arbitrary bracket value — same discipline,
+     and the same `theme()`-in-a-scoped-block pattern NavDrawer.astro already
+     uses for its own durations.
+
+     `inset-block-start`, not `top`: the logical property is what this repo
+     writes everywhere, and although the two are identical for a horizontal
+     writing mode it keeps the rule honest. Sticky itself needs no RTL
+     treatment at all — the offset is on the block axis, and which side of the
+     grid the column lands on is already decided by the document direction.
+
+     The offset is the measured fixed-header clearance plus one spacing step,
+     so the pinned column clears the header with a gap rather than butting up
+     against its lower edge. Both are existing tokens; re-measuring
+     `spacing.header` moves this with it.
+
+     Scoped to `lg` because that is the width at which the layout becomes two
+     columns. Below it the two stack, the intro is simply the block above the
+     form, and there is nothing to pin — so the rule is not merely disabled
+     there, it never enters the cascade.
+
+     No reduced-motion branch: sticky is a layout position, not a transition
+     or a transform. Nothing animates, so there is nothing to switch off. */
+  @media (min-width: theme("screens.lg")) {
+    .tm-contact-intro {
+      position: sticky;
+      inset-block-start: calc(
+        theme("spacing.header") + theme("spacing.6")
+      );
+    }
+  }
+</style>

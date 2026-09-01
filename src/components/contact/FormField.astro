@@ -3,28 +3,51 @@
 // label, native input/textarea, and a permanently-rendered (but empty at
 // rest) error paragraph.
 //
-// Accessibility pattern (P7): `aria-describedby` ties the field to its own
-// error paragraph (announced by AT when the field receives focus, or on
-// re-focus after a failed submit), `aria-invalid` is toggled by
+// ---- 2026-09-01 contact-form redesign (USER DIRECTIVE: "make it modern and
+// use good design and color, not everything needs to be too dark themed").
+// The field was an underline: `border-0 border-b border-hairline
+// bg-transparent`, i.e. a 10%-white hairline on a dark card. On the textarea
+// that meant a 100px-tall region whose only boundary was a line under it —
+// the reported "almost invisible" empty box. It is now a real container on
+// the page's one light surface: a `form-field` (white) interior, a
+// `form-line` border that measures 3.3:1 against that interior (WCAG 1.4.11
+// non-text contrast, which an outlined input has to meet to count as a
+// boundary at all), 8px `field` radius, and a 1px inset top shade so the
+// field reads as cut into the paper rather than drawn on it.
+//
+// Sizing is deliberate, not incidental: `text-body` is 1rem, which is the
+// threshold below which iOS Safari zooms the viewport on focus, and
+// `py-3` + a 1.55 line-height puts every control at ~49px, over the 44px
+// touch-target floor, at every breakpoint including 375.
+//
+// Accessibility pattern (P7, unchanged): `aria-describedby` ties the field
+// to its own error paragraph (announced by AT when the field receives focus,
+// or on re-focus after a failed submit), `aria-invalid` is toggled by
 // scripts/contactForm.ts, and the paragraph keeps a reserved `min-height` at
 // ALL times — including empty — so text arriving after validation never
 // pushes any field below it (CLAUDE.md: "keep layout stable (no CLS when
-// they appear)"). The message text itself renders in `text-paper` (14.96:1
-// on ink, verified — see the contrast note in ContactForm.astro), not `red`
-// (4.42:1 on ink, i.e. under the 4.5:1 AA floor for normal-size text): the
-// small red dot beside it is the colour cue, the paper-coloured text is what
-// actually carries the meaning, matching RagDot.astro's own "colour is never
-// the only signal" pattern.
+// they appear)").
+//
+// What DID change accessibly is the error colour. On the old dark card the
+// message rendered in `text-paper`, because `red` (#E0574C) measured 4.42:1
+// on ink — under the AA floor. On the light card `red-deep` (#B3261E)
+// measures 6.2:1 on `form-paper`, so the message can now carry its own
+// colour and still clear AA. The red dot beside it stays regardless: colour
+// is never the only signal (RagDot.astro's own principle), and the dot plus
+// the `aria-invalid` border are the two supplementary cues around text that
+// says the thing outright.
+//
+// Focus is a 2px `accent-deep` outline at a 2px offset, plus a soft
+// `field-focus` halo. The outline (not the halo) is what carries the
+// indicator contrast: 5.3:1 against the field interior, 5.0:1 against the
+// card — comfortably past 1.4.11's 3:1, and past WCAG 2.2's 2.4.13 focus
+// appearance geometry as well. `focus:` rather than `focus-visible:` on a
+// text input is intentional — a click into a text field genuinely begins a
+// keyboard interaction, so the ring is wanted every time.
 //
 // Native `required`/`type="email"` stay on the element regardless of
 // JavaScript — see ContactForm.astro's comment on `form.noValidate` for why
 // this is what keeps a JS-disabled submission validated at all.
-//
-// P10 (DESIGN-ELEVATION.md §4.5): the border/outline transition moves from
-// the content-motion pair (`transition-colors duration-state ease-standard`)
-// to the micro tier (`transition duration-micro ease-micro`) — the states
-// themselves (the `aria-invalid:border-red` cue, the `:focus-visible` accent
-// outline) are unchanged, both information rather than motion, per spec.
 interface Props {
   id: string;
   name: string;
@@ -35,6 +58,10 @@ interface Props {
   /** Span every column of the parent grid, per the reference's own
    *  `grid-column: 1 / -1` on the work-email field. */
   full?: boolean;
+  /** 2026-09-01: the "Optional" pill beside the label. Only `message` sets
+   *  it — a form where three of four fields are required communicates more
+   *  by naming the exception than by marking the rule. */
+  optionalLabel?: string;
 }
 
 const {
@@ -45,18 +72,36 @@ const {
   required = false,
   autocomplete,
   full = false,
+  optionalLabel,
 }: Props = Astro.props;
 
 const errorId = `${id}-error`;
+
+// One class list for both branches so an input and a textarea can never
+// drift apart. Every utility here is symmetric (`px-3.5`) or logical, never
+// a physical-edge one, so the field mirrors under `[dir=rtl]` with no
+// override of its own.
+const controlClass =
+  "mt-2 block w-full rounded-field border border-form-line bg-form-field px-3.5 py-3 text-body font-light text-form-ink shadow-field transition duration-micro ease-micro placeholder:text-form-muted hover:border-form-line-strong focus:border-accent-deep focus:shadow-field-focus focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent-deep aria-invalid:border-red-deep";
 ---
 
 <div class:list={["contact-field", full && "col-span-full"]}>
-  <label for={id} class="text-small font-semi text-paper">
-    {label}
-    {required && (
-      <span aria-hidden="true" class="text-muted">
-        {" "}
-        *
+  <label
+    for={id}
+    class="flex flex-wrap items-baseline gap-x-2 text-small font-semi text-form-ink"
+  >
+    <span>
+      {label}
+      {required && (
+        <span aria-hidden="true" class="text-accent-deep">
+          {" "}
+          *
+        </span>
+      )}
+    </span>
+    {!required && optionalLabel && (
+      <span class="text-small font-light text-form-muted">
+        {optionalLabel}
       </span>
     )}
   </label>
@@ -71,7 +116,7 @@ const errorId = `${id}-error`;
         autocomplete={autocomplete}
         aria-describedby={errorId}
         aria-invalid="false"
-        class="mt-2 w-full resize-y border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition duration-micro ease-micro placeholder:text-muted aria-invalid:border-red focus:border-accent"
+        class:list={[controlClass, "min-h-[7.5rem] resize-y"]}
       />
     ) : (
       <input
@@ -82,7 +127,7 @@ const errorId = `${id}-error`;
         autocomplete={autocomplete}
         aria-describedby={errorId}
         aria-invalid="false"
-        class="mt-2 w-full border-0 border-b border-hairline bg-transparent py-3 text-body font-light text-paper transition duration-micro ease-micro placeholder:text-muted aria-invalid:border-red focus:border-accent"
+        class={controlClass}
       />
     )
   }
@@ -90,6 +135,7 @@ const errorId = `${id}-error`;
   <p
     id={errorId}
     data-field-error
-    class="mt-2 min-h-[1.3em] text-small font-light text-paper"
-  ></p>
+    class="mt-2 min-h-[1.3em] text-small font-light text-red-deep"
+  >
+  </p>
 </div>

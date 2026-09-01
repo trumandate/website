@@ -4,16 +4,39 @@
 // drives. Shared by both /en/contact and /ar/contact (BUILD_FLAGS' "keep one
 // shared component" bias) — only `lang` differs between the two call sites.
 //
-// Posts to Formspree via the `action` attribute (spec §6's own line: "Posts
-// to Formspree with fetch"), reading the endpoint from
-// `PUBLIC_FORMSPREE_ENDPOINT`, falling back to the live endpoint so a build
-// without the env var (e.g. Cloudflare CI) still posts somewhere real — the
-// endpoint is public by design, it ships in this very attribute. The env var
-// remains the override for staging/testing. The `action` attribute is not
-// decorative: it is the entire submission path for a reader with JavaScript
-// disabled, since `<form action method>` needs no script to POST. See
-// scripts/contactForm.ts for how the two paths (native POST vs. fetch)
-// share one endpoint without duplicating it.
+// ---- 2026-09-01 contact-form redesign (USER DIRECTIVE: "I also don't like
+// the form which we created, make it modern and use good design and color,
+// not everything needs to be too dark themed"). ----
+//
+// The form now sits on the site's ONE light surface (ContactPage.astro's
+// paper card). Three things changed and one thing deliberately did not:
+//
+//   1. Fields became real containers rather than underlines — see
+//      FormField.astro's own note for the contrast and touch-target working.
+//   2. The interest radios became selectable cards. A naked radio circle is
+//      a ~16px target with a label beside it; a card is a 52px-tall target
+//      the whole width of its column, which is both the WCAG target-size
+//      answer and the reason the chosen option is now legible at a glance
+//      (tinted ground + filled mark + accent border, three cues, none of
+//      them colour alone).
+//   3. The submit button is written here rather than composed from
+//      Button.astro. Button's `primary` variant hovers by INVERTING —
+//      `bg-accent` becomes transparent with `text-accent` — and `accent`
+//      (#19C39B) measures 2.13:1 on this card, so that hover state is
+//      unreadable on a light ground. Overriding it with a `class` prop would
+//      put two `hover:bg-*` utilities of equal specificity in the sheet and
+//      let Tailwind's internal ordering, not source order, decide the winner.
+//      A light-surface button is a case the shared dark component does not
+//      cover, so it is spelled out once, here, with Button's own motion
+//      tokens (micro tier, motion-safe seat) carried over verbatim.
+//
+// What did NOT change is the submission plumbing. `action` is still the
+// entire submission path for a reader with JavaScript disabled, reading the
+// endpoint from `PUBLIC_FORMSPREE_ENDPOINT` and falling back to the live
+// endpoint so a build without the env var (e.g. Cloudflare CI) still posts
+// somewhere real — the endpoint is public by design, it ships in this very
+// attribute. Field `name`s, `id`s, the honeypot and both status regions are
+// byte-identical to what scripts/contactForm.ts queries for.
 //
 // Interest values (`full-walkthrough`, `strategy-kpi-cascade`,
 // `benefits-realisation`, `deployment-sovereignty`) are stable English keys
@@ -22,7 +45,6 @@
 // implementation judgement call, not brief content (BUILD_FLAGS-style
 // decision, logged there).
 import FormField from "./FormField.astro";
-import Button from "../ui/Button.astro";
 import { useTranslations } from "../../i18n/utils";
 import type { Language } from "../../i18n/types";
 
@@ -56,6 +78,19 @@ const interestOptions = [
     "https://formspree.io/f/meajpeja"}
   method="POST"
 >
+  {/* The card's own header. New this redesign: the card is a distinct
+      surface now, so it names the document it is, and — more usefully — the
+      `*` markers finally have a legend. They were `aria-hidden` decoration
+      with nothing anywhere explaining them. */}
+  <div class="border-b border-form-rule pb-5">
+    <h2 class="font-sans text-h3 font-semi text-form-ink">
+      {t("contact.formTitle")}
+    </h2>
+    <p class="mt-1.5 text-small font-light text-form-muted">
+      {t("contact.requiredNote")}
+    </p>
+  </div>
+
   {/* Assertive, focus-moved status region for BOTH a failed-validation
       summary and the post-submit success/error result. One region, not two:
       each state fully replaces the previous one's content, and `role="alert"`
@@ -63,31 +98,41 @@ const interestOptions = [
       `hidden` at rest — its later appearance is a direct, synchronous result
       of the reader's own submit click, which the CLS metric explicitly
       excludes (`hadRecentInput`), so this doesn't cost the budget the way an
-      unrelated layout jump would. Verified in the P7 QA pass. */}
-  {
-    /* P10 (DESIGN-ELEVATION.md §4.5): a real-DOM card gets `shadow-raised` —
-       "it is the one surface on the page that appears in direct response to
-       the reader's own action." Its show/replace transition adopts
-       `ease-exit` (the site's first real use of that token) via
-       scripts/contactForm.ts's `style.opacity` toggle — `motion-safe:` gates
-       it, so under `prefers-reduced-motion: reduce` the property never
-       enters the cascade and the region simply appears, matching every
-       other CSS-only motion-safe transition on the site (Button.astro,
-       Nav.astro). The class list here is also the JS-side default:
-       scripts/contactForm.ts's `showStatus()` REPLACES this attribute
-       wholesale on every call, so these classes are repeated there too. */
-  }
+      unrelated layout jump would.
+
+      P10 (DESIGN-ELEVATION.md §4.5): a real-DOM card that "appears in direct
+      response to the reader's own action". Its show/replace transition
+      adopts `ease-exit` via scripts/contactForm.ts's `style.opacity` toggle
+      — `motion-safe:` gates it, so under `prefers-reduced-motion: reduce`
+      the property never enters the cascade and the region simply appears.
+
+      2026-09-01: retinted for the light card (`bg-form-field` at rest,
+      `form-tint`/`form-alert` per state) and moved to the `field` radius so
+      it is the same control shape as everything under it. The class list
+      here is also the JS-side default: scripts/contactForm.ts's
+      `showStatus()` REPLACES this attribute wholesale on every call, so
+      these classes are repeated there too — change one, change both.
+
+      `focus-visible:outline-accent-deep` overrides global.css's site-wide
+      `:focus-visible` ring, which is `accent` (#19C39B). That ring is tuned
+      for the dark ground and measures 2.0:1 against this region's light
+      grounds — under 1.4.11's 3:1 floor for a focus indicator. The utility
+      wins because global.css's rule lives in `@layer base`; only the colour
+      is replaced, so the 2px width and 2px offset still come from there.
+      Every other focusable thing on this card (the inputs, the choice
+      tiles, the submit button, and the summary's own jump links) sets its
+      own outline colour for the same reason. */}
   <div
     id="form-status"
     data-form-status
     role="alert"
     tabindex="-1"
     hidden
-    class="mb-8 rounded-control border-y border-e border-s-marker border-hairline bg-jade p-5 shadow-raised motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit"
+    class="mt-8 rounded-field border border-form-rule border-s-marker border-s-form-line bg-form-field p-5 shadow-field focus-visible:outline-accent-deep motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit"
   >
   </div>
 
-  <div class="grid grid-cols-1 gap-x-gutter gap-y-8 lg:grid-cols-2">
+  <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
     <FormField
       id="contact-name"
       name="name"
@@ -121,7 +166,18 @@ const interestOptions = [
       in the accessibility tree from the moment the page loads, driven by
       native constraint validity rather than anything this page's script
       does) — the same premature-before-any-attempt state FormField.astro's
-      text/email inputs already avoid with their own static aria-invalid. */}
+      text/email inputs already avoid with their own static aria-invalid.
+
+      2026-09-01 — how the card works, since it is not the obvious markup:
+      the `<input>` IS the card. It is `appearance-none`, absolutely
+      positioned to fill the label, and carries the border/ground/radius; the
+      mark and the text sit above it at `z-10` with `pointer-events-none` so
+      every click and tap lands on the input itself. That keeps a real,
+      focusable, arrow-key-navigable native radio group — no `sr-only` input,
+      no `role="radio"` re-implementation — while letting `checked:` style the
+      whole tile. The mark is one element using the `radio-dot` inset-ring
+      shadow rather than a nested dot, because `peer-checked:` compiles to a
+      `~` sibling combinator and cannot reach a sibling's descendants. */}
   <fieldset
     id="interest-group"
     class="mt-8 border-0 p-0"
@@ -129,24 +185,37 @@ const interestOptions = [
     aria-describedby="interest-error"
     aria-invalid="false"
   >
-    <legend class="text-small font-semi text-paper">
+    <legend class="text-small font-semi text-form-ink">
       {t("contact.interestLegend")}
-      <span aria-hidden="true" class="text-muted"> *</span>
+      <span aria-hidden="true" class="text-accent-deep"> *</span>
     </legend>
 
-    <div class="mt-3 flex flex-col gap-3">
+    {/* One column at every width, not a 2×2. The card is a grid column now
+        (ContactPage.astro's two-column composition), which measures ~550px at
+        1440 — a 2×2 there gives each tile ~223px, where the longest option
+        ("Deployment and data sovereignty" / "النشر وسيادة البيانات") wraps and
+        the four tiles stop scanning as one list. A single column also matches
+        the general radio-group rule that vertical alignment wins once labels
+        are long or the options number more than two. */}
+    <div class="mt-3 grid grid-cols-1 gap-3">
       {
         interestOptions.map((option) => (
-          <label class="flex items-center gap-3 text-body font-light text-paper">
+          <label class="relative flex min-h-[3.25rem] items-center gap-3 rounded-field p-4">
             <input
               type="radio"
               name="interest"
               value={option.value}
               required
               aria-invalid="false"
-              class="size-4 shrink-0 accent-accent"
+              class="tm-choice-input peer absolute inset-0 m-0 size-full cursor-pointer appearance-none rounded-field border border-form-line bg-form-field shadow-field transition duration-micro ease-micro hover:border-form-line-strong checked:border-accent-deep checked:bg-form-tint focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-deep"
             />
-            {option.label}
+            <span
+              aria-hidden="true"
+              class="pointer-events-none relative z-10 block size-5 shrink-0 rounded-full border border-form-line bg-form-field transition duration-micro ease-micro peer-checked:border-accent-deep peer-checked:bg-accent-deep peer-checked:shadow-radio-dot"
+            />
+            <span class="pointer-events-none relative z-10 text-small font-light text-form-ink">
+              {option.label}
+            </span>
           </label>
         ))
       }
@@ -155,8 +224,9 @@ const interestOptions = [
     <p
       id="interest-error"
       data-field-error
-      class="mt-2 min-h-[1.3em] text-small font-light text-paper"
-    ></p>
+      class="mt-2 min-h-[1.3em] text-small font-light text-red-deep"
+    >
+    </p>
   </fieldset>
 
   <div class="mt-8">
@@ -165,6 +235,7 @@ const interestOptions = [
       name="message"
       type="textarea"
       label={t("contact.messageLabel")}
+      optionalLabel={t("contact.optionalLabel")}
     />
   </div>
 
@@ -190,16 +261,50 @@ const interestOptions = [
 
   <input type="hidden" name="_subject" value="TruMandate — walkthrough request" />
 
-  <div class="mt-10">
-    <Button type="submit" class="min-w-[12rem]">
+  {/* The footnote moves out of `font-mono text-datum tracking-datum
+      text-muted`. That treatment was tuned to read as machine data on a dark
+      ground, which is the opposite of what this sentence is doing: it is the
+      one humane line on the page, and on paper a tracked-out mono grey reads
+      as a system notice rather than a person's promise. Same words, in the
+      body face. The `flex-wrap` row keeps the button and the line side by
+      side where there is room and stacks them at 375 without a breakpoint. */}
+  <div class="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
+    <button
+      type="submit"
+      class="inline-flex min-h-[3rem] shrink-0 items-center justify-center whitespace-nowrap rounded-field bg-accent-deep px-7 text-body font-semi text-form-field transition duration-micro ease-micro hover:bg-accent-deeper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-form-ink disabled:cursor-progress disabled:bg-form-line-strong motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0"
+    >
       <span data-submit-label>{t("cta.primary")}</span>
-    </Button>
-    {/* Redesign wave B (Contact (redesign).dc.html): the mono footnote
-        under the submit button, carried verbatim in both languages. */}
-    <p class="mt-4 font-mono text-datum font-data tracking-datum text-muted">
+    </button>
+    <p class="text-small font-light text-form-muted">
       {t("contact.footnote")}
     </p>
   </div>
 </form>
+
+<style>
+  /* The one rule Tailwind cannot express here deterministically. When
+     scripts/contactForm.ts marks the GROUP invalid it sets `aria-invalid` on
+     the fieldset, not on each radio, so the tiles need a descendant selector
+     rather than a variant on the input itself. Written as scoped CSS instead
+     of `group-aria-invalid/...` so the compiled selector is visible and
+     certain. Astro scopes both ends of it (fieldset and inputs are markup in
+     this file), and it is a border colour paired with the red-dotted error
+     text below the group — never the only signal.
+
+     The `forced-colors` block restores what `appearance-none` removes: in a
+     Windows high-contrast theme a custom-painted radio loses both its native
+     glyph and every authored colour, so the chosen tile is re-marked with a
+     system-colour outline that forced-colors mode is guaranteed to honour. */
+  #interest-group[aria-invalid="true"] .tm-choice-input {
+    border-color: theme("colors.red-deep");
+  }
+
+  @media (forced-colors: active) {
+    .tm-choice-input:checked {
+      outline: 3px solid Highlight;
+      outline-offset: -3px;
+    }
+  }
+</style>
 
 <script src="../../scripts/contactForm.ts"></script>

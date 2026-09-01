@@ -98,8 +98,13 @@ if (form) {
         // relying on greyscale both get (RagDot.astro's own principle).
         const dot = document.createElement("span");
         dot.setAttribute("aria-hidden", "true");
+        // 2026-09-01: `red-deep`, not `red`. On the light card `red`
+        // (#E0574C) measures 3.5:1 against `form-paper` — fine for a
+        // graphical dot under 1.4.11's 3:1 rule, but the error TEXT beside it
+        // now carries the same colour and needs 4.5:1, so both use the one
+        // token rather than drifting apart.
         dot.className =
-          "me-2 inline-block size-2 rounded-full bg-red align-middle";
+          "me-2 inline-block size-2 rounded-full bg-red-deep align-middle";
         errorEl.append(dot, document.createTextNode(message));
       }
     }
@@ -156,39 +161,56 @@ if (form) {
     // P10 (DESIGN-ELEVATION.md §4.5): this REPLACES the class list wholesale
     // on every call, so the shadow/transition classes ContactForm.astro's
     // static markup carries have to be repeated here, or they'd be dropped
-    // the first time any status is shown.
+    // the first time any status is shown. Keep the two in step — the static
+    // list is the at-rest default, this one is every shown state.
+    //
+    // 2026-09-01 contact-form redesign: retinted for the light card. The
+    // ground now differs per outcome (`form-tint` for success, `form-alert`
+    // for either failure) so the state is legible before a word is read, and
+    // the 2px inline-start marker still carries the accent/red distinction
+    // for anyone who cannot separate the two grounds. Both grounds are light
+    // enough that `form-ink`/`form-body` keep their measured ratios on them:
+    // form-ink 13.7:1 on form-tint and 13.4:1 on form-alert.
     statusEl.className = [
-      "mb-8 rounded-control border-y border-e border-s-marker border-hairline bg-jade p-5",
-      "shadow-raised motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit",
-      isPositive ? "border-s-accent" : "border-s-red",
+      "mt-8 rounded-field border border-form-rule border-s-marker p-5",
+      "shadow-field focus-visible:outline-accent-deep motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit",
+      isPositive
+        ? "bg-form-tint border-s-accent-deep"
+        : "bg-form-alert border-s-red-deep",
     ].join(" ");
 
     const heading = document.createElement("p");
-    heading.className = "font-sans text-h3 font-semi text-paper";
+    heading.className = "font-sans text-h3 font-semi text-form-ink";
 
     if (kind === "success") {
       heading.textContent = strings.successHeading;
       const body = document.createElement("p");
-      body.className = "mt-2 text-body font-light text-body";
+      body.className = "mt-2 text-body font-light text-form-body";
       body.textContent = strings.successBody;
       statusEl.append(heading, body);
     } else if (kind === "submit-error") {
       heading.textContent = strings.errorHeading;
       const body = document.createElement("p");
-      body.className = "mt-2 text-body font-light text-body";
+      body.className = "mt-2 text-body font-light text-form-body";
       body.textContent = strings.errorBody;
       statusEl.append(heading, body);
     } else {
       heading.textContent = strings.errorSummaryHeading;
       const list = document.createElement("ul");
       list.className =
-        "mt-2 list-inside list-disc text-body font-light text-body";
+        "mt-2 list-inside list-disc text-body font-light text-form-body";
       for (const item of detail ?? []) {
         const li = document.createElement("li");
         const link = document.createElement("a");
         link.href = `#${item.anchorId}`;
         link.textContent = item.label;
-        link.className = "underline underline-offset-4 hover:text-accent";
+        // `form-ink` rather than the inherited `form-body`, so a jump link
+        // is the darkest, heaviest text in its own list item (13.4:1 on the
+        // `form-alert` ground). The underline is what actually distinguishes
+        // it without colour, per 1.4.1; weight and darkness are the
+        // supplementary cues, not the load-bearing ones.
+        link.className =
+          "font-semi text-form-ink underline underline-offset-4 hover:text-accent-deep focus-visible:outline-accent-deep";
         li.append(link);
         list.append(li);
       }
