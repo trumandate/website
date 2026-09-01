@@ -1,0 +1,80 @@
+---
+// BlogIndex.astro — the /en/blog and /ar/blog index. Reuses the same visual
+// vocabulary as the redesign's product-page idiom (ProductHero.astro/
+// ProductPage.astro): a plain start-aligned hero (eyebrow, H1, lede) — no
+// hue, no gradient key-phrase, since the blog section has no per-page hue
+// the way Strategy/Execution/Benefits do — followed by a hairline-divided
+// list, each row a full-row link (title, description, byline, tags).
+//
+// Deliberately no `.tm-rise`/reveal script: the blog is reading-focused
+// content, not a marketing surface, and CLAUDE.md's own "the site must be
+// readable with JavaScript disabled" plus this build's own "keep them nearly
+// JS-free" instruction are both satisfied more simply by never gating
+// visibility behind IntersectionObserver in the first place, rather than by
+// adding the noscript/reduced-motion escape hatches every `.tm-rise` call
+// site elsewhere on the site needs.
+import Section from "../layout/Section.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+import { formatPostDate, type BlogPost } from "../../lib/blog";
+
+interface Props {
+  lang: Language;
+  posts: BlogPost[];
+}
+
+const { lang, posts }: Props = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section pad={false} style="padding-top: clamp(3.5rem, 8vh, 6rem); padding-bottom: clamp(1.5rem, 3vh, 2rem);">
+  <p class="font-mono text-eyebrow font-data uppercase tracking-eyebrow text-muted">
+    {t("blog.eyebrow")}
+  </p>
+  <h1
+    class="mt-5 font-sans text-display font-semi tracking-heading text-paper lg:tracking-display-lg"
+    style="max-width: 18ch; text-wrap: balance;"
+  >
+    {t("blog.heading")}
+  </h1>
+  <p class="mt-6 text-lede font-light text-body" style="max-width: 54ch;">
+    {t("blog.sub")}
+  </p>
+</Section>
+
+<Section tight>
+  <ul class="border-t border-hairline">
+    {
+      posts.map((post) => (
+        <li class="border-b border-hairline">
+          <a
+            href={`/${lang}/blog/${post.data.translationKey}/`}
+            class="group block py-8 transition-colors duration-state ease-standard"
+          >
+            <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formatPostDate(post.data.pubDate, lang)}
+              </time>
+            </p>
+            <h2 class="mt-3 font-sans text-h3 font-semi tracking-heading text-paper transition-colors duration-state ease-standard group-hover:text-accent">
+              {post.data.title}
+            </h2>
+            <p class="mt-3 text-body font-light text-body" style="max-width: 62ch;">
+              {post.data.description}
+            </p>
+            <ul
+              class="mt-4 flex flex-wrap gap-2"
+              aria-label={t("blog.tagsLabel")}
+            >
+              {post.data.tags.map((tag) => (
+                <li class="rounded-control border border-hairline px-2 py-1 font-mono text-datum font-data tracking-datum text-muted">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

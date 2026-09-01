@@ -1,0 +1,42 @@
+---
+// BlogIndexJsonLd.astro — Blog/CollectionPage structured data for the two
+// blog index routes (/en/blog, /ar/blog). Same "rendered alongside
+// seo/JsonLd.astro rather than folded into it" reasoning as
+// BlogPostJsonLd.astro's own header comment — see that file for the full
+// argument.
+import type { Language } from "../../i18n/types";
+
+interface Props {
+  lang: Language;
+  title: string;
+  description: string;
+}
+
+const { lang, title, description } = Astro.props;
+
+const base = Astro.site ?? new URL("https://www.trumandate.com/");
+const siteRoot = base.href;
+const orgId = `${siteRoot}#organization`;
+const canonical = new URL(`${lang}/blog/`, base).href;
+const webpageId = `${canonical}#webpage`;
+
+// Both types on one node (schema.org permits an array `@type`) rather than
+// picking one: "Blog" names what the resource IS, "CollectionPage" names
+// what this specific route IS (a list of items), and the build brief asks
+// for both rather than a choice between them.
+const blog = {
+  "@context": "https://schema.org",
+  "@type": ["Blog", "CollectionPage"],
+  "@id": `${canonical}#blog`,
+  name: title,
+  description,
+  inLanguage: lang,
+  url: canonical,
+  publisher: { "@id": orgId },
+  mainEntityOfPage: { "@id": webpageId },
+};
+
+const blogSafe = JSON.stringify(blog).replace(/</g, "\\u003c");
+---
+
+<script type="application/ld+json" is:inline set:html={blogSafe} />

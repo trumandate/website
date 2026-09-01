@@ -25,9 +25,18 @@ interface Props {
    * same shape i18n/utils.ts's `pairedRoutes` already uses. Drives the
    * canonical URL, hreflang alternates and og:url in Meta.astro (P9). */
   path: string;
+  /** Blog section only (BUILD_FLAGS.md's 2026-08-19 entry): the per-language
+   * RSS feed href, rendered as a `<link rel="alternate" type="application/
+   * rss+xml">` for feed-reader autodiscovery. Optional and undefined on
+   * every other route — this file is the only place `<head>` is assembled
+   * ("no page sets its own <html> attributes or font links"), so a blog page
+   * cannot add this tag on its own without either this small optional prop
+   * or a second head-assembling layout; the optional prop keeps every
+   * non-blog route byte-for-byte unchanged. */
+  rssHref?: string;
 }
 
-const { lang, title, description, path } = Astro.props;
+const { lang, title, description, path, rssHref } = Astro.props;
 const dir = directionFor[lang];
 const t = useTranslations(lang);
 // Tailwind's own `Config` type allows `theme.colors` to be either a plain
@@ -75,6 +84,16 @@ const fontPreloads =
       ogImageAlt={t("meta.ogImageAlt")}
     />
     <JsonLd lang={lang} path={path} title={title} description={description} />
+    {
+      rssHref && (
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={`${t("brand.name")} — ${t("nav.blog")}`}
+          href={rssHref}
+        />
+      )
+    }
 
     <!-- Favicon set (P9, spec §5A; PNG sizes + optically-corrected geometry
          added later — see public/favicon.svg's own comment for why its

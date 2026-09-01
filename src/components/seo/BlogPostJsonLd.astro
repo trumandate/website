@@ -1,0 +1,98 @@
+---
+// BlogPostJsonLd.astro — BlogPosting (+ FAQPage where the post's own
+// "Common questions"/"أسئلة شائعة" section parses cleanly, see lib/blog.ts's
+// `parseFaq`) structured data for one blog post route.
+//
+// Rendered ALONGSIDE seo/JsonLd.astro — which BaseLayout.astro already wires
+// into every route unconditionally, blog posts included, emitting its own
+// Organization/WebSite/SoftwareApplication/WebPage/BreadcrumbList graph —
+// rather than folded into that file: JsonLd.astro's own header comment
+// already frames its @graph as "re-serialized on every page rather than
+// written once," and multiple `<script type="application/ld+json">` blocks
+// on one document are valid, documented practice (Google's own rich-results
+// docs parse every such block on a page as separate entries). Adding a
+// second, blog-specific block here means the ten already-shipped routes'
+// JSON-LD is untouched by this change — the safer edit given how load-
+// bearing JsonLd.astro/BaseLayout.astro already are across the whole site.
+//
+// Every field is sourced from the post's own frontmatter — nothing invented.
+// `author`/`publisher` both point at the Organization node (`#organization`)
+// JsonLd.astro already declares on the same page: the site has no named
+// human byline (frontmatter `author` names a team, "TruMandate team,
+// Intertec Systems" / "فريق TruMandate، إنترتك سيستمز", not a person), so
+// Organization is the honest schema.org fit rather than inventing a Person
+// entity the record doesn't support.
+import type { Language } from "../../i18n/types";
+import type { FaqItem } from "../../lib/blog";
+
+interface Props {
+  lang: Language;
+  /** translationKey — the post's shared slug, same value the route and
+   * hreflang alternates use. */
+  slug: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  /** null when lib/blog.ts's `parseFaq` couldn't confidently extract Q/A
+   * pairs from this post's raw Markdown — FAQPage is omitted rather than
+   * emitted with guessed content. */
+  faq: FaqItem[] | null;
+}
+
+const { lang, slug, title, description, pubDate, faq } = Astro.props;
+
+// Same `Astro.site` single-source-of-truth Meta.astro/JsonLd.astro already
+// use, rather than a second hardcoded domain literal.
+const base = Astro.site ?? new URL("https://www.trumandate.com/");
+const siteRoot = base.href;
+const orgId = `${siteRoot}#organization`;
+const canonical = new URL(`${lang}/blog/${slug}/`, base).href;
+// Same `#webpage` @id shape JsonLd.astro's own `webpageId` computes for this
+// exact URL — reusing the string rather than re-deriving it lets
+// `mainEntityOfPage` point at the very WebPage node that file already emits
+// on this page, instead of declaring a second, redundant WebPage stub here.
+const webpageId = `${canonical}#webpage`;
+
+const blogPosting: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${canonical}#blogposting`,
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  inLanguage: lang,
+  author: { "@id": orgId },
+  publisher: { "@id": orgId },
+  mainEntityOfPage: { "@id": webpageId },
+};
+
+const faqPage =
+  faq && faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      }
+    : null;
+
+// Same `<` guard as JsonLd.astro's own — defends against a future post body
+// containing a literal "<" that could prematurely close the script tag.
+const blogPostingSafe = JSON.stringify(blogPosting).replace(/</g, "\\u003c");
+const faqPageSafe = faqPage
+  ? JSON.stringify(faqPage).replace(/</g, "\\u003c")
+  : null;
+---
+
+<script type="application/ld+json" is:inline set:html={blogPostingSafe} />
+{
+  faqPageSafe && (
+    <script type="application/ld+json" is:inline set:html={faqPageSafe} />
+  )
+}

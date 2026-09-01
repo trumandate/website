@@ -1,0 +1,62 @@
+---
+// /en/blog/[slug] — one post per route, generated over the collection
+// (BUILD_FLAGS.md's 2026-08-19 decisions-log entry). `slug` is the post's
+// `translationKey`, never the loader's own `en/<slug>` id — the content
+// author's own handoff note: "use the translationKey frontmatter field for
+// pairing languages, never id parsing."
+import { render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogPostArticle from "../../../components/blog/BlogPostArticle.astro";
+import BlogPostJsonLd from "../../../components/seo/BlogPostJsonLd.astro";
+import { getPublishedPosts, parseFaq, type BlogPost } from "../../../lib/blog";
+
+// `getStaticPaths` is extracted into its own isolated build chunk (Astro's
+// static-build process) that only carries its own imports and body — a
+// sibling top-level `const lang` declared outside the function is NOT
+// visible inside it (verified: referencing the outer `lang` here throws
+// "lang is not defined" at build time), so the literal is repeated here
+// rather than shared with the module-level `lang` below.
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts("en");
+  return posts.map((post) => ({
+    params: { slug: post.data.translationKey },
+    props: { post },
+  }));
+}
+
+const lang = "en" as const;
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const posts = await getPublishedPosts(lang);
+const index = posts.findIndex((p) => p.id === post.id);
+const prevPost = index > 0 ? posts[index - 1] : null;
+const nextPost = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
+
+const faq = parseFaq(post.body ?? "", lang);
+---
+
+<BaseLayout
+  lang={lang}
+  path={`/blog/${post.data.translationKey}`}
+  title={`${post.data.title} — TruMandate`}
+  description={post.data.description}
+  rssHref={`/${lang}/blog/rss.xml`}
+>
+  <BlogPostJsonLd
+    lang={lang}
+    slug={post.data.translationKey}
+    title={post.data.title}
+    description={post.data.description}
+    pubDate={post.data.pubDate}
+    faq={faq}
+  />
+  <BlogPostArticle lang={lang} post={post} prevPost={prevPost} nextPost={nextPost}>
+    <Content />
+  </BlogPostArticle>
+</BaseLayout>

@@ -72,7 +72,24 @@ const pairedRoutes = new Set([
   "/execution",
   "/benefits",
   "/contact",
+  // Blog index (2026-08-19 decisions-log entry, BUILD_FLAGS.md). Individual
+  // post routes (`/blog/<slug>`) are NOT enumerated here one by one — see
+  // `isPairedBlogPost` below, which pairs any post route mechanically
+  // instead, since every post's translationKey is shared verbatim as its
+  // filename in both `src/content/blog/en` and `.../ar`.
+  "/blog",
 ]);
+
+/**
+ * `/blog/<slug>` is paired the moment both language files exist under that
+ * shared slug (translationKey === filename in both `src/content/blog/{en,ar}`
+ * — the content author's own guarantee), so unlike the five hand-enumerated
+ * routes above this is checked structurally rather than added to the Set one
+ * post at a time.
+ */
+function isPairedBlogPost(suffix: string): boolean {
+  return /^\/blog\/[^/]+\/?$/.test(suffix);
+}
 
 /**
  * Swaps the leading /en/ or /ar/ path segment for the target language, keeping
@@ -106,5 +123,7 @@ export function altUrl(url: URL, targetLang: Language): string {
     "/",
   );
 
-  return pairedRoutes.has(suffix) ? withSlash : `/${targetLang}/`;
+  return pairedRoutes.has(suffix) || isPairedBlogPost(suffix)
+    ? withSlash
+    : `/${targetLang}/`;
 }

@@ -29,6 +29,13 @@ export interface UiStrings {
     strategy: string;
     execution: string;
     benefits: string;
+    /** Added for the blog section (BUILD_FLAGS.md's 2026-08-19 decisions-log
+     * entry: "blog section added for SEO and LLM discoverability"). Placed
+     * between `benefits` and `contact` in every call site's own `links`
+     * array (Nav.astro/NavDrawer.astro/Footer.astro each keep an independent
+     * copy of that array — see their own file headers for why) so the blog
+     * reads as one more content route ahead of the terminal contact link. */
+    blog: string;
     contact: string;
     /** Mobile nav drawer trigger's accessible name while closed (P11, USER
      * REPORT fix: Strategy/Execution/Benefits vanish below `lg` because
@@ -401,6 +408,31 @@ export interface UiStrings {
     /** og:image / twitter:image alt text — describes the actual image
      * (wordmark + chain motif on jade), not a restatement of the page title. */
     ogImageAlt: string;
+  };
+  /**
+   * The blog section's own chrome — index page hero copy and the strings
+   * BlogPostArticle.astro/BlogIndex.astro need (byline joiner, prev/next,
+   * back-to-index). No brief source (trumandate-content-brief.md predates
+   * the blog; trumandate-site-spec.md §1 in fact lists "no blog" as original
+   * scope, superseded by BUILD_FLAGS.md's 2026-08-19 decisions-log entry),
+   * so every string here is invented and written directly, not translated —
+   * same discipline as `contact`/`fragment` above.
+   */
+  blog: {
+    eyebrow: string;
+    heading: string;
+    sub: string;
+    metaTitle: string;
+    metaDescription: string;
+    /** aria-label introducing a post's tag list — the tags themselves render
+     * as plain kebab-case labels (no tag pages), this just names the group
+     * for assistive tech, same purpose as `ragStatus`'s visually-hidden
+     * status words. */
+    tagsLabel: string;
+    previousLabel: string;
+    nextLabel: string;
+    /** "All posts" — the back-to-index link on every post page. */
+    indexLabel: string;
   };
 }
 

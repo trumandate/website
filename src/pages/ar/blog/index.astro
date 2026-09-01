@@ -1,0 +1,28 @@
+---
+// /ar/blog — the Arabic blog index. Mirrors src/pages/en/blog/index.astro
+// exactly; see that file for the section's own comment.
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogIndex from "../../../components/blog/BlogIndex.astro";
+import BlogIndexJsonLd from "../../../components/seo/BlogIndexJsonLd.astro";
+import { useTranslations } from "../../../i18n/utils";
+import { getPublishedPosts } from "../../../lib/blog";
+
+const lang = "ar" as const;
+const t = useTranslations(lang);
+const posts = await getPublishedPosts(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  path="/blog"
+  title={t("blog.metaTitle")}
+  description={t("blog.metaDescription")}
+  rssHref={`/${lang}/blog/rss.xml`}
+>
+  <BlogIndexJsonLd
+    lang={lang}
+    title={t("blog.metaTitle")}
+    description={t("blog.metaDescription")}
+  />
+  <BlogIndex lang={lang} posts={posts} />
+</BaseLayout>

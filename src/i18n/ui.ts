@@ -25,6 +25,7 @@ export const ui: UiDictionary = {
       strategy: "Strategy",
       execution: "Execution",
       benefits: "Benefits",
+      blog: "Blog",
       contact: "Contact",
       // P11 (USER REPORT fix) — see types.ts's doc comment on this pair.
       openMenu: "Open menu",
@@ -331,6 +332,23 @@ export const ui: UiDictionary = {
       ogImageAlt:
         "TruMandate wordmark and the headline 'Every mandate, traced to its measured benefit' on a dark green ground.",
     },
+    // Blog section (2026-08-19 decisions-log entry, BUILD_FLAGS.md) — no
+    // brief source, written directly per that entry's own "no invented
+    // statistics or personas" instruction: nothing below states a number, a
+    // customer, or a result, only what the section is and how to move
+    // through it.
+    blog: {
+      eyebrow: "From the team behind TruMandate",
+      heading: "Notes on governing a portfolio.",
+      sub: "Short, specific pieces on portfolio governance, strategy execution and benefits realisation, written by the people who build the platform.",
+      metaTitle: "Blog — TruMandate",
+      metaDescription:
+        "Notes on portfolio governance, strategy execution and benefits realisation, from the team that builds TruMandate.",
+      tagsLabel: "Topics",
+      previousLabel: "Previous",
+      nextLabel: "Next",
+      indexLabel: "All posts",
+    },
   },
   ar: {
     brand: {
@@ -345,6 +363,7 @@ export const ui: UiDictionary = {
       strategy: "الاستراتيجية",
       execution: "التنفيذ",
       benefits: "المنافع",
+      blog: "المدونة",
       contact: "تواصل",
       // P11 (USER REPORT fix) — see types.ts's doc comment on this pair.
       openMenu: "افتح القائمة",
@@ -619,6 +638,20 @@ export const ui: UiDictionary = {
       },
       ogImageAlt:
         "شعار TruMandate وعنوان 'كل تكليف، متتبَّع حتى أثره المُقاس' على خلفية خضراء داكنة.",
+    },
+    // Blog section — written directly in Arabic (BUILD_FLAGS: "written, not
+    // machine-translated"), matching the English side one-for-one.
+    blog: {
+      eyebrow: "من الفريق الذي يبني TruMandate",
+      heading: "ملاحظات في حوكمة المحفظة.",
+      sub: "مقالات قصيرة ومحددة عن حوكمة المحافظ، وتنفيذ الاستراتيجية، وتحقيق المنافع، يكتبها من يبنون المنصة.",
+      metaTitle: "المدونة — TruMandate",
+      metaDescription:
+        "ملاحظات حول حوكمة المحافظ، وتنفيذ الاستراتيجية، وتحقيق المنافع، من الفريق الذي يبني TruMandate.",
+      tagsLabel: "المواضيع",
+      previousLabel: "السابق",
+      nextLabel: "التالي",
+      indexLabel: "كل المقالات",
     },
   },
 };

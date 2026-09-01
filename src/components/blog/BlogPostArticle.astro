@@ -1,0 +1,255 @@
+---
+// BlogPostArticle.astro — the reading-focused post shell: title, byline,
+// tags, the rendered Markdown body (styled by hand below — no
+// @tailwindcss/typography, per this build's own hard constraint), and a
+// quiet prev/next/back-to-index footer. `<slot />` carries the post's
+// rendered `<Content />` — passed as a child from the calling page, since an
+// Astro component factory (the return of `render()`) can only be composed
+// as markup at the call site, not threaded through as a plain prop.
+//
+// No `.tm-rise`/reveal script here either — see BlogIndex.astro's own header
+// comment for why the blog section skips the site's scroll-reveal mechanism
+// outright rather than gating it per element.
+import Section from "../layout/Section.astro";
+import { useTranslations } from "../../i18n/utils";
+import type { Language } from "../../i18n/types";
+import { formatPostDate, type BlogPost } from "../../lib/blog";
+import tailwindConfig from "../../../tailwind.config.mjs";
+
+interface Props {
+  lang: Language;
+  post: BlogPost;
+  prevPost: BlogPost | null;
+  nextPost: BlogPost | null;
+}
+
+const { lang, post, prevPost, nextPost }: Props = Astro.props;
+const t = useTranslations(lang);
+
+// The rendered Markdown body arrives through `<slot />` from another
+// component tree entirely (the post's `<Content />`), so the `.blog-prose
+// :global(...)` rules below can't reach it via Tailwind utility classes —
+// only via literal CSS. To keep every size/colour a token read from
+// tailwind.config.mjs rather than a second hardcoded copy (that file's own
+// header: "every colour, duration, ease and measurement... is a token
+// defined here"), the values are read from the config in JS here and handed
+// to the `<style>` block as CSS custom properties via `define:vars` — the
+// same "read tailwindConfig at build time" approach ProductHero.astro/
+// AiMomentCard.astro already use for values Tailwind's own utility classes
+// can't express, just handed to CSS through custom properties instead of an
+// inline `style` string, since these rules must reach slotted content.
+const theme = (
+  tailwindConfig as unknown as {
+    theme: {
+      colors: Record<string, string>;
+      fontFamily: { sans: string[] };
+      fontWeight: Record<string, string>;
+      fontSize: Record<string, [string, Record<string, string>]>;
+      lineHeight: Record<string, string>;
+      letterSpacing: Record<string, string>;
+      extend: { borderWidth: Record<string, string> };
+    };
+  }
+).theme;
+
+const proseVars = {
+  proseFontSans: theme.fontFamily.sans.join(", "),
+  proseWeightSemi: theme.fontWeight.semi,
+  proseH2Size: theme.fontSize.h2[0],
+  proseH3Size: theme.fontSize.h3[0],
+  proseBodySize: theme.fontSize.body[0],
+  proseLedeSize: theme.fontSize.lede[0],
+  proseLineHeightLatin: theme.lineHeight.latin,
+  proseLineHeightArabic: theme.lineHeight.arabic,
+  proseLetterSpacingNone: theme.letterSpacing.none,
+  proseColorPaper: theme.colors.paper,
+  proseColorBody: theme.colors.body,
+  proseColorAccent: theme.colors.accent,
+  proseMarkerWidth: theme.extend.borderWidth.marker,
+};
+---
+
+<Section pad={false} style="padding-top: clamp(3rem, 7vh, 5rem); padding-bottom: clamp(1rem, 2vh, 1.5rem);">
+  <div class="max-w-measure">
+    <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+      <time datetime={post.data.pubDate.toISOString()}>
+        {formatPostDate(post.data.pubDate, lang)}
+      </time>
+      {" · "}{post.data.author}
+    </p>
+    <h1
+      class="mt-4 font-sans text-h2 font-semi tracking-heading text-paper"
+      style="text-wrap: pretty;"
+    >
+      {post.data.title}
+    </h1>
+    <ul class="mt-5 flex flex-wrap gap-2" aria-label={t("blog.tagsLabel")}>
+      {
+        post.data.tags.map((tag) => (
+          <li class="rounded-control border border-hairline px-2 py-1 font-mono text-datum font-data tracking-datum text-muted">
+            {tag}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>
+
+<Section tight>
+  <div class="blog-prose max-w-measure">
+    <slot />
+  </div>
+
+  <nav
+    aria-label={t("blog.indexLabel")}
+    class="mt-16 flex flex-col gap-6 border-t border-hairline pt-8 max-w-measure"
+  >
+    <a
+      href={`/${lang}/blog/`}
+      class="text-small font-semi text-accent transition-colors duration-state ease-standard hover:text-paper"
+    >
+      {t("blog.indexLabel")}
+    </a>
+    {
+      (prevPost || nextPost) && (
+        <div class="flex flex-wrap items-start justify-between gap-6">
+          <div>
+            {prevPost && (
+              <a
+                href={`/${lang}/blog/${prevPost.data.translationKey}/`}
+                class="group block"
+              >
+                <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+                  {t("blog.previousLabel")}
+                </p>
+                <p class="mt-2 text-small font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
+                  {prevPost.data.title}
+                </p>
+              </a>
+            )}
+          </div>
+          <div class="text-end">
+            {nextPost && (
+              <a
+                href={`/${lang}/blog/${nextPost.data.translationKey}/`}
+                class="group block"
+              >
+                <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+                  {t("blog.nextLabel")}
+                </p>
+                <p class="mt-2 text-small font-semi text-paper transition-colors duration-state ease-standard group-hover:text-accent">
+                  {nextPost.data.title}
+                </p>
+              </a>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </nav>
+</Section>
+
+<style define:vars={proseVars}>
+  /* Markdown styled by hand (CLAUDE.md: no new dependencies — no
+   * @tailwindcss/typography). `:global()` because the elements below come
+   * from the rendered Markdown Content component passed through `<slot />`,
+   * not written literally in this component's own template — Astro's
+   * per-component style scoping only reaches markup authored in the file
+   * itself, so a plain `.blog-prose h2` selector here would never match.
+   * Every size/colour is a `var(--prose*)` custom property sourced from
+   * tailwind.config.mjs in the frontmatter above (`define:vars`), never a
+   * second hardcoded literal — CSS custom properties inherit normally down
+   * the DOM regardless of Astro's own scoping mechanism, so the values
+   * declared on this component's root elements reach the slotted content
+   * exactly like any other inherited CSS property.
+   *
+   * h2/h3 get no explicit [dir=rtl] line-height/letter-spacing override:
+   * global.css's own base-layer rules (`[dir="rtl"] h2, h3 { line-height:
+   * ... }` / `[dir="rtl"] h1, h2, h3, .font-display, .tracking-brand {
+   * letter-spacing: ... }`) already apply to every h2/h3 in the document
+   * regardless of which component rendered them, so re-declaring the same
+   * override here would just be dead weight. Paragraphs/lists/blockquotes
+   * get their own explicit RTL rule below because THIS file, not global.css,
+   * is what sets their (Latin) line-height in the first place — see that
+   * rule's own comment. */
+  .blog-prose :global(h2) {
+    margin-block: clamp(2rem, 4vw, 2.75rem) 1rem;
+    font-family: var(--proseFontSans);
+    font-weight: var(--proseWeightSemi);
+    font-size: var(--proseH2Size);
+    color: var(--proseColorPaper);
+  }
+
+  .blog-prose :global(h3) {
+    margin-block: clamp(1.5rem, 3vw, 2rem) 0.75rem;
+    font-family: var(--proseFontSans);
+    font-weight: var(--proseWeightSemi);
+    font-size: var(--proseH3Size);
+    color: var(--proseColorPaper);
+  }
+
+  .blog-prose :global(p) {
+    margin-block: 1.25em 0;
+    font-size: var(--proseBodySize);
+    line-height: var(--proseLineHeightLatin);
+    color: var(--proseColorBody);
+  }
+
+  .blog-prose :global(ul),
+  .blog-prose :global(ol) {
+    margin-block: 1.25em 0;
+    padding-inline-start: 1.25em;
+    font-size: var(--proseBodySize);
+    line-height: var(--proseLineHeightLatin);
+    color: var(--proseColorBody);
+  }
+
+  .blog-prose :global(ul) {
+    list-style-type: disc;
+  }
+
+  .blog-prose :global(ol) {
+    list-style-type: decimal;
+  }
+
+  .blog-prose :global(li + li) {
+    margin-block-start: 0.5em;
+  }
+
+  .blog-prose :global(blockquote) {
+    margin-block: 1.5em;
+    margin-inline: 0;
+    padding-inline-start: 1.25em;
+    border-inline-start: var(--proseMarkerWidth) solid var(--proseColorAccent);
+    font-size: var(--proseLedeSize);
+    line-height: var(--proseLineHeightLatin);
+    color: var(--proseColorPaper);
+  }
+
+  .blog-prose :global(strong) {
+    font-weight: var(--proseWeightSemi);
+    color: var(--proseColorPaper);
+  }
+
+  .blog-prose :global(a) {
+    color: var(--proseColorAccent);
+    text-decoration-line: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  /* `:global([dir="rtl"])`, not a bare `[dir="rtl"]` — known-issues.md's P5
+   * trap, already documented in NavDrawer.astro's own header comment:
+   * Astro's per-component style scoping silently adds its own scope
+   * attribute to any selector token not explicitly wrapped in `:global()`,
+   * which would require `[dir="rtl"]` (set on `<html>`) to ALSO carry this
+   * component's scope attribute — never true — and the whole rule would
+   * silently never match. Verified against this exact bug in the built
+   * output before writing this comment. */
+  :global([dir="rtl"]) .blog-prose :global(p),
+  :global([dir="rtl"]) .blog-prose :global(ul),
+  :global([dir="rtl"]) .blog-prose :global(ol),
+  :global([dir="rtl"]) .blog-prose :global(blockquote) {
+    line-height: var(--proseLineHeightArabic);
+    letter-spacing: var(--proseLetterSpacingNone);
+  }
+</style>
