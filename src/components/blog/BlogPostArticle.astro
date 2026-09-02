@@ -289,6 +289,7 @@ const proseVars = {
              `prefers-reduced-motion: reduce`. Nothing here needs a
              reduced-motion branch because nothing here animates. */
           <nav
+            data-blog-toc
             aria-labelledby="blog-toc-label"
             class="hidden lg:sticky lg:top-sticky-top lg:col-start-1 lg:row-start-1 lg:block lg:max-h-toc lg:self-start lg:overflow-y-auto"
           >
@@ -303,7 +304,7 @@ const proseVars = {
                 <li>
                   <a
                     href={`#${heading.slug}`}
-                    class="block ps-4 text-small font-light text-muted transition-colors duration-micro ease-micro hover:text-paper"
+                    class="toc-link relative block ps-4 text-small font-light text-muted transition-colors duration-micro ease-micro hover:text-paper"
                   >
                     {heading.text}
                   </a>
@@ -575,3 +576,46 @@ const proseVars = {
     margin-inline: 0.5rem;
   }
 </style>
+
+<style>
+  /* USER REPORT 2026-09-02: the rail stuck to the page but never said which
+   * section was being read. scripts/blogToc.ts sets `aria-current="location"`
+   * on the matching link; these two rules are the whole visual answer, hung
+   * off that real ARIA state rather than a duplicate class.
+   *
+   * The marker rides the <ol>'s own `border-s` rail: a 2px accent segment
+   * sitting exactly on the 1px hairline, so the rail reads as one line with
+   * the reader's position lit rather than as a second decoration. Logical
+   * inset, so RTL mirrors with no override. */
+  .toc-link::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -1px;
+    inset-block: 0;
+    inline-size: 2px;
+    background-color: theme("colors.accent");
+    opacity: 0;
+  }
+
+  .toc-link[aria-current="location"] {
+    color: theme("colors.paper");
+  }
+
+  .toc-link[aria-current="location"]::before {
+    opacity: 1;
+  }
+
+  /* Motion doctrine (CLAUDE.md, and the motion audit's own frequency gate):
+   * this state changes continuously while scrolling, so the transition is
+   * the shortest tier the system has and touches opacity/colour only. Under
+   * `reduce` no rule here sets `transition`, so the state still applies —
+   * instantly, with no animated step. */
+  @media (prefers-reduced-motion: no-preference) {
+    .toc-link::before {
+      transition: opacity theme("transitionDuration.micro")
+        theme("transitionTimingFunction.micro");
+    }
+  }
+</style>
+
+<script src="../../scripts/blogToc.ts"></script>
