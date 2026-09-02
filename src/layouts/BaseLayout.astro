@@ -154,6 +154,11 @@ const fontPreloads =
          fix: the same end-state declarations the reduced-motion media query
          already applies, scoped to `<noscript>` so they only ever engage
          when script did not run at all. -->
+    <!-- `!important` (design audit 2026-09-02, P1): Tailwind 3.4 flattens
+         @layer, and Astro inlines the main stylesheet AFTER this block, so at
+         equal specificity the sheet's opacity:0 start states won and the
+         fallback was inert — verified with scripting disabled: 8 of 14 routes
+         lost their body copy. Same idiom Header.astro's noscript block uses. -->
     <noscript>
       <style>
         .tm-load,
@@ -161,18 +166,18 @@ const fontPreloads =
         .tm-rise,
         .tm-fade,
         .tm-grow {
-          opacity: 1;
-          transform: none;
-          animation: none;
-          transition: none;
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+          transition: none !important;
         }
         .tm-live,
         .tm-live-r {
-          animation: none;
+          animation: none !important;
         }
         .tm-spark {
-          animation: none;
-          stroke-dashoffset: 0;
+          animation: none !important;
+          stroke-dashoffset: 0 !important;
         }
       </style>
     </noscript>
