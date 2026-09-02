@@ -9,6 +9,7 @@
 // SplitText only" plugin allowlist.
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import config from "../../tailwind.config.mjs";
 
 let registered = false;
 
@@ -126,5 +127,45 @@ export const standardEase = cubicBezier(0.22, 0.61, 0.36, 1);
  * exactly without adding a dependency outside the three-plugin allowlist.
  */
 export const microEase = cubicBezier(0.22, 1, 0.36, 1);
+
+/**
+ * The motion magnitudes GSAP tweens need, read from tailwind.config.mjs rather
+ * than retyped — that file states it is the one place every duration and
+ * measurement lives, and a GSAP tween cannot call `theme()`. Seconds, because
+ * that is GSAP's unit; px stripped, because that is GSAP's unit for `y`.
+ */
+// Tailwind's own `Config` type models `theme.extend` as an arbitrary
+// resolver function for plugin compatibility, which is looser than this
+// object literal actually is. This narrows it to exactly the tokens read
+// below, rather than reaching for `any`.
+interface MotionConfigTokens {
+  transitionDuration: {
+    reveal: string;
+    card: string;
+    "tm-counter": string;
+  };
+  translate: {
+    reveal: string;
+    stagger: string;
+  };
+  transitionDelay: {
+    stagger: string;
+  };
+}
+
+const motionTokens = config.theme!.extend as unknown as MotionConfigTokens;
+const ms = (v: string) => Number.parseFloat(v) / 1000;
+const px = (v: string) => Number.parseFloat(v);
+
+export const durations = {
+  reveal: ms(motionTokens.transitionDuration.reveal),
+  card: ms(motionTokens.transitionDuration.card),
+  counter: Number.parseFloat(motionTokens.transitionDuration["tm-counter"]),
+};
+export const offsets = {
+  reveal: px(motionTokens.translate.reveal),
+  stagger: px(motionTokens.translate.stagger),
+};
+export const staggerStep = ms(motionTokens.transitionDelay.stagger);
 
 export { gsap, ScrollTrigger };

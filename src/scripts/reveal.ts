@@ -3,7 +3,7 @@
 //
 // Every [data-reveal] element on the page is driven from here — Reveal.astro
 // is "the ONLY reveal wrapper" (PLAN.md §1), and this is its one script.
-import { gsap, standardEase, whenMotionSafe } from "./motion";
+import { durations, gsap, offsets, staggerStep, standardEase, whenMotionSafe } from "./motion";
 
 whenMotionSafe(() => {
   const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
@@ -11,8 +11,8 @@ whenMotionSafe(() => {
   elements.forEach((el) => {
     gsap.from(el, {
       opacity: 0,
-      y: 24, // translate.reveal token, tailwind.config.mjs
-      duration: 0.8, // transitionDuration.reveal token
+      y: offsets.reveal, // translate.reveal token, tailwind.config.mjs
+      duration: durations.reveal, // transitionDuration.reveal token
       ease: standardEase,
       scrollTrigger: {
         trigger: el,
@@ -51,8 +51,8 @@ whenMotionSafe(() => {
     const stagger = Number.isFinite(overridden)
       ? overridden
       : blocks.length > 8
-        ? 0.03
-        : 0.06; // transitionDelay.stagger, or its stated half
+        ? staggerStep / 2
+        : staggerStep; // transitionDelay.stagger, or its stated half
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -66,8 +66,8 @@ whenMotionSafe(() => {
       blocks,
       {
         opacity: 0,
-        y: 12, // translate.stagger token
-        duration: 0.5,
+        y: offsets.stagger, // translate.stagger token
+        duration: durations.card,
         ease: standardEase,
         stagger,
       },
@@ -83,7 +83,7 @@ whenMotionSafe(() => {
         rules,
         {
           scaleX: 0,
-          duration: 0.5,
+          duration: durations.card,
           ease: standardEase,
           stagger,
         },

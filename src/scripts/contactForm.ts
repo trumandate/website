@@ -173,7 +173,7 @@ if (form) {
     // form-ink 13.7:1 on form-tint and 13.4:1 on form-alert.
     statusEl.className = [
       "mt-8 rounded-field border border-form-rule border-s-marker p-5",
-      "shadow-field focus-visible:outline-accent-deep motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit",
+      "shadow-field focus-visible:outline-accent-deep motion-safe:transition-[opacity,transform] motion-safe:duration-state motion-safe:ease-micro",
       isPositive
         ? "bg-form-tint border-s-accent-deep"
         : "bg-form-alert border-s-red-deep",
@@ -218,21 +218,23 @@ if (form) {
     }
 
     statusEl.hidden = false;
-    // P10 (DESIGN-ELEVATION.md §4.5): fade the region in (and re-fade it on
-    // every replacement — error-summary → success, etc.) via the
-    // `motion-safe:transition-opacity` class the markup/className above
-    // always carries. Reset to 0 first so a repeated call (content already
-    // visible, being replaced) fades again rather than snapping. One frame's
-    // wait (rAF) so the browser registers the 0 before animating to 1 — a
-    // synchronous `style.opacity` flip to 1 in the same tick would never
-    // transition. Purely a CSS opacity toggle, not a GSAP tween, so this
-    // needs no whenMotionSafe gate of its own: `motion-safe:` on the class
-    // already removes the transition property entirely under
-    // `prefers-reduced-motion: reduce`, and the assertive announcement/focus
-    // move below are unaffected either way.
+    // P10 (DESIGN-ELEVATION.md §4.5): fade and rise the region in (and
+    // re-run it on every replacement — error-summary → success, etc.) via
+    // the `motion-safe:transition-[opacity,transform]` class the
+    // markup/className above always carries. Reset to opacity 0 / 4px down
+    // first so a repeated call (content already visible, being replaced)
+    // animates again rather than snapping. One frame's wait (rAF) so the
+    // browser registers the start state before animating to the end one — a
+    // synchronous flip in the same tick would never transition. Purely a CSS
+    // toggle, not a GSAP tween, so this needs no whenMotionSafe gate of its
+    // own: `motion-safe:` on the class already removes both properties from
+    // the cascade under `prefers-reduced-motion: reduce`, and the assertive
+    // announcement/focus move below are unaffected either way.
     statusEl.style.opacity = "0";
+    statusEl.style.transform = "translateY(4px)";
     requestAnimationFrame(() => {
       statusEl.style.opacity = "1";
+      statusEl.style.transform = "translateY(0)";
     });
     // Assertive `role="alert"` announces the content change on its own in
     // every browser/AT combination tested (P7 QA); the explicit focus move

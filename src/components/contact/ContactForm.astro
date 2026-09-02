@@ -102,9 +102,10 @@ const interestOptions = [
 
       P10 (DESIGN-ELEVATION.md §4.5): a real-DOM card that "appears in direct
       response to the reader's own action". Its show/replace transition
-      adopts `ease-exit` via scripts/contactForm.ts's `style.opacity` toggle
-      — `motion-safe:` gates it, so under `prefers-reduced-motion: reduce`
-      the property never enters the cascade and the region simply appears.
+      adopts `ease-micro` via scripts/contactForm.ts's `style.opacity`/
+      `style.transform` toggle — `motion-safe:` gates it, so under
+      `prefers-reduced-motion: reduce` the properties never enter the
+      cascade and the region simply appears.
 
       2026-09-01: retinted for the light card (`bg-form-field` at rest,
       `form-tint`/`form-alert` per state) and moved to the `field` radius so
@@ -128,7 +129,7 @@ const interestOptions = [
     role="alert"
     tabindex="-1"
     hidden
-    class="mt-8 rounded-field border border-form-rule border-s-marker border-s-form-line bg-form-field p-5 shadow-field focus-visible:outline-accent-deep motion-safe:transition-opacity motion-safe:duration-state motion-safe:ease-exit"
+    class="mt-8 rounded-field border border-form-rule border-s-marker border-s-form-line bg-form-field p-5 shadow-field focus-visible:outline-accent-deep motion-safe:transition-[opacity,transform] motion-safe:duration-state motion-safe:ease-micro"
   >
   </div>
 

@@ -73,7 +73,7 @@ const links = [
             <a
               href={link.href}
               data-nav-link
-              class="block rounded-control py-3 text-h3 font-semi text-paper transition-colors duration-state ease-standard hover:text-accent"
+              class="block rounded-control py-3 text-h3 font-semi text-paper transition-colors duration-micro ease-micro hover:text-accent"
             >
               {link.label}
             </a>
@@ -138,15 +138,30 @@ const links = [
     transform: translateX(-100%);
   }
 
+  /* Open/close asymmetry: opening is an invitation, closing must get out of
+   * the way. The base (closed) rules below carry the CLOSE timing —
+   * `duration-state`, 200ms — because a transition resolves from the rule
+   * that applies in the state being entered; the `.is-open` overrides carry
+   * the OPEN timing, `duration-header`, 300ms. Both directions share
+   * `ease-micro` (the project's strong ease-out and the same curve every
+   * surface motion on the site uses); asymmetry is expressed as duration,
+   * never as a second curve, and never as an overshoot — global.css's own
+   * motion doctrine forbids that. No delay in either direction: a dismissal
+   * is never delayed. */
   @media (prefers-reduced-motion: no-preference) {
     [data-nav-backdrop] {
-      transition: opacity theme("transitionDuration.header")
-        theme("transitionTimingFunction.standard");
+      transition: opacity theme("transitionDuration.state")
+        theme("transitionTimingFunction.micro");
     }
 
     [data-nav-panel] {
-      transition: transform theme("transitionDuration.header")
-        theme("transitionTimingFunction.standard");
+      transition: transform theme("transitionDuration.state")
+        theme("transitionTimingFunction.micro");
+    }
+
+    [data-nav-drawer].is-open [data-nav-backdrop],
+    [data-nav-drawer].is-open [data-nav-panel] {
+      transition-duration: theme("transitionDuration.header");
     }
   }
 

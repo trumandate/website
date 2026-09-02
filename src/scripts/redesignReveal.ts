@@ -17,15 +17,29 @@
 // their finished opacity/transform unconditionally, and every `[data-count]`
 // element's server-rendered text is already its final value (ProofBand.astro)
 // — so skipping this setup entirely under reduce loses nothing.
-import { whenMotionSafe } from "./motion";
+import { durations, whenMotionSafe } from "./motion";
 
-const COUNT_DURATION = 1300; // tm-counter token, tailwind.config.mjs
+const COUNT_DURATION = durations.counter; // tm-counter token, tailwind.config.mjs
 
 function runCounter(el: HTMLElement) {
   const to = Number.parseFloat(el.dataset.to ?? "0");
   if (!Number.isFinite(to)) return;
   const prefix = el.dataset.prefix ?? "";
   const suffix = el.dataset.suffix ?? "";
+
+  // The element's server-rendered text is already the FINAL value
+  // (ProofBand.astro), so measuring it now gives the exact width the count-up
+  // will end at. Reserving it up front turns ~78 reflowing textContent writes
+  // into ~78 writes inside a fixed box: the figure no longer jitters
+  // horizontally as it grows from one digit to three, and the centred line
+  // stops dragging. Set once, before the first frame — never animated, so
+  // nothing here animates a layout property (CLAUDE.md).
+  const finalWidth = el.getBoundingClientRect().width;
+  if (finalWidth > 0) {
+    el.style.display = "inline-block";
+    el.style.minInlineSize = `${finalWidth}px`;
+  }
+
   const start = performance.now();
   const ease = (t: number) => 1 - (1 - t) ** 3;
 
