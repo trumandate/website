@@ -25,6 +25,16 @@
 // Colours resolve from tailwind.config.mjs at build time for the two rgba
 // washes with no existing token (the coral-tinted critical row's border and
 // background) — same `hexToRgb` pattern as `KpiCard.astro`/`AiMomentCard.astro`.
+//
+// 2026-09-02 (owner decision, logged in BUILD_FLAGS.md): the reference's
+// `max-width: 880px` on this wrapper is deliberately NOT reproduced — the
+// full reasoning and the measurements are in KpiCard.astro's note. This
+// fragment's cut is the bottom mask, not an inline-end one, so nothing else
+// here changes: the panel simply spans the section's own content box (1036px
+// from ~1324px up, ending on the same x the header CTA ends on) instead of
+// stopping 156px short of it, and the row grid's `minmax()` tracks absorb the
+// extra width. Type sizes, row count and the 340px crop height are untouched.
+//
 import type { Language } from "../../i18n/types";
 import tailwindConfig from "../../../tailwind.config.mjs";
 
@@ -117,7 +127,7 @@ const rows = [
 ];
 ---
 
-<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative; max-width: 880px;">
+<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative;">
   <div
     class="border-hairline bg-surface"
     style="border-width: 1px; border-radius: 6px; box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.16), 0 14px 32px -10px rgba(2,24,19,0.6); overflow: hidden; max-height: 340px;"

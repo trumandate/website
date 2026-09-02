@@ -27,6 +27,17 @@
 // Colours resolve from tailwind.config.mjs at build time for the rgba washes
 // with no existing token (the gold measurement-window tint, the mint
 // endpoint halo) — same `hexToRgb` pattern as the other two new fragments.
+//
+// 2026-09-02 (owner decision, logged in BUILD_FLAGS.md): the reference's
+// `max-width: 880px` on this wrapper is deliberately NOT reproduced — the
+// full reasoning and the measurements are in KpiCard.astro's note. Nothing
+// inside this file changes: the chart is one `viewBox` scaled by
+// `width: 100%`, so a wider frame scales the whole composition uniformly (no
+// stretch, no re-authored coordinates, and the labels get LARGER, not
+// smaller), and the inline-end mask — being a percentage of that same frame —
+// keeps its cut on the same chart coordinate it had at 880px. It now simply
+// lands on the section's content edge rather than 156px inside it.
+//
 import type { Language } from "../../i18n/types";
 import tailwindConfig from "../../../tailwind.config.mjs";
 
@@ -75,7 +86,7 @@ const microClass = (extra: string) =>
   (isAr ? `font-mono text-datum font-data ${extra}` : `font-mono font-data ${extra}`).trim();
 ---
 
-<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative; max-width: 880px;">
+<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative;">
   <div
     style={`border: 1px solid ${colors.hairline}; border-radius: 6px; background: linear-gradient(180deg, ${colors["kpi-tile-top"]} 0%, ${colors.surface} 100%); padding: 20px; box-shadow: inset 0 1px 0 0 ${colors.highlight}, 0 14px 32px -10px rgba(2,24,19,0.6); overflow: hidden; mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 82%, transparent 99%); -webkit-mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 82%, transparent 99%);`}
   >

@@ -24,6 +24,29 @@
 // matching the fragment's `direction: ltr` device other fragments use for
 // numeric figures.
 //
+// 2026-09-02 (owner decision, logged in BUILD_FLAGS.md): the reference's own
+// `max-width: 880px` on this wrapper is DELIBERATELY NOT reproduced. At 880px
+// the crop landed 156px short of the section's own content edge (measured,
+// chrome-devtools: fragment ended at x 1074.3 against a content edge of
+// 1230.3 at 1440, and at 1314.3 against 1470.3 at 1920), so the fade read as
+// an arbitrary stop mid-figure rather than the "cropped at the section edge"
+// CLAUDE.md's fragment invariant asks for. The wrapper now fills the
+// `max-w-content` + `px-gutter` content box (1036px from ~1324px up) — the
+// same grid, and the same inline-end x, the header's own CTA ends on.
+//
+// Two knock-on changes keep the composition itself intact rather than just
+// letting a wider frame reveal the whole second card:
+//   - the row is held 120px wider than its frame (`width: calc(100% + 120px)`),
+//     so exactly 120px — 30% of the 400px neighbour card — sits outside the
+//     crop at EVERY frame width, instead of a fraction that shrank as the
+//     frame grew;
+//   - the primary card takes the slack (`flex: 1 0 560px`) instead of the
+//     reference's rigid `0 0 560px`, so the extra width lands on the record
+//     being read, not on dead space. Nothing is scaled or stretched; the
+//     figures, sparkline and chips keep their own type sizes.
+// `min-width: 980px` still governs below ~860px of frame, so every viewport
+// at or below tablet renders the composition it rendered before.
+//
 // Type sizes, a two-part fix caught only by measured comparison against the
 // reference (chips wrapped to a second line, +43px section height first
 // pass; then a second, opposite-direction 29px gap on /ar):
@@ -113,13 +136,13 @@ const copy = {
 };
 ---
 
-<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative; max-width: 880px;">
+<div class:list={["tm-boardload", className]} style="--d: 380ms; position: relative;">
   <div
     style={`position: relative; overflow: hidden; mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 78%, transparent 99%); -webkit-mask-image: linear-gradient(to ${isAr ? "left" : "right"}, black 0%, black 78%, transparent 99%);`}
   >
-    <div style="display: flex; gap: 14px; min-width: 980px;">
+    <div style="display: flex; gap: 14px; min-width: 980px; width: calc(100% + 120px);">
       <div
-        style={`flex: 0 0 560px; border: 1px solid ${colors.hairline}; border-radius: 6px; background: ${cardBg}; padding: 20px; box-shadow: ${cardShadow};`}
+        style={`flex: 1 0 560px; border: 1px solid ${colors.hairline}; border-radius: 6px; background: ${cardBg}; padding: 20px; box-shadow: ${cardShadow};`}
       >
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
           <span class={refClass} style={refStyle}>{copy.ref}</span>

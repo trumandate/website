@@ -247,7 +247,7 @@ the featured `<h2>` remains the page's only second-level heading.
 
 ---
 
-## Conflict to resolve (not a finding — the owner must pick)
+## Conflict — RESOLVED 2026-09-02 (owner decision, implemented)
 
 `CLAUDE.md` invariant: *"No full product screen appears on the site. Fragments
 only, one per product page, **cropped at the section edge**."*
@@ -261,13 +261,37 @@ inside a column that ends at 1470, with a further 450px of empty ground beyond
 that. The crop therefore falls mid-canvas, not at a section edge, and the effect
 weakens as the viewport grows.
 
-Two governing sources disagree: the `CLAUDE.md` invariant, and `BUILD_FLAGS.md`
+Two governing sources disagreed: the `CLAUDE.md` invariant, and `BUILD_FLAGS.md`
 REDESIGN directive #2 (*"exact fidelity to the `.dc.html` references overrides all
 repo conventions"*). Per `CLAUDE.md` — *"If a spec contradicts the code, stop and
-say so. Do not silently pick one."* — this is surfaced rather than corrected.
-Deciding it either way (bleed the fragment strip to the viewport edge, or amend the
-invariant to say "cropped at the content-column edge") is a one-line change once
-the owner rules.
+say so. Do not silently pick one."* — it was surfaced rather than corrected.
+
+**Resolution (owner, 2026-09-02):** *"don't rely on claude design references to the
+core, audit may be right. it's okay to diverge."* The invariant wins; the reference
+loses. Implemented the same day — the `max-width: 880px` cap is gone from all three
+fragments, which now fill the section's own content box (`max-w-content` 1180px
+minus two `px-gutter`s = 1036px from ~1324px up), so the crop lands on exactly the
+x the header's CTA ends on. Re-measured with the chrome-devtools MCP, all six
+routes at 1440 / 1920 / 375:
+
+| Viewport | content-box / header-CTA inline-end x | fragment before | fragment after |
+| --- | --- | --- | --- |
+| 1440 EN | 1230.3 | 1074.3 | 1230.3 |
+| 1920 EN | 1470.3 | 1314.3 | 1470.3 |
+| 1440 AR | 194.3 (mirrored) | 350.3 | 194.3 |
+| 1920 AR | 434.3 (mirrored) | 590.3 | 434.3 |
+| 375 both | 340.0 EN / 20.0 AR | already flush | unchanged |
+
+`scrollWidth === clientWidth` at every width in both languages, so the zero
+horizontal overflow this page verified is preserved. `KpiCard.astro` needed two
+supporting changes to keep its neighbouring card genuinely cut by a wider frame
+(`width: calc(100% + 120px)` on the row, `flex: 1 0 560px` on the primary card);
+the other two needed only the cap removed. Full reasoning, measurements and the
+"do not restore the 880px cap" warning are in `BUILD_FLAGS.md`'s decisions log
+under 2026-09-02, and in each fragment's own file header.
+
+The `62ch` handoff-block half of the "dead space at 1920" observation below is
+**not** covered by this change and remains open.
 
 ---
 
@@ -289,7 +313,7 @@ same ground is not re-litigated.
 | Bare `z-index: 5` (`RecordChain.astro:190`) and `z-[1]` (`Hero.astro`) sit outside the named `zIndex` scale | Both are within-composition stacking well below the chrome scale (`header: 50` … `skip: 70`); correcting them would require inventing token names. Rejected on the "no inventing product intent" rule. |
 | `text-body` is both a colour and a font-size utility, so `text-blog-* … text-body` on one element silently renders at 1rem | Documented at length in `tailwind.config.mjs` and `known-issues.md`. Grepped: **no live call site** pairs them. `text-lede`/`text-small` + `text-body` pairs are safe by alphabetical ordering. Latent risk only. |
 | Blog index standfirst uses the site `text-lede` while the post header uses `blog-lede` | The blog scale is documented as "blog-only", not "blog-exclusive". No rule forbids the site scale in the index masthead. |
-| Handoff sections leave large dead space on the inline-end side at 1920 (`max-width: 62ch` handoff block, `880px` fragments) | Same conflict as the fragment crop above; surfaced there rather than duplicated. |
+| Handoff sections leave large dead space on the inline-end side at 1920 (`max-width: 62ch` handoff block, `880px` fragments) | Same conflict as the fragment crop above; surfaced there rather than duplicated. **Update 2026-09-02:** the fragment half is resolved (see the conflict entry — the 880px cap is gone and the fragments now reach the content edge). The `62ch` handoff block is untouched and still open. |
 
 ---
 

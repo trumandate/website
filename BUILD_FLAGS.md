@@ -659,6 +659,65 @@ Log every such choice under "Decisions taken" below.
 - 2026-08-19 (user directive): the authoritative TruMandate mark is the Echelons geometry the user supplied (EchelonsLogo.tsx, measured from the 1173×1174 master on 2026-08-04): start-aligned pill bars at x≈11.2/48, y 12.79/21.57/30.37, widths 25.59/18.27/11.15, h≈4.77, rx≈2.385; tile rx 8.87 fill #F1F4F3; top bar #0E7E6D (former accent teal, deliberately unchanged), lower bars #21B586. Brand colours stay LITERAL per the brand doc ("a logo is an asset rather than a token") — carried as dedicated brand-* tokens in tailwind.config.mjs for grep cleanliness, never restyled to site accents. The mark does NOT mirror in RTL. This supersedes both the P1 token-coloured mark AND the P9-era favicon "optical correction" (thicker bars), which the brand doc explicitly forbids — the pill radius is what keeps 16px legible.
 - 2026-08-19 (user directive): blog section added for SEO and LLM discoverability (GEO) — content collections under src/content/blog/{en,ar}, no invented statistics or personas, authored Arabic, Article JSON-LD, RSS, sitemap inclusion.
 
+- 2026-09-02 (owner decision — reference fidelity OVERRIDDEN, do NOT restore
+  the 880px cap): the three product-page fragments no longer carry the
+  `.dc.html` references' own `max-width: 880px` (`Strategy (redesign)
+  .dc.html:54` and its two siblings). This is a deliberate divergence from
+  REDESIGN directive #2 above ("exact fidelity to the .dc.html references
+  overrides ALL repo conventions"), ruled by the owner on 2026-09-02 — *"don't
+  rely on claude design references to the core, audit may be right. it's okay
+  to diverge"* — after `design-plans/ui-audit.md` surfaced the conflict rather
+  than settling it. The invariant wins here; the reference does not.
+
+  Why: CLAUDE.md's fragment invariant is *"fragments only, one per product
+  page, cropped at the section edge."* At 880px the crop landed at no edge at
+  all. Measured with the chrome-devtools MCP against the built `dist`, at the
+  fragment's inline-end x (EN):
+
+  | Viewport | content-box edge (= header CTA's inline-end x) | fragment before | fragment after |
+  | --- | --- | --- | --- |
+  | 1440 | 1230.3 | 1074.3 (156px short) | 1230.3 (delta 0) |
+  | 1920 | 1470.3 | 1314.3 (156px short) | 1470.3 (delta 0) |
+  | 375  | 340.0  | 340.0 (already flush) | 340.0 (unchanged) |
+
+  Arabic mirrors the same numbers on the opposite edge: at 1440 the inline-end
+  x is 194.3 and the fragment, the content box and the header CTA all end
+  there; at 1920 it is 434.3; at 375, 20.0. The fragment now spans the same
+  1036px content box (`max-w-content` 1180px minus two `px-gutter`s) that the
+  header and every other section already use, so the crop reads as a cut at
+  the section boundary instead of an arbitrary stop mid-figure.
+
+  How, per fragment. No SVG is stretched, no anonymised datum changed, and the
+  one-fragment-per-page rule is untouched:
+
+  - `KpiCard.astro` — wrapper cap removed; the card row is held 120px wider
+    than its frame (`width: calc(100% + 120px)`), so exactly 30% of the 400px
+    neighbouring card sits outside the crop at every frame width instead of a
+    fraction that shrank as the frame grew, and the primary card takes the
+    slack (`flex: 1 0 560px`, was `0 0 560px`). Measured after: frame 1036,
+    row 1156, primary card 742, neighbour 400 with 280 visible / 120 cut.
+    `min-width: 980px` still governs below ~860px of frame, so mobile renders
+    the composition it rendered before.
+  - `InitiativeRows.astro` — wrapper cap removed, nothing else: its cut is the
+    bottom mask, not an inline-end one, and the row grid's `minmax()` tracks
+    absorb the extra width.
+  - `BenefitCurve.astro` — wrapper cap removed, nothing else: the chart is one
+    `viewBox` at `width: 100%`, so a wider frame scales the whole composition
+    uniformly (SVG scale 1.048 → 1.243; the 10px in-chart labels now render at
+    12.43px rather than 10.48px, i.e. more legible, not less) and the
+    inline-end mask — a percentage of that same frame — keeps its cut on the
+    same chart coordinate it had at 880px.
+
+  RTL is carried by the existing per-language mask-direction branch in
+  `KpiCard.astro`/`BenefitCurve.astro` plus the wrapper's own logical sizing;
+  no physical direction property was added. Verified: `npm run build` clean,
+  `npm run check` 79 files 0 errors / 0 warnings / 0 hints, all six product
+  routes measured at 1440 / 1920 / 375 in both languages with
+  `scrollWidth === clientWidth` at every width (zero horizontal overflow) and
+  no console messages. `design-plans/ui-audit.md`'s conflict entry is now
+  marked resolved.
+
+
 ## Deferred
 
 (Claude Code appends here, mirroring `TODO.md`. Nothing deferred lives only in prose.)
