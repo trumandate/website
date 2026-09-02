@@ -636,6 +636,15 @@ export default {
       },
     },
   },
+  // Motion audit 2026-09-02 (M1): without this, every `hover:` utility also
+  // fires on touch — a tap leaves the CTA lift, card raise and nav colour
+  // stuck until the next tap elsewhere. Wraps hover variants in
+  // `@media (hover: hover)`. Verified absent: 0 of 477 built rules carried
+  // the guard before this.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+
   corePlugins: {
     // physical-direction utilities are switched off so `ml-`, `pr-`, `text-left`
     // cannot be written by accident. CLAUDE.md greps for them; this makes them

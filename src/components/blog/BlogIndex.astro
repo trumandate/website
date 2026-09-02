@@ -210,9 +210,13 @@ const chevron = lang === "ar" ? "M7 1 2 6.5 7 12" : "M2 1l5 5.5L2 12";
       pad={false}
       style="padding-block: clamp(2.5rem, 6vh, 4rem) clamp(3rem, 8vh, 5.5rem);"
     >
-      <h2 class="font-mono text-datum font-data uppercase tracking-datum text-muted">
+      <!-- UI audit 2026-09-02 (P3-1): a <p>, not an <h2>. This 11.5px eyebrow
+           sat at the same level as the 29.6px featured title and above the
+           20.8px card <h3>s, inverting the outline. It labels the group; the
+           posts carry the page's real headings. -->
+      <p class="font-mono text-datum font-data uppercase tracking-datum text-muted">
         {t("blog.moreHeading")}
-      </h2>
+      </p>
 
       <ul class="mt-5 grid gap-x-12 sm:grid-cols-2">
         {rest.map((entry) => (
