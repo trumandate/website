@@ -1,0 +1,322 @@
+{
+  "route": {
+    "en": "/en/contact/",
+    "ar": "/ar/contact/"
+  },
+  "title": "Contact / demo request",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 38,
+    "ar": 38,
+    "pairs": 38,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Next step",
+      "ar": "الخطوة التالية",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "See it against your own plan.",
+      "ar": "شاهدها على خطتك أنت.",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Send this and we will run the demo on a portfolio shaped like yours, not a sample dataset.",
+      "ar": "أرسل النموذج ونقدّم العرض على محفظة تشبه محفظتك، لا على بيانات تجريبية.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Prefer email? Write to trumandate@intertecsys.com.",
+      "ar": "تفضّل البريد الإلكتروني؟ راسلنا على trumandate@intertecsys.com.",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Demo request",
+      "ar": "طلب عرض توضيحي",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Fields marked * are required.",
+      "ar": "الحقول المعلَّمة بـ * مطلوبة.",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Name *",
+      "ar": "الاسم *",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Organisation *",
+      "ar": "الجهة *",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Work email *",
+      "ar": "البريد المؤسسي *",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "legend",
+      "en": "What you want to see *",
+      "ar": "ما ترغب في رؤيته *",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Full platform demo",
+      "ar": "عرض كامل للمنصة",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Strategy and KPI cascade",
+      "ar": "تدرّج الاستراتيجية والمؤشرات",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Benefits realisation",
+      "ar": "تحقيق المنافع",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Deployment and data sovereignty",
+      "ar": "النشر وسيادة البيانات",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Anything we should knowOptional",
+      "ar": "أي معلومة تودّ إضافتهااختياري",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "label",
+      "en": "Leave this field blank",
+      "ar": "اترك هذا الحقل فارغاً",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "We reply from a named address, not a queue.",
+      "ar": "نرد من عنوان باسم صاحبه، لا من قائمة انتظار.",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

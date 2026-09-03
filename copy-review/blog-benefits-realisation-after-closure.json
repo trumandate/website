@@ -1,0 +1,808 @@
+{
+  "route": {
+    "en": "/en/blog/benefits-realisation-after-closure/",
+    "ar": "/ar/blog/benefits-realisation-after-closure/"
+  },
+  "title": "Post: benefits realisation after closure",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 92,
+    "ar": 98,
+    "pairs": 92,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 6
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "Benefits realisation after project closure",
+      "ar": "تحقيق المنافع بعد إغلاق المشروع",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefit forecasts stop being measured the day the team disbands. What a benefit register holds, why 24 months, and who should own a benefit.",
+      "ar": "يتوقف قياس المنافع المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل المنافع، ولماذا أربعة وعشرون شهراً، ومن يجب أن يملك المنفعة.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "19 August 2026 · TruMandate team, Intertec Systems · 7 min read",
+      "ar": "19 أغسطس 2026 · فريق TruMandate، إنترتك سيستمز · قراءة في 8 دقائق",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "On this page",
+      "ar": "في هذه الصفحة",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What is benefits realisation, and why does it stop at closure?",
+      "ar": "ما هو تحقيق المنافع، ولماذا يتوقف عند الإغلاق؟",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Why do benefit forecasts stop being measured?",
+      "ar": "لماذا يتوقف قياس المنافع المتوقعة؟",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What is a benefit register?",
+      "ar": "ما هو سجل المنافع؟",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Why measure for 24 months after closure?",
+      "ar": "لماذا نقيس أربعة وعشرين شهراً بعد الإغلاق؟",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "The part nobody has solved",
+      "ar": "الجزء الذي لم يحلّه أحد",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Who should own a benefit?",
+      "ar": "من يجب أن يملك المنفعة؟",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Common questions",
+      "ar": "ماذا يتغير عملياً؟",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where this comes from",
+      "ar": "أسئلة شائعة",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": null,
+      "ar": "من أين جاء هذا",
+      "extraArabic": true,
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Try this. Pick a project your entity closed two years ago, find the business case, read the benefits section out loud, and ask who has measured it since.",
+      "ar": "جرّب هذا: اختر مشروعاً أغلقته جهتك قبل سنتين، واعثر على دراسة الجدوى، واقرأ قسم المنافع بصوت عالٍ، ثم اسأل من قاسها منذ ذلك الحين.",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "You already know how that goes. The question is why, and the answer is more structural than most people assume.",
+      "ar": "أنت تعرف كيف ينتهي هذا. السؤال هو: لماذا؟ والجواب بنيوي أكثر مما يفترضه أكثر الناس.",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What is benefits realisation, and why does it stop at closure?",
+      "ar": "ما هو تحقيق المنافع، ولماذا يتوقف عند الإغلاق؟",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefits realisation is the practice of measuring whether the outcome a project promised actually arrived, in the units it was promised in, after the project has finished. It is a separate question from delivery. A project can deliver everything in its scope, on time and within budget, and produce no benefit at all.",
+      "ar": "تحقيق المنافع هو ممارسة قياس ما إذا كان الأثر الذي وعد به المشروع قد وصل فعلاً، بالوحدات التي وُعد بها، بعد انتهاء المشروع. وهو سؤال منفصل عن التسليم: يستطيع مشروع أن يسلّم كل ما في نطاقه، في موعده وضمن موازنته، ولا ينتج منفعة على الإطلاق.",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Almost every organisation performs the first half of this well and the second half not at all. Benefits are forecast carefully at approval, when the forecast is what wins the funding. They are then measured on the one date when measurement is impossible, the closure date, before anything has had time to change. After that, nothing.",
+      "ar": "تُتقن كل جهة تقريباً النصف الأول من هذه الممارسة ولا تمارس النصف الثاني إطلاقاً. تُتوقَّع المنافع بعناية عند الاعتماد، حين يكون التوقع هو ما يكسب التمويل. ثم تُقاس في التاريخ الوحيد الذي يستحيل فيه القياس، وهو تاريخ الإغلاق، قبل أن يتاح لأي شيء وقت ليتغير. وبعد ذلك لا شيء.",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "This is the largest credibility gap in portfolio governance and it is unusual in being widely known. Ask anyone in a strategy office whether their closed projects delivered their forecast benefits and you will get a candid answer, often a wry one.",
+      "ar": "هذه أكبر فجوة مصداقية في حوكمة المحافظ، وهي استثنائية في كونها معروفة على نطاق واسع. اسأل أي شخص في مكتب استراتيجية إن كانت مشاريعه المغلقة قد حققت منافعها المتوقعة، فستحصل على إجابة صريحة.",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Why do benefit forecasts stop being measured?",
+      "ar": "لماذا يتوقف قياس المنافع المتوقعة؟",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Four mechanisms, and they compound.",
+      "ar": "أربع آليات، وهي تتراكب.",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The team disbands. The project manager who wrote the business case moves to the next programme within weeks. The people who understood how the forecast was built, which assumption carried the saving, what else had to be true, are dispersed. Six months later, when the benefit could finally be measured, nobody left knows what to measure.",
+      "ar": "يتفرق الفريق. مدير المشروع الذي كتب دراسة الجدوى ينتقل إلى البرنامج التالي خلال أسابيع. والأشخاص الذين فهموا كيف بُني التوقع، وأي افتراض كان يحمل الوفر، وما الذي كان يجب أن يتحقق أيضاً، يتفرقون. وبعد ستة أشهر، حين يصير القياس ممكناً أخيراً، لا يبقى من يعرف ما الذي يُقاس.",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The budget ends at closure. A project’s funding covers delivery. Measurement twelve months later has no cost code, so the effort has to be donated by a function that was never asked. Work with no budget line loses to work that has one.",
+      "ar": "تنتهي الموازنة عند الإغلاق. تمويل المشروع يغطي التنفيذ. أما القياس بعد اثني عشر شهراً فلا بند تكلفة له، فيتحوّل إلى جهد تتبرع به وظيفة لم يسألها أحد ولم تخطط له. والعمل بلا بند موازنة يخسر أمام العمل الذي له بند.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The measure was never specified tightly enough. “Improved processing efficiency” cannot be tested. “Median permit processing time falls from 14 days to 6 days, same case type, twelve months after go-live” can be tested by anyone, including someone who has never heard of the project. The vagueness is not accidental. A vague forecast is easier to approve, and both the author and the approver know it.",
+      "ar": "لم يُحدَّد المقياس بدقة كافية. عبارة “تحسين كفاءة المعالجة” لا يمكن اختبارها. أما “ينخفض وسيط زمن معالجة التصريح من 14 يوماً إلى 6 أيام، لنوع الحالة نفسه، بعد اثني عشر شهراً من التشغيل” فيستطيع اختبارها أي شخص، حتى من لم يسمع بالمشروع. والغموض ليس عرضياً: التوقع الغامض أسهل اعتماداً، ويعرف ذلك كاتبه ومعتمِده معاً.",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Nobody is uncomfortable. No individual is accountable after closure, so no individual is exposed when the benefit fails to arrive. This is how the same saving gets promised by three consecutive programmes: the earlier promise stopped being tracked the day its project shut down, so there is nothing to check the new one against. Nobody is lying. Nobody is checking.",
+      "ar": "لا أحد ينزعج. لا فرد مسؤول بعد الإغلاق، فلا فرد مكشوف حين لا تصل المنفعة. وهكذا يُوعد بالوفر نفسه ثلاثة برامج متعاقبة: توقف تتبّع الوعد الأسبق يوم أُغلق مشروعه، فلم يبقَ ما يُقارَن به الوعد الجديد. لا أحد يكذب. ولا أحد يتحقق.",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Appraisal guidance has known about the first-order version of this for a long time. The UK Treasury’s Green Book requires an explicit optimism bias adjustment for exactly this reason, and several regional frameworks borrow the idea. What the adjustment cannot do is verify itself afterwards.",
+      "ar": "وقد عرفت أدلة التقييم الاقتصادي الصورة الأولية لهذه المشكلة منذ زمن: يشترط الكتاب الأخضر لخزانة المملكة المتحدة تعديلاً صريحاً لتحيّز التفاؤل لهذا السبب بالذات، وتستعير عدة أطر إقليمية الفكرة نفسها. لكن ما لا يستطيع التعديل فعله هو التحقق من نفسه بعد وقوع الأمر.",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What is a benefit register?",
+      "ar": "ما هو سجل المنافع؟",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The record that keeps every promised outcome alive independently of the project that promised it. A benefit is only a handful of fields, and each has to be present before approval rather than after.",
+      "ar": "هو السجل الذي يُبقي كل أثر موعود حيّاً باستقلال عن المشروع الذي وعد به. والمنفعة ليست إلا حفنة حقول، لكن كل حقل يجب أن يكون حاضراً قبل الاعتماد لا بعده.",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The statement. What will change, as a direction and a quantity. Not an aspiration.",
+      "ar": "الصياغة. ما الذي سيتغير، كاتجاه ومقدار. لا كطموح.",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The measure. Which KPI shows it, in which unit, with a baseline value and the date the baseline was taken. If the benefit cannot be pointed at an existing measure, either you create the measure before approval or the benefit is not real. Say that out loud in the appraisal meeting; it works better than it sounds.",
+      "ar": "المقياس. أي مؤشر يُظهرها، وبأي وحدة، مع قيمة خط أساس وتاريخ أخذه. وإن تعذّر ربط المنفعة بمقياس قائم، فإما أن يُنشأ المقياس قبل الاعتماد، أو أن المنفعة ليست حقيقية. قلها بصوت مسموع في اجتماع التقييم؛ نتيجتها أفضل مما تبدو.",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The profile. When the change is expected and at what rate. Most benefits do not switch on at go-live, and a saving that ramps over three quarters should be recorded as ramping, so a flat reading at month three is understood rather than escalated.",
+      "ar": "المنحنى الزمني. متى يُتوقع ظهور التغيير وبأي وتيرة. أغلب المنافع لا تُشغَّل دفعة واحدة عند التشغيل، والوفر الذي يتصاعد على ثلاثة أرباع يجب أن يُسجَّل متصاعداً، حتى تُفهم قراءة مسطحة في الشهر الثالث بدل أن تُصعَّد.",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The accountable individual. A named person who will still hold their role after the delivery team is gone, with the date their accountability starts. Usually closure, not approval.",
+      "ar": "الفرد المسؤول. شخص بالاسم سيبقى في دوره بعد رحيل فريق التنفيذ، مع تاريخ بدء مسؤوليته، وهو الإغلاق عادةً لا الاعتماد.",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The measurement dates. Fixed points at which the actual gets taken and compared, scheduled in advance so they do not depend on anyone remembering.",
+      "ar": "تواريخ القياس. نقاط ثابتة تُؤخذ عندها القيمة الفعلية وتُقارن، مجدولة سلفاً حتى لا تعتمد على تذكّر أحد.",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The source initiative. So a pattern of optimistic forecasting becomes visible at the level of a sponsor or a department rather than one project at a time.",
+      "ar": "المبادرة المصدر. حتى يصير نمط التوقع المتفائل مرئياً على مستوى الراعي أو الإدارة، لا مشروعاً مشروعاً.",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The status history. Each measurement, and each forecast revision with its reason and the name of whoever made it. Revising downward on evidence is legitimate governance. Revising quietly is not, and the difference is entirely the name.",
+      "ar": "تاريخ الحالة. كل قياس، وكل مراجعة للتوقع مع سببها واسم من أجراها. مراجعة التوقع نزولاً بناءً على دليل حوكمة مشروعة. أما مراجعته بصمت فليست كذلك، والفرق كله في الاسم.",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "MSP and PMI’s benefits realisation guidance both describe versions of this artefact. The register is the list a committee should be able to open at any time and read as one question: of everything we have paid for, what did we say would change, and what changed.",
+      "ar": "تصف منهجية MSP وإرشادات PMI لتحقيق المنافع صيغاً من هذا السجل. وهو القائمة التي يجب أن تستطيع اللجنة فتحها في أي وقت وقراءتها كسؤال واحد: من كل ما دفعنا ثمنه، ماذا قلنا إنه سيتغير، وماذا تغيّر؟",
+      "n": 48,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Why measure for 24 months after closure?",
+      "ar": "لماذا نقيس أربعة وعشرين شهراً بعد الإغلاق؟",
+      "n": 49,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Because the interesting period starts after the attention stops.",
+      "ar": "لأن الفترة المثيرة للاهتمام تبدأ بعد أن يتوقف الانتباه.",
+      "n": 50,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Most benefits are not observable at closure. A new system goes live and processing times get worse for a quarter while people learn it. A procurement reform produces its saving in the following contract cycle. A measurement taken at closure, or three months after, will often show the opposite of the truth.",
+      "ar": "أغلب المنافع غير قابلة للرصد عند الإغلاق. نظام جديد يبدأ التشغيل فتسوء أزمنة المعالجة ربعاً كاملاً بينما يتعلمه الناس. وإصلاح في المشتريات يُنتج وفره في دورة التعاقد التالية لا الحالية. والقياس المأخوذ عند الإغلاق، أو بعده بثلاثة أشهر، سيُظهر عكس الحقيقة في أحيان كثيرة.",
+      "n": 51,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Twenty-four months is long enough to see a benefit ramp and then hold, which is the distinction worth having. Plenty of benefits appear on schedule and then decay. The process reverts. The headcount returns under a different label. The manual workaround comes back, because nobody owns the new way of working. A benefit measured once at month twelve and declared realised records the peak and misses all of that. It is also long enough to catch leakage in the quiet quarters, when there is no project team left to notice.",
+      "ar": "أربعة وعشرون شهراً مدة كافية لرؤية المنفعة تتصاعد ثم تثبت، وهذا هو التمييز الذي يستحق العناء. فكثير من المنافع تظهر في موعدها ثم تتآكل: تعود العملية إلى ما كانت عليه، ويعود العدد الوظيفي تحت مسمى آخر، ويعود الالتفاف اليدوي لأن أحداً لا يملك طريقة العمل الجديدة. والمنفعة التي تُقاس مرة واحدة في الشهر الثاني عشر ثم تُعلن محقَّقة تسجّل القمة وتفوّت ذلك كله. وهي مدة كافية أيضاً لالتقاط التسرّب في الأرباع الهادئة، حين لا يبقى فريق مشروع لينتبه.",
+      "n": 52,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Twenty-four months is a discipline rather than a natural law. Some benefits settle at twelve. Infrastructure and major reform need longer. What matters is that the window is set deliberately at approval and outlasts the optimism that produced the forecast.",
+      "ar": "وأربعة وعشرون شهراً انضباط لا قانون طبيعة. بعض المنافع تستقر عند اثني عشر شهراً، والبنية التحتية والإصلاحات الكبرى تحتاج أطول. المهم أن تُحدَّد النافذة عمداً عند الاعتماد، وأن تعيش أطول من التفاؤل الذي أنتج التوقع.",
+      "n": 53,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "The part nobody has solved",
+      "ar": "الجزء الذي لم يحلّه أحد",
+      "n": 54,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Attribution.",
+      "ar": "الإسناد السببي.",
+      "n": 55,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Eighteen months after closure your permit processing time has fallen from 14 days to 7. Your project promised 6. Did the project cause it? Partly, probably. Also relevant: a staffing change in the department, a drop in application volume, a policy amendment that removed an approval step. There is no counterfactual. You do not get to run the two years again without the project.",
+      "ar": "بعد ثمانية عشر شهراً من الإغلاق انخفض زمن معالجة التصريح لديك من 14 يوماً إلى 7. وكان مشروعك قد وعد بـ6. هل تسبب المشروع في التحسن؟ جزئياً، على الأرجح. وثمة عوامل أخرى: تغيير في ملاك الإدارة، وانخفاض في حجم الطلبات، وتعديل تنظيمي ألغى خطوة موافقة كاملة. لا يوجد سيناريو مضاد. أنت لا تستطيع إعادة تشغيل السنتين من دون المشروع.",
+      "n": 56,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "This is not something you can engineer your way out of, and anyone offering clean attribution across a two-year window is overstating what the data carries. Statistical approaches exist and they want comparison groups and stable conditions a single portfolio rarely provides.",
+      "ar": "هذه ليست مشكلة قياس تُحلّ هندسياً، ومن يعرض إسناداً نظيفاً عبر نافذة سنتين يبالغ في ما تحتمله البيانات. المقاربات الإحصائية موجودة، وهي تطلب مجموعات مقارنة وظروفاً مستقرة نادراً ما توفرها محفظة حكومية واحدة.",
+      "n": 57,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "So what is a register worth if attribution is unavailable? It shows whether the promised change happened at all, which is a lower bar than causation and still eliminates most bad business cases. And it forces the argument to be had, in front of people, by an owner who has to say in their own words why the number moved.",
+      "ar": "فما قيمة السجل إذاً إن كان الإسناد متعذراً؟ إنه يُظهر إن كان التغيير الموعود قد حدث أصلاً، وهو سقف أدنى من السببية ويكفي لاستبعاد أغلب دراسات الجدوى الرديئة. ثم إنه يفرض أن تُدار المحاجّة أمام الناس، بلسان مالك عليه أن يشرح بكلماته لماذا تحرك الرقم. وهذه المحادثة لا تحدث ما لم يفرضها بند على جدول الأعمال.",
+      "n": 58,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Who should own a benefit?",
+      "ar": "من يجب أن يملك المنفعة؟",
+      "n": 59,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Not the project manager. Not the programme. Not the PMO.",
+      "ar": "ليس مدير المشروع. ولا البرنامج. ولا مكتب إدارة المشاريع.",
+      "n": 60,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Give it to the person accountable for the operational area where the change is supposed to show up. The head of the service whose processing time should fall. The finance owner of the budget line where the saving should appear. The working rule: pick someone who would notice the benefit failing to arrive even if nobody had asked them to look.",
+      "ar": "أعطها للشخص المسؤول عن المجال التشغيلي الذي يُفترض أن يظهر فيه التغيير: رئيس الخدمة التي يجب أن ينخفض زمن معالجتها، أو مالك بند الموازنة في المالية الذي يجب أن يظهر فيه الوفر. والقاعدة العملية: اختر من كان سينتبه إلى غياب المنفعة حتى لو لم يطلب منه أحد أن ينظر.",
+      "n": 61,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "That owner is usually not involved in delivery, so they have to be named and have to agree the number before approval. A benefit assigned to an operational head after closure gets disputed rather than measured, and they will be right to dispute it.",
+      "ar": "هذا المالك ليس مشاركاً في التنفيذ عادةً، فيجب أن يُسمّى وأن يوافق على الرقم قبل الاعتماد. المنفعة التي تُسنَد إلى رئيس تشغيلي بعد الإغلاق يُختلف عليها بدل أن تُقاس، وسيكون محقاً في الاختلاف.",
+      "n": 62,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Make it a role plus a person, so accountability transfers when the individual moves. And make sure the measure exists independently of the owner. If the only source of the actual is the owner’s own assertion, your register holds an opinion.",
+      "ar": "واجعلها دوراً وشخصاً معاً، حتى تنتقل المسؤولية حين ينتقل الفرد. وتأكد من أن المقياس قائم باستقلال عن المالك: إن كان المصدر الوحيد للقيمة الفعلية هو تصريح المالك نفسه، فسجلّك يحفظ رأياً لا قياساً.",
+      "n": 63,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The PMO holds the register, schedules the measurements and escalates divergence. It does not own the benefits. A PMO that owns benefits owns everything and is accountable for nothing.",
+      "ar": "يحفظ مكتب إدارة المشاريع السجل، ويجدول القياسات، ويصعّد التباعد. وهو لا يملك المنافع. المكتب الذي يملك المنافع يملك كل شيء ولا يُسأل عن شيء.",
+      "n": 64,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Common questions",
+      "ar": "ماذا يتغير عملياً؟",
+      "n": 65,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": null,
+      "ar": "ثلاث عادات، كل واحدة صغيرة.",
+      "extraArabic": true,
+      "n": 66,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": null,
+      "ar": "ارفض دراسة جدوى لا يمكن ربط منفعتها بمقياس له خط أساس. لا تكلّف شيئاً سوى الاستعداد لإعادة الورقة، وفي المرة الثانية تتغير جودة ما يصلك.",
+      "extraArabic": true,
+      "n": 67,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": null,
+      "ar": "سمِّ مالك ما بعد الإغلاق في ورقة الاعتماد، في الفقرة نفسها التي تحمل التوقع. التفاوض على ذلك أسهل بكثير قبل منح المال منه بعده.",
+      "extraArabic": true,
+      "n": 68,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": null,
+      "ar": "وضَع المشاريع المغلقة على جدول أعمال الحوكمة. اللجنة التي لا تناقش إلا المبادرات الحيّة تكون قد استبعدت بنيوياً سؤال ما إذا كان أي شيء موّلته سابقاً قد نجح.",
+      "extraArabic": true,
+      "n": 69,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": null,
+      "ar": "أسئلة شائعة",
+      "extraArabic": true,
+      "n": 70,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "When should a benefit first be measured?",
+      "ar": "متى تُقاس المنفعة أول مرة؟",
+      "n": 71,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "At the point set in the benefit profile, which is usually not at closure. For most operational benefits the first meaningful reading falls six to nine months after go-live, once the transition period has passed. Read it earlier and you get a number that gets argued about instead of acted on.",
+      "ar": "عند النقطة المحددة في منحنى المنفعة، وهي ليست الإغلاق عادةً. لأغلب المنافع التشغيلية تقع القراءة الأولى ذات المعنى بعد ستة إلى تسعة أشهر من التشغيل، بعد انقضاء فترة الانتقال. واقرأها قبل ذلك تحصل على رقم يُتجادل حوله بدل أن يُتصرَّف بناءً عليه.",
+      "n": 72,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "What if the benefit did not arrive?",
+      "ar": "ماذا لو لم تصل المنفعة؟",
+      "n": 73,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Record it, with the reason, and keep the entry open. A benefit that did not arrive is more useful to the next business case than one that did, provided the record survives. The failure to avoid is quietly closing the entry, which removes the only evidence that the forecast was optimistic.",
+      "ar": "سجّل ذلك مع السبب، وأبقِ القيد مفتوحاً. المنفعة التي لم تصل أنفع لدراسة الجدوى التالية من المنفعة التي وصلت، شرط أن يبقى السجل. والخطأ الذي يجب تجنبه هو إغلاق القيد بصمت، فذلك يمحو الدليل الوحيد على أن التوقع كان متفائلاً.",
+      "n": 74,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "How is a benefit different from a KPI?",
+      "ar": "ما الفرق بين المنفعة ومؤشر الأداء؟",
+      "n": 75,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A KPI is a standing measure of something you care about; it exists whether or not any project is running. A benefit is a specific, time-bound claim that one investment will move that KPI by a stated amount by a stated date. Benefits are measured on KPIs, which is why a benefit whose KPI does not yet exist cannot be measured at all.",
+      "ar": "مؤشر الأداء مقياس دائم لشيء يهمّك، وهو قائم سواء جرى مشروع أم لا. أما المنفعة فادّعاء محدد ومحدود بزمن بأن استثماراً بعينه سيحرّك ذلك المؤشر بمقدار معلوم بحلول تاريخ معلوم. المنافع تُقاس على المؤشرات، ولهذا فإن منفعة لا يوجد مؤشرها بعد لا يمكن قياسها إطلاقاً.",
+      "n": 76,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 77,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "We build TruMandate, a portfolio governance platform for government entities and large enterprises in the UAE and Saudi Arabia, which keeps each benefit attached to the KPI it promised to move for two years past closure. The argument above is why.",
+      "ar": "نحن نبني TruMandate، منصة حوكمة محافظ لجهات حكومية ومؤسسات كبرى في الإمارات والسعودية، تُبقي كل منفعة مرتبطة بالمؤشر الذي وُعدت بتحريكه لسنتين بعد الإغلاق. وما سبق هو سبب وجود ذلك السلوك.",
+      "n": 78,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Topics",
+      "ar": "المواضيع",
+      "n": 79,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "benefits-realisation",
+      "ar": "benefits-realisation",
+      "n": 80,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "benefit-register",
+      "ar": "benefit-register",
+      "n": 81,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "portfolio-governance",
+      "ar": "portfolio-governance",
+      "n": 82,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "project-closure",
+      "ar": "project-closure",
+      "n": 83,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "public-sector",
+      "ar": "public-sector",
+      "n": 84,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "See this on your own portfolio.",
+      "ar": "شاهد هذا على محفظتك أنت.",
+      "n": 85,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions.",
+      "ar": "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات.",
+      "n": 86,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 87,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "All posts",
+      "ar": "كل المقالات",
+      "n": 88,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "NextThe strategy execution gap: why strategy dies between the mandate and the money",
+      "ar": "التاليفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والمال؟",
+      "n": 89,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 90,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 91,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 92,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 93,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 94,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 95,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 96,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 97,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 98,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

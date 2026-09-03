@@ -1,0 +1,778 @@
+{
+  "route": {
+    "en": "/en/blog/strategy-execution-gap/",
+    "ar": "/ar/blog/strategy-execution-gap/"
+  },
+  "title": "Post: the strategy execution gap",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 95,
+    "ar": 95,
+    "pairs": 95,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "The strategy execution gap: why strategy dies between the mandate and the money",
+      "ar": "فجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والمال؟",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The strategy execution gap is a records problem, not a motivation problem. Three mechanisms that open it, and what closing it actually requires.",
+      "ar": "فجوة التنفيذ مشكلة سجلات لا مشكلة عزيمة. ثلاث آليات تفتحها، وما الذي يتطلبه إغلاقها فعلاً: التتبّع، والملكية بالاسم، والقيم الفعلية الحيّة.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "19 August 2026 · TruMandate team, Intertec Systems · 7 min read",
+      "ar": "19 أغسطس 2026 · فريق TruMandate، إنترتك سيستمز · قراءة في 7 دقائق",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "On this page",
+      "ar": "في هذه الصفحة",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What is the strategy execution gap?",
+      "ar": "ما هي فجوة تنفيذ الاستراتيجية؟",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where does the gap actually open?",
+      "ar": "أين تنفتح الفجوة فعلاً؟",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Why does more reporting not close the gap?",
+      "ar": "لماذا لا يُغلق مزيدٌ من التقارير هذه الفجوة؟",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What does closing the gap require?",
+      "ar": "ماذا يتطلب إغلاق الفجوة؟",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Which parts of the gap should stay open?",
+      "ar": "أي أجزاء الفجوة يجب أن تبقى مفتوحة؟",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "How would you know the gap is closing?",
+      "ar": "كيف تعرف أن الفجوة تضيق؟",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Common questions",
+      "ar": "أسئلة شائعة",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The number on the slide is 62%. Someone at the far end of the table asks where it came from.",
+      "ar": "الرقم على الشريحة 62%. يسأل أحدهم من الطرف الآخر للطاولة: من أين جاء؟",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "What follows is familiar. The analyst looks at the director. The director looks at the deck. Somebody offers to confirm it after the meeting. The true answer, which nobody gives because nobody in the room has it, is that 62% came from a cell in a consolidation workbook, filled from a status template, filled three weeks ago from a delivery tracker by a project manager who is not in the building today.",
+      "ar": "ما يلي مألوف. المحلل ينظر إلى المدير. المدير ينظر إلى العرض. أحدهم يعرض التأكد بعد الاجتماع. والجواب الصحيح، الذي لا يقوله أحد لأن لا أحد في الغرفة يملكه، أن 62% جاء من خلية في ملف تجميع، مُلئت من نموذج حالة، مُلئ قبل ثلاثة أسابيع من متتبع تنفيذ بيد مدير مشروع ليس في المبنى اليوم.",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Nobody did anything wrong. The strategy is still going to fail on that pillar, and this meeting is where it will fail, quietly, by not deciding anything.",
+      "ar": "لم يرتكب أحد خطأً. ومع ذلك ستفشل الاستراتيجية على ذلك المحور، وهذا الاجتماع هو مكان الفشل: بهدوء، وبألا يُتخذ فيه قرار.",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What is the strategy execution gap?",
+      "ar": "ما هي فجوة تنفيذ الاستراتيجية؟",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The strategy execution gap is the distance between what an organisation has formally committed to and what its money and its people are actually doing. It opens not because anyone disagrees with the strategy, but because the strategy is held in one set of documents and the delivery is held in another, and nothing structurally forces the two to agree.",
+      "ar": "فجوة تنفيذ الاستراتيجية هي المسافة بين ما التزمت به الجهة رسمياً وما يفعله مالها وموظفوها فعلاً. وهي لا تنفتح لأن أحداً يعترض على الاستراتيجية، بل لأن الاستراتيجية محفوظة في مجموعة وثائق والتنفيذ محفوظ في مجموعة أخرى، ولا شيء بنيوي يُجبر الاثنتين على التطابق.",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Be precise about this, because the phrase usually describes a failure of will. It rarely is one. The objectives are clear, the leadership is committed, and delivery teams are working hard on things they believe matter. The gap opens in the mechanics: wherever a number has to be carried from one system to another by a person, and nothing checks that it arrived intact or on time.",
+      "ar": "كن دقيقاً هنا، فالعبارة تُستعمل عادةً لوصف ضعف في العزيمة. ونادراً ما تكون كذلك. الأهداف واضحة، والقيادة ملتزمة، وفرق التنفيذ تعمل بجد على أشياء تؤمن بأهميتها. الفجوة تنفتح في الميكانيكا: في كل موضع يُنقل فيه رقم من نظام إلى نظام بيد إنسان، ولا شيء يتحقق من وصوله سليماً أو في وقته.",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Strategy does not die when it is written. It dies over the following twelve to eighteen months, in three specific places.",
+      "ar": "الاستراتيجية لا تموت يوم تُكتب. تموت خلال الاثني عشر إلى الثمانية عشر شهراً التالية، في ثلاثة مواضع بعينها.",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where does the gap actually open?",
+      "ar": "أين تنفتح الفجوة فعلاً؟",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "The retyping problem",
+      "ar": "مشكلة إعادة الطباعة",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Between the delivery team and the committee, every number gets retyped.",
+      "ar": "بين فريق التنفيذ واللجنة، يُعاد طبع كل رقم.",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "An analyst requests status from twenty initiative owners. Each fills a template from their own tracker. The analyst consolidates twenty templates into one deck. A director softens the wording on three items. The deck goes up.",
+      "ar": "محلل يطلب الحالة من عشرين مالك مبادرة. كل مالك يملأ نموذجاً من متتبعه الخاص. المحلل يدمج عشرين نموذجاً في عرض واحد. مدير يخفف الصياغة في ثلاثة بنود. ويصعد العرض.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Two things happen in that chain and neither is dishonest. Information is lost at every hop, because a template has fewer fields than the tracker it was filled from. And each number is rounded gently toward the answer its author would prefer to give, because the person writing the status is the person who will be asked about it in the room. Twenty small roundings in the same direction produce a portfolio view that is systematically more comfortable than the portfolio.",
+      "ar": "يحدث أمران في هذه السلسلة، وليس أيٌّ منهما تدليساً. تُفقد معلومات عند كل قفزة، لأن حقول النموذج أقل من حقول المتتبع الذي مُلئ منه. ويُقرَّب كل رقم برفق نحو الإجابة التي يفضّل كاتبه تقديمها، لأن كاتب الحالة هو من سيُسأل عنها في الغرفة. عشرون تقريباً صغيراً في الاتجاه نفسه تُنتج صورة محفظة أكثر راحة من المحفظة ذاتها.",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Retyping also destroys the trail. Once a number has been copied by hand it cannot be traced back. That is what the 62% moment is.",
+      "ar": "وإعادة الطباعة تُتلف الأثر أيضاً. الرقم المنسوخ يدوياً لا يمكن تتبّعه إلى مصدره. تلك هي لحظة الـ62%.",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "The month-end lag",
+      "ar": "تأخر إقفال الشهر",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The portfolio view exists only as often as somebody assembles it. That is monthly, and it describes a period that closed before assembly started.",
+      "ar": "صورة المحفظة لا توجد إلا بقدر ما يجمعها أحد. وهذا شهري، وهي تصف فترة أُغلقت قبل أن يبدأ التجميع.",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A committee meeting on the 20th is looking at the last day of the previous month, filtered through two weeks of consolidation. It is making funding decisions on a picture between three and seven weeks old. Everyone knows the picture is stale. Everyone treats it as current, because it is the only picture there is.",
+      "ar": "فاللجنة المجتمعة في العشرين من الشهر تنظر إلى آخر يوم من الشهر السابق، مصفّى عبر أسبوعين من التجميع. وهي تتخذ قرارات تمويل على صورة عمرها بين ثلاثة وسبعة أسابيع. الجميع يعرف أن الصورة قديمة، والجميع يتعامل معها كأنها حالية، لأنها الصورة الوحيدة المتاحة.",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The cost is not inaccuracy. It is that intervention arrives after intervention was possible. A dependency that slipped in week one reaches the committee in week seven, by which point the downstream team has re-planned around it or lost the time.",
+      "ar": "الكلفة ليست في عدم الدقة، بل في أن التدخل يصل بعد أن كان التدخل ممكناً. تبعية تأخرت في الأسبوع الأول تصل إلى اللجنة في الأسبوع السابع، وقد أعاد الفريق اللاحق تخطيطه حولها أو خسر الوقت أصلاً.",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Ownerless numbers",
+      "ar": "أرقام بلا مالك",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The quietest of the three. A KPI owned by “Corporate Services”. A benefit owned by “the programme”. A milestone owned by a job title that has been vacant since March.",
+      "ar": "أهدأ الثلاثة. مؤشر يملكه “قطاع الخدمات المؤسسية”. منفعة يملكها “البرنامج”. معلم يملكه مسمّى وظيفي شاغر منذ مارس.",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A number owned by a department is owned by nobody. There is no one who is uncomfortable when it stops moving, no one who can explain what changed, no one to ask a second question. When it goes red the response is to schedule a workshop, because the first task is finding out who knows anything about it.",
+      "ar": "الرقم الذي تملكه إدارة لا يملكه أحد. لا أحد ينزعج حين يتوقف عن الحركة، ولا أحد يستطيع شرح ما تغيّر، ولا أحد يُسأل سؤالاً ثانياً. وحين يصير أحمر يكون الرد جدولة ورشة عمل، لأن المهمة الأولى هي معرفة من يعرف عنه شيئاً.",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Such numbers also outlive their own relevance. A measure nobody owns is never retired, because retiring it requires someone to argue it stopped mattering. So measures accumulate, and each one lowers the attention available to the rest.",
+      "ar": "وهذه الأرقام تعيش أطول من صلاحيتها. المقياس الذي لا يملكه أحد لا يُتقاعد أبداً، لأن تقاعده يتطلب من يجادل بأنه لم يعد مهماً. فتتراكم المقاييس، وكل مقياس مضاف يخفض الانتباه المتاح لبقيتها.",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Why does more reporting not close the gap?",
+      "ar": "لماذا لا يُغلق مزيدٌ من التقارير هذه الفجوة؟",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Because the instinctive fix makes each of the three mechanisms worse.",
+      "ar": "لأن العلاج الغريزي يزيد الآليات الثلاث سوءاً.",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "More reporting means more retyping, which means more loss and more rounding. It consumes the time of exactly the people who would otherwise be delivering. And it adds surface for the committee to read, pushing the meeting further toward reading and further from deciding.",
+      "ar": "مزيد من التقارير يعني مزيداً من إعادة الطباعة، أي مزيداً من الفقد والتقريب. ويستهلك وقت الأشخاص أنفسهم الذين كانوا سينفّذون. ويضيف مساحة قراءة للجنة، فيدفع الاجتماع أبعد نحو القراءة وأبعد عن القرار.",
+      "n": 48,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Most struggling portfolios already produce more reporting than anyone can absorb. The numbers exist; they are simply not attached to the objectives they are supposed to explain, and by the time they are assembled they describe a past state.",
+      "ar": "أغلب المحافظ المتعثرة تُنتج أصلاً تقارير أكثر مما يستوعبه أحد. الأرقام موجودة؛ لكنها ببساطة غير موصولة بالأهداف التي يُفترض أن تفسّرها، وحين تُجمَّع تكون قد صارت تصف ماضياً.",
+      "n": 49,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What does closing the gap require?",
+      "ar": "ماذا يتطلب إغلاق الفجوة؟",
+      "n": 50,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Three things, in this order.",
+      "ar": "ثلاثة أشياء، بهذا الترتيب.",
+      "n": 51,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Traceability. Every initiative attached to the objective that funded it. Every objective attached to the measure that shows it moving. Not in a mapping slide, which goes stale within a quarter, but as a link in the record, so a change on one side is visible on the other without anyone maintaining the map. The test: can you rescope an initiative and see, without asking anyone, which objectives are now less well served?",
+      "ar": "التتبّع. كل مبادرة موصولة بالهدف الذي مَوّلها، وكل هدف موصول بالمقياس الذي يُظهر حركته. لا في شريحة ربط تتقادم خلال ربع، بل كرابط داخل السجل، بحيث يظهر التغيير على أحد الطرفين في الطرف الآخر دون أن يصون أحد الخريطة. والاختبار: هل تستطيع إعادة تحديد نطاق مبادرة وترى، دون أن تسأل أحداً، أي الأهداف صارت أقل خدمة؟",
+      "n": 52,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Named ownership. Every objective, KPI, initiative, milestone and benefit carries an individual rather than a department. The individual can change; the field cannot be empty. This sounds administrative. It is the highest-yield change available to most offices, because a named owner turns a red status from a topic into a conversation with a specific person who already knows the answer.",
+      "ar": "الملكية بالاسم. كل هدف ومؤشر ومبادرة ومعلم ومنفعة يحمل شخصاً لا إدارة. الشخص قابل للتغيير، والحقل غير قابل للفراغ. يبدو هذا إجرائياً، وهو أعلى التغييرات عائداً في أغلب المكاتب، لأن المالك بالاسم يحوّل الحالة الحمراء من موضوع إلى محادثة مع شخص بعينه يعرف الجواب سلفاً.",
+      "n": 53,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "It also makes decisions durable. A decision to accept a six-week slip, carrying a name and a date, is still legible two years later.",
+      "ar": "وهو يجعل القرارات معمّرة. قرارٌ بقبول تأخر ستة أسابيع، يحمل اسماً وتاريخاً، يبقى مقروءاً بعد سنتين.",
+      "n": 54,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Live actuals. Delivery data arriving from where the work happens, on its own schedule, rather than being requested. This is the part most often deferred, because it looks like an integration project. It is also the part that removes the lag. Once actuals arrive continuously the monthly pack stops being assembled, not because someone automated the assembly but because it was never disassembled.",
+      "ar": "القيم الفعلية الحيّة. بيانات التنفيذ تصل من حيث يجري العمل، بإيقاعها الخاص، لا بالطلب. وهذا الجزء هو الأكثر تأجيلاً لأنه يبدو مشروع تكامل، وهو الجزء الذي يزيل التأخر. حين تصل القيم الفعلية باستمرار، يتوقف تجميع الحزمة الشهرية، لا لأن أحداً أتمت التجميع، بل لأنها لم تُفكَّك أصلاً.",
+      "n": 55,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Order matters. Live actuals in a record with no traceability give you a fast view of disconnected activity, and traceability without named ownership gives you a map nobody can be asked about.",
+      "ar": "الترتيب مهم. قيم فعلية حيّة في سجل بلا تتبّع تمنحك صورة سريعة لنشاط غير موصول، والتتبّع بلا ملكية بالاسم يمنحك خريطة لا يمكن سؤال أحد عنها.",
+      "n": 56,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Which parts of the gap should stay open?",
+      "ar": "أي أجزاء الفجوة يجب أن تبقى مفتوحة؟",
+      "n": 57,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Here is where the argument needs qualifying, because taken to its conclusion it produces something worse than the problem.",
+      "ar": "هنا يحتاج ما سبق إلى تقييد، لأنه إن أُخذ إلى منتهاه أنتج ما هو أسوأ من المشكلة.",
+      "n": 58,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A portfolio wired so tightly that every scope change escalates to the strategy office does not execute. It seizes. Delivery teams need room to re-sequence and absorb small slips without a governance event, and an office that can see everything is under constant temptation to respond to everything it sees. The difference between visibility and control is a discipline, not a feature.",
+      "ar": "المحفظة الموصولة بإحكام يصعد فيها كل تغيير نطاق إلى مكتب الاستراتيجية لا تُنفّذ، بل تتجمّد. تحتاج فرق التنفيذ إلى مساحة لإعادة الترتيب ولامتصاص التأخرات الصغيرة دون حدث حوكمي، والمكتب الذي يرى كل شيء يقع تحت إغراء دائم بأن يستجيب لكل ما يراه. الفرق بين الرؤية والسيطرة انضباط، لا خاصية في نظام.",
+      "n": 59,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The second risk is what traceability does to the people supplying the data. Trace a number to an individual and you have made that individual accountable, which was the point. Use the trace punitively two or three times and you have also taught everyone that early warning is dangerous. Data quality then degrades in a particular direction: statuses stay green longer, forecasts get revised later, bad news arrives pre-negotiated. No software fixes that. A committee that visibly rewards the owner who flagged a slip in week one might.",
+      "ar": "والخطر الثاني هو ما يفعله التتبّع بالناس الذين يزوّدونه بالبيانات. تتبّع الرقم إلى شخص يجعل ذلك الشخص مسؤولاً، وهذا هو المقصود. لكن استخدم التتبّع عقابياً مرتين أو ثلاثاً، وتكون قد علّمت الجميع أن الإنذار المبكر خطر. عندها تتدهور جودة البيانات في اتجاه محدد: تبقى الحالات خضراء أطول، وتُراجَع التوقعات متأخرة، ويصل الخبر السيئ متفاوَضاً عليه سلفاً. لا برنامج يعالج ذلك. لكن لجنة تكافئ علناً المالك الذي رفع علامة تأخر في الأسبوع الأول قد تعالجه.",
+      "n": 60,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "And there is a question nobody has answered well. The balanced scorecard and OKRs both assume what matters can be cascaded downward into measures. Some of what a government entity does resists that: policy work whose value shows up a decade later, capability held in reserve, coordination between entities that has no output of its own. Those things still have to be funded, and a record built around traceable measurement will quietly disadvantage them every cycle.",
+      "ar": "وثمة سؤال لم يُجب عنه أحد إجابة مقنعة. تفترض بطاقة الأداء المتوازن وأهداف OKR أن ما يهمّ يمكن تنزيله إلى مقاييس. وبعض ما تفعله الجهة الحكومية يقاوم ذلك: عمل السياسات الذي تظهر قيمته بعد عقد، والقدرة المحفوظة احتياطاً، والتنسيق بين الجهات الذي لا مخرج له بذاته. وهذه أشياء يجب أن تُموَّل، وسجلٌّ مبنيّ على القياس القابل للتتبّع سيضعها في مرتبة أدنى بهدوء في كل دورة.",
+      "n": 61,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "How would you know the gap is closing?",
+      "ar": "كيف تعرف أن الفجوة تضيق؟",
+      "n": 62,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The signs are behavioural and they show up in the room.",
+      "ar": "العلامات سلوكية، وتظهر داخل الغرفة.",
+      "n": 63,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The meeting stops opening with a page-by-page read of everything green. Questions get directed at a person by name rather than at the PMO. “We will come back to you on that” becomes rare, because the answer is in the record and can be produced while the question is still being asked. Committees move money between initiatives mid-year instead of only at budget time.",
+      "ar": "يتوقف الاجتماع عن الافتتاح بقراءة كل ما هو أخضر صفحةً صفحة. تُوجَّه الأسئلة إلى شخص بالاسم لا إلى مكتب المشاريع. تصير عبارة “سنعود إليكم في هذه النقطة” نادرة، لأن الجواب في السجل ويمكن استخراجه والسؤال ما زال يُطرح. وتبدأ اللجان بتحريك المال بين المبادرات في منتصف السنة لا عند الموازنة فقط.",
+      "n": 64,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "And the reporting cycle stops being an event. Nobody discusses the pack, because there is no pack.",
+      "ar": "ثم تتوقف دورة التقارير عن كونها حدثاً. لا أحد يتحدث عن الحزمة، لأنه لا توجد حزمة.",
+      "n": 65,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Common questions",
+      "ar": "أسئلة شائعة",
+      "n": 66,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Is the strategy execution gap a leadership problem or a systems problem?",
+      "ar": "هل فجوة التنفيذ مشكلة قيادة أم مشكلة أنظمة؟",
+      "n": 67,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Usually a systems problem misdiagnosed as a leadership one. Leadership attention gets spent on whatever the record puts in front of it, and a record showing only a monthly summary of activity will absorb that attention into activity. Fix what the record connects before running another alignment exercise.",
+      "ar": "مشكلة أنظمة تُشخَّص خطأً كمشكلة قيادة، في الغالب. انتباه القيادة يُصرف على ما يضعه السجل أمامها، وسجلٌّ لا يُظهر إلا ملخصاً شهرياً للنشاط سيمتصّ ذلك الانتباه إلى النشاط. أصلح ما يصله السجل قبل تنظيم ورشة مواءمة أخرى.",
+      "n": 68,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Do we need to replace our project tools?",
+      "ar": "هل يجب أن نستبدل أدوات إدارة المشاريع لدينا؟",
+      "n": 69,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "No, and trying to usually stalls the work. Delivery teams should keep the tools they deliver in. What changes is that the governance layer above them holds the objectives, the measures and the links, and receives delivery data instead of requesting it.",
+      "ar": "لا، ومحاولة ذلك تُعطّل العمل عادةً. لتبقَ فرق التنفيذ على الأدوات التي تنفّذ بها. ما يتغيّر أن طبقة الحوكمة فوقها تحفظ الأهداف والمقاييس والروابط، وتستقبل بيانات التنفيذ بدل أن تطلبها.",
+      "n": 70,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "What is the smallest useful first step?",
+      "ar": "ما أصغر خطوة أولى مفيدة؟",
+      "n": 71,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Take the objective your leadership is asked about most often. Attach every initiative claiming to serve it, name an individual owner for each, and record a baseline for its KPI with the date it was taken. That usually surfaces more about the portfolio than a year of monthly packs did.",
+      "ar": "خذ الهدف الذي تُسأل عنه قيادتك أكثر من غيره. اربط به كل مبادرة تدّعي خدمته، وسمِّ مالكاً فرداً لكل منها، وسجّل خط أساس لمؤشره مع تاريخ أخذه. هذا التمرين وحده يكشف عن المحفظة أكثر مما كشفته سنة من الحزم الشهرية.",
+      "n": 72,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 73,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "We build TruMandate, a portfolio governance platform for government entities and large enterprises in the UAE and Saudi Arabia. This is the problem we were shown repeatedly before we built anything, in offices doing the work well and unable to prove it.",
+      "ar": "نحن نبني TruMandate، منصة حوكمة محافظ لجهات حكومية ومؤسسات كبرى في الإمارات والسعودية. وهذه هي المشكلة التي عُرضت علينا مراراً قبل أن نبني أي شيء، في مكاتب كانت تُحسن العمل ولا تستطيع إثباته.",
+      "n": 74,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Topics",
+      "ar": "المواضيع",
+      "n": 75,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "strategy-execution",
+      "ar": "strategy-execution",
+      "n": 76,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "portfolio-governance",
+      "ar": "portfolio-governance",
+      "n": 77,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "epmo",
+      "ar": "epmo",
+      "n": 78,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "reporting",
+      "ar": "reporting",
+      "n": 79,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "public-sector",
+      "ar": "public-sector",
+      "n": 80,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "See this on your own portfolio.",
+      "ar": "شاهد هذا على محفظتك أنت.",
+      "n": 81,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions.",
+      "ar": "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات.",
+      "n": 82,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 83,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "All posts",
+      "ar": "كل المقالات",
+      "n": 84,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "PreviousBenefits realisation after project closure",
+      "ar": "السابقتحقيق المنافع بعد إغلاق المشروع",
+      "n": 85,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "NextWhat is portfolio governance?",
+      "ar": "التاليما هي حوكمة المحافظ؟",
+      "n": 86,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 87,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 88,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 89,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 90,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 91,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 92,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 93,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 94,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 95,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

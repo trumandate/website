@@ -1,0 +1,954 @@
+{
+  "route": {
+    "en": "/en/",
+    "ar": "/ar/"
+  },
+  "title": "Home",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 117,
+    "ar": 117,
+    "pairs": 117,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Portfolio governance · Intertec Systems",
+      "ar": "حَوكمة المحافظ · إنترتك سيستمز",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "Every mandate, traced to its measured benefit.",
+      "ar": "كل تكليف، متتبَّع حتى أثره المُقاس.",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Strategy is a promise. Delivery is the proof. TruMandate keeps the thread between them unbroken, and its AI reads every inch of it.",
+      "ar": "الاستراتيجية وعد، والتنفيذ برهانه. يُبقي TruMandate الخيط بينهما متصلاً بلا انقطاع، ويقرؤه الذكاء الاصطناعي بكامله.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Follow one record",
+      "ar": "تتبَّع سجلاً واحداً",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Deliver",
+      "ar": "التنفيذ",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Prove",
+      "ar": "الإثبات",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Projects › Command Centre",
+      "ar": "المشاريع › مركز القيادة",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Performance Command Centre",
+      "ar": "مركز قيادة الأداء",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Portfolio health",
+      "ar": "صحة المحفظة",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "86% ▲ +4",
+      "ar": "86% ▲ +4",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Budget utilisation",
+      "ar": "استخدام الميزانية",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "71% used",
+      "ar": "71% من AED 218M",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TARGET 68%",
+      "ar": "المستهدف 68%",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Active risks",
+      "ar": "المخاطر النشطة",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "48 ▼ 4",
+      "ar": "48 ▼ 4",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefits realised",
+      "ar": "المنافع المحققة",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "AED 1.32B ▲ 18%",
+      "ar": "AED 1.32B ▲ 18%",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Milestone slip predicted: 12 days",
+      "ar": "تأخير متوقَّع في المعلم: 12 يوماً",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Two dependencies unresolved at gate 3. Suggests re-sequencing gate 4.",
+      "ar": "تبعيتان غير محلولتين عند البوابة 3. يقترح إعادة ترتيب البوابة 4.",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Two KPIs counting one benefit",
+      "ar": "مؤشران يحتسبان منفعة واحدة",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Delayed 34 days · overrun 18%",
+      "ar": "تأخير 34 يوماً · تجاوز 18%",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "3 closed today · every decision logged with a name",
+      "ar": "أُغلقت 3 اليوم · كل قرار مسجَّل باسم صاحبه",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A corner of the Command Centre. The demo shows it whole.",
+      "ar": "زاوية من مركز القيادة. العرض التوضيحي يُظهره كاملاً.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "142",
+      "ar": "142",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Projects governed",
+      "ar": "مشروعاً تحت الحوكمة",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "AED 218M",
+      "ar": "AED 218M",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Portfolio budget",
+      "ar": "ميزانية المحفظة",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "6",
+      "ar": "6",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Decisions waiting on a person",
+      "ar": "قرارات بانتظار شخص",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "24 mo",
+      "ar": "24 شهراً",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefits measured after closure",
+      "ar": "قياس المنافع بعد الإغلاق",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "AI in the platform",
+      "ar": "الذكاء الاصطناعي في المنصة",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "AI proposes. A person decides. The record keeps the name.",
+      "ar": "الذكاء الاصطناعي يقترح، والإنسان يقرر، والسجل يحفظ الاسم.",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Overnight, the model walked all 142 projects and came back with six things worth a person's morning. Each arrives carrying its evidence and its confidence. Nothing becomes the record until someone signs their name to it.",
+      "ar": "خلال الليل قرأ النموذج 142 مشروعاً وعاد بستة أمور تستحق صباح إنسان. كل اقتراح يصل ومعه دليله ودرجة ثقته، ولا يدخل السجل شيء حتى يوقّع أحدهم باسمه.",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Cross-department dependency at risk",
+      "ar": "تبعية بين إدارتين معرَّضة للخطر",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Gate 3 slipped on Initiative 07. Initiative 21's start condition references it. Neither owner has escalated.",
+      "ar": "تأخرت البوابة 3 في المبادرة 07، وشرط بدء المبادرة 21 يشير إليها. لم يصعّد أي من المالكَين.",
+      "n": 48,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Accept",
+      "ar": "قبول",
+      "n": 49,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Modify",
+      "ar": "تعديل",
+      "n": 50,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Reject",
+      "ar": "رفض",
+      "n": 51,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Accepted · m.alfarsi · 08:15",
+      "ar": "مقبول · m.alfarsi · 08:15",
+      "n": 52,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Two KPIs counting one benefit",
+      "ar": "مؤشران يحتسبان منفعة واحدة",
+      "n": 53,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Objective 2.1 and 4.3 share a source measure and an overlapping initiative set. Merge, or mark one as contributing.",
+      "ar": "الهدف 2.1 والهدف 4.3 يتشاركان مقياس المصدر ومجموعة مبادرات متداخلة. ادمج، أو علّم أحدهما مقياساً مساهماً.",
+      "n": 54,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Accept",
+      "ar": "قبول",
+      "n": 55,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Modify",
+      "ar": "تعديل",
+      "n": 56,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Reject",
+      "ar": "رفض",
+      "n": 57,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Modified · h.alsuwaidi · 11:07",
+      "ar": "معدَّل · h.alsuwaidi · 11:07",
+      "n": 58,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Benefit leakage after closure",
+      "ar": "تسرّب منفعة بعد الإغلاق",
+      "n": 59,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefit 4.2 is 18% below forecast two quarters after closure. The KPI stopped improving when the team was released.",
+      "ar": "المنفعة 4.2 أدنى من المتوقَّع بنسبة 18% بعد ربعين من الإغلاق. توقف المؤشر عن التحسّن حين سُرّح الفريق.",
+      "n": 60,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Accept",
+      "ar": "قبول",
+      "n": 61,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Modify",
+      "ar": "تعديل",
+      "n": 62,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Reject",
+      "ar": "رفض",
+      "n": 63,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Open · assigned s.alnuaimi",
+      "ar": "مفتوح · مُسند إلى s.alnuaimi",
+      "n": 64,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "No model output has ever entered the record unapproved.",
+      "ar": "لم يدخل السجل قط أي مخرَج للنموذج دون اعتماد.",
+      "n": 65,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Traceability",
+      "ar": "التتبّع",
+      "n": 66,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "One identity, carried from the mandate down to the money.",
+      "ar": "هوية واحدة، تُحمل من التكليف حتى المال.",
+      "n": 67,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "One objective travels the whole way down: from the sentence a minister signed to the saving a finance office can point at.",
+      "ar": "هدف واحد يقطع الطريق كله: من الجملة التي وُقّعت في الأعلى إلى الوفر الذي يشير إليه المكتب المالي.",
+      "n": 68,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "01 / 05",
+      "ar": "01 / 05",
+      "n": 69,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Objective",
+      "ar": "الهدف",
+      "n": 70,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "01 · Objective",
+      "ar": "01 · الهدف",
+      "n": 71,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Digital government maturity",
+      "ar": "نضج الحكومة الرقمية",
+      "n": 72,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Versioned, published, weighted. A named owner.",
+      "ar": "مُصدَّر بنسخة معتمدة وموزون، وله مالك بالاسم.",
+      "n": 73,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "02 · KPI",
+      "ar": "02 · مؤشر الأداء",
+      "n": 74,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Digital service adoption",
+      "ar": "تبنّي الخدمات الرقمية",
+      "n": 75,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Carries Objective 1.2. No baseline, no KPI.",
+      "ar": "يحمل الهدف 1.2. لا خط أساس، لا مؤشر.",
+      "n": 76,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "03 · Initiative",
+      "ar": "03 · المبادرة",
+      "n": 77,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Unified service portal",
+      "ar": "بوابة الخدمات الموحّدة",
+      "n": 78,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Funded to move KPI 1.2.3, and it knows it.",
+      "ar": "مموّلة لتحريك المؤشر 1.2.3، وتعرف ذلك.",
+      "n": 79,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "04 · Milestone",
+      "ar": "04 · المعلم",
+      "n": 80,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Gate 4 · decommission",
+      "ar": "البوابة 4 · إيقاف الأنظمة القديمة",
+      "n": 81,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Slip is a subtraction, surfaced the day it happens.",
+      "ar": "التأخير عملية طرح، يظهر يوم وقوعه.",
+      "n": 82,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "05 · Benefit",
+      "ar": "05 · المنفعة",
+      "n": 83,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Annual operating saving",
+      "ar": "وفر تشغيلي سنوي",
+      "n": 84,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Measured for 24 months after closure, against KPI 1.2.3, not a memory.",
+      "ar": "تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر 1.2.3 لا الذاكرة.",
+      "n": 85,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Without the record",
+      "ar": "بدون السجل",
+      "n": 86,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Strategy is written once. Then it is retyped for a year.",
+      "ar": "تُكتب الاستراتيجية مرة واحدة، ثم يُعاد نسخها طوال عام.",
+      "n": 87,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "3 days",
+      "ar": "3 أيام",
+      "n": 88,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Planning",
+      "ar": "التخطيط",
+      "n": 89,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "To answer which initiative moves which objective. Assembled by hand, in a spreadsheet, if it arrives at all.",
+      "ar": "لمعرفة أي مبادرة تحرّك أي هدف. يُجمَّع الجواب يدوياً في جدول، إن وصل أصلاً.",
+      "n": 90,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Month-end",
+      "ar": "نهاية الشهر",
+      "n": 91,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 92,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Before a slip reaches the office that funded the work. By then the number has been rounded by the person who will be asked about it.",
+      "ar": "قبل أن يصل التأخير إلى المكتب الذي موّل العمل، وبعد أن قُرّب الرقم بيد من سيُسأل عنه.",
+      "n": 93,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Never",
+      "ar": "أبداً",
+      "n": 94,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 95,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Measured against the forecast after closure. The team that promised it was released before the benefit was due.",
+      "ar": "قياس الفعلي مقابل التوقع بعد الإغلاق، وقد سُرّح الفريق الذي وعد بها قبل موعد ظهورها.",
+      "n": 96,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The next forty minutes",
+      "ar": "الدقائق الأربعون القادمة",
+      "n": 97,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Bring one objective. We will trace it to the money.",
+      "ar": "أحضر هدفاً واحداً، ونتتبّعه حتى المال.",
+      "n": 98,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions. Not a demo dataset.",
+      "ar": "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات. لا بيانات تجريبية.",
+      "n": 99,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 100,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Write to us instead",
+      "ar": "راسلنا بدلاً من ذلك",
+      "n": 101,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The essentials",
+      "ar": "الأساسيات",
+      "n": 102,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Deployment",
+      "ar": "النشر",
+      "n": 103,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Sovereign. On-premise or in your own cloud tenancy, inside your boundary.",
+      "ar": "سيادي. داخل مقرّك أو في سحابتك الخاصة، ضمن حدودك.",
+      "n": 104,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Language",
+      "ar": "اللغة",
+      "n": 105,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Arabic and English, both first-class, reports included.",
+      "ar": "العربية والإنجليزية، كلتاهما أساسية، بما في ذلك التقارير.",
+      "n": 106,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Operated by",
+      "ar": "التشغيل",
+      "n": 107,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Intertec Systems, Dubai.",
+      "ar": "إنترتك سيستمز، دبي.",
+      "n": 108,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 109,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 110,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 111,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 112,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 113,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 114,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 115,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 116,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 117,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

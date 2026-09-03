@@ -1,0 +1,386 @@
+{
+  "route": {
+    "en": "/en/benefits/",
+    "ar": "/ar/benefits/"
+  },
+  "title": "Benefits realisation",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 46,
+    "ar": 46,
+    "pairs": 46,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The chain · Benefit",
+      "ar": "السلسلة · المنفعة",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "The project closed. Did the benefit arrive?",
+      "ar": "أُغلق المشروع. فهل وصلت المنفعة؟",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefits are forecast when optimism is rewarded and measured after the team is gone. TruMandate keeps each benefit alive for 24 months past closure, attached to the exact KPI it promised to move.",
+      "ar": "تُتوقَّع المنافع حين يُكافأ التفاؤل، وتُقاس بعد رحيل الفريق. يُبقي TruMandate كل منفعة حيّة 24 شهراً بعد الإغلاق، مرتبطةً بالمؤشر ذاته الذي وُعدت بتحريكه.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forecast and actual on the same axis, in the units the business case used. Divergence shows itself.",
+      "ar": "المتوقَّع والفعلي على المحور نفسه، وبوحدات دراسة الجدوى. التباعد يُظهر نفسه بنفسه.",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Where it breaks",
+      "ar": "أين ينقطع الخيط",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "The largest credibility gap in portfolio governance.",
+      "ar": "أكبر فجوة مصداقية في حوكمة المحافظ.",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The gap",
+      "ar": "الفجوة",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forecast at approval, measured never. Everyone involved knows the gap is there. It is simply nobody's job to close it once the project has closed.",
+      "ar": "تُتوقَّع عند الاعتماد، ولا تُقاس أبداً. الجميع يعرف أن الفجوة هناك، لكنها ببساطة ليست مسؤولية أحد بعد إغلاق المشروع.",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The repeat promise",
+      "ar": "الوعد المتكرر",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The same saving gets promised by three consecutive programmes, because the earlier promise stopped being tracked the day its project shut down. Nobody is lying. Nobody is checking.",
+      "ar": "يَعِد ثلاثةُ برامج متعاقبة بالوفر ذاته، لأن الوعد الأسبق توقف تتبّعه يوم أُغلق مشروعه. لا أحد يكذب، ولا أحد يتحقق.",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The 24 months",
+      "ar": "الأشهر الأربعة والعشرون",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate keeps the benefit alive past closure, owned by someone still in the role, measured against the KPI it promised to move. The quiet period is exactly when it watches.",
+      "ar": "يُبقي TruMandate المنفعة حيّة بعد الإغلاق، بمالك ما زال في دوره، مقاسةً على المؤشر الذي وُعدت بتحريكه. فترة الصمت هي بالضبط فترة المراقبة.",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "AI in the platform",
+      "ar": "الذكاء الاصطناعي في المنصة",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Leakage, found in the quarter nobody was watching.",
+      "ar": "تسرّب، ظهر في الربع الذي لم يراقبه أحد.",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The model watches the measure, not the project, so it keeps watching after the project stops existing. When actuals pull away from forecast it says by how much, over what period, and what it thinks caused it. Then a person decides, on the record.",
+      "ar": "يراقب النموذج المقياس لا المشروع، فيستمر في المراقبة بعد أن يتوقف المشروع عن الوجود. حين تبتعد القيم الفعلية عن المتوقَّعة يذكر المقدار والمدة والسبب المرجَّح، ثم يقرر إنسان، وعلى السجل.",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Benefit leakage detected after closure",
+      "ar": "تسرّب منفعة بعد الإغلاق",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Benefit 4.2. Evidence: actuals diverged from forecast by 18% in the two quarters since closure, and the KPI stopped improving when the team was released. Suggested action: reassign ownership and revise the forecast.",
+      "ar": "المنفعة 4.2. الدليل: ابتعدت القيم الفعلية عن المتوقَّعة بنسبة 18% خلال الربعين التاليين للإغلاق، وتوقف المؤشر عن التحسّن حين سُرّح الفريق. الإجراء المقترح: إعادة إسناد الملكية ومراجعة التوقعات.",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Accept",
+      "ar": "قبول",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Modify",
+      "ar": "تعديل",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Reject",
+      "ar": "رفض",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Decision logged · s.alnuaimi · 16:30",
+      "ar": "القرار مسجَّل · s.alnuaimi · 16:30",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "In the demo",
+      "ar": "في العرض التوضيحي",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "The benefit register: every promise, its status, its owner. One list.",
+      "ar": "سجل المنافع: كل وعد، وحالته، ومالكه. في قائمة واحدة.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Back to home",
+      "ar": "العودة إلى الرئيسية",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

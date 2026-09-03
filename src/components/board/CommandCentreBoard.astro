@@ -367,18 +367,31 @@ const dir = isAr ? "rtl" : "ltr";
                   <p class:list={[isAr && "font-sans", "font-semi text-paper"]} style="font-size: 13px; margin: 10px 0 0;">{c.aiPanel.item2Title}</p>
                 </div>
 
-                {!isAr && (
-                  <div class="cc-ai-item cc-ai-item-critical" style="margin-top: 8px;">
-                    <div class="flex items-baseline justify-between gap-2">
-                      <span class="font-mono font-data tracking-datum uppercase text-muted" style="font-size: 9px;">{c.aiPanel.escalationDept}</span>
-                      <span class="cc-chip" style="background: rgba(255,122,110,0.16);">
-                        <span aria-hidden="true" class="tm-live-r" style="width: 5px; height: 5px; border-radius: 50%; background: theme('colors.coral-dark');"></span>
-                        <span class="font-mono font-data text-coral" style="font-size: 9px;">{c.aiPanel.escalationChip}</span>
-                      </span>
-                    </div>
-                    <p class="font-semi text-paper" style="font-size: 13px; margin: 8px 0 0;">{c.aiPanel.escalationTitle}</p>
+                <!-- Rendered in BOTH languages. It shipped gated behind
+                     `!isAr` with the three Arabic strings left as empty
+                     strings — no comment, no ledger entry — so the Arabic
+                     board silently carried one AI card fewer than the
+                     English, which CLAUDE.md forbids ("Arabic never carries
+                     less content than English"). Found by the bilingual copy
+                     export (tools/export-copy.mjs, 2026-09-02) as the one
+                     English block on /ar/ with no counterpart. The likely
+                     original reason was vertical fit, since Arabic sets at
+                     line-height 1.8 against Latin's 1.55 — measured, it fits:
+                     26.2px of headroom inside the panel at 1440 and 11.8px at
+                     375, board scrollHeight == clientHeight in both, no page
+                     overflow. Arabic copy is newly authored and still needs a
+                     native reviewer's sign-off. -->
+                <div class="cc-ai-item cc-ai-item-critical" style="margin-top: 8px;">
+                  <div class="flex items-baseline justify-between gap-2">
+                    <span class="font-mono font-data tracking-datum uppercase text-muted" style="font-size: 9px;">{c.aiPanel.escalationDept}</span>
+                    <span class="cc-chip" style="background: rgba(255,122,110,0.16);">
+                      <span aria-hidden="true" class="tm-live-r" style="width: 5px; height: 5px; border-radius: 50%; background: theme('colors.coral-dark');"></span>
+                      <span class="font-mono font-data text-coral" style="font-size: 9px;">{c.aiPanel.escalationChip}</span>
+                    </span>
                   </div>
-                )}
+                  <p class="font-semi text-paper" style="font-size: 13px; margin: 8px 0 0;">{c.aiPanel.escalationTitle}</p>
+                </div>
+
 
                 <p class:list={[isAr ? "font-sans font-semi" : "font-mono font-data tracking-datum", "text-muted"]} style="font-size: 9px; margin: 10px 0 0;">{c.aiPanel.footerLine}</p>
               </div>

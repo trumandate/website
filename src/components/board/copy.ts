@@ -186,9 +186,16 @@ const ar: BoardCopy = {
     item1Detail: "تبعيتان غير محلولتين عند البوابة 3. يقترح إعادة ترتيب البوابة 4.",
     item2Dept: "الاستراتيجية · المؤشران 2.1 / 4.3",
     item2Title: "مؤشران يحتسبان منفعة واحدة",
-    escalationDept: "",
-    escalationChip: "",
-    escalationTitle: "",
+    // 2026-09-02 (bilingual copy export, tools/export-copy.mjs): these three
+    // shipped as empty strings, so the Arabic board rendered the escalation
+    // card as an empty shell — Arabic carrying less than English, which
+    // CLAUDE.md forbids. Written here to match the English card and this
+    // file's own AR conventions: Latin system names and "%" are kept as the
+    // sibling strings already keep them ("AED 218M", "المستهدف 68%").
+    // FLAGGED for the native reviewer as newly authored, not yet signed off.
+    escalationDept: "تصعيد · نظام ERP الأساسي",
+    escalationChip: "حرج",
+    escalationTitle: "تأخير 34 يوماً · تجاوز 18%",
     accept: "قبول",
     modify: "تعديل",
     reject: "رفض",

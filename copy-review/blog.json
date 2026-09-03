@@ -1,0 +1,242 @@
+{
+  "route": {
+    "en": "/en/blog/",
+    "ar": "/ar/blog/"
+  },
+  "title": "Blog index",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 28,
+    "ar": 28,
+    "pairs": 28,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "From the team behind TruMandate",
+      "ar": "من الفريق الذي يبني TruMandate",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "Notes on governing a portfolio.",
+      "ar": "ملاحظات في حوكمة المحفظة.",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Short, specific pieces on portfolio governance, strategy execution and benefits realisation, written by the people who build the platform.",
+      "ar": "مقالات قصيرة ومحددة عن حوكمة المحافظ، وتنفيذ الاستراتيجية، وتحقيق المنافع، يكتبها من يبنون المنصة.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Latest",
+      "ar": "الأحدث",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "19 August 2026 · 7 min readBenefits realisation after project closureBenefit forecasts stop being measured the day the team disbands. What a benefit register holds, why 24 months, and who should own a benefit.benefits-realisationbenefit-registerportfolio-governanceRead this post",
+      "ar": "19 أغسطس 2026 · قراءة في 8 دقائقتحقيق المنافع بعد إغلاق المشروعيتوقف قياس المنافع المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل المنافع، ولماذا أربعة وعشرون شهراً، ومن يجب أن يملك المنفعة.benefits-realisationbenefit-registerportfolio-governanceاقرأ المقال",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "More posts",
+      "ar": "مقالات أخرى",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "19 August 2026 · 7 min readThe strategy execution gap: why strategy dies between the mandate and the moneyThe strategy execution gap is a records problem, not a motivation problem. Three mechanisms that open it, and what closing it actually requires.strategy-executionportfolio-governanceepmo",
+      "ar": "19 أغسطس 2026 · قراءة في 7 دقائقفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والمال؟فجوة التنفيذ مشكلة سجلات لا مشكلة عزيمة. ثلاث آليات تفتحها، وما الذي يتطلبه إغلاقها فعلاً: التتبّع، والملكية بالاسم، والقيم الفعلية الحيّة.strategy-executionportfolio-governanceepmo",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "19 August 2026 · 7 min readWhat is portfolio governance?A working definition of portfolio governance: what it decides, what its record holds, how it differs from project governance, and why spreadsheets fail.portfolio-governancestrategy-officeepmo",
+      "ar": "19 أغسطس 2026 · قراءة في 7 دقائقما هي حوكمة المحافظ؟تعريف عملي لحوكمة المحافظ: ماذا تقرر، وماذا يحتوي سجلّها، وكيف تختلف عن حوكمة المشاريع، ولماذا تعجز جداول البيانات عنها.portfolio-governancestrategy-officeepmo",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

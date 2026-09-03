@@ -1,0 +1,111 @@
+{
+  "site": "https://www.trumandate.com",
+  "generated": "2026-09-03",
+  "purpose": "Bilingual copy export for native-reader review of the Arabic against the English.",
+  "totals": {
+    "pages": 9,
+    "strings": 620,
+    "unpairedBlocks": 6
+  },
+  "pages": [
+    {
+      "file": "home.json",
+      "title": "Home",
+      "route": {
+        "en": "/en/",
+        "ar": "/ar/"
+      },
+      "strings": 117,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "strategy.json",
+      "title": "Strategy and KPIs",
+      "route": {
+        "en": "/en/strategy/",
+        "ar": "/ar/strategy/"
+      },
+      "strings": 59,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "execution.json",
+      "title": "Execution and governance",
+      "route": {
+        "en": "/en/execution/",
+        "ar": "/ar/execution/"
+      },
+      "strings": 47,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "benefits.json",
+      "title": "Benefits realisation",
+      "route": {
+        "en": "/en/benefits/",
+        "ar": "/ar/benefits/"
+      },
+      "strings": 46,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "contact.json",
+      "title": "Contact / demo request",
+      "route": {
+        "en": "/en/contact/",
+        "ar": "/ar/contact/"
+      },
+      "strings": 38,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "blog.json",
+      "title": "Blog index",
+      "route": {
+        "en": "/en/blog/",
+        "ar": "/ar/blog/"
+      },
+      "strings": 28,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "blog-what-is-portfolio-governance.json",
+      "title": "Post: what is portfolio governance",
+      "route": {
+        "en": "/en/blog/what-is-portfolio-governance/",
+        "ar": "/ar/blog/what-is-portfolio-governance/"
+      },
+      "strings": 92,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "blog-strategy-execution-gap.json",
+      "title": "Post: the strategy execution gap",
+      "route": {
+        "en": "/en/blog/strategy-execution-gap/",
+        "ar": "/ar/blog/strategy-execution-gap/"
+      },
+      "strings": 95,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "blog-benefits-realisation-after-closure.json",
+      "title": "Post: benefits realisation after closure",
+      "route": {
+        "en": "/en/blog/benefits-realisation-after-closure/",
+        "ar": "/ar/blog/benefits-realisation-after-closure/"
+      },
+      "strings": 98,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 6
+    }
+  ]
+}

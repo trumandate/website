@@ -1,0 +1,490 @@
+{
+  "route": {
+    "en": "/en/strategy/",
+    "ar": "/ar/strategy/"
+  },
+  "title": "Strategy and KPIs",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 59,
+    "ar": 59,
+    "pairs": 59,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The chain · Objective → KPI",
+      "ar": "السلسلة · من الهدف إلى مؤشر الأداء",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "A mandate is not a plan until someone owns a number.",
+      "ar": "التكليف لا يصير خطة حتى يملك أحدهم رقماً.",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Every office can draw the objective tree. TruMandate makes the KPI the join: a baseline, a target, a named owner and a live actual, wired to the objective above it and the initiatives below it.",
+      "ar": "كل مكتب يستطيع رسم شجرة الأهداف. يجعل TruMandate المؤشر نقطة الوصل: خط أساس، وقيمة مستهدفة، ومالك بالاسم، وقيمة فعلية حيّة، موصولة بالهدف فوقها والمبادرات تحتها.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Digital service adoption",
+      "ar": "تبنّي الخدمات الرقمية",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Baseline",
+      "ar": "خط الأساس",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "42.0",
+      "ar": "42.0",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Target",
+      "ar": "المستهدف",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "75.0",
+      "ar": "75.0",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Live actual",
+      "ar": "الفعلي الحي",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "61.4",
+      "ar": "61.4",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Case processing time",
+      "ar": "زمن معالجة المعاملة",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Baseline",
+      "ar": "خط الأساس",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "38.0",
+      "ar": "38.0",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Target",
+      "ar": "المستهدف",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "21.0",
+      "ar": "21.0",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "One KPI record as the platform stores it. The status dot is computed from movement, never typed in.",
+      "ar": "سجل مؤشر واحد كما تحفظه المنصة. نقطة الحالة تُحسب من الحركة، ولا تُكتب بيد أحد.",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Where it breaks",
+      "ar": "أين ينقطع الخيط",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "The tree was never the hard part.",
+      "ar": "الشجرة لم تكن يوماً الجزء الصعب.",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The break",
+      "ar": "الانقطاع",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Objectives are written by the people who set direction. KPIs are defined months later by the people who report. Nobody's job is to reconcile the two, so they drift apart quietly.",
+      "ar": "الأهداف يكتبها من يضعون التوجّه، والمؤشرات يعرّفها بعد أشهر من سيرفعون التقارير. لا أحد وظيفته التوفيق بينهما، فيبتعدان بهدوء.",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The join",
+      "ar": "نقطة الوصل",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "In TruMandate the KPI is the join, not a downstream artefact. Rescope an initiative and the consequence shows at the KPI it feeds, because the link is part of the record.",
+      "ar": "في TruMandate المؤشر هو نقطة الوصل لا مخرَجاً لاحقاً. غيّر نطاق مبادرة، فيظهر الأثر عند المؤشر الذي تغذّيه، لأن الرابط جزء من السجل.",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The refusal",
+      "ar": "الرفض",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The platform will not accept a KPI without a baseline. A measure with no starting point is an opinion, and an opinion does not survive a minister asking what changed.",
+      "ar": "لا تقبل المنصة مؤشراً بلا خط أساس. مقياس بلا نقطة انطلاق رأيٌ، والرأي لا ينجو من سؤال وزير عمّا تغيّر.",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "AI in the platform",
+      "ar": "الذكاء الاصطناعي في المنصة",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Two KPIs, one benefit, counted twice.",
+      "ar": "مؤشران، ومنفعة واحدة، محسوبة مرتين.",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The model compares measure definitions and initiative links, not names, so it catches duplication that a tidy naming convention hides. It states what it found, how sure it is, and what it would do. A person chooses, and the choice is stored with their name.",
+      "ar": "يقارن النموذج تعريفات المقاييس وروابط المبادرات لا الأسماء، فيكشف ازدواجاً يخفيه اصطلاح تسمية مرتَّب. يذكر ما وجده ودرجة يقينه وما يقترح فعله، ويختار إنسان، ويُحفظ اختياره باسمه.",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Two KPIs counting the same benefit",
+      "ar": "مؤشران يحتسبان المنفعة نفسها",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Objective 2.1 and Objective 4.3. Evidence: identical source measure and an overlapping initiative set. Suggested action: merge, or mark one as a contributing measure.",
+      "ar": "الهدف 2.1 والهدف 4.3. الدليل: مقياس مصدري متطابق ومجموعة مبادرات متداخلة. الإجراء المقترح: الدمج، أو تعليم أحدهما مقياساً مساهماً.",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Accept",
+      "ar": "قبول",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Modify",
+      "ar": "تعديل",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Reject",
+      "ar": "رفض",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Decision logged · h.alsuwaidi · 11:07",
+      "ar": "القرار مسجَّل · h.alsuwaidi · 11:07",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Held back from this page",
+      "ar": "محجوب عن هذه الصفحة",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "The cascade editor. Watch it built live, in about ten minutes.",
+      "ar": "محرّر التدرّج. شاهده يُبنى أمامك في نحو عشر دقائق.",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A national framework document in at the top, weighted objectives out at the bottom.",
+      "ar": "وثيقة إطار وطني تدخل من أعلاه، وأهداف موزونة تخرج من أسفله.",
+      "n": 48,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 49,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Next: Execution",
+      "ar": "التالي: التنفيذ",
+      "n": 50,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 51,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 52,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 53,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 54,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 55,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 56,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 57,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 58,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 59,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

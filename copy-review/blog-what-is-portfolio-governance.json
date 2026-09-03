@@ -1,0 +1,754 @@
+{
+  "route": {
+    "en": "/en/blog/what-is-portfolio-governance/",
+    "ar": "/ar/blog/what-is-portfolio-governance/"
+  },
+  "title": "Post: what is portfolio governance",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 92,
+    "ar": 92,
+    "pairs": 92,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "What is portfolio governance?",
+      "ar": "ما هي حوكمة المحافظ؟",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A working definition of portfolio governance: what it decides, what its record holds, how it differs from project governance, and why spreadsheets fail.",
+      "ar": "تعريف عملي لحوكمة المحافظ: ماذا تقرر، وماذا يحتوي سجلّها، وكيف تختلف عن حوكمة المشاريع، ولماذا تعجز جداول البيانات عنها.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "19 August 2026 · TruMandate team, Intertec Systems · 7 min read",
+      "ar": "19 أغسطس 2026 · فريق TruMandate، إنترتك سيستمز · قراءة في 7 دقائق",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "On this page",
+      "ar": "في هذه الصفحة",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What is portfolio governance?",
+      "ar": "ما هي حوكمة المحافظ؟",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "How is portfolio governance different from project and programme governance?",
+      "ar": "كيف تختلف حوكمة المحافظ عن حوكمة المشاريع والبرامج؟",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What does a portfolio governance record contain?",
+      "ar": "ماذا يحتوي سجلّ حوكمة المحافظ؟",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Why do spreadsheets fail at portfolio governance?",
+      "ar": "لماذا تعجز جداول البيانات عن حوكمة المحافظ؟",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where does this definition get uncomfortable?",
+      "ar": "أين يصير هذا التعريف محرجاً؟",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What does good portfolio governance look like?",
+      "ar": "كيف تبدو الحوكمة الجيدة؟",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where should an office start?",
+      "ar": "من أين يبدأ المكتب؟",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Common questions",
+      "ar": "أسئلة شائعة",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Ask three people in the same strategy office what portfolio governance is and you will get an answer about committees, an answer about dashboards, and an answer about the budget cycle. All three describe parts of it. None is the thing.",
+      "ar": "اسأل ثلاثة أشخاص في مكتب استراتيجية واحد عن معنى حوكمة المحافظ، فتصلك إجابة عن اللجان، وإجابة عن لوحات المؤشرات، وإجابة عن دورة الموازنة. الثلاث تصف أجزاءً منها. ولا واحدة منها هي الشيء نفسه.",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What is portfolio governance?",
+      "ar": "ما هي حوكمة المحافظ؟",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Portfolio governance is the set of decision rights, records and review routines by which an organisation decides which work to fund, holds that work against the objectives it was funded to move, and confirms afterwards that the promised outcome arrived. Its unit of interest is the mandate and the money, not the task list. Project management asks whether a piece of work was delivered on schedule; portfolio governance asks whether it was the right work to fund at all, and whether it produced what it promised.",
+      "ar": "حوكمة المحافظ هي منظومة صلاحيات القرار والسجلات وروتين المراجعة التي تقرر بها الجهة أي عمل تموّله، وتُبقي ذلك العمل مقابل الأهداف التي مُوّل لتحريكها، وتتحقق بعد ذلك من أن الأثر الموعود قد وصل فعلاً. وحدة اهتمامها هي التكليف والمال، لا قائمة المهام. إدارة المشاريع تسأل: هل سُلّم العمل في موعده؟ أما حوكمة المحافظ فتسأل: هل كان هذا هو العمل الجدير بالتمويل أصلاً، وهل أنتج ما وعد به؟",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Put in terms of a room, it is how a strategy office answers three questions in front of a board. What did we commit to. What is actually happening. Did it work. You have portfolio governance when those three answers come out of the same record, and you do not have it when they come out of three documents assembled by three different people in the week before the meeting.",
+      "ar": "بصيغة الغرفة: هي الطريقة التي يجيب بها مكتب الاستراتيجية عن ثلاثة أسئلة أمام مجلس. بماذا التزمنا؟ ماذا يجري فعلاً؟ وهل نجح؟ لديك حوكمة محافظ حين تخرج الإجابات الثلاث من سجلّ واحد، ولا تكون لديك حين تخرج من ثلاث وثائق يجمعها ثلاثة أشخاص في الأسبوع السابق للاجتماع.",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Most entities that believe they lack governance have plenty of governance activity. What is missing is a record that all of it points at.",
+      "ar": "أكثر الجهات التي تظن أنها تفتقر إلى الحوكمة لديها نشاط حوكمي وفير. الناقص سجلّ تشير إليه تلك الأنشطة كلها.",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "How is portfolio governance different from project and programme governance?",
+      "ar": "كيف تختلف حوكمة المحافظ عن حوكمة المشاريع والبرامج؟",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Three altitudes, three time horizons, three kinds of authority.",
+      "ar": "ثلاثة ارتفاعات، وثلاثة آفاق زمنية، وثلاثة أنواع من الصلاحية.",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Project governance governs one defined piece of delivery: scope, schedule, cost, quality, risk, for a single output. PRINCE2 describes this layer well. Its question is whether the thing will arrive as agreed, and its authority ends at closure.",
+      "ar": "حوكمة المشروع تحكم قطعة تسليم واحدة: النطاق والجدول والتكلفة والجودة والمخاطر لمخرج واحد. يصف PRINCE2 هذه الطبقة وصفاً جيداً، وسؤالها هو: هل سيصل الشيء كما اتُّفق عليه؟ وصلاحيتها تنتهي عند الإغلاق.",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Programme governance governs a group of related projects pursuing one shared outcome. It coordinates dependencies, resolves contention for the same scarce team, and asks whether the outcome is assembling across the parts. MSP is the reference most UAE and Saudi entities already have on the shelf.",
+      "ar": "حوكمة البرنامج تحكم مجموعة مشاريع مترابطة تسعى إلى أثر مشترك. تنسّق التبعيات، وتفصل في التزاحم على الفريق النادر نفسه، وتسأل: هل يتجمّع الأثر عبر الأجزاء؟ ومرجع MSP موجود أصلاً على رفّ أغلب الجهات في الإمارات والسعودية.",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Portfolio governance governs the whole set of funded investments against strategy, and it does not end. Given finite money and finite delivery capacity, is this still the right mix. What should be started, slowed, merged, stopped. ISO 21504 and MoP address this layer, though most offices assemble their own version out of whatever their mandate requires.",
+      "ar": "حوكمة المحافظ تحكم مجموع الاستثمارات المموَّلة مقابل الاستراتيجية، وهي لا تنتهي. أسئلتها مقارِنة ومستمرة: بمالٍ محدود وقدرة تنفيذ محدودة، هل ما زال هذا هو المزيج الصحيح؟ ما الذي يجب أن يبدأ أو يتباطأ أو يُدمج أو يتوقف؟ ويتناول هذه الطبقة معيار ISO 21504 ومنهجية MoP، وإن كان أغلب المكاتب يركّب نسخته الخاصة مما يفرضه تكليفه.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The practical difference is authority over money. Project and programme governance decide how to deliver what is already funded. Portfolio governance decides what gets funded and can take the funding back.",
+      "ar": "الفارق العملي هو الصلاحية على المال. حوكمة المشروع والبرنامج تقرران كيف يُنفَّذ ما مُوّل بالفعل. حوكمة المحافظ تقرر ما الذي يُموَّل، وتستطيع سحب التمويل.",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Want a quick read on a forum that calls itself a governance board? Skip the terms of reference and look at what it has stopped in the last two years. A board that cannot cancel an initiative or move its budget is a reporting body. Fine thing to be. Not what it is called.",
+      "ar": "تريد قراءة سريعة لمنتدى يسمّي نفسه مجلس حوكمة؟ اترك لائحة الاختصاصات، وانظر إلى ما أوقفه فعلاً خلال سنتين. المجلس الذي لا يستطيع إلغاء مبادرة ولا تحريك موازنتها هو جهة تقارير. وهذا دور محترم. لكنه ليس الاسم المكتوب على الباب.",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What does a portfolio governance record contain?",
+      "ar": "ماذا يحتوي سجلّ حوكمة المحافظ؟",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A connected chain, not a set of registers.",
+      "ar": "سلسلة موصولة، لا مجموعة سجلات منفصلة.",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "An objective carries a statement, an accountable owner, the mandate it derives from (Vision 2030, We the UAE 2031, a sector strategy), its place in a hierarchy, and its weight against its siblings. Skip the weight and everything is equally important, which is operationally identical to nothing being important.",
+      "ar": "الهدف يحمل صياغته، ومالكاً مسؤولاً، والتكليف الذي اشتُقّ منه (رؤية 2030، نحن الإمارات 2031، استراتيجية قطاعية)، وموقعه في التسلسل، ووزنه مقابل أشقائه. أسقِط الوزن يصر كل شيء مهماً بالتساوي، وهو عملياً مطابق لألا يكون شيء مهماً.",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A KPI carries a baseline value with the date it was taken, a target with its date, a unit, a measurement method, a frequency, a named owner, and a series of actuals. A measure with no baseline is an opinion. It shows position but not movement, and governance is almost entirely about movement.",
+      "ar": "مؤشر الأداء يحمل خط أساس بقيمته وتاريخ أخذه، وقيمة مستهدفة بتاريخها، ووحدة، وطريقة قياس معلنة، وتكراراً، ومالكاً بالاسم، وسلسلة قيم فعلية. المؤشر بلا خط أساس رأي لا قياس؛ يُظهر الموضع ولا يُظهر الحركة، والحوكمة كلها تقريباً عن الحركة.",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "An initiative carries approved, committed and spent cost, a sponsor, a delivery owner, the objectives it serves, the KPIs it claims to move, and its current gate.",
+      "ar": "المبادرة تحمل التكلفة المعتمدة والملتزَمة والمصروفة، وراعياً، ومالك تنفيذ، والأهداف التي تخدمها، والمؤشرات التي تدّعي تحريكها، وبوابتها الحالية.",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A milestone carries a baseline date, a forecast date and an actual date. Three dates, not one. With three dates, slip is a subtraction. With one, slip is a negotiation between the person reporting and the person receiving.",
+      "ar": "المعلم يحمل تاريخ خط أساس، وتاريخاً متوقعاً، وتاريخاً فعلياً. ثلاثة تواريخ لا واحداً. بثلاثة تواريخ يصير التأخر عملية طرح، وبواحد يصير مفاوضة بين من يرفع التقرير ومن يستلمه.",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A benefit carries what will change, in which units, by when, measured on which KPI, and who stays accountable once the delivery team has dispersed.",
+      "ar": "المنفعة تحمل ما الذي سيتغير، وبأي وحدات، ومتى، ومقاساً على أي مؤشر، ومن يبقى مسؤولاً بعد تفرّق فريق التنفيذ.",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "None of that is exotic. What is rare is holding the links between them as data rather than as a slide. Anyone can produce five registers. The value is being able to ask which objectives are exposed if this initiative slips two quarters, and getting the answer from the record instead of a workshop.",
+      "ar": "لا شيء من هذا غريب. الغريب هو حفظ الروابط بينها كبيانات، لا كشريحة عرض. أي أحد يستطيع إنتاج خمسة سجلات. القيمة في أن تسأل: أي الأهداف تصير مكشوفة إن تأخرت هذه المبادرة ربعين؟ ثم تحصل على الجواب من السجل لا من ورشة عمل.",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "One element is routinely left out: the audit line. Every status that moved, every gate passed should carry who changed it, when, and what it was before. That is the difference between a number you can defend and a number you can only repeat.",
+      "ar": "وثمة عنصر يُنسى دائماً: سطر التدقيق. كل حالة تحرّكت، وكل بوابة عُبرت، يجب أن تحمل من غيّرها ومتى وماذا كانت قبل ذلك. هذا هو الفرق بين رقم تستطيع الدفاع عنه ورقم تستطيع تكراره فقط.",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Why do spreadsheets fail at portfolio governance?",
+      "ar": "لماذا تعجز جداول البيانات عن حوكمة المحافظ؟",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Not because they are unsophisticated. Most of the best portfolio analysis you will ever see was done in a spreadsheet. It fails at governance for structural reasons no skill in the author can fix.",
+      "ar": "ليس لأنها بدائية. أفضل تحليل محفظة سترونه في حياتكم أُنجز غالباً في جدول بيانات. هي تعجز عن الحوكمة لأسباب بنيوية لا تعالجها مهارة الكاتب.",
+      "n": 48,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "It stores a snapshot, not a history. When a status moves from amber to green, the amber is gone. No record that it was ever amber, who changed it, or on what evidence.",
+      "ar": "الجدول يخزّن لقطة لا تاريخاً. حين تنتقل الحالة من الكهرماني إلى الأخضر يختفي الكهرماني: لا أثر لأنها كانت كذلك، ولا لمن غيّرها، ولا للدليل الذي بُني عليه التغيير.",
+      "n": 49,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "It has no referential integrity. Rename an initiative on one tab and its links elsewhere break quietly, still returning a number, just the wrong one.",
+      "ar": "ولا تكامل مرجعي فيه. أعد تسمية مبادرة في ورقة، فتنكسر روابطها في ورقة أخرى بصمت، وتظل تُرجع رقماً، لكنه الرقم الخطأ.",
+      "n": 50,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Ownership is a text field, not a person. Nothing stops “Finance” being an owner, and nothing notices when the individual who actually understood the number transfers out.",
+      "ar": "والملكية فيه حقل نصي لا شخص. لا شيء يمنع أن تكون “المالية” مالكة، ولا شيء ينتبه حين يُنقل الشخص الذي كان يفهم الرقم فعلاً.",
+      "n": 51,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Consolidation is manual, which makes it periodic, which makes the portfolio view at least as old as the retyping cycle. It is also tedious and error-prone.",
+      "ar": "والتجميع يدوي، فيصير دورياً، فتصير صورة المحفظة قديمة بقدر دورة إعادة الطباعة على الأقل. وهو عمل مُرهِق وعُرضة للخطأ.",
+      "n": 52,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "And it never refuses. It will accept a KPI with no baseline, a benefit with no measure, a milestone with no date. A large part of governance is refusing a partial record at the moment someone tries to enter it, and a blank cell cannot refuse anything.",
+      "ar": "وهو لا يرفض شيئاً أبداً. سيقبل مؤشراً بلا خط أساس، ومنفعة بلا مقياس، ومعلماً بلا تاريخ. وجزء كبير من الحوكمة هو رفض السجل الناقص لحظة إدخاله، والخلية الفارغة لا ترفض شيئاً.",
+      "n": 53,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where does this definition get uncomfortable?",
+      "ar": "أين يصير هذا التعريف محرجاً؟",
+      "n": 54,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Everything above argues that governance improves when more of the portfolio is measured and linked. That is mostly true, and not entirely true.",
+      "ar": "كل ما سبق يقول إن الحوكمة تتحسن كلما قِيس جزء أكبر من المحفظة ورُبط. هذا صحيح في معظمه، وليس صحيحاً بالكامل.",
+      "n": 55,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Goodhart’s law is the obvious problem. Once a measure becomes the basis on which funding is granted, people optimise the measure rather than the thing it stands for. Attach a KPI to every objective, publish it, tie budget to it, and in eighteen months you will have a portfolio that scores well. Whether it scores well because outcomes arrived or because definitions were adjusted is a question the record cannot answer.",
+      "ar": "قانون غودهارت هو المشكلة الظاهرة: حين يصير المقياس أساس منح التمويل، يُحسّن الناس المقياس لا الشيء الذي يمثله. اربط مؤشراً بكل هدف، وانشره، وعلّق الموازنة عليه، وبعد ثمانية عشر شهراً ستملك محفظة تسجّل نتائج جيدة. أما هل سجّلت جيداً لأن الآثار وصلت أم لأن التعريفات عُدِّلت، فسؤال لا يجيب عنه السجل نفسه.",
+      "n": 56,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "There is a quieter distortion too. Measurable work crowds out important work. An initiative with a clean baseline and a monthly actual is easy to defend in a committee. An initiative whose value is a non-event, the breach that did not happen, the capability held in reserve, is nearly impossible to defend against it, because its success looks identical to it never having been needed. Strong governance systematically favours the first kind. Nobody has a satisfying general answer. Some offices carve out a protected allocation and decide not to govern it the same way, which is an admission rather than a solution.",
+      "ar": "وثمة تشويه أهدأ: العمل القابل للقياس يزاحم العمل المهم. المبادرة ذات خط الأساس النظيف والقيمة الشهرية يسهل الدفاع عنها في لجنة. أما المبادرة التي قيمتها حدثٌ لم يقع، كالاختراق الأمني الذي مُنع أو القدرة المحفوظة احتياطاً، فيكاد يستحيل الدفاع عنها في مواجهتها، لأن نجاحها يبدو مطابقاً لعدم الحاجة إليها أصلاً. الحوكمة القوية تُفضّل النوع الأول بانتظام، ولا أحد يملك جواباً عاماً مُرضياً. بعض المكاتب تفرز مخصصاً محمياً وتقرر ألا تحكمه بالطريقة نفسها، وهو اعتراف أكثر منه حلاً.",
+      "n": 57,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What does good portfolio governance look like?",
+      "ar": "كيف تبدو الحوكمة الجيدة؟",
+      "n": 58,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Concrete markers, none from a maturity model. Every KPI has a baseline, because the system will not store one without it. Every number carries a person’s name rather than a department’s. Actuals arrive on their own cadence instead of being requested. Slip is arithmetic. Decisions carry the name and date of whoever made them and stay attached after that person moves on. Benefits outlive the projects that promised them. And the forum spends its time on exceptions: if a governance meeting opens by reading aloud the rows that are green, it has already failed.",
+      "ar": "علامات ملموسة، لا شيء منها من نماذج النضج. كل مؤشر له خط أساس، لأن النظام لا يقبل تخزينه بدونه. كل رقم يحمل اسم شخص لا اسم إدارة. القيم الفعلية تصل بإيقاعها الخاص لا بالطلب. التأخر عملية حسابية. القرارات تحمل اسم صاحبها وتاريخه وتبقى ملتصقة بالسجل بعد انتقاله. المنافع تعيش أطول من المشاريع التي وعدت بها. والمنتدى يصرف وقته على الاستثناءات: إذا افتُتح اجتماع الحوكمة بقراءة الصفوف الخضراء بصوت عالٍ، فقد فشل قبل أن يبدأ.",
+      "n": 59,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where should an office start?",
+      "ar": "من أين يبدأ المكتب؟",
+      "n": 60,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Not with a tool. Take one objective and trace it downward.",
+      "ar": "لا من أداة. خذ هدفاً واحداً وتتبّعه نزولاً.",
+      "n": 61,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Pick something a minister or a board member would recognise by name. Find every initiative claiming to serve it. Find the KPI supposed to show it moving, and ask when the baseline was taken and by whom. Find the benefits promised by initiatives under it that have already closed, and ask who measured them.",
+      "ar": "اختر هدفاً يعرفه وزير أو عضو مجلس بالاسم. اعثر على كل مبادرة تدّعي خدمته. اعثر على المؤشر الذي يُفترض أن يُظهر حركته، واسأل متى أُخذ خط أساسه ومن أخذه. اعثر على المنافع التي وعدت بها مبادرات أُغلقت تحته، واسأل من قاسها.",
+      "n": 62,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "You will almost certainly find the same four things: initiatives attached to no objective, objectives with no measure, KPIs with no baseline, benefits nobody owns. It takes about a week and it beats a maturity assessment, mostly because it is specific enough to be uncomfortable.",
+      "ar": "ستجد على الأرجح الأربعة نفسها: مبادرات بلا هدف، وأهداف بلا مقياس، ومؤشرات بلا خط أساس، ومنافع بلا مالك. يستغرق ذلك أسبوعاً، وهو أنفع من تقييم نضج، لأنه محدد بما يكفي ليكون محرجاً.",
+      "n": 63,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Common questions",
+      "ar": "أسئلة شائعة",
+      "n": 64,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Is portfolio governance the same as PPM?",
+      "ar": "هل حوكمة المحافظ هي نفسها إدارة محافظ المشاريع؟",
+      "n": 65,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "No. Project portfolio management describes the operating practice and its tooling: intake, prioritisation, resourcing, scheduling, reporting. Governance is the decision layer above it, covering who may decide what, on what evidence, and where the decision is written down. A capable PPM tool with no governance produces well-formatted reports nobody acts on.",
+      "ar": "لا. إدارة محافظ المشاريع تصف الممارسة التشغيلية وأدواتها: الاستقبال والمفاضلة والموارد والجدولة والتقارير. أما الحوكمة فطبقة القرار فوقها: من يحق له أن يقرر ماذا، وبأي دليل، وأين يُكتب القرار. أداة قادرة بلا حوكمة تُنتج تقارير أنيقة لا يتصرف أحد بناءً عليها.",
+      "n": 66,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Who should own portfolio governance in a government entity?",
+      "ar": "من يجب أن يملك حوكمة المحافظ في جهة حكومية؟",
+      "n": 67,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Usually the strategy office or the EPMO, and where it sits matters more than what it is called. The function needs enough authority to stop things and enough independence to publish a number the delivery organisation would rather not see.",
+      "ar": "مكتب الاستراتيجية أو مكتب إدارة المشاريع المؤسسي عادةً، وموقعه في الهيكل أهم من اسمه. تحتاج الوظيفة إلى صلاحية كافية لإيقاف الأشياء، واستقلال كافٍ لنشر رقم لا تودّ جهة التنفيذ رؤيته.",
+      "n": 68,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "What is the minimum a governance record must hold?",
+      "ar": "ما الحد الأدنى الذي يجب أن يحمله سجل الحوكمة؟",
+      "n": 69,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "For every funded initiative: the objective it serves, the KPI it claims to move with a baseline value and date, a named accountable person, baseline and actual dates on its milestones, and the benefit it promised with a measure and a date after closure. With less than that you can report activity, but you cannot judge value.",
+      "ar": "لكل مبادرة ممولة: الهدف الذي تخدمه، والمؤشر الذي تدّعي تحريكه بقيمة خط أساس وتاريخه، وشخص مسؤول بالاسم، وتاريخا خط الأساس والفعلي على معالمها، والمنفعة التي وعدت بها بمقياس وتاريخ يقع بعد الإغلاق. بأقل من ذلك يمكنك رفع تقرير عن النشاط، لكن لا يمكنك الحكم على القيمة.",
+      "n": 70,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 71,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "We build TruMandate, a portfolio governance platform used by government entities and large enterprises in the UAE and Saudi Arabia. The above is what we learned holding that chain as one connected record instead of five.",
+      "ar": "نحن نبني TruMandate، منصة حوكمة محافظ تستخدمها جهات حكومية ومؤسسات كبرى في الإمارات والسعودية. وما سبق هو ما تعلّمناه من حفظ تلك السلسلة سجلاً واحداً موصولاً بدل خمسة.",
+      "n": 72,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Topics",
+      "ar": "المواضيع",
+      "n": 73,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "portfolio-governance",
+      "ar": "portfolio-governance",
+      "n": 74,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "strategy-office",
+      "ar": "strategy-office",
+      "n": 75,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "epmo",
+      "ar": "epmo",
+      "n": 76,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "kpi",
+      "ar": "kpi",
+      "n": 77,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "public-sector",
+      "ar": "public-sector",
+      "n": 78,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "See this on your own portfolio.",
+      "ar": "شاهد هذا على محفظتك أنت.",
+      "n": 79,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions.",
+      "ar": "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات.",
+      "n": 80,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 81,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "All posts",
+      "ar": "كل المقالات",
+      "n": 82,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "PreviousThe strategy execution gap: why strategy dies between the mandate and the money",
+      "ar": "السابقفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والمال؟",
+      "n": 83,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 84,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 85,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 86,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 87,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 88,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 89,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 90,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 91,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 92,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "route": {
+    "en": "/en/execution/",
+    "ar": "/ar/execution/"
+  },
+  "title": "Execution and governance",
+  "generated": "2026-09-03",
+  "counts": {
+    "en": 47,
+    "ar": 47,
+    "pairs": 47,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The chain · Initiative → Milestone",
+      "ar": "السلسلة · من المبادرة إلى المعلم",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "Delivery data that never reaches the funder is just paperwork.",
+      "ar": "بيانات التنفيذ التي لا تصل إلى الممُوِّل مجرد أوراق.",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Project tools cannot roll up to a mandate they have never heard of. TruMandate holds every initiative against the objective that funded it, so slip is a subtraction, visible the day it happens.",
+      "ar": "أدوات المشاريع لا تستطيع الصعود إلى تكليف لم تسمع به. يحفظ TruMandate كل مبادرة مقابل الهدف الذي موّلها، فيصير التأخير عملية طرح تظهر يوم وقوعها.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The list continues past the crop. The red row raised itself; nobody filed an exception report.",
+      "ar": "القائمة تستمر بعد القص. الصف الأحمر رفع نفسه بنفسه؛ لم يكتب أحد تقرير استثناء.",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Where it breaks",
+      "ar": "أين ينقطع الخيط",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "The monthly pack is stale and negotiated. Committees fund on it anyway.",
+      "ar": "التقرير الشهري قديم ومتفاوَض عليه، واللجان تموّل بناءً عليه رغم ذلك.",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The ritual",
+      "ar": "الطقس الشهري",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Someone requests status. Someone retypes it into a template. Each number is rounded toward the answer its author would rather give, because the writer is also the one who will be asked about it.",
+      "ar": "أحدهم يطلب الحالة، وآخر يعيد كتابتها في قالب. وفي الطريق يُقرَّب كل رقم نحو الجواب الذي يفضّله كاتبه، لأنه هو من سيُسأل عنه.",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The subtraction",
+      "ar": "عملية الطرح",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Every milestone carries a baseline date and an actual date, so slip is arithmetic, not judgement. The steering pack stops being assembled because it was never disassembled.",
+      "ar": "كل معلم يحمل تاريخ أساس وتاريخاً فعلياً، فيصير التأخير حساباً لا اجتهاداً. يتوقف تقرير اللجنة عن كونه شيئاً يُركَّب، لأنه لم يُفكَّك أصلاً.",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The name",
+      "ar": "الاسم",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Every stage gate decision is recorded against a person and a date, and it stays on the record after that person moves on. A wrong number leads back to someone who can be asked.",
+      "ar": "كل قرار بوابة مسجَّل باسم شخص وتاريخ، ويبقى على السجل بعد انتقاله. الرقم الخاطئ يقود إلى شخص يمكن سؤاله.",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "AI in the platform",
+      "ar": "الذكاء الاصطناعي في المنصة",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "A risk neither owner had raised.",
+      "ar": "خطرٌ لم يرفعه أي من المالكَين.",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Two records no person had a reason to compare: a date that moved on one initiative, and a start condition on another that points at it. Different departments, no shared meeting. The model put it in front of someone with a week still on the clock.",
+      "ar": "سجلّان لم يكن لأحد سبب لمقارنتهما: تاريخ تحرّك في مبادرة، وشرط بدء في أخرى يشير إليه. إدارتان مختلفتان ولا اجتماع مشترك. وضعه النموذج أمام شخص وفي الوقت أسبوع كامل.",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Cross-department dependency at risk",
+      "ar": "تبعية بين إدارتين معرَّضة للخطر",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Initiative 07 and Initiative 21, different departments. Evidence: gate 3 slipped on one, and the other's start condition references it. Suggested action: raise a dependency flag before the steering meeting.",
+      "ar": "المبادرة 07 والمبادرة 21، في إدارتين مختلفتين. الدليل: تأخرت البوابة 3 في إحداهما، وشرط بدء الأخرى يشير إليها. الإجراء المقترح: رفع علامة تبعية قبل اجتماع اللجنة.",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Accept",
+      "ar": "قبول",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Modify",
+      "ar": "تعديل",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "button",
+      "en": "Reject",
+      "ar": "رفض",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Decision logged · m.alfarsi · 08:15",
+      "ar": "القرار مسجَّل · m.alfarsi · 08:15",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Held back from this page",
+      "ar": "محجوب عن هذه الصفحة",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What happens when a gate is rejected.",
+      "ar": "ماذا يحدث حين تُرفض بوابة.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "How far the change propagates through dates, dependencies and owners before anyone sits down to re-plan.",
+      "ar": "إلى أي مدى ينتشر التغيير عبر التواريخ والتبعيات والمالكين قبل أن يجلس أحد لإعادة التخطيط.",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Next: Benefits",
+      "ar": "التالي: المنافع",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}
