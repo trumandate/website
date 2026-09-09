@@ -1429,3 +1429,44 @@ was invisible on the one block anyone would have eyeballed. Fixed by adding
 `lg:w-full` alongside the `max-w-*` cap, which gives a definite inline size so
 the auto margins resolve to 0. Worth knowing before adding a fifth block to
 that grid.
+
+## RESOLVED 2026-09-09 — every control below the header was dead under 1024px
+
+**Report (Piyush, on iPad):** "many buttons do not work and the contact form
+also becomes unresponsive."
+
+**Cause.** `NavDrawer.astro`'s outer container is
+`fixed inset-x-0 top-header bottom-0 z-nav-drawer lg:hidden`. Its backdrop
+carried `pointer-events: none` while closed, but the container itself did not —
+so at every width below `lg` a transparent sheet at z-index 65 covered the
+whole page beneath the header and absorbed every tap. Present since the drawer
+shipped (commit dc94a3c).
+
+**Why it looked like an iPad problem, and why nothing caught it earlier.**
+Three coincidences. The header sits above the sheet's top edge, so the
+hamburger, the wordmark and the language toggle all kept working — the page
+looked alive. Touch-dragging a fixed element still scrolls the nearest
+scrollable ancestor, so scrolling was unaffected. And the whole thing vanishes
+at exactly 1024px, where `lg:hidden` removes the container, so every desktop
+review and every Lighthouse run was clean. Our mobile testing had measured
+geometry and layout at 375 and 390 but never once asked whether a control at
+those widths could actually be clicked.
+
+**Measured, before:** `document.elementFromPoint` over the contact form's own
+inputs and the home page's CTA returned `[data-nav-drawer]` at 820x1180 (iPad
+portrait), 768x1024 and 390x844; at 1024x1366 they returned themselves.
+
+**Fix.** `pointer-events: none` on the container, `auto` on `.is-open`. The
+panel inherits `none` while closed (it is off-canvas and `inert` anyway); when
+open, hit-testing returns for the backdrop's dismiss tap and the panel's links.
+
+**Verified after:** all three probes return their own element at 820x1180,
+768x1024, 390x844 and 1194x834, EN and AR; and a full interaction pass at
+820x1180 — focus and type in a field, tap a radio tile, submit empty (client
+validation fires, three fields marked invalid, no network call), open the
+drawer (panel link on top, background `inert`), close it, page controls
+reachable again.
+
+**Lesson for the checklist.** Geometry assertions do not prove interactivity.
+Any future mobile pass must hit-test at least one real control per route with
+`elementFromPoint`, not just measure boxes.

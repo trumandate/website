@@ -125,6 +125,35 @@ const links = [
    * mirrors under RTL" pattern Nav.astro/LangToggle.astro already use for
    * their hover underline's `transform-origin`, applied here to a
    * `translateX` instead. */
+  /* USER REPORT (iPad, 2026-09-09): "many buttons do not work and the
+   * contact form also becomes unresponsive". This container is
+   * `fixed inset-x-0 top-header bottom-0` at `z-nav-drawer` (65) and exists
+   * at every width below `lg` — so while it was closed it still hit-tested
+   * as a transparent sheet over the whole page under the header, and every
+   * tap landed on it instead of the control beneath. The header sits above
+   * its top edge, which is why the hamburger and the wordmark kept working
+   * and nothing else did, and why scrolling was unaffected (a touch-drag on
+   * a fixed element still scrolls the nearest scrollable ancestor).
+   *
+   * Measured with elementFromPoint on the built pages before the fix: the
+   * contact form's own inputs and the home CTA both returned this element
+   * at 820x1180 (iPad portrait), 768x1024 and 390x844; at 1024 they
+   * returned themselves, because `lg:hidden` takes the container out there.
+   * That 1024 boundary is why desktop review never caught it.
+   *
+   * `pointer-events` on the container, not just the backdrop: when closed
+   * the whole sheet must be transparent to input, and the panel inherits
+   * `none` (it is off-canvas anyway, and carries `inert`). When open the
+   * container turns hit-testing back on for itself and its children, so the
+   * backdrop can take the dismiss tap and the panel its links. */
+  [data-nav-drawer] {
+    pointer-events: none;
+  }
+
+  [data-nav-drawer].is-open {
+    pointer-events: auto;
+  }
+
   [data-nav-backdrop] {
     opacity: 0;
     pointer-events: none;
