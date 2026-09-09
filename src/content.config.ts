@@ -43,6 +43,23 @@ const blog = defineCollection({
     translationKey: z.string(),
     /** Three to five, lowercase kebab. */
     tags: z.array(z.string()).min(3).max(5),
+    /**
+     * Optional regional scope marker (owner, 2026-09-09, with the AED to USD
+     * change: "if you are using UAE specific terminology... write on top
+     * location as UAE"). Set it only when the ARGUMENT depends on a specific
+     * jurisdiction's instruments — a named national strategy, a charter, a
+     * regulator — so a reader outside the Gulf knows before the second
+     * paragraph that part of the piece will not transfer. A post that merely
+     * mentions where we are (the "Where this comes from" epilogue on every
+     * post) does NOT get one, or the marker appears everywhere and stops
+     * carrying information.
+     *
+     * An enum rather than a free string: the two values below are the only
+     * scopes the current posts actually argue within, and each needs a
+     * reviewed bilingual label in lib/blog.ts. A new jurisdiction should fail
+     * the build until someone writes its Arabic.
+     */
+    region: z.enum(["uae", "uae-ksa"]).optional(),
     draft: z.boolean().default(false),
   }).refine((post) => post.title.length <= 60 || post.seoTitle !== undefined, {
     message:

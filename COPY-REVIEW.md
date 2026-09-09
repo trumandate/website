@@ -849,3 +849,87 @@ FAQ sections are in `copy-review/` for the reviewer.
    enterprises". That asserts live customers. The other three posts say "for".
    The two new posts were normalised to "for" on 2026-09-09; the live one was
    left alone pending the owner's word, since it may well be accurate.
+
+---
+
+## 2026-09-09 — currency changed to US dollars, and a regional scope marker
+
+**Owner instruction:** "change everything from AED to Dollar everywhere, make
+it global. In blogs also take smart call, if you are using UAE specific
+terminology like Vision 2050, write on top location as UAE."
+
+### Currency
+
+Every money figure on the site now reads in US dollars. `USD ` replaced `AED `
+as a literal token rather than being reformatted to `$218M`, for a reason worth
+recording: the figures sit in a monospace data font inside the Command Centre
+fragment and the proof band's count-up, both of which were width-tuned. `AED`
+and `USD` are both three monospace glyphs, so the swap moved nothing —
+re-measured after the change, zero horizontal overflow at 320px, 390px and
+1440px in both languages, and the count-up's prefix is the same four characters
+it was.
+
+| where | was | now |
+| --- | --- | --- |
+| Home proof band (count-up) | AED 218M | USD 218M |
+| Command Centre, benefits KPI | AED 1.32B | USD 1.32B |
+| Command Centre, budget tile (AR only) | من AED 218M | من USD 218M |
+| Board aria-label, English | AED 1.32B benefits realised | USD 1.32B benefits realised |
+| Board aria-label, Arabic | 1.32 مليار درهم | 1.32 مليار دولار |
+| The record, initiative funding | AED 28M | USD 28M |
+| The record, benefit forecast → actual | AED 50M → 41M | USD 50M → 41M |
+
+The one Arabic prose change is درهم → دولار in the board's aria-label. **Flagged
+for the reviewer**: the figure itself (`1.32 مليار`) is unchanged and the
+sentence around it untouched, but a native reader should confirm دولار is the
+form they want there rather than دولار أمريكي.
+
+`docs/trumandate-content-brief.md` (authority 4) was updated in step, so the
+copy authority and the code do not contradict each other. Older records that
+quote the pre-change strings — `design-plans/ui-audit.md`,
+`design-plans/motion-audit.md`, `PLAN.md`, `TODO.md`, `MORNING-REPORT.md` — were
+deliberately left as they are: they are dated accounts of past audits and
+decisions, and editing them would rewrite the record rather than update it.
+`docs/design-research/product-ui-kit/REAL-UI-REFERENCE.md` keeps its `AED
+151.6M` for a stronger reason: it documents what the real product actually
+shows, and that observation must stay true. Changing the currency in a fragment
+is anonymising the *data*, which the spec allows; the interface is untouched.
+
+### Regional scope marker
+
+Three of the five posts argue partly inside a specific jurisdiction, so each now
+carries a `region` value in its frontmatter, rendered as a quiet bordered label
+on the eyebrow row directly above the H1 — before the argument, not after it, so
+a reader outside the Gulf knows in advance which part will not transfer.
+
+| post | marker | why |
+| --- | --- | --- |
+| who-is-accountable-when-ai-recommends | Region · UAE | A whole section and one FAQ turn on the UAE AI Charter, the National AI System's Cabinet seat, and the UAE AI and Data Authority. Saudi Arabia appears once, as a contrast. |
+| what-is-portfolio-governance | Region · UAE & Saudi Arabia | Cites "Vision 2030, We the UAE 2031" as the mandate examples, and MSP as what "most UAE and Saudi entities" hold. |
+| portfolio-data-ready-for-ai | Region · UAE & Saudi Arabia | One sentence pairs Saudi Vision 2030 with the UAE AI Strategy 2031. |
+
+`benefits-realisation-after-closure` and `strategy-execution-gap` get **no**
+marker on purpose. Their only regional mention is the "Where this comes from"
+epilogue that every post carries, which says where we are rather than arguing
+from a local instrument. A marker on all five would stop carrying information.
+
+**New Arabic strings, authored here and unreviewed** — all three now appear in
+`copy-review/` as paired rows, which is why the marker renders as a `<p>`: the
+exporter collects by block tag and skips `<span>`, so a span would have shipped
+its Arabic unseen.
+
+| key | English | Arabic (unreviewed) |
+| --- | --- | --- |
+| `blog.regionLabel` | Region | المنطقة |
+| `region: uae` | UAE | الإمارات |
+| `region: uae-ksa` | UAE & Saudi Arabia | الإمارات والسعودية |
+
+### Left for the owner, not assumed
+
+"Make it global" was applied to the money, which is what the instruction named.
+It was **not** applied to the sentence every post's epilogue carries — "a
+portfolio governance platform for government entities and large enterprises in
+the UAE and Saudi Arabia" — nor to the footer's "Dubai, UAE". Those state where
+Intertec sells and where it is, which is a business fact rather than a
+presentation choice, and widening it would assert a market reach this repo
+cannot verify. Say the word and both change in one pass.

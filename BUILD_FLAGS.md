@@ -746,3 +746,29 @@ Log every such choice under "Decisions taken" below.
   TODO.md's P9 section. Still open, unaffected by this pass: the Formspree
   endpoint, a native-reader Arabic pass, `<main>`'s missing `tabindex="-1"`,
   and the WebKit-specific verification passes.
+- 2026-09-09 (owner: "change everything from AED to Dollar everywhere, make it
+  global"): every money figure on the site now reads `USD` — the home proof
+  band's count-up, both Command Centre KPI figures, the AR budget tile's
+  suffix, both board aria-labels (Arabic درهم → دولار), and the two record rows
+  in `i18n/ui.ts`. Chosen as the literal token `USD ` rather than `$` because
+  `AED` and `USD` are both three monospace glyphs, so the width-tuned fragment
+  and the count-up prefix were unaffected; re-measured at 320/390/1440 in both
+  languages, zero overflow. `docs/trumandate-content-brief.md` updated in step
+  so authority 4 does not contradict the code. Deliberately NOT changed:
+  `docs/design-research/product-ui-kit/REAL-UI-REFERENCE.md` (`AED 151.6M`
+  records what the real product shows and must stay true — currency here is
+  anonymised data, not interface), the four `.dc.html` design-handoff exports
+  (historical reference), and the dated audit records in `design-plans/`,
+  `PLAN.md`, `TODO.md` and `MORNING-REPORT.md` that quote the old strings.
+- 2026-09-09 (same instruction, second half): blog posts gained an optional
+  `region` frontmatter field (zod enum `uae` | `uae-ksa`, `src/content.config.ts`),
+  rendered as a bordered label on the post header's eyebrow row above the H1.
+  Set on the three posts whose argument leans on a named national instrument;
+  deliberately absent on the two whose only regional mention is the standard
+  "Where this comes from" epilogue. An enum rather than a free string so a new
+  jurisdiction fails the build until someone writes its Arabic label. The label
+  is a `<p>`, not a `<span>`, because `tools/export-copy.mjs` collects by block
+  tag and excludes `span` — a span would have shipped unreviewed Arabic. Still
+  open, unaffected by this pass: the Formspree endpoint, a native-reader Arabic
+  pass (now including three new marker strings, flagged in COPY-REVIEW.md),
+  `<main>`'s missing `tabindex="-1"`, and the WebKit verification passes.

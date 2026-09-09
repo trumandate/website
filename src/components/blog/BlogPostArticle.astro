@@ -64,6 +64,7 @@ import {
   formatReadingTime,
   readingTime,
   type BlogPost,
+  regionLabel,
   tagLabel,
 } from "../../lib/blog";
 import tailwindConfig from "../../../tailwind.config.mjs";
@@ -90,6 +91,15 @@ const readLabel = formatReadingTime(minutes, lang, {
   few: t("blog.readingTimeFew"),
   other: t("blog.readingTimeOther"),
 });
+
+// Regional scope marker. `undefined` for most posts — see the `region` field
+// in content.config.ts for when a post earns one, and `regionLabel` in
+// lib/blog.ts for why the two current values are `uae` and `uae-ksa`. It
+// renders above the H1 rather than in the byline meta line below it because
+// its job is to reach the reader BEFORE the argument does: a reader in
+// Singapore should learn that a section turns on the UAE AI Charter while
+// they are still deciding whether to read on, not after finishing.
+const region = regionLabel(post.data.region, lang);
 
 // The rendered Markdown body arrives through `<slot />` from another
 // component tree entirely (the post's `<Content />`), so the `.blog-prose
@@ -225,12 +235,47 @@ const proseVars = {
         its own; the plain div is here only to keep the four blocks grouped. */}
     <div>
       <div>
-        <a
-          href={`/${lang}/blog/`}
-          class="font-mono text-datum font-data uppercase tracking-datum text-muted transition-colors duration-micro ease-micro hover:text-accent"
-        >
-          {t("nav.blog")}
-        </a>
+        {/* The eyebrow row: the breadcrumb, plus the scope marker when the
+            post declares one. A flex row rather than two stacked blocks so a
+            marker costs no vertical rhythm — the H1's own `mt-5` then means
+            the same thing on every post, marked or not. `flex-wrap` is what
+            makes the long value ("REGION · UAE & SAUDI ARABIA") safe on a
+            360px phone: it drops to its own line instead of squeezing the
+            breadcrumb. No physical direction properties, so the row mirrors
+            under RTL on its own. */}
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <a
+            href={`/${lang}/blog/`}
+            class="font-mono text-datum font-data uppercase tracking-datum text-muted transition-colors duration-micro ease-micro hover:text-accent"
+          >
+            {t("nav.blog")}
+          </a>
+
+          {/* Deliberately quiet: `text-muted` and a hairline pill, not an
+              accent colour. `text-accent` is the site's one accent and marks
+              things you can click; this is a non-interactive label, and
+              colouring it like a link would promise a filter page that does
+              not exist (the topic labels in the footer below are plain text
+              for the same reason). The border alone separates it from the
+              breadcrumb sitting beside it in the same type style.
+
+              A `p`, not a `span`, for one concrete reason: tools/export-copy.mjs
+              collects reviewable strings by block tag and deliberately excludes
+              `span` (spans on this site are sentence fragments — the gradient
+              phrase inside a headline — and emitting them would fill the Arabic
+              reviewer's sheet with half-sentences). A bare span here meant the
+              marker never reached copy-review/, so its Arabic would have shipped
+              unreviewed. `m-0` because global.css does not zero `p` margins
+              (ProofBand.astro carries the same class for the same reason);
+              `inline-flex` keeps the box identical to the span's. */}
+          {region && (
+            <p class="m-0 inline-flex items-center rounded-full border border-hairline px-3 py-1 font-mono text-datum font-data uppercase tracking-datum text-muted">
+              {t("blog.regionLabel")}
+              {" · "}
+              {region}
+            </p>
+          )}
+        </div>
 
         <h1
           class="mt-5 font-sans text-blog-title font-semi text-paper"

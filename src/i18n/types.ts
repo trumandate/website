@@ -448,6 +448,12 @@ export interface UiStrings {
     nextLabel: string;
     /** "All posts" — the back-to-index link on every post page. */
     indexLabel: string;
+    /** The word in front of a post's regional scope marker, e.g. "Region ·
+     * UAE". The jurisdiction name itself comes from `regionLabel` in
+     * lib/blog.ts, keyed by the post's own `region` frontmatter; this is the
+     * only part of the marker that is site chrome. Rendered on the eyebrow
+     * row above the H1, and only on posts that declare a region. */
+    regionLabel: string;
     /** ---- 2026-09-01 blog redesign (USER REPORT: the index read as a flat
      * undifferentiated list and the post pages as an unfinished column).
      * Everything below exists to give both pages a hierarchy: a named

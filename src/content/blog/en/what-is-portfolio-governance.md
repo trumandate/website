@@ -6,6 +6,7 @@ author: "TruMandate team, Intertec Systems"
 lang: "en"
 translationKey: "what-is-portfolio-governance"
 tags: ["portfolio-governance", "strategy-office", "epmo", "kpi", "public-sector"]
+region: "uae-ksa"
 draft: false
 ---
 

@@ -4,7 +4,7 @@
   "purpose": "Bilingual copy export for native-reader review of the Arabic against the English.",
   "totals": {
     "pages": 11,
-    "strings": 821,
+    "strings": 824,
     "unpairedBlocks": 6
   },
   "pages": [
@@ -81,7 +81,7 @@
         "en": "/en/blog/what-is-portfolio-governance/",
         "ar": "/ar/blog/what-is-portfolio-governance/"
       },
-      "strings": 92,
+      "strings": 93,
       "englishWithoutArabic": 0,
       "arabicWithoutEnglish": 0
     },
@@ -114,7 +114,7 @@
         "en": "/en/blog/who-is-accountable-when-ai-recommends/",
         "ar": "/ar/blog/who-is-accountable-when-ai-recommends/"
       },
-      "strings": 103,
+      "strings": 104,
       "englishWithoutArabic": 0,
       "arabicWithoutEnglish": 0
     },
@@ -125,7 +125,7 @@
         "en": "/en/blog/portfolio-data-ready-for-ai/",
         "ar": "/ar/blog/portfolio-data-ready-for-ai/"
       },
-      "strings": 95,
+      "strings": 96,
       "englishWithoutArabic": 0,
       "arabicWithoutEnglish": 0
     }

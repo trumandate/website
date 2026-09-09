@@ -8,7 +8,7 @@
 //
 // The board is invented anonymised product data (spec's own "anonymise the
 // data, never the interface" rule) — figures match across both languages
-// exactly (86%, 71%, 48, AED 1.32B, 142 projects, 78/15/7%), only the labels
+// exactly (86%, 71%, 48, USD 1.32B, 142 projects, 78/15/7%), only the labels
 // translate. Digits stay Western in both languages, matching the repo's
 // established fragment convention (KpiCard.astro, InitiativeRows.astro).
 import type { Language } from "../../i18n/types";
@@ -75,7 +75,7 @@ export interface BoardCopy {
 
 const en: BoardCopy = {
   ariaLabel:
-    "Performance Command Centre. Compact KPIs: portfolio health 86 per cent, budget utilisation 71 per cent, 48 active risks, AED 1.32B benefits realised. A performance-over-time chart carries an AI flag on the July dip; an AI watch panel holds six suggestions waiting on a named person, cropped at the frame edge.",
+    "Performance Command Centre. Compact KPIs: portfolio health 86 per cent, budget utilisation 71 per cent, 48 active risks, USD 1.32B benefits realised. A performance-over-time chart carries an AI flag on the July dip; an AI watch panel holds six suggestions waiting on a named person, cropped at the frame edge.",
   workspaceLabel: "Workspace",
   breadcrumbSep: "/",
   pageTitle: "Performance Command Centre",
@@ -137,7 +137,7 @@ const en: BoardCopy = {
 
 const ar: BoardCopy = {
   ariaLabel:
-    "مركز قيادة الأداء: صحة المحفظة 86 بالمئة، واستخدام الميزانية 71 بالمئة، و48 خطراً نشطاً، ومنافع محققة 1.32 مليار درهم. رسم للأداء عبر الزمن يحمل علامة ذكاء اصطناعي، ولوحة مراقبة ذكية فيها ستة اقتراحات بانتظار شخص، مقصوصة عند حافة الإطار.",
+    "مركز قيادة الأداء: صحة المحفظة 86 بالمئة، واستخدام الميزانية 71 بالمئة، و48 خطراً نشطاً، ومنافع محققة 1.32 مليار دولار. رسم للأداء عبر الزمن يحمل علامة ذكاء اصطناعي، ولوحة مراقبة ذكية فيها ستة اقتراحات بانتظار شخص، مقصوصة عند حافة الإطار.",
   workspaceLabel: "مساحة العمل",
   breadcrumbSep: "/",
   pageTitle: "مركز قيادة الأداء",
@@ -159,7 +159,7 @@ const ar: BoardCopy = {
   kpi: {
     healthLabel: "صحة المحفظة",
     budgetLabel: "استخدام الميزانية",
-    budgetSuffix: "من AED 218M",
+    budgetSuffix: "من USD 218M",
     budgetTarget: "المستهدف 68%",
     risksLabel: "المخاطر النشطة",
     benefitsLabel: "المنافع المحققة",
@@ -191,7 +191,7 @@ const ar: BoardCopy = {
     // card as an empty shell — Arabic carrying less than English, which
     // CLAUDE.md forbids. Written here to match the English card and this
     // file's own AR conventions: Latin system names and "%" are kept as the
-    // sibling strings already keep them ("AED 218M", "المستهدف 68%").
+    // sibling strings already keep them ("USD 218M", "المستهدف 68%").
     // FLAGGED for the native reviewer as newly authored, not yet signed off.
     escalationDept: "تصعيد · نظام ERP الأساسي",
     escalationChip: "حرج",

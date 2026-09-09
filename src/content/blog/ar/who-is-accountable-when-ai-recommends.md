@@ -7,6 +7,7 @@ author: "فريق TruMandate، إنترتك سيستمز"
 lang: "ar"
 translationKey: "who-is-accountable-when-ai-recommends"
 tags: ["ai-governance", "decision-rights", "portfolio-governance", "epmo", "public-sector"]
+region: "uae"
 draft: false
 ---
 

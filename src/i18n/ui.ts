@@ -135,7 +135,7 @@ export const ui: UiDictionary = {
         record3Title: "Unified service portal",
         record3Body: "Funded to move KPI 1.2.3, and it knows it.",
         record3Row1Label: "Funded",
-        record3Row1Value: "AED 28M",
+        record3Row1Value: "USD 28M",
         record3Row2Label: "Progress",
         record3Row2Value: "74%",
         record4Name: "Milestone",
@@ -152,7 +152,7 @@ export const ui: UiDictionary = {
         record5Body:
           "Measured for 24 months after closure, against KPI 1.2.3, not a memory.",
         record5Row1Label: "Forecast → actual",
-        record5Row1Value: "AED 50M → 41M",
+        record5Row1Value: "USD 50M → 41M",
         record5Row2Label: "Measured until",
         record5Row2Value: "Mar 2028",
       },
@@ -360,6 +360,7 @@ export const ui: UiDictionary = {
       previousLabel: "Previous",
       nextLabel: "Next",
       indexLabel: "All posts",
+      regionLabel: "Region",
       // 2026-09-01 blog redesign — see types.ts for what each of these is
       // for. Same "no invented statistics or personas" discipline as the
       // strings above; the CTA restates the home page's own forty-minute
@@ -484,7 +485,7 @@ export const ui: UiDictionary = {
         record3Title: "البوابة الموحدة للخدمات",
         record3Body: "تم تمويلها لدعم تحقيق مؤشر الأداء 1.2.3، وهي على دراية بدورها في ذلك.",
         record3Row1Label: "التمويل",
-        record3Row1Value: "AED 28M",
+        record3Row1Value: "USD 28M",
         record3Row2Label: "التقدّم",
         record3Row2Value: "74%",
         record4Name: "المعلم",
@@ -501,7 +502,7 @@ export const ui: UiDictionary = {
         record5Body:
           "يُقاس لمدة 24 شهرًا بعد إغلاق المشروع، بالاستناد إلى مؤشر الأداء 1.2.4، وليس بالاعتماد على الذاكرة.",
         record5Row1Label: "المتوقَّع ← الفعلي",
-        record5Row1Value: "AED 50M → 41M",
+        record5Row1Value: "USD 50M → 41M",
         record5Row2Label: "القياس حتى",
         record5Row2Value: "Mar 2028",
       },
@@ -685,6 +686,7 @@ export const ui: UiDictionary = {
       previousLabel: "السابق",
       nextLabel: "التالي",
       indexLabel: "كل المقالات",
+      regionLabel: "المنطقة",
       // 2026-09-01 blog redesign — written in Arabic, not translated, same
       // as the block above. `readingTimeFew` is the 3–10 plural (دقائق),
       // `readingTimeOther` the singular the language takes for 1, 2 and 11+

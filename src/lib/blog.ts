@@ -243,3 +243,40 @@ const TAG_LABELS: Record<string, { en: string; ar: string }> = {
 export function tagLabel(slug: string, lang: Language): string {
   return TAG_LABELS[slug]?.[lang] ?? slug;
 }
+
+/**
+ * Bilingual labels for the optional `region` frontmatter field — the scope
+ * marker that sits above a post's H1 when the argument leans on a specific
+ * jurisdiction's instruments (content.config.ts documents when to set it).
+ *
+ * Written here rather than in i18n/ui.ts for the same reason TAG_LABELS is:
+ * these are per-post content values, keyed by a slug the Markdown carries,
+ * not page chrome the whole site reads through `t()`. The word in front of
+ * them ("Region") IS chrome and lives in ui.ts as `blog.regionLabel`.
+ *
+ * `uae-ksa` reads as a pair because both posts carrying it cite Saudi Vision
+ * 2030 alongside a UAE instrument in the same sentence. `who-is-accountable`
+ * gets the bare `uae` instead: its regulatory section is UAE law end to end,
+ * and labelling it for Saudi Arabia too would assert a coverage the piece
+ * does not have.
+ *
+ * FLAGGED in COPY-REVIEW.md as newly authored Arabic, not yet reviewed.
+ */
+const REGION_LABELS: Record<string, { en: string; ar: string }> = {
+  uae: { en: "UAE", ar: "الإمارات" },
+  "uae-ksa": { en: "UAE & Saudi Arabia", ar: "الإمارات والسعودية" },
+};
+
+/**
+ * Display label for a region slug, or `undefined` when the post carries no
+ * `region` — which is the common case, so the caller renders nothing rather
+ * than an empty chip. An unmapped slug returns `undefined` too: a marker with
+ * no reviewed label is worse than no marker, and the zod enum in
+ * content.config.ts already fails the build before this can happen.
+ */
+export function regionLabel(
+  slug: string | undefined,
+  lang: Language,
+): string | undefined {
+  return slug ? REGION_LABELS[slug]?.[lang] : undefined;
+}

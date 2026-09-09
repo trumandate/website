@@ -7,6 +7,7 @@ author: "فريق TruMandate، إنترتك سيستمز"
 lang: "ar"
 translationKey: "portfolio-data-ready-for-ai"
 tags: ["ai-readiness", "data-quality", "portfolio-governance", "epmo", "kpi"]
+region: "uae-ksa"
 draft: false
 ---
 

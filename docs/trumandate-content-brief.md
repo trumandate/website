@@ -37,7 +37,7 @@ Panel label — EN: Objective 1.2 · Digital government maturity / AR: الهد�
 Row 1 — Published plan / الخطة المعتمدة — value: v3
 Row 2 — Composite KPI / المؤشر المركّب — value: 68 / 75, green RAG dot
 Row 3 — Initiatives linked / المبادرات المرتبطة — value: 14, amber RAG dot
-Row 4 — Benefit to date / المنفعة المحققة — value: AED 41M
+Row 4 — Benefit to date / المنفعة المحققة — value: USD 41M
 Sparkline: eleven points trending upward, teal stroke, drawn on scroll
 
 ---

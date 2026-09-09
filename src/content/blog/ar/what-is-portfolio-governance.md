@@ -6,6 +6,7 @@ author: "فريق TruMandate، إنترتك سيستمز"
 lang: "ar"
 translationKey: "what-is-portfolio-governance"
 tags: ["portfolio-governance", "strategy-office", "epmo", "kpi", "public-sector"]
+region: "uae-ksa"
 draft: false
 ---
 

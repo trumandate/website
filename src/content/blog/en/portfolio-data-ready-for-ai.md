@@ -7,6 +7,7 @@ author: "TruMandate team, Intertec Systems"
 lang: "en"
 translationKey: "portfolio-data-ready-for-ai"
 tags: ["ai-readiness", "data-quality", "portfolio-governance", "epmo", "kpi"]
+region: "uae-ksa"
 draft: false
 ---
 
