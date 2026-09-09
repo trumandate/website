@@ -815,3 +815,37 @@ Owner decision 2026-09-09: leave as they are — they were written directly in
 Arabic rather than translated. `copy-review/blog-*.json` is ready whenever a
 reviewer wants them. Same for the site chrome, form fields and Command Centre
 labels (~110 strings) the sheet skipped.
+
+## 2026-09-09 — two new posts, and four more tag labels
+
+Two posts added, English and Arabic: "Who is accountable when an AI recommends a
+portfolio decision?" and "Is your portfolio data ready for AI?". Both written
+against `docs/writing-rules.md` (the StoryScope findings, now recorded in the
+repo rather than held in a chat summary).
+
+**Arabic in both is newly authored and unreviewed.** It was written directly in
+Arabic rather than translated, mirrors the English section for section, and uses
+the ترو ماندات (TruMandate) spelling settled on 2026-09-09. Both posts and their
+FAQ sections are in `copy-review/` for the reviewer.
+
+**Four new tag labels, ours not the reviewer's:**
+
+| slug | English | Arabic (unreviewed) |
+| --- | --- | --- |
+| ai-governance | AI governance | حوكمة الذكاء الاصطناعي |
+| decision-rights | Decision rights | صلاحيات القرار |
+| ai-readiness | AI readiness | الجاهزية للذكاء الاصطناعي |
+| data-quality | Data quality | جودة البيانات |
+
+**Two claims for the owner to confirm, both flagged rather than assumed:**
+
+1. `who-is-accountable-when-ai-recommends` says of the product: "it holds no
+   write access to the record." That is a specific technical assertion, not a
+   governance argument, and it cannot be checked from this repo. The site's own
+   audit line makes the weaker claim ("No model output has ever entered the
+   record unapproved"). Confirm or the sentence should be softened to match.
+2. `what-is-portfolio-governance` (pre-existing, live since August) closes with
+   "a portfolio governance platform **used by** government entities and large
+   enterprises". That asserts live customers. The other three posts say "for".
+   The two new posts were normalised to "for" on 2026-09-09; the live one was
+   left alone pending the owner's word, since it may well be accurate.

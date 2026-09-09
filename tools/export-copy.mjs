@@ -47,6 +47,11 @@ const BLOG_POSTS = [
     "blog/benefits-realisation-after-closure",
     "Post: benefits realisation after closure",
   ],
+  [
+    "blog/who-is-accountable-when-ai-recommends",
+    "Post: who is accountable when an AI recommends",
+  ],
+  ["blog/portfolio-data-ready-for-ai", "Post: is your portfolio data ready for AI"],
 ];
 
 // Tags whose text is a reviewable unit. `option`/`legend`/`label`/`button`

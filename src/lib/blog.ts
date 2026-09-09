@@ -222,6 +222,12 @@ const TAG_LABELS: Record<string, { en: string; ar: string }> = {
   "strategy-execution": { en: "Strategy execution", ar: "تنفيذ الاستراتيجية" },
   "strategy-office": { en: "Strategy office", ar: "مكتب الاستراتيجية" },
   epmo: { en: "EPMO", ar: "مكتب إدارة المشاريع المؤسسي (EPMO)" },
+  // 2026-09-09, the two AI posts. English is ours; the Arabic follows the
+  // phrasing the existing Arabic posts already use for these terms.
+  "ai-governance": { en: "AI governance", ar: "حوكمة الذكاء الاصطناعي" },
+  "decision-rights": { en: "Decision rights", ar: "صلاحيات القرار" },
+  "ai-readiness": { en: "AI readiness", ar: "الجاهزية للذكاء الاصطناعي" },
+  "data-quality": { en: "Data quality", ar: "جودة البيانات" },
   // ---- authored here, not yet reviewed ----
   "project-closure": { en: "Project closure", ar: "إغلاق المشروع" },
   "public-sector": { en: "Public sector", ar: "القطاع العام" },

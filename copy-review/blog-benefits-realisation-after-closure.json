@@ -6,9 +6,9 @@
   "title": "Post: benefits realisation after closure",
   "generated": "2026-09-09",
   "counts": {
-    "en": 92,
-    "ar": 98,
-    "pairs": 92,
+    "en": 93,
+    "ar": 99,
+    "pairs": 93,
     "englishWithoutArabic": 0,
     "arabicWithoutEnglish": 6
   },
@@ -726,9 +726,17 @@
     },
     {
       "element": "a",
+      "en": "PreviousWho is accountable when an AI recommends a portfolio decision?",
+      "ar": "السابقمن المسؤول عندما يقترح الذكاء الاصطناعي قراراً في المحفظة؟",
+      "n": 89,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
       "en": "NextThe strategy execution gap: why strategy dies between the mandate and the money",
       "ar": "التاليفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والتمويل؟",
-      "n": 89,
+      "n": 90,
       "verdict": "",
       "comment": ""
     },
@@ -736,7 +744,7 @@
       "element": "a",
       "en": "TruMandate",
       "ar": "TruMandate",
-      "n": 90,
+      "n": 91,
       "verdict": "",
       "comment": ""
     },
@@ -744,7 +752,7 @@
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
       "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
-      "n": 91,
+      "n": 92,
       "verdict": "",
       "comment": ""
     },
@@ -752,7 +760,7 @@
       "element": "a",
       "en": "Strategy",
       "ar": "الاستراتيجية",
-      "n": 92,
+      "n": 93,
       "verdict": "",
       "comment": ""
     },
@@ -760,7 +768,7 @@
       "element": "a",
       "en": "Execution",
       "ar": "التنفيذ",
-      "n": 93,
+      "n": 94,
       "verdict": "",
       "comment": ""
     },
@@ -768,7 +776,7 @@
       "element": "a",
       "en": "Benefits",
       "ar": "المنافع",
-      "n": 94,
+      "n": 95,
       "verdict": "",
       "comment": ""
     },
@@ -776,7 +784,7 @@
       "element": "a",
       "en": "Blog",
       "ar": "المدونة",
-      "n": 95,
+      "n": 96,
       "verdict": "",
       "comment": ""
     },
@@ -784,7 +792,7 @@
       "element": "a",
       "en": "Contact",
       "ar": "تواصل",
-      "n": 96,
+      "n": 97,
       "verdict": "",
       "comment": ""
     },
@@ -792,7 +800,7 @@
       "element": "p",
       "en": "© 2026 Intertec Systems. All rights reserved.",
       "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
-      "n": 97,
+      "n": 98,
       "verdict": "",
       "comment": ""
     },
@@ -800,7 +808,7 @@
       "element": "p",
       "en": "TruMandate™",
       "ar": "TruMandate™",
-      "n": 98,
+      "n": 99,
       "verdict": "",
       "comment": ""
     }

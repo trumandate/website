@@ -3,8 +3,8 @@
   "generated": "2026-09-09",
   "purpose": "Bilingual copy export for native-reader review of the Arabic against the English.",
   "totals": {
-    "pages": 9,
-    "strings": 620,
+    "pages": 11,
+    "strings": 821,
     "unpairedBlocks": 6
   },
   "pages": [
@@ -70,7 +70,7 @@
         "en": "/en/blog/",
         "ar": "/ar/blog/"
       },
-      "strings": 28,
+      "strings": 30,
       "englishWithoutArabic": 0,
       "arabicWithoutEnglish": 0
     },
@@ -103,9 +103,31 @@
         "en": "/en/blog/benefits-realisation-after-closure/",
         "ar": "/ar/blog/benefits-realisation-after-closure/"
       },
-      "strings": 98,
+      "strings": 99,
       "englishWithoutArabic": 0,
       "arabicWithoutEnglish": 6
+    },
+    {
+      "file": "blog-who-is-accountable-when-ai-recommends.json",
+      "title": "Post: who is accountable when an AI recommends",
+      "route": {
+        "en": "/en/blog/who-is-accountable-when-ai-recommends/",
+        "ar": "/ar/blog/who-is-accountable-when-ai-recommends/"
+      },
+      "strings": 103,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
+    },
+    {
+      "file": "blog-portfolio-data-ready-for-ai.json",
+      "title": "Post: is your portfolio data ready for AI",
+      "route": {
+        "en": "/en/blog/portfolio-data-ready-for-ai/",
+        "ar": "/ar/blog/portfolio-data-ready-for-ai/"
+      },
+      "strings": 95,
+      "englishWithoutArabic": 0,
+      "arabicWithoutEnglish": 0
     }
   ]
 }

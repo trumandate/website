@@ -1,0 +1,842 @@
+{
+  "route": {
+    "en": "/en/blog/who-is-accountable-when-ai-recommends/",
+    "ar": "/ar/blog/who-is-accountable-when-ai-recommends/"
+  },
+  "title": "Post: who is accountable when an AI recommends",
+  "generated": "2026-09-09",
+  "counts": {
+    "en": 103,
+    "ar": 103,
+    "pairs": 103,
+    "englishWithoutArabic": 0,
+    "arabicWithoutEnglish": 0
+  },
+  "howToUse": "Read `en` and `ar` for each row. Put 'ok' or 'change' in `verdict` and the corrected Arabic (or the issue) in `comment`. A row flagged `missingArabic` has English with no Arabic counterpart; `extraArabic` is the reverse. Both are worth a look before the wording itself — the site's rule is that Arabic never carries less than English.",
+  "rows": [
+    {
+      "element": "a",
+      "en": "Skip to content",
+      "ar": "تخطَّ إلى المحتوى",
+      "n": 1,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 2,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 3,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 4,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 5,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 6,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 7,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 8,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 9,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "العربية",
+      "ar": "English",
+      "n": 10,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 11,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 12,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h1",
+      "en": "Who is accountable when an AI recommends a portfolio decision?",
+      "ar": "من المسؤول عندما يقترح الذكاء الاصطناعي قراراً في المحفظة؟",
+      "n": 13,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Accountability cannot be delegated to a model. What a record must hold so every AI recommendation carries the name of the person who accepted it.",
+      "ar": "لا يمكن تفويض المسؤولية إلى نموذج. ما الذي يجب أن يحفظه السجل حتى يحمل كل اقتراح للذكاء الاصطناعي اسم الشخص الذي قبِله.",
+      "n": 14,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "9 September 2026 · TruMandate team, Intertec Systems · 8 min read",
+      "ar": "9 سبتمبر 2026 · فريق TruMandate، إنترتك سيستمز · قراءة في 8 دقائق",
+      "n": 15,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "On this page",
+      "ar": "في هذه الصفحة",
+      "n": 16,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Who is accountable when an AI recommends a portfolio decision?",
+      "ar": "من المسؤول عندما يقترح الذكاء الاصطناعي قراراً في المحفظة؟",
+      "n": 17,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What does the UAE actually require right now?",
+      "ar": "ما الذي تطلبه الإمارات فعلاً اليوم؟",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What changes when a model sits in the decision path?",
+      "ar": "ما الذي يتغير عندما يدخل النموذج في مسار القرار؟",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "What does the record have to hold?",
+      "ar": "ماذا يجب أن يحفظه السجل؟",
+      "n": 20,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where does this argument get worse if you push it?",
+      "ar": "أين تسوء هذه الحجة إن دُفعت إلى منتهاها؟",
+      "n": 21,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Which decisions actually need a name?",
+      "ar": "أي القرارات يحتاج فعلاً إلى اسم؟",
+      "n": 22,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Common questions",
+      "ar": "أسئلة شائعة",
+      "n": 23,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 24,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Item four on the agenda arrives already answered.",
+      "ar": "البند الرابع في جدول الأعمال يصل مُجاباً عنه سلفاً.",
+      "n": 25,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "On the screen: hold the next tranche on Initiative 21 until the dependency on Initiative 07 clears. Evidence attached. Confidence stated. Nobody in the room wrote it.",
+      "ar": "على الشاشة: أوقفوا الدفعة التالية على المبادرة 21 حتى تُحلَّ التبعية على المبادرة 07. الأدلة مرفقة. ودرجة الثقة معلنة. ولم يكتبه أحد في الغرفة.",
+      "n": 26,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The committee agrees in under a minute, because it looks right.",
+      "ar": "توافق اللجنة في أقل من دقيقة، لأنه يبدو صحيحاً.",
+      "n": 27,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "“Do we need to minute this one?”",
+      "ar": "“هل نُثبت هذا في المحضر؟”",
+      "n": 28,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "“It’s the system’s recommendation.”",
+      "ar": "“هذه توصية النظام.”",
+      "n": 29,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "“Fine. Minute that, then.”",
+      "ar": "“حسناً. أثبِتوا ذلك إذن.”",
+      "n": 30,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "And that is what gets written. The room has just held a tranche of money, and the only name attached to the holding belongs to something that cannot be asked about it later.",
+      "ar": "وهذا ما يُكتب فعلاً. الغرفة أوقفت دفعة مالية، والاسم الوحيد المرتبط بالإيقاف يعود إلى شيء لا يمكن سؤاله عنه لاحقاً.",
+      "n": 31,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Who is accountable when an AI recommends a portfolio decision?",
+      "ar": "من المسؤول عندما يقترح الذكاء الاصطناعي قراراً في المحفظة؟",
+      "n": 32,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The person who accepted it. There is no second answer, and the reason is structural rather than ethical. Accountability needs someone who can be asked a question and made to answer it, whose mandate can be withdrawn, and for whom being wrong costs something. A model meets none of those conditions.",
+      "ar": "الشخص الذي قبِل الاقتراح. لا جواب ثانٍ، والسبب بنيوي لا أخلاقي. المسؤولية تقتضي شخصاً يمكن أن يُسأل ويُلزَم بالجواب، ويمكن أن يُسحب تكليفه، ويكلّفه الخطأ شيئاً. والنموذج لا يستوفي أي شرط من هذه الشروط.",
+      "n": 33,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Be precise about this, because four candidates get offered and three of them fail on contact.",
+      "ar": "كن دقيقاً هنا، فأربعة مرشحين يُطرحون وثلاثة منهم يسقطون عند أول اختبار.",
+      "n": 34,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The model. It cannot hold an obligation. It cannot be summoned, reassigned, or asked what it was thinking in a way that binds. A system that cannot bear a consequence cannot carry accountability.",
+      "ar": "النموذج. لا يستطيع حمل التزام. لا يُستدعى، ولا يُنقل، ولا يُسأل عمّا كان يفكر فيه سؤالاً يُلزمه. والنظام الذي لا يتحمّل تبعة لا يحمل مسؤولية.",
+      "n": 35,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The vendor. A supplier can be contractually liable for a defect. That is not accountability for a decision. The vendor was not in the room, holds no mandate, and will not explain to a board why an initiative stopped.",
+      "ar": "المورّد. يمكن أن يكون مسؤولاً تعاقدياً عن عيب في المنتج. وهذه ليست مسؤولية عن قرار. المورّد لم يكن في الغرفة، ولا يحمل التكليف، ولن يشرح لمجلس إدارة سبب إيقاف مبادرة.",
+      "n": 36,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The committee. Collective accountability degrades the same way a departmental owner does. A decision owned by nine people is owned by nobody: no one uncomfortable, no one to ask a second question.",
+      "ar": "اللجنة. المسؤولية الجماعية تتفكك كما تتفكك ملكية إدارة لرقم. القرار الذي يملكه تسعة أشخاص لا يملكه أحد: لا أحد ينزعج، ولا أحد يُسأل سؤالاً ثانياً.",
+      "n": 37,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The individual who accepted it. The only candidate left standing, which makes the answer unavoidable rather than admirable.",
+      "ar": "الفرد الذي قبِله. المرشح الوحيد الباقي، وهذا ما يجعل الجواب حتمياً لا فاضلاً.",
+      "n": 38,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Our own position says exactly that. AI proposes. A person decides. The record keeps the name. The third sentence is the one that costs money to build.",
+      "ar": "وموقفنا يقول ذلك بالحرف. الذكاء الاصطناعي يقترح. والمسؤول يقرر. والسجل يحفظ الاسم. والجملة الثالثة هي التي يكلّف بناؤها مالاً.",
+      "n": 39,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What does the UAE actually require right now?",
+      "ar": "ما الذي تطلبه الإمارات فعلاً اليوم؟",
+      "n": 40,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Less than most people assume, and more than most people notice.",
+      "ar": "أقل مما يفترضه أكثر الناس، وأكثر مما يلاحظونه.",
+      "n": 41,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The UAE Charter for the Development and Use of Artificial Intelligence, issued in June 2024, sets out twelve principles. Two are in play here: human oversight, and governance and accountability. It is a statement of principle. No cause of action, no penalty of its own. Nobody gets sued or fined under it.",
+      "ar": "ميثاق الإمارات لتطوير الذكاء الاصطناعي واستخدامه، الصادر في يونيو 2024، يضع اثني عشر مبدأً. اثنان منها في صلب الموضوع هنا: الإشراف البشري، والحوكمة والمسؤولية. وهو إعلان مبادئ: لا دعوى تُقام بموجبه، ولا عقوبة خاصة به. لا أحد يُقاضى أو يُغرَّم استناداً إليه.",
+      "n": 42,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "That does not make it inert. Principles get borrowed into procurement conditions, internal audit criteria and regulator expectations long before they become statute. And the UAE regulates AI in layers rather than through one horizontal AI law: the Personal Data Protection Law where personal data is involved, sectoral regulators in their own domains, the Cybercrimes Law, the Charter, and the International Policy on AI above them.",
+      "ar": "وهذا لا يجعله بلا أثر. المبادئ تُستعار إلى شروط المشتريات، ومعايير التدقيق الداخلي، وتوقعات الجهات الرقابية، قبل زمن طويل من صيرورتها تشريعاً. والإمارات تنظّم الذكاء الاصطناعي بطبقات لا بقانون أفقي واحد: قانون حماية البيانات الشخصية (PDPL) حيث تكون البيانات الشخصية داخلة في الأمر، والجهات الرقابية القطاعية كل في نطاقها، وقانون مكافحة الجرائم الإلكترونية، والميثاق، والسياسة الدولية للذكاء الاصطناعي فوقها.",
+      "n": 43,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Two structural changes since.",
+      "ar": "تغييران بنيويان بعد ذلك.",
+      "n": 44,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "From January 2026 a National Artificial Intelligence System became an advisory member of the UAE Cabinet, the Ministerial Development Council, and the boards of federal entities and state-owned companies. The word to notice is advisory. It is the whole design: a seat without a vote. The system may propose. The people in the room decide, and carry it.",
+      "ar": "من يناير 2026 صار نظام ذكاء اصطناعي وطني عضواً استشارياً في مجلس الوزراء، ومجلس التنمية الوزاري، ومجالس إدارات الجهات الفدرالية والشركات المملوكة للدولة. والكلمة التي يجب ملاحظتها هي “استشاري”. هي التصميم كله: مقعد بلا صوت. النظام يقترح. والحاضرون في الغرفة يقررون، ويحملون القرار.",
+      "n": 45,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "On 14 June 2026 the UAE Artificial Intelligence and Data Authority was established as a single national body reporting to the Cabinet, covering AI, data governance and digital government together. Putting those three under one authority tells you where the next round of questions comes from. They will be about records.",
+      "ar": "وفي 14 يونيو 2026 أُنشئت هيئة الإمارات للذكاء الاصطناعي والبيانات كجهة وطنية واحدة ترفع إلى مجلس الوزراء، وتغطي الذكاء الاصطناعي وحوكمة البيانات والحكومة الرقمية معاً. وجمع هذه الثلاثة تحت هيئة واحدة يخبرك من أين تأتي الجولة التالية من الأسئلة. ستكون أسئلة عن السجلات.",
+      "n": 46,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "None of this settles the same problem in Saudi Arabia. Saudi Vision 2030 gives an entity there its mandate; it does not say who signs off a model’s recommendation.",
+      "ar": "ولا شيء من هذا يحسم المسألة نفسها في السعودية. رؤية السعودية 2030 تمنح الجهة هناك تكليفها؛ لكنها لا تقول من يعتمد اقتراح نموذج.",
+      "n": 47,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What changes when a model sits in the decision path?",
+      "ar": "ما الذي يتغير عندما يدخل النموذج في مسار القرار؟",
+      "n": 48,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Nothing about who is accountable. A great deal about whether the accountability can be shown to anyone.",
+      "ar": "لا شيء بخصوص من المسؤول. والكثير بخصوص إمكان إظهار تلك المسؤولية لأحد.",
+      "n": 49,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The answer to “why did we fund this” used to live in a paper, a minute and a name. Now part of the reasoning happened where no minute reached, arrived compressed into a recommendation with a confidence attached, and the human contribution was agreement. Agreement leaves almost no trace.",
+      "ar": "جواب “لماذا موّلنا هذا؟” كان يسكن في ورقة ومحضر واسم. الآن جرى جزء من الاستدلال في مكان لم يبلغه محضر، ووصل مضغوطاً في اقتراح تحمله درجة ثقة، وكانت مساهمة الإنسان هي الموافقة. والموافقة لا تكاد تترك أثراً.",
+      "n": 50,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "That is duller than the failure people worry about. Not a model going rogue. A decision trail reading “the analysis indicated X and we proceeded”, with nothing recorded about who read it or what they checked.",
+      "ar": "وهذا أبهت من الفشل الذي يقلق منه الناس. لا نموذج يخرج عن السيطرة، بل أثر قرار يُقرأ هكذا: “أشار التحليل إلى كذا فمضينا”، ولا شيء مسجل عن من قرأه وما تحقق منه.",
+      "n": 51,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The version of this worry circulating in the industry is worth engaging with rather than repeating: agents are being deployed faster than AI governance adapts, and an agent cannot be an accountable entity. Both halves are true. The second half is not a reason to slow the agents down.",
+      "ar": "والصيغة السائدة لهذا القلق في السوق تستحق مناقشتها لا تكرارها: الوكلاء الأذكياء يُنشرون أسرع مما تتكيف حوكمة الذكاء الاصطناعي، والوكيل لا يمكن أن يكون جهة مسؤولة. والشقّان صحيحان. والشق الثاني ليس سبباً لإبطاء الوكلاء.",
+      "n": 52,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "What does the record have to hold?",
+      "ar": "ماذا يجب أن يحفظه السجل؟",
+      "n": 53,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Six fields. None exotic. The discipline is capturing them at the moment of the decision rather than reconstructing them later.",
+      "ar": "ستة حقول. لا شيء منها غريب. والانضباط هو التقاطها في لحظة القرار لا إعادة تركيبها لاحقاً.",
+      "n": 54,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The proposal as it was made. The recommendation in its own words, with its timestamp and the model version that produced it. Tidied up afterwards it stops being evidence and becomes a summary.",
+      "ar": "الاقتراح كما صدر. بنصه، مع طابعه الزمني وإصدار النموذج الذي أنتجه. والمُنقَّح بعد الواقعة يتوقف عن كونه دليلاً ويصير ملخصاً.",
+      "n": 55,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The evidence it drew on. Which records, as of when. A recommendation citing a KPI reading is only as defensible as that reading, and readings get revised.",
+      "ar": "الأدلة التي استند إليها. أي سجلات، وبحال أي تاريخ. الاقتراح الذي يستشهد بقراءة مؤشر لا يصلح للدفاع عنه إلا بقدر تلك القراءة، والقراءات تُراجَع.",
+      "n": 56,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The stated confidence. Recorded not because the number is precise, but so that “we were told this was a weak signal” and “we were told this was near certain” stay different entries later.",
+      "ar": "درجة الثقة المعلنة. تُسجَّل لا لأن الرقم دقيق، بل حتى تبقى “قيل لنا إن هذه إشارة ضعيفة” و“قيل لنا إنها شبه مؤكدة” قيدين مختلفين لاحقاً.",
+      "n": 57,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The decision, in three states. Accepted, modified, or rejected. Two states are not enough. Modified is where most of the human judgement in a working setup actually sits.",
+      "ar": "القرار بثلاث حالات. مقبول، أو معدَّل، أو مرفوض. حالتان لا تكفيان. فالتعديل هو موضع أكثر الحكم البشري في أي إعداد يعمل فعلاً.",
+      "n": 58,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The name and the time. An individual, never a department, never a forum. The same rule the rest of portfolio governance already runs on, applied to a new kind of input. The individual can change; the field cannot be empty.",
+      "ar": "الاسم والوقت. فرد، لا إدارة، ولا لجنة. القاعدة نفسها التي تعمل بها بقية حوكمة المحافظ، مطبَّقة على نوع جديد من المدخلات. الفرد قابل للتغيير، والحقل غير قابل للفراغ.",
+      "n": 59,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "What the person changed, and why, in their own words. The quietest of the six and the most useful. One rejection with a one-line reason is an administrative artefact. Twenty of them describe where your model is weak on your portfolio, which no vendor can hand you. Rejecting has to be as cheap as accepting, or the record will overstate the model and understate the humans.",
+      "ar": "ما غيّره الشخص، ولماذا، بكلماته. أهدأ الستة وأنفعها. رفضٌ واحد مع سبب في سطر هو أثر إداري. وعشرون منها تصف مواضع ضعف نموذجك على محفظتك أنت، وهذا ما لا يستطيع أي مورّد أن يعطيك إياه. والرفض يجب أن يكون رخيصاً كالقبول، وإلا بالَغ سجلك في تقدير النموذج وقلّل من شأن تفكير البشر.",
+      "n": 60,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where does this argument get worse if you push it?",
+      "ar": "أين تسوء هذه الحجة إن دُفعت إلى منتهاها؟",
+      "n": 61,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Two places. The first is the weakest part of everything above, and doing the record properly is what produces it.",
+      "ar": "في موضعين. الأول هو أضعف ما في كل ما سبق، وإتقان السجل هو ما يُنتجه.",
+      "n": 62,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "A signature that means nothing is worse than no signature. Require named human acceptance on every model output and, at volume, you manufacture rubber stamps. Six recommendations a morning can be read. Six hundred a month cannot. The name goes on anyway, because the workflow will not advance without it, and the record now asserts something false. Not a gap in accountability but a counterfeit, and harder to spot than a gap, because it looks exactly like compliance.",
+      "ar": "التوقيع الذي لا يعني شيئاً أسوأ من غياب التوقيع. اشترط قبولاً بشرياً باسم على كل ناتج للنموذج، وستُصنّع أختاماً مطاطية عند الأحجام الكبيرة. ستة اقتراحات في صباح واحد يمكن قراءتها. ستمئة في الشهر لا يمكن. ويوضع الاسم رغم ذلك، لأن المسار لا يتقدم بدونه، فيصير السجل يؤكد أمراً غير صحيح. وهذه ليست ثغرة في المسؤولية بل تزييف لها، وكشفه أصعب من كشف الثغرة، لأنه يشبه الالتزام تماماً.",
+      "n": 63,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "If you have a module already bought and a specification to write, that is the paragraph to argue with.",
+      "ar": "وإن كانت لديك وحدة ذكاء اصطناعي مشتراة سلفاً ومواصفات تنتظر الكتابة، فهذه هي الفقرة التي يجب أن تجادلها.",
+      "n": 64,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "The record turns into a defence instead of a discipline. A well-kept trail is also a very good liability shield. “I accepted the recommendation, with its evidence and confidence attached, in line with policy” is a strong place to stand when the outcome is bad. Left unattended, the record becomes the mechanism that moves responsibility off the accepter and onto the process. Watch for the tell: the reasons field fills with “as per system recommendation”. Every field populated, and the accountability gone from the room.",
+      "ar": "السجل يتحول إلى دفاع بدل أن يكون انضباطاً. الأثر المحفوظ جيداً هو أيضاً درع ممتاز أمام المساءلة. وعبارة “قبلتُ الاقتراح، بأدلته ودرجة ثقته المرفقة، وفق السياسة” موقفٌ قوي حين تسوء النتيجة. وإن تُرك الأمر دون رعاية، صار السجل هو الآلية التي تنقل المسؤولية عن القابل إلى الإجراء. وراقب العلامة الدالة: حقل الأسباب يمتلئ بعبارة “حسب توصية النظام”. كل الحقول مملوءة، والمسؤولية غادرت الغرفة.",
+      "n": 65,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "There is a cost on the other side, and it should be named rather than waved at. A named accepter makes acceptance personally risky, and personally risky decisions get avoided. A recommendation to stop an initiative, correct and unwelcome, needs someone willing to attach their name to stopping it. Where being wrong is expensive, the safe move is to leave the item open and let events overtake it. So the field that creates accountability can suppress the decisions worth having. No software fixes that. A committee that visibly stands behind someone who accepted a hard recommendation that later turned out wrong might.",
+      "ar": "وثمة كلفة في الاتجاه المقابل، ويجب تسميتها لا التلويح بها. القابل المسمّى بالاسم يجعل القبول خطراً شخصياً، والقرارات ذات الخطر الشخصي يُتجنَّب اتخاذها. الاقتراح بإيقاف مبادرة، وهو صحيح وغير مرحَّب به، يحتاج إلى من يقبل أن يقترن اسمه بالإيقاف. وحيث يكون الخطأ مكلفاً، تكون الخطوة الآمنة ترك البند مفتوحاً حتى تتجاوزه الأحداث. فالحقل الذي ينشئ المسؤولية قد يكبت القرارات التي تستحق أن تُتخذ. لا برنامج يعالج ذلك. لكن لجنة تقف علناً مع من قبِل اقتراحاً صعباً ثم تبيّن أنه خاطئ قد تعالجه.",
+      "n": 66,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Which decisions actually need a name?",
+      "ar": "أي القرارات يحتاج فعلاً إلى اسم؟",
+      "n": 67,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "If not all of them, then which. Draw the line on consequence rather than on the technology involved.",
+      "ar": "إن لم تكن كلها، فأيها. ارسم الخط على التبعة لا على التقنية المستخدمة.",
+      "n": 68,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Three tests, and one is enough to qualify. Does it move money, or change a commitment someone outside the organisation is relying on. Is it hard to reverse, so that re-sequencing two internal tasks and suspending a funded initiative are not the same kind of object. Would it need explaining in eighteen months, after the person who took it has moved on.",
+      "ar": "ثلاثة اختبارات، ويكفي واحد منها للتأهل. هل يحرّك مالاً، أو يغيّر التزاماً يعتمد عليه طرف خارج الجهة. هل يصعب التراجع عنه، بحيث لا تكون إعادة ترتيب مهمتين داخليتين وتعليق مبادرة ممولة شيئاً واحداً. هل سيحتاج إلى شرح بعد ثمانية عشر شهراً، بعد أن يكون متخذه قد انتقل.",
+      "n": 69,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Anything that qualifies gets the six fields. Everything else is logged in batch and sampled, with a person accountable for the class rather than each instance. High-volume records work that way in other domains.",
+      "ar": "كل ما يتأهل يأخذ الحقول الستة. وما عداه يُسجَّل بالدفعات وتُفحص منه عيّنة، مع شخص مسؤول عن الفئة لا عن كل حالة فيها. السجلات كبيرة الحجم تعمل بهذه الطريقة في مجالات أخرى.",
+      "n": 70,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "That narrows the counterfeit problem. It does not solve it. A sampled class still contains unread approvals carrying real names, and all you have done is make them fewer and cheaper to find.",
+      "ar": "وهذا يضيّق مشكلة التزييف. لكنه لا يحلّها. الفئة المعايَنة تبقى تحتوي موافقات لم تُقرأ وتحمل أسماءً حقيقية، وكل ما فعلته أنك جعلتها أقل عدداً وأرخص كشفاً.",
+      "n": 71,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Eighteen months on, an internal auditor asks for one thing: the recommendation as originally worded, and the name of whoever accepted it. The office produces the decision. Then the minute. Then, on the fourth day, a screenshot from somebody’s laptop. It gets written up as an observation rather than a finding, which is generous.",
+      "ar": "وبعد ثمانية عشر شهراً، يطلب مدقق داخلي شيئاً واحداً: الاقتراح بصيغته الأصلية، واسم من قبِله. يُخرج المكتب القرار. ثم المحضر. ثم، في اليوم الرابع، صورة شاشة من حاسوب أحدهم. ويُكتب الأمر كملاحظة لا كمخالفة، وهذا كرم منه.",
+      "n": 72,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Try it on your own setup before someone else does. Pick a decision your entity took last quarter with a model in the path, and produce, in one sitting, the recommendation as it was worded, the evidence as it stood that day, who accepted it, and what they changed first. A week and three phone calls means the accountability lives in the policy, not in the record.",
+      "ar": "جرّبها على إعدادك أنت قبل أن يجرّبها غيرك. اختر قراراً اتخذته جهتك الربع الماضي وكان لنموذج موضع في مساره، وأخرِج في جلسة واحدة: الاقتراح بصيغته، والأدلة كما كانت في ذلك اليوم، ومن قبِله، وما غيّره قبل ذلك. أسبوع وثلاث مكالمات يعني أن المسؤولية قائمة في السياسة لا في السجل.",
+      "n": 73,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Common questions",
+      "ar": "أسئلة شائعة",
+      "n": 74,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Can we make the vendor accountable for what the model recommends?",
+      "ar": "هل يمكن تحميل المورّد مسؤولية ما يقترحه النموذج؟",
+      "n": 75,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Only for the product. A contract can allocate liability for defects, availability and misuse of data, and it should. It cannot transfer accountability for a funding decision: the vendor holds no mandate and answers to no board in your sector. Keep the two questions separate, because a procurement process that merges them settles the easier one and drops the other.",
+      "ar": "عن المنتج فقط. يستطيع العقد أن يوزّع المسؤولية عن العيوب والتوافر وسوء استخدام البيانات، ويجب أن يفعل. لكنه لا ينقل المسؤولية عن قرار تمويل: المورّد لا يحمل تكليفاً، ولا يجيب أمام أي مجلس في قطاعك. أبقِ السؤالين منفصلين، فعملية مشتريات تدمجهما تحسم الأسهل منهما وتُسقط الآخر.",
+      "n": 76,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "Is the UAE AI Charter enforceable?",
+      "ar": "هل ميثاق الإمارات للذكاء الاصطناعي مُلزم؟",
+      "n": 77,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Not by itself. The Charter, issued in June 2024, sets twelve principles including human oversight and accountability, but creates no cause of action and no penalty of its own. Enforcement arrives through the other layers: the Personal Data Protection Law, the sectoral regulators, the Cybercrimes Law. A management system standard such as ISO/IEC 42001 gives you an auditable structure to hold those principles in, which is faster than waiting to see what becomes statute.",
+      "ar": "ليس بذاته. الميثاق، الصادر في يونيو 2024، يضع اثني عشر مبدأً منها الإشراف البشري والمسؤولية، لكنه لا يُنشئ دعوى ولا يحمل عقوبة خاصة به. والإنفاذ يأتي عبر الطبقات الأخرى: قانون حماية البيانات الشخصية (PDPL)، والجهات الرقابية القطاعية، وقانون مكافحة الجرائم الإلكترونية. ومعيار نظام إداري مثل ISO/IEC 42001 يمنحك هيكلاً قابلاً للتدقيق تحفظ فيه تلك المبادئ، وهو أسرع من انتظار ما سيصير تشريعاً.",
+      "n": 78,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h3",
+      "en": "What is the smallest change worth making this quarter?",
+      "ar": "ما أصغر تغيير يستحق التنفيذ هذا الربع؟",
+      "n": 79,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Take one class of recommendation your teams already act on. Add three fields: who accepted it, when, and what they changed. Three fields on one class gives you something to show an auditor within a month, and it usually reveals that a surprising share of recommendations were being modified rather than accepted. Useful fact about your own people.",
+      "ar": "خذ فئة واحدة من الاقتراحات التي تتصرف فرقك بناءً عليها أصلاً. وأضف ثلاثة حقول: من قبِله، وفي أي وقت، وما غيّره. ثلاثة حقول على فئة واحدة تعطيك ما تعرضه على مدقق خلال شهر، وتكشف عادةً أن نسبة مفاجئة من الاقتراحات كانت تُعدَّل لا تُقبل. وهذه معلومة نافعة عن موظفيك أنفسهم.",
+      "n": 80,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "Where this comes from",
+      "ar": "من أين جاء هذا",
+      "n": 81,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "We build TruMandate, a portfolio governance platform for government entities and large enterprises in the UAE and Saudi Arabia. Its AI reads the portfolio overnight and proposes; it holds no write access to the record. Every proposal carries the name of whoever accepted, modified or rejected it, and the moment they did. The argument above is why it was built in that order.",
+      "ar": "نحن نبني ترو ماندات (TruMandate)، منصة حوكمة محافظ لجهات حكومية ومؤسسات كبرى في الإمارات والسعودية. يقرأ الذكاء الاصطناعي فيها المحفظة ليلاً ويقترح، ولا يملك صلاحية الكتابة في السجل. وكل اقتراح يحمل اسم من قبِله أو عدّله أو رفضه، واللحظة التي فعل فيها ذلك. وما سبق هو سبب بنائه بهذا الترتيب.",
+      "n": 82,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Topics",
+      "ar": "المواضيع",
+      "n": 83,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "AI governance",
+      "ar": "حوكمة الذكاء الاصطناعي",
+      "n": 84,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Decision rights",
+      "ar": "صلاحيات القرار",
+      "n": 85,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Portfolio governance",
+      "ar": "حوكمة المحافظ",
+      "n": 86,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "EPMO",
+      "ar": "مكتب إدارة المشاريع المؤسسي (EPMO)",
+      "n": 87,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "Public sector",
+      "ar": "القطاع العام",
+      "n": 88,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "h2",
+      "en": "See this on your own portfolio.",
+      "ar": "شاهد هذا على محفظتك أنت.",
+      "n": 89,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions.",
+      "ar": "أربعون دقيقة لتحليل محفظة أعمال مماثلة لمحفظتك، تشمل إداراتك وفترتك الزمنية وأسماء متخذي القرارات، وليست بيانات تجريبية.",
+      "n": 90,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Book a demo",
+      "ar": "احجز عرضاً توضيحياً",
+      "n": 91,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "All posts",
+      "ar": "كل المقالات",
+      "n": 92,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "PreviousIs your portfolio data ready for AI? Readiness is a governance property",
+      "ar": "السابقهل بيانات محفظتك جاهزة للذكاء الاصطناعي؟ الجاهزية خاصية حوكمة",
+      "n": 93,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "NextBenefits realisation after project closure",
+      "ar": "التاليتحقيق الفوائد بعد إغلاق المشروع",
+      "n": 94,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "TruMandate",
+      "ar": "TruMandate",
+      "n": 95,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "Powered by Intertec Systems · Dubai, UAE",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
+      "n": 96,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Strategy",
+      "ar": "الاستراتيجية",
+      "n": 97,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Execution",
+      "ar": "التنفيذ",
+      "n": 98,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Benefits",
+      "ar": "المنافع",
+      "n": 99,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Blog",
+      "ar": "المدونة",
+      "n": 100,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "a",
+      "en": "Contact",
+      "ar": "تواصل",
+      "n": 101,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "© 2026 Intertec Systems. All rights reserved.",
+      "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
+      "n": 102,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "p",
+      "en": "TruMandate™",
+      "ar": "TruMandate™",
+      "n": 103,
+      "verdict": "",
+      "comment": ""
+    }
+  ]
+}

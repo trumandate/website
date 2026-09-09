@@ -6,9 +6,9 @@
   "title": "Blog index",
   "generated": "2026-09-09",
   "counts": {
-    "en": 28,
-    "ar": 28,
-    "pairs": 28,
+    "en": 30,
+    "ar": 30,
+    "pairs": 30,
     "englishWithoutArabic": 0,
     "arabicWithoutEnglish": 0
   },
@@ -136,8 +136,8 @@
     },
     {
       "element": "a",
-      "en": "19 August 2026 · 7 min readBenefits realisation after project closureBenefit forecasts stop being measured the day the team disbands. What a benefit register holds, why 24 months, and who should own a benefit.Benefits realisationBenefit registerPortfolio governanceRead this post",
-      "ar": "19 أغسطس 2026 · قراءة في 8 دقائقتحقيق الفوائد بعد إغلاق المشروعيتوقف قياس الفوائد المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل الفوائد، ولماذا أربعة وعشرون شهرًا، ومن المسؤول عن كل فائدة.تحقيق الفوائدسجل الفوائدحوكمة المحافظاقرأ المقال",
+      "en": "9 September 2026 · 8 min readIs your portfolio data ready for AI? Readiness is a governance propertyAI on a portfolio fails before the model is chosen. Why readiness is a governance property, and how AI-ready differs from report-ready.AI readinessData qualityPortfolio governanceRead this post",
+      "ar": "9 سبتمبر 2026 · قراءة في 8 دقائقهل بيانات محفظتك جاهزة للذكاء الاصطناعي؟ الجاهزية خاصية حوكمةالذكاء الاصطناعي على المحفظة يفشل قبل اختيار النموذج. لماذا الجاهزية خاصية حوكمة، وما الفرق بين الجاهزية للتقارير والجاهزية للنموذج.الجاهزية للذكاء الاصطناعيجودة البياناتحوكمة المحافظاقرأ المقال",
       "n": 16,
       "verdict": "",
       "comment": ""
@@ -152,9 +152,25 @@
     },
     {
       "element": "li",
+      "en": "9 September 2026 · 8 min readWho is accountable when an AI recommends a portfolio decision?Accountability cannot be delegated to a model. What a record must hold so every AI recommendation carries the name of the person who accepted it.AI governanceDecision rightsPortfolio governance",
+      "ar": "9 سبتمبر 2026 · قراءة في 8 دقائقمن المسؤول عندما يقترح الذكاء الاصطناعي قراراً في المحفظة؟لا يمكن تفويض المسؤولية إلى نموذج. ما الذي يجب أن يحفظه السجل حتى يحمل كل اقتراح للذكاء الاصطناعي اسم الشخص الذي قبِله.حوكمة الذكاء الاصطناعيصلاحيات القرارحوكمة المحافظ",
+      "n": 18,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
+      "en": "19 August 2026 · 7 min readBenefits realisation after project closureBenefit forecasts stop being measured the day the team disbands. What a benefit register holds, why 24 months, and who should own a benefit.Benefits realisationBenefit registerPortfolio governance",
+      "ar": "19 أغسطس 2026 · قراءة في 8 دقائقتحقيق الفوائد بعد إغلاق المشروعيتوقف قياس الفوائد المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل الفوائد، ولماذا أربعة وعشرون شهرًا، ومن المسؤول عن كل فائدة.تحقيق الفوائدسجل الفوائدحوكمة المحافظ",
+      "n": 19,
+      "verdict": "",
+      "comment": ""
+    },
+    {
+      "element": "li",
       "en": "19 August 2026 · 7 min readThe strategy execution gap: why strategy dies between the mandate and the moneyThe strategy execution gap is a records problem, not a motivation problem. Three mechanisms that open it, and what closing it actually requires.Strategy executionPortfolio governanceEPMO",
       "ar": "19 أغسطس 2026 · قراءة في 7 دقائقفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والتمويل؟فجوة تنفيذ الاستراتيجية هي مشكلة في السجلات، وليست مشكلة في التحفيز. ثلاث آليات تؤدي إلى اتساعها، وما يتطلبه سدّها فعليًا.تنفيذ الاستراتيجيةحوكمة المحافظمكتب إدارة المشاريع المؤسسي (EPMO)",
-      "n": 18,
+      "n": 20,
       "verdict": "",
       "comment": ""
     },
@@ -162,7 +178,7 @@
       "element": "li",
       "en": "19 August 2026 · 7 min readWhat is portfolio governance?A working definition of portfolio governance: what it decides, what its record holds, how it differs from project governance, and why spreadsheets fail.Portfolio governanceStrategy officeEPMO",
       "ar": "19 أغسطس 2026 · قراءة في 7 دقائقحوكمة المحفظةالتعريف العملي لحوكمة المحافظ: ما الذي تقرره، وما الذي يتضمنه سجلها، وكيف تختلف عن حوكمة المشاريع، ولماذا تفشل جداول البيانات في ذلك.حوكمة المحافظمكتب الاستراتيجيةمكتب إدارة المشاريع المؤسسي (EPMO)",
-      "n": 19,
+      "n": 21,
       "verdict": "",
       "comment": ""
     },
@@ -170,7 +186,7 @@
       "element": "a",
       "en": "TruMandate",
       "ar": "TruMandate",
-      "n": 20,
+      "n": 22,
       "verdict": "",
       "comment": ""
     },
@@ -178,7 +194,7 @@
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
       "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
-      "n": 21,
+      "n": 23,
       "verdict": "",
       "comment": ""
     },
@@ -186,7 +202,7 @@
       "element": "a",
       "en": "Strategy",
       "ar": "الاستراتيجية",
-      "n": 22,
+      "n": 24,
       "verdict": "",
       "comment": ""
     },
@@ -194,7 +210,7 @@
       "element": "a",
       "en": "Execution",
       "ar": "التنفيذ",
-      "n": 23,
+      "n": 25,
       "verdict": "",
       "comment": ""
     },
@@ -202,7 +218,7 @@
       "element": "a",
       "en": "Benefits",
       "ar": "المنافع",
-      "n": 24,
+      "n": 26,
       "verdict": "",
       "comment": ""
     },
@@ -210,7 +226,7 @@
       "element": "a",
       "en": "Blog",
       "ar": "المدونة",
-      "n": 25,
+      "n": 27,
       "verdict": "",
       "comment": ""
     },
@@ -218,7 +234,7 @@
       "element": "a",
       "en": "Contact",
       "ar": "تواصل",
-      "n": 26,
+      "n": 28,
       "verdict": "",
       "comment": ""
     },
@@ -226,7 +242,7 @@
       "element": "p",
       "en": "© 2026 Intertec Systems. All rights reserved.",
       "ar": "© 2026 إنترتك سيستمز. جميع الحقوق محفوظة.",
-      "n": 27,
+      "n": 29,
       "verdict": "",
       "comment": ""
     },
@@ -234,7 +250,7 @@
       "element": "p",
       "en": "TruMandate™",
       "ar": "TruMandate™",
-      "n": 28,
+      "n": 30,
       "verdict": "",
       "comment": ""
     }
