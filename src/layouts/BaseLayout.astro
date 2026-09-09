@@ -104,9 +104,14 @@ const fontPreloads =
       )
     }
 
-    <!-- Favicon set (P9, spec §5A; PNG sizes + optically-corrected geometry
-         added later — see public/favicon.svg's own comment for why its
-         geometry no longer matches Header.astro's lockup): the SVG mark is
+    <!-- Favicon set (P9, spec §5A). NOTE (2026-09-09): this comment used to
+         say the icon carried an "optically corrected" geometry that no longer
+         matched Header.astro's lockup. That stopped being true on 2026-08-19,
+         when the authoritative Echelons geometry replaced it everywhere. All
+         six files here now render the same mark as the header, verified by
+         pixel comparison against a fresh render of favicon.svg: the three
+         PNGs, apple-touch-icon, and all three sizes embedded in favicon.ico
+         differ from it by zero subpixels. The SVG mark is
          the primary icon in browsers that support it. The explicit PNG links
          below exist for Google Search (which reads sized <link rel="icon">
          PNGs from the homepage head and prefers a size that's a multiple of
