@@ -4,7 +4,7 @@
     "ar": "/ar/"
   },
   "title": "Home",
-  "generated": "2026-09-03",
+  "generated": "2026-09-09",
   "counts": {
     "en": 117,
     "ar": 117,
@@ -113,7 +113,7 @@
     {
       "element": "h1",
       "en": "Every mandate, traced to its measured benefit.",
-      "ar": "كل تكليف، متتبَّع حتى أثره المُقاس.",
+      "ar": "ربط كل توجيه بأثر إيجابي قابل للقياس",
       "n": 13,
       "verdict": "",
       "comment": ""
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Strategy is a promise. Delivery is the proof. TruMandate keeps the thread between them unbroken, and its AI reads every inch of it.",
-      "ar": "الاستراتيجية وعد، والتنفيذ برهانه. يُبقي TruMandate الخيط بينهما متصلاً بلا انقطاع، ويقرؤه الذكاء الاصطناعي بكامله.",
+      "ar": "الاستراتيجية هي وعد. والتنفيذ هو الدليل. تحافظ منصة ترو مانديت على استمرارية الصلة بينهما، ويقوم الذكاء الاصطناعي الخاص بها بتحليل كل تفاصيلها بدقة.",
       "n": 14,
       "verdict": "",
       "comment": ""
@@ -249,7 +249,7 @@
     {
       "element": "p",
       "en": "Milestone slip predicted: 12 days",
-      "ar": "تأخير متوقَّع في المعلم: 12 يوماً",
+      "ar": "التنبؤ بتأخر تحقيق المرحلة الرئيسية",
       "n": 30,
       "verdict": "",
       "comment": ""
@@ -257,7 +257,7 @@
     {
       "element": "p",
       "en": "Two dependencies unresolved at gate 3. Suggests re-sequencing gate 4.",
-      "ar": "تبعيتان غير محلولتين عند البوابة 3. يقترح إعادة ترتيب البوابة 4.",
+      "ar": "هناك اعتمادان لم تتم معالجتهما بعد في البوابة 3، مما يستدعي إعادة ترتيب تسلسل البوابة 4.",
       "n": 31,
       "verdict": "",
       "comment": ""
@@ -265,7 +265,7 @@
     {
       "element": "p",
       "en": "Two KPIs counting one benefit",
-      "ar": "مؤشران يحتسبان منفعة واحدة",
+      "ar": "مؤشران يقيسان منفعة واحدة",
       "n": 32,
       "verdict": "",
       "comment": ""
@@ -289,7 +289,7 @@
     {
       "element": "p",
       "en": "A corner of the Command Centre. The demo shows it whole.",
-      "ar": "زاوية من مركز القيادة. العرض التوضيحي يُظهره كاملاً.",
+      "ar": "استعراض جزئي لمركز القيادة، يليه عرض شامل للمركز.",
       "n": 35,
       "verdict": "",
       "comment": ""
@@ -305,7 +305,7 @@
     {
       "element": "p",
       "en": "Projects governed",
-      "ar": "مشروعاً تحت الحوكمة",
+      "ar": "مشروعًا خاضعًا للحوكمة",
       "n": 37,
       "verdict": "",
       "comment": ""
@@ -337,7 +337,7 @@
     {
       "element": "p",
       "en": "Decisions waiting on a person",
-      "ar": "قرارات بانتظار شخص",
+      "ar": "قرارات بانتظار المراجعة",
       "n": 41,
       "verdict": "",
       "comment": ""
@@ -353,7 +353,7 @@
     {
       "element": "p",
       "en": "Benefits measured after closure",
-      "ar": "قياس المنافع بعد الإغلاق",
+      "ar": "الفوائد المقاسة بعد الإغلاق",
       "n": 43,
       "verdict": "",
       "comment": ""
@@ -369,7 +369,7 @@
     {
       "element": "h2",
       "en": "AI proposes. A person decides. The record keeps the name.",
-      "ar": "الذكاء الاصطناعي يقترح، والإنسان يقرر، والسجل يحفظ الاسم.",
+      "ar": "الذكاء الاصطناعي يقترح، والمسؤول يقرر، والسجل يوثّق.",
       "n": 45,
       "verdict": "",
       "comment": ""
@@ -385,7 +385,7 @@
     {
       "element": "h3",
       "en": "Cross-department dependency at risk",
-      "ar": "تبعية بين إدارتين معرَّضة للخطر",
+      "ar": "الاعتمادية المشتركة بين الإدارات معرضة للخطر",
       "n": 47,
       "verdict": "",
       "comment": ""
@@ -393,7 +393,7 @@
     {
       "element": "p",
       "en": "Gate 3 slipped on Initiative 07. Initiative 21's start condition references it. Neither owner has escalated.",
-      "ar": "تأخرت البوابة 3 في المبادرة 07، وشرط بدء المبادرة 21 يشير إليها. لم يصعّد أي من المالكَين.",
+      "ar": "تأخرت البوابة 3 ضمن المبادرة 07، مما يؤثر على شرط بدء المبادرة 21، ولم يبادر أيٌّ من المسؤولين إلى تصعيد الأمر.",
       "n": 48,
       "verdict": "",
       "comment": ""
@@ -433,7 +433,7 @@
     {
       "element": "h3",
       "en": "Two KPIs counting one benefit",
-      "ar": "مؤشران يحتسبان منفعة واحدة",
+      "ar": "مؤشران يقيسان منفعة واحدة",
       "n": 53,
       "verdict": "",
       "comment": ""
@@ -441,7 +441,7 @@
     {
       "element": "p",
       "en": "Objective 2.1 and 4.3 share a source measure and an overlapping initiative set. Merge, or mark one as contributing.",
-      "ar": "الهدف 2.1 والهدف 4.3 يتشاركان مقياس المصدر ومجموعة مبادرات متداخلة. ادمج، أو علّم أحدهما مقياساً مساهماً.",
+      "ar": "يرتبط الهدفان 2.1 و4.3 بالمقياس نفسه ومجموعة مبادرات متداخلة، ما يستدعي دمجهما أو تحديد أحدهما كهدف مساهم.",
       "n": 54,
       "verdict": "",
       "comment": ""
@@ -481,7 +481,7 @@
     {
       "element": "h3",
       "en": "Benefit leakage after closure",
-      "ar": "تسرّب منفعة بعد الإغلاق",
+      "ar": "تسرّب المنافع بعد الإغلاق",
       "n": 59,
       "verdict": "",
       "comment": ""
@@ -489,7 +489,7 @@
     {
       "element": "p",
       "en": "Benefit 4.2 is 18% below forecast two quarters after closure. The KPI stopped improving when the team was released.",
-      "ar": "المنفعة 4.2 أدنى من المتوقَّع بنسبة 18% بعد ربعين من الإغلاق. توقف المؤشر عن التحسّن حين سُرّح الفريق.",
+      "ar": "بعد مرور ربعين على إغلاق المشروع، تقلّ منفعة 4.2 عن التوقعات بنسبة 18%، وقد توقّف مؤشر الأداء عن التحسن بعد انتهاء مهمة الفريق.",
       "n": 60,
       "verdict": "",
       "comment": ""
@@ -529,7 +529,7 @@
     {
       "element": "p",
       "en": "No model output has ever entered the record unapproved.",
-      "ar": "لم يدخل السجل قط أي مخرَج للنموذج دون اعتماد.",
+      "ar": "لا يُدرج أي مخرج للنموذج في السجل إلا بعد اعتماده.",
       "n": 65,
       "verdict": "",
       "comment": ""
@@ -537,7 +537,7 @@
     {
       "element": "p",
       "en": "Traceability",
-      "ar": "التتبّع",
+      "ar": "قابلية التتبع",
       "n": 66,
       "verdict": "",
       "comment": ""
@@ -545,7 +545,7 @@
     {
       "element": "h2",
       "en": "One identity, carried from the mandate down to the money.",
-      "ar": "هوية واحدة، تُحمل من التكليف حتى المال.",
+      "ar": "هوية موحّدة تربط بين التفويض والتمويل عبر كامل مسار التنفيذ.",
       "n": 67,
       "verdict": "",
       "comment": ""
@@ -553,7 +553,7 @@
     {
       "element": "p",
       "en": "One objective travels the whole way down: from the sentence a minister signed to the saving a finance office can point at.",
-      "ar": "هدف واحد يقطع الطريق كله: من الجملة التي وُقّعت في الأعلى إلى الوفر الذي يشير إليه المكتب المالي.",
+      "ar": "يرتبط الهدف نفسه عبر كامل مسار التنفيذ، بدءًا من القرار الذي وقّعه الوزير ووصولًا إلى الوفر المالي الذي يمكن للجهة المالية إثباته.",
       "n": 68,
       "verdict": "",
       "comment": ""
@@ -593,7 +593,7 @@
     {
       "element": "p",
       "en": "Versioned, published, weighted. A named owner.",
-      "ar": "مُصدَّر بنسخة معتمدة وموزون، وله مالك بالاسم.",
+      "ar": "له إصدار معتمد، ومنشور، ومُرجّح، مع تحديد المسؤول عنه.",
       "n": 73,
       "verdict": "",
       "comment": ""
@@ -609,7 +609,7 @@
     {
       "element": "h3",
       "en": "Digital service adoption",
-      "ar": "تبنّي الخدمات الرقمية",
+      "ar": "اعتماد الخدمات الرقمية",
       "n": 75,
       "verdict": "",
       "comment": ""
@@ -617,7 +617,7 @@
     {
       "element": "p",
       "en": "Carries Objective 1.2. No baseline, no KPI.",
-      "ar": "يحمل الهدف 1.2. لا خط أساس، لا مؤشر.",
+      "ar": "مرتبط بالهدف 1.2، دون خط أساس أو مؤشر أداء رئيسي.",
       "n": 76,
       "verdict": "",
       "comment": ""
@@ -633,7 +633,7 @@
     {
       "element": "h3",
       "en": "Unified service portal",
-      "ar": "بوابة الخدمات الموحّدة",
+      "ar": "البوابة الموحدة للخدمات",
       "n": 78,
       "verdict": "",
       "comment": ""
@@ -641,7 +641,7 @@
     {
       "element": "p",
       "en": "Funded to move KPI 1.2.3, and it knows it.",
-      "ar": "مموّلة لتحريك المؤشر 1.2.3، وتعرف ذلك.",
+      "ar": "تم تمويلها لدعم تحقيق مؤشر الأداء 1.2.3، وهي على دراية بدورها في ذلك.",
       "n": 79,
       "verdict": "",
       "comment": ""
@@ -657,7 +657,7 @@
     {
       "element": "h3",
       "en": "Gate 4 · decommission",
-      "ar": "البوابة 4 · إيقاف الأنظمة القديمة",
+      "ar": "البوابة 4 – إخراج الأنظمة من الخدمة",
       "n": 81,
       "verdict": "",
       "comment": ""
@@ -665,7 +665,7 @@
     {
       "element": "p",
       "en": "Slip is a subtraction, surfaced the day it happens.",
-      "ar": "التأخير عملية طرح، يظهر يوم وقوعه.",
+      "ar": "يُحتسب أي تأخير كخصم في الأداء، ويظهر أثره في يوم حدوثه.",
       "n": 82,
       "verdict": "",
       "comment": ""
@@ -681,7 +681,7 @@
     {
       "element": "h3",
       "en": "Annual operating saving",
-      "ar": "وفر تشغيلي سنوي",
+      "ar": "الوفر التشغيلي السنوي",
       "n": 84,
       "verdict": "",
       "comment": ""
@@ -689,7 +689,7 @@
     {
       "element": "p",
       "en": "Measured for 24 months after closure, against KPI 1.2.3, not a memory.",
-      "ar": "تُقاس 24 شهراً بعد الإغلاق، مقابل المؤشر 1.2.3 لا الذاكرة.",
+      "ar": "يُقاس لمدة 24 شهرًا بعد إغلاق المشروع، بالاستناد إلى مؤشر الأداء 1.2.4، وليس بالاعتماد على الذاكرة.",
       "n": 85,
       "verdict": "",
       "comment": ""
@@ -705,7 +705,7 @@
     {
       "element": "h2",
       "en": "Strategy is written once. Then it is retyped for a year.",
-      "ar": "تُكتب الاستراتيجية مرة واحدة، ثم يُعاد نسخها طوال عام.",
+      "ar": "تُكتب الاستراتيجية مرة واحدة، ثم يُعاد إدخالها مرارًا على مدار العام.",
       "n": 87,
       "verdict": "",
       "comment": ""
@@ -729,7 +729,7 @@
     {
       "element": "p",
       "en": "To answer which initiative moves which objective. Assembled by hand, in a spreadsheet, if it arrives at all.",
-      "ar": "لمعرفة أي مبادرة تحرّك أي هدف. يُجمَّع الجواب يدوياً في جدول، إن وصل أصلاً.",
+      "ar": "لتحديد مساهمة كل مبادرة في تحقيق الأهداف، تُجمع البيانات يدويًا في جداول البيانات، إن توفرت.",
       "n": 90,
       "verdict": "",
       "comment": ""
@@ -753,7 +753,7 @@
     {
       "element": "p",
       "en": "Before a slip reaches the office that funded the work. By then the number has been rounded by the person who will be asked about it.",
-      "ar": "قبل أن يصل التأخير إلى المكتب الذي موّل العمل، وبعد أن قُرّب الرقم بيد من سيُسأل عنه.",
+      "ar": "قبل أن يصل التأخير إلى الجهة المموِّلة، يكون الرقم قد تم تقريبه بالفعل من قِبل الشخص المسؤول عنه، والذي سيُطلب منه تفسيره لاحقًا.",
       "n": 93,
       "verdict": "",
       "comment": ""
@@ -777,7 +777,7 @@
     {
       "element": "p",
       "en": "Measured against the forecast after closure. The team that promised it was released before the benefit was due.",
-      "ar": "قياس الفعلي مقابل التوقع بعد الإغلاق، وقد سُرّح الفريق الذي وعد بها قبل موعد ظهورها.",
+      "ar": "تُقاس المنفعة بعد إغلاق المشروع مقارنةً بالتوقعات، رغم انتهاء مهمة الفريق المسؤول عن تحقيقها قبل موعد استحقاقها.",
       "n": 96,
       "verdict": "",
       "comment": ""
@@ -793,7 +793,7 @@
     {
       "element": "h2",
       "en": "Bring one objective. We will trace it to the money.",
-      "ar": "أحضر هدفاً واحداً، ونتتبّعه حتى المال.",
+      "ar": "اختر هدفًا واحدًا، وسنتتبّع مساره حتى نصل إلى العائد المالي الذي حققه.",
       "n": 98,
       "verdict": "",
       "comment": ""
@@ -801,7 +801,7 @@
     {
       "element": "p",
       "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions. Not a demo dataset.",
-      "ar": "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات. لا بيانات تجريبية.",
+      "ar": "أربعون دقيقة لتحليل محفظة أعمال مماثلة لمحفظتك، تشمل إداراتك وفترتك الزمنية وأسماء متخذي القرارات، وليست بيانات تجريبية.",
       "n": 99,
       "verdict": "",
       "comment": ""
@@ -841,7 +841,7 @@
     {
       "element": "p",
       "en": "Sovereign. On-premise or in your own cloud tenancy, inside your boundary.",
-      "ar": "سيادي. داخل مقرّك أو في سحابتك الخاصة، ضمن حدودك.",
+      "ar": "حل سيادي يعمل داخل مقرّكم أو ضمن بيئة سحابية مخصصة لكم، مع بقاء جميع البيانات والعمليات داخل نطاقكم.",
       "n": 104,
       "verdict": "",
       "comment": ""
@@ -857,7 +857,7 @@
     {
       "element": "p",
       "en": "Arabic and English, both first-class, reports included.",
-      "ar": "العربية والإنجليزية، كلتاهما أساسية، بما في ذلك التقارير.",
+      "ar": "تجربة متكاملة باللغتين العربية والإنجليزية، بما في ذلك جميع التقارير.",
       "n": 106,
       "verdict": "",
       "comment": ""
@@ -865,7 +865,7 @@
     {
       "element": "p",
       "en": "Operated by",
-      "ar": "التشغيل",
+      "ar": "تديره",
       "n": 107,
       "verdict": "",
       "comment": ""
@@ -889,7 +889,7 @@
     {
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
-      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
       "n": 110,
       "verdict": "",
       "comment": ""

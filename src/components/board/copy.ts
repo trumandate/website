@@ -182,10 +182,10 @@ const ar: BoardCopy = {
     waitingChip: "6 بانتظار شخص",
     confidenceLabel: "الثقة",
     item1Dept: "التنفيذ · المبادرة 07",
-    item1Title: "تأخير متوقَّع في المعلم: 12 يوماً",
-    item1Detail: "تبعيتان غير محلولتين عند البوابة 3. يقترح إعادة ترتيب البوابة 4.",
+    item1Title: "التنبؤ بتأخر تحقيق المرحلة الرئيسية",
+    item1Detail: "هناك اعتمادان لم تتم معالجتهما بعد في البوابة 3، مما يستدعي إعادة ترتيب تسلسل البوابة 4.",
     item2Dept: "الاستراتيجية · المؤشران 2.1 / 4.3",
-    item2Title: "مؤشران يحتسبان منفعة واحدة",
+    item2Title: "مؤشران يقيسان منفعة واحدة",
     // 2026-09-02 (bilingual copy export, tools/export-copy.mjs): these three
     // shipped as empty strings, so the Arabic board rendered the escalation
     // card as an empty shell — Arabic carrying less than English, which

@@ -4,7 +4,7 @@
     "ar": "/ar/contact/"
   },
   "title": "Contact / demo request",
-  "generated": "2026-09-03",
+  "generated": "2026-09-09",
   "counts": {
     "en": 38,
     "ar": 38,
@@ -145,7 +145,7 @@
     {
       "element": "p",
       "en": "Fields marked * are required.",
-      "ar": "الحقول المعلَّمة بـ * مطلوبة.",
+      "ar": "الحقول التي تحمل علامة * مطلوبة.",
       "n": 17,
       "verdict": "",
       "comment": ""
@@ -153,7 +153,7 @@
     {
       "element": "label",
       "en": "Name *",
-      "ar": "الاسم *",
+      "ar": "التوثيق *",
       "n": 18,
       "verdict": "",
       "comment": ""
@@ -177,7 +177,7 @@
     {
       "element": "legend",
       "en": "What you want to see *",
-      "ar": "ما ترغب في رؤيته *",
+      "ar": "ما الذي ترغب في الاطلاع عليه *",
       "n": 21,
       "verdict": "",
       "comment": ""
@@ -193,7 +193,7 @@
     {
       "element": "label",
       "en": "Strategy and KPI cascade",
-      "ar": "تدرّج الاستراتيجية والمؤشرات",
+      "ar": "تسلسل الاستراتيجية ومؤشرات الأداء",
       "n": 23,
       "verdict": "",
       "comment": ""
@@ -201,7 +201,7 @@
     {
       "element": "label",
       "en": "Benefits realisation",
-      "ar": "تحقيق المنافع",
+      "ar": "تحقيق الفوائد",
       "n": 24,
       "verdict": "",
       "comment": ""
@@ -257,7 +257,7 @@
     {
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
-      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
       "n": 31,
       "verdict": "",
       "comment": ""

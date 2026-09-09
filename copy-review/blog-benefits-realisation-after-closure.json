@@ -4,7 +4,7 @@
     "ar": "/ar/blog/benefits-realisation-after-closure/"
   },
   "title": "Post: benefits realisation after closure",
-  "generated": "2026-09-03",
+  "generated": "2026-09-09",
   "counts": {
     "en": 92,
     "ar": 98,
@@ -113,7 +113,7 @@
     {
       "element": "h1",
       "en": "Benefits realisation after project closure",
-      "ar": "تحقيق المنافع بعد إغلاق المشروع",
+      "ar": "تحقيق الفوائد بعد إغلاق المشروع",
       "n": 13,
       "verdict": "",
       "comment": ""
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Benefit forecasts stop being measured the day the team disbands. What a benefit register holds, why 24 months, and who should own a benefit.",
-      "ar": "يتوقف قياس المنافع المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل المنافع، ولماذا أربعة وعشرون شهراً، ومن يجب أن يملك المنفعة.",
+      "ar": "يتوقف قياس الفوائد المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل الفوائد، ولماذا أربعة وعشرون شهرًا، ومن المسؤول عن كل فائدة.",
       "n": 14,
       "verdict": "",
       "comment": ""
@@ -703,7 +703,7 @@
     {
       "element": "p",
       "en": "Forty minutes, on a portfolio shaped like yours: your departments, your period, your names on the decisions.",
-      "ar": "أربعون دقيقة على محفظة تشبه محفظتك: إداراتك، وفترتك، وأسماؤكم على القرارات.",
+      "ar": "أربعون دقيقة لتحليل محفظة أعمال مماثلة لمحفظتك، تشمل إداراتك وفترتك الزمنية وأسماء متخذي القرارات، وليست بيانات تجريبية.",
       "n": 86,
       "verdict": "",
       "comment": ""
@@ -727,7 +727,7 @@
     {
       "element": "a",
       "en": "NextThe strategy execution gap: why strategy dies between the mandate and the money",
-      "ar": "التاليفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والمال؟",
+      "ar": "التاليفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والتمويل؟",
       "n": 89,
       "verdict": "",
       "comment": ""
@@ -743,7 +743,7 @@
     {
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
-      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
       "n": 91,
       "verdict": "",
       "comment": ""

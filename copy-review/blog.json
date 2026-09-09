@@ -4,7 +4,7 @@
     "ar": "/ar/blog/"
   },
   "title": "Blog index",
-  "generated": "2026-09-03",
+  "generated": "2026-09-09",
   "counts": {
     "en": 28,
     "ar": 28,
@@ -105,7 +105,7 @@
     {
       "element": "p",
       "en": "From the team behind TruMandate",
-      "ar": "من الفريق الذي يبني TruMandate",
+      "ar": "من الفريق الذي يقف وراء TruMandate",
       "n": 12,
       "verdict": "",
       "comment": ""
@@ -113,7 +113,7 @@
     {
       "element": "h1",
       "en": "Notes on governing a portfolio.",
-      "ar": "ملاحظات في حوكمة المحفظة.",
+      "ar": "ملاحظات حول حوكمة المحافظ",
       "n": 13,
       "verdict": "",
       "comment": ""
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Short, specific pieces on portfolio governance, strategy execution and benefits realisation, written by the people who build the platform.",
-      "ar": "مقالات قصيرة ومحددة عن حوكمة المحافظ، وتنفيذ الاستراتيجية، وتحقيق المنافع، يكتبها من يبنون المنصة.",
+      "ar": "محتوى موجز ومحدد حول حوكمة المحافظ، وتنفيذ الاستراتيجيات، وتحقيق الفوائد، يقدمه أعضاء الفريق الذين يطوّرون المنصة.",
       "n": 14,
       "verdict": "",
       "comment": ""
@@ -137,7 +137,7 @@
     {
       "element": "a",
       "en": "19 August 2026 · 7 min readBenefits realisation after project closureBenefit forecasts stop being measured the day the team disbands. What a benefit register holds, why 24 months, and who should own a benefit.benefits-realisationbenefit-registerportfolio-governanceRead this post",
-      "ar": "19 أغسطس 2026 · قراءة في 8 دقائقتحقيق المنافع بعد إغلاق المشروعيتوقف قياس المنافع المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل المنافع، ولماذا أربعة وعشرون شهراً، ومن يجب أن يملك المنفعة.benefits-realisationbenefit-registerportfolio-governanceاقرأ المقال",
+      "ar": "19 أغسطس 2026 · قراءة في 8 دقائقتحقيق الفوائد بعد إغلاق المشروعيتوقف قياس الفوائد المتوقعة يوم يتفرق الفريق. ما الذي يحتويه سجل الفوائد، ولماذا أربعة وعشرون شهرًا، ومن المسؤول عن كل فائدة.benefits-realisationbenefit-registerportfolio-governanceاقرأ المقال",
       "n": 16,
       "verdict": "",
       "comment": ""
@@ -153,7 +153,7 @@
     {
       "element": "li",
       "en": "19 August 2026 · 7 min readThe strategy execution gap: why strategy dies between the mandate and the moneyThe strategy execution gap is a records problem, not a motivation problem. Three mechanisms that open it, and what closing it actually requires.strategy-executionportfolio-governanceepmo",
-      "ar": "19 أغسطس 2026 · قراءة في 7 دقائقفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والمال؟فجوة التنفيذ مشكلة سجلات لا مشكلة عزيمة. ثلاث آليات تفتحها، وما الذي يتطلبه إغلاقها فعلاً: التتبّع، والملكية بالاسم، والقيم الفعلية الحيّة.strategy-executionportfolio-governanceepmo",
+      "ar": "19 أغسطس 2026 · قراءة في 7 دقائقفجوة تنفيذ الاستراتيجية: لماذا تموت الاستراتيجية بين التكليف والتمويل؟فجوة تنفيذ الاستراتيجية هي مشكلة في السجلات، وليست مشكلة في التحفيز. ثلاث آليات تؤدي إلى اتساعها، وما يتطلبه سدّها فعليًا.strategy-executionportfolio-governanceepmo",
       "n": 18,
       "verdict": "",
       "comment": ""
@@ -161,7 +161,7 @@
     {
       "element": "li",
       "en": "19 August 2026 · 7 min readWhat is portfolio governance?A working definition of portfolio governance: what it decides, what its record holds, how it differs from project governance, and why spreadsheets fail.portfolio-governancestrategy-officeepmo",
-      "ar": "19 أغسطس 2026 · قراءة في 7 دقائقما هي حوكمة المحافظ؟تعريف عملي لحوكمة المحافظ: ماذا تقرر، وماذا يحتوي سجلّها، وكيف تختلف عن حوكمة المشاريع، ولماذا تعجز جداول البيانات عنها.portfolio-governancestrategy-officeepmo",
+      "ar": "19 أغسطس 2026 · قراءة في 7 دقائقحوكمة المحفظةالتعريف العملي لحوكمة المحافظ: ما الذي تقرره، وما الذي يتضمنه سجلها، وكيف تختلف عن حوكمة المشاريع، ولماذا تفشل جداول البيانات في ذلك.portfolio-governancestrategy-officeepmo",
       "n": 19,
       "verdict": "",
       "comment": ""
@@ -177,7 +177,7 @@
     {
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
-      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
       "n": 21,
       "verdict": "",
       "comment": ""

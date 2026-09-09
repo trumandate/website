@@ -4,7 +4,7 @@
     "ar": "/ar/execution/"
   },
   "title": "Execution and governance",
-  "generated": "2026-09-03",
+  "generated": "2026-09-09",
   "counts": {
     "en": 47,
     "ar": 47,
@@ -105,7 +105,7 @@
     {
       "element": "p",
       "en": "The chain · Initiative → Milestone",
-      "ar": "السلسلة · من المبادرة إلى المعلم",
+      "ar": "السلسلة · المبادرة ← نقطة الإنجاز",
       "n": 12,
       "verdict": "",
       "comment": ""
@@ -113,7 +113,7 @@
     {
       "element": "h1",
       "en": "Delivery data that never reaches the funder is just paperwork.",
-      "ar": "بيانات التنفيذ التي لا تصل إلى الممُوِّل مجرد أوراق.",
+      "ar": "بيانات التنفيذ التي لا تصل إلى الجهة المموِّلة ليست سوى أوراق.",
       "n": 13,
       "verdict": "",
       "comment": ""
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Project tools cannot roll up to a mandate they have never heard of. TruMandate holds every initiative against the objective that funded it, so slip is a subtraction, visible the day it happens.",
-      "ar": "أدوات المشاريع لا تستطيع الصعود إلى تكليف لم تسمع به. يحفظ TruMandate كل مبادرة مقابل الهدف الذي موّلها، فيصير التأخير عملية طرح تظهر يوم وقوعها.",
+      "ar": "لا يمكن لأدوات إدارة المشاريع ربط نتائجها بتكليف لا تعرفه. ويربط ترو ماندات (TruMandate) كل مبادرة بالهدف الذي موّلها، بحيث يُحتسب أي تأخير كتراجع مباشر في تحقيق الهدف، ويظهر أثره في يوم حدوثه.",
       "n": 14,
       "verdict": "",
       "comment": ""
@@ -137,7 +137,7 @@
     {
       "element": "p",
       "en": "The list continues past the crop. The red row raised itself; nobody filed an exception report.",
-      "ar": "القائمة تستمر بعد القص. الصف الأحمر رفع نفسه بنفسه؛ لم يكتب أحد تقرير استثناء.",
+      "ar": "تتجاوز القائمة الجزء الظاهر، بينما برز الصف الأحمر تلقائيًا دون أن يقدّم أحد تقريرًا عن الاستثناء.",
       "n": 16,
       "verdict": "",
       "comment": ""
@@ -145,7 +145,7 @@
     {
       "element": "p",
       "en": "Where it breaks",
-      "ar": "أين ينقطع الخيط",
+      "ar": "أين يحدث الخلل",
       "n": 17,
       "verdict": "",
       "comment": ""
@@ -153,7 +153,7 @@
     {
       "element": "h2",
       "en": "The monthly pack is stale and negotiated. Committees fund on it anyway.",
-      "ar": "التقرير الشهري قديم ومتفاوَض عليه، واللجان تموّل بناءً عليه رغم ذلك.",
+      "ar": "تعتمد اللجان في قرارات التمويل على تقرير شهري قديم يخضع للتفاوض والتعديل.",
       "n": 18,
       "verdict": "",
       "comment": ""
@@ -161,7 +161,7 @@
     {
       "element": "p",
       "en": "The ritual",
-      "ar": "الطقس الشهري",
+      "ar": "الطقس المتكرر",
       "n": 19,
       "verdict": "",
       "comment": ""
@@ -169,7 +169,7 @@
     {
       "element": "p",
       "en": "Someone requests status. Someone retypes it into a template. Each number is rounded toward the answer its author would rather give, because the writer is also the one who will be asked about it.",
-      "ar": "أحدهم يطلب الحالة، وآخر يعيد كتابتها في قالب. وفي الطريق يُقرَّب كل رقم نحو الجواب الذي يفضّله كاتبه، لأنه هو من سيُسأل عنه.",
+      "ar": "يطلب أحدهم تحديثًا عن الحالة، ثم يعيد شخص آخر إدخالها يدويًا في نموذج موحّد. ويُقرَّب كل رقم نحو النتيجة التي يفضّل كاتبه عرضها، لأن الشخص الذي يكتب الرقم هو نفسه من سيُطلب منه تفسيره لاحقًا.",
       "n": 20,
       "verdict": "",
       "comment": ""
@@ -185,7 +185,7 @@
     {
       "element": "p",
       "en": "Every milestone carries a baseline date and an actual date, so slip is arithmetic, not judgement. The steering pack stops being assembled because it was never disassembled.",
-      "ar": "كل معلم يحمل تاريخ أساس وتاريخاً فعلياً، فيصير التأخير حساباً لا اجتهاداً. يتوقف تقرير اللجنة عن كونه شيئاً يُركَّب، لأنه لم يُفكَّك أصلاً.",
+      "ar": "كل معلم يحمل تاريخ خط أساس وتاريخًا فعليًا، فيصبح التأخير نتيجة حسابية لا مسألة اجتهاد. وتتوقف الحاجة إلى إعداد تقرير اللجنة يدويًا، لأن البيانات التي يستند إليها مترابطة أصلًا.",
       "n": 22,
       "verdict": "",
       "comment": ""
@@ -193,7 +193,7 @@
     {
       "element": "p",
       "en": "The name",
-      "ar": "الاسم",
+      "ar": "التوثيق",
       "n": 23,
       "verdict": "",
       "comment": ""
@@ -201,7 +201,7 @@
     {
       "element": "p",
       "en": "Every stage gate decision is recorded against a person and a date, and it stays on the record after that person moves on. A wrong number leads back to someone who can be asked.",
-      "ar": "كل قرار بوابة مسجَّل باسم شخص وتاريخ، ويبقى على السجل بعد انتقاله. الرقم الخاطئ يقود إلى شخص يمكن سؤاله.",
+      "ar": "يُسجَّل كل قرار عند كل مرحلة من مراحل الاعتماد باسم المسؤول عنه وتاريخه، ويظل محفوظًا في السجل حتى بعد مغادرة ذلك الشخص لمنصبه. وعند ظهور رقم غير صحيح، يمكن الرجوع إلى المسؤول عنه ومساءلته.",
       "n": 24,
       "verdict": "",
       "comment": ""
@@ -217,7 +217,7 @@
     {
       "element": "h2",
       "en": "A risk neither owner had raised.",
-      "ar": "خطرٌ لم يرفعه أي من المالكَين.",
+      "ar": "مخاطرة لم يرفعها أيٌّ من المسؤولين عنها",
       "n": 26,
       "verdict": "",
       "comment": ""
@@ -225,7 +225,7 @@
     {
       "element": "p",
       "en": "Two records no person had a reason to compare: a date that moved on one initiative, and a start condition on another that points at it. Different departments, no shared meeting. The model put it in front of someone with a week still on the clock.",
-      "ar": "سجلّان لم يكن لأحد سبب لمقارنتهما: تاريخ تحرّك في مبادرة، وشرط بدء في أخرى يشير إليه. إدارتان مختلفتان ولا اجتماع مشترك. وضعه النموذج أمام شخص وفي الوقت أسبوع كامل.",
+      "ar": "سجلّان لم يكن لدى أي شخص سبب لمقارنتهما: تاريخ تغيّر في إحدى المبادرات، وشرط بدء في مبادرة أخرى يشير إليها. قسمان مختلفان، ولا اجتماع يجمع بينهما. اكتشف النموذج الرابط بينهما ولفت انتباه أحد المسؤولين إليه، بينما لا يزال أمامه أسبوع لاتخاذ الإجراء اللازم.",
       "n": 27,
       "verdict": "",
       "comment": ""
@@ -233,7 +233,7 @@
     {
       "element": "h3",
       "en": "Cross-department dependency at risk",
-      "ar": "تبعية بين إدارتين معرَّضة للخطر",
+      "ar": "الاعتمادية المشتركة بين الإدارات معرضة للخطر",
       "n": 28,
       "verdict": "",
       "comment": ""
@@ -241,7 +241,7 @@
     {
       "element": "p",
       "en": "Initiative 07 and Initiative 21, different departments. Evidence: gate 3 slipped on one, and the other's start condition references it. Suggested action: raise a dependency flag before the steering meeting.",
-      "ar": "المبادرة 07 والمبادرة 21، في إدارتين مختلفتين. الدليل: تأخرت البوابة 3 في إحداهما، وشرط بدء الأخرى يشير إليها. الإجراء المقترح: رفع علامة تبعية قبل اجتماع اللجنة.",
+      "ar": "المبادرة 07 والمبادرة 21، وتتبعان إدارتين مختلفتين. الدليل: تأخرت البوابة 3 في إحداهما، وشرط بدء الأخرى يشير إليها. الإجراء المقترح: تسجيل التبعية قبل اجتماع اللجنة.",
       "n": 29,
       "verdict": "",
       "comment": ""
@@ -281,7 +281,7 @@
     {
       "element": "p",
       "en": "Held back from this page",
-      "ar": "محجوب عن هذه الصفحة",
+      "ar": "في هذه الصفحة",
       "n": 34,
       "verdict": "",
       "comment": ""
@@ -289,7 +289,7 @@
     {
       "element": "h2",
       "en": "What happens when a gate is rejected.",
-      "ar": "ماذا يحدث حين تُرفض بوابة.",
+      "ar": "ماذا يحدث عند رفض البوابة؟",
       "n": 35,
       "verdict": "",
       "comment": ""
@@ -297,7 +297,7 @@
     {
       "element": "p",
       "en": "How far the change propagates through dates, dependencies and owners before anyone sits down to re-plan.",
-      "ar": "إلى أي مدى ينتشر التغيير عبر التواريخ والتبعيات والمالكين قبل أن يجلس أحد لإعادة التخطيط.",
+      "ar": "إلى أي مدى يمتد أثر التغيير عبر التواريخ والتبعيات والمسؤولين عنه، قبل أن يبدأ أحد بإعادة التخطيط.",
       "n": 36,
       "verdict": "",
       "comment": ""
@@ -329,7 +329,7 @@
     {
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
-      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
       "n": 40,
       "verdict": "",
       "comment": ""

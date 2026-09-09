@@ -4,7 +4,7 @@
     "ar": "/ar/strategy/"
   },
   "title": "Strategy and KPIs",
-  "generated": "2026-09-03",
+  "generated": "2026-09-09",
   "counts": {
     "en": 59,
     "ar": 59,
@@ -113,7 +113,7 @@
     {
       "element": "h1",
       "en": "A mandate is not a plan until someone owns a number.",
-      "ar": "التكليف لا يصير خطة حتى يملك أحدهم رقماً.",
+      "ar": "التكليف وحده ليس خطة؛ فلا بد من شخص يتحمل مسؤولية تحقيق نتائج محددة.",
       "n": 13,
       "verdict": "",
       "comment": ""
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Every office can draw the objective tree. TruMandate makes the KPI the join: a baseline, a target, a named owner and a live actual, wired to the objective above it and the initiatives below it.",
-      "ar": "كل مكتب يستطيع رسم شجرة الأهداف. يجعل TruMandate المؤشر نقطة الوصل: خط أساس، وقيمة مستهدفة، ومالك بالاسم، وقيمة فعلية حيّة، موصولة بالهدف فوقها والمبادرات تحتها.",
+      "ar": "يمكن لكل جهة بناء شجرة أهداف واضحة، بينما يربط ترو ماندات (TruMandate) مؤشرات الأداء بالأهداف والمبادرات، من خلال تحديد خط الأساس والهدف والمسؤول عن تحقيقه والقيمة الفعلية بشكل مستمر، بما يضمن ارتباط كل مؤشر بالهدف الذي يدعمه والمبادرات التي تسهم في تحقيقه.",
       "n": 14,
       "verdict": "",
       "comment": ""
@@ -233,7 +233,7 @@
     {
       "element": "p",
       "en": "One KPI record as the platform stores it. The status dot is computed from movement, never typed in.",
-      "ar": "سجل مؤشر واحد كما تحفظه المنصة. نقطة الحالة تُحسب من الحركة، ولا تُكتب بيد أحد.",
+      "ar": "يمثل هذا السجل مؤشر أداء رئيسيًا (KPI) واحدًا محفوظًا في المنصة، مع احتساب حالته تلقائيًا بناءً على حركة الأداء وتطوره، دون أي إدخال يدوي.",
       "n": 28,
       "verdict": "",
       "comment": ""
@@ -241,7 +241,7 @@
     {
       "element": "p",
       "en": "Where it breaks",
-      "ar": "أين ينقطع الخيط",
+      "ar": "أين يحدث الخلل",
       "n": 29,
       "verdict": "",
       "comment": ""
@@ -249,7 +249,7 @@
     {
       "element": "h2",
       "en": "The tree was never the hard part.",
-      "ar": "الشجرة لم تكن يوماً الجزء الصعب.",
+      "ar": "لم تكن شجرة الأهداف هي التحدي الحقيقي.",
       "n": 30,
       "verdict": "",
       "comment": ""
@@ -257,7 +257,7 @@
     {
       "element": "p",
       "en": "The break",
-      "ar": "الانقطاع",
+      "ar": "الفجوة",
       "n": 31,
       "verdict": "",
       "comment": ""
@@ -265,7 +265,7 @@
     {
       "element": "p",
       "en": "Objectives are written by the people who set direction. KPIs are defined months later by the people who report. Nobody's job is to reconcile the two, so they drift apart quietly.",
-      "ar": "الأهداف يكتبها من يضعون التوجّه، والمؤشرات يعرّفها بعد أشهر من سيرفعون التقارير. لا أحد وظيفته التوفيق بينهما، فيبتعدان بهدوء.",
+      "ar": "تبدأ المشكلة عندما تُحدَّد الأهداف في مرحلة، ثم تُبنى مؤشرات الأداء الرئيسية بعد أشهر وبشكل منفصل عنها. ومع غياب من يربط بين الأهداف والمؤشرات، تتباعد تدريجيًا، حتى تفقد المؤشرات ارتباطها بالأهداف التي يفترض أن تقيس التقدم نحوها.",
       "n": 32,
       "verdict": "",
       "comment": ""
@@ -273,7 +273,7 @@
     {
       "element": "p",
       "en": "The join",
-      "ar": "نقطة الوصل",
+      "ar": "حلقة الوصل",
       "n": 33,
       "verdict": "",
       "comment": ""
@@ -281,7 +281,7 @@
     {
       "element": "p",
       "en": "In TruMandate the KPI is the join, not a downstream artefact. Rescope an initiative and the consequence shows at the KPI it feeds, because the link is part of the record.",
-      "ar": "في TruMandate المؤشر هو نقطة الوصل لا مخرَجاً لاحقاً. غيّر نطاق مبادرة، فيظهر الأثر عند المؤشر الذي تغذّيه، لأن الرابط جزء من السجل.",
+      "ar": "في ترو ماندات (TruMandate)، لا يأتي مؤشر الأداء الرئيسي (KPI) كعنصر منفصل في نهاية العملية، بل يشكل حلقة الوصل بين الأهداف والمبادرات. فعند تغيير نطاق أي مبادرة، يظهر أثر التغيير مباشرةً على مؤشر الأداء المرتبط بها، لأن العلاقة بينهما مدمجة ضمن سجل المؤشر نفسه.",
       "n": 34,
       "verdict": "",
       "comment": ""
@@ -297,7 +297,7 @@
     {
       "element": "p",
       "en": "The platform will not accept a KPI without a baseline. A measure with no starting point is an opinion, and an opinion does not survive a minister asking what changed.",
-      "ar": "لا تقبل المنصة مؤشراً بلا خط أساس. مقياس بلا نقطة انطلاق رأيٌ، والرأي لا ينجو من سؤال وزير عمّا تغيّر.",
+      "ar": "لا تسمح المنصة بإضافة أي مؤشر أداء رئيسي (KPI) من دون تحديد خط أساس واضح. فبدون نقطة بداية، لا يمكن قياس التغيير بصورة موثوقة، ولن يكون من السهل الإجابة عن السؤال الأهم: ما الذي تغيّر؟",
       "n": 36,
       "verdict": "",
       "comment": ""
@@ -313,7 +313,7 @@
     {
       "element": "h2",
       "en": "Two KPIs, one benefit, counted twice.",
-      "ar": "مؤشران، ومنفعة واحدة، محسوبة مرتين.",
+      "ar": "مؤشرا أداء، ونتيجة واحدة، تُحتسب مرتين.",
       "n": 38,
       "verdict": "",
       "comment": ""
@@ -321,7 +321,7 @@
     {
       "element": "p",
       "en": "The model compares measure definitions and initiative links, not names, so it catches duplication that a tidy naming convention hides. It states what it found, how sure it is, and what it would do. A person chooses, and the choice is stored with their name.",
-      "ar": "يقارن النموذج تعريفات المقاييس وروابط المبادرات لا الأسماء، فيكشف ازدواجاً يخفيه اصطلاح تسمية مرتَّب. يذكر ما وجده ودرجة يقينه وما يقترح فعله، ويختار إنسان، ويُحفظ اختياره باسمه.",
+      "ar": "يقارن النموذج تعريفات مؤشرات الأداء وروابط المبادرات، وليس أسماءها فقط، مما يتيح له اكتشاف التكرار الذي قد تخفيه حتى أنظمة التسمية المنظمة. ويوضح النموذج ما اكتشفه، ومدى ثقته في النتيجة، والإجراء الذي يقترحه. ثم يتخذ المسؤول القرار، ويُحفظ هذا القرار في المنصة باسمه.",
       "n": 39,
       "verdict": "",
       "comment": ""
@@ -329,7 +329,7 @@
     {
       "element": "h3",
       "en": "Two KPIs counting the same benefit",
-      "ar": "مؤشران يحتسبان المنفعة نفسها",
+      "ar": "مؤشرا أداء يقيسان الفائدة نفسها",
       "n": 40,
       "verdict": "",
       "comment": ""
@@ -337,7 +337,7 @@
     {
       "element": "p",
       "en": "Objective 2.1 and Objective 4.3. Evidence: identical source measure and an overlapping initiative set. Suggested action: merge, or mark one as a contributing measure.",
-      "ar": "الهدف 2.1 والهدف 4.3. الدليل: مقياس مصدري متطابق ومجموعة مبادرات متداخلة. الإجراء المقترح: الدمج، أو تعليم أحدهما مقياساً مساهماً.",
+      "ar": "الهدف 2.1 والهدف 4.3 الدليل: يعتمد المؤشران على مصدر القياس نفسه، مع وجود مبادرات متداخلة بينهما. الإجراء المقترح: دمج المؤشرين، أو تحديد أحدهما كمؤشر مساهم.",
       "n": 41,
       "verdict": "",
       "comment": ""
@@ -377,7 +377,7 @@
     {
       "element": "p",
       "en": "Held back from this page",
-      "ar": "محجوب عن هذه الصفحة",
+      "ar": "في هذه الصفحة",
       "n": 46,
       "verdict": "",
       "comment": ""
@@ -385,7 +385,7 @@
     {
       "element": "h2",
       "en": "The cascade editor. Watch it built live, in about ten minutes.",
-      "ar": "محرّر التدرّج. شاهده يُبنى أمامك في نحو عشر دقائق.",
+      "ar": "محرّر تسلسل الأهداف — شاهد كيف يُبنى مباشرةً أمامك في نحو عشر دقائق.",
       "n": 47,
       "verdict": "",
       "comment": ""
@@ -393,7 +393,7 @@
     {
       "element": "p",
       "en": "A national framework document in at the top, weighted objectives out at the bottom.",
-      "ar": "وثيقة إطار وطني تدخل من أعلاه، وأهداف موزونة تخرج من أسفله.",
+      "ar": "من وثيقة استراتيجية شاملة إلى أهداف موزونة على مستوى التنفيذ.",
       "n": 48,
       "verdict": "",
       "comment": ""
@@ -425,7 +425,7 @@
     {
       "element": "p",
       "en": "Powered by Intertec Systems · Dubai, UAE",
-      "ar": "مشغَّل من إنترتك سيستمز · دبي، الإمارات",
+      "ar": "مدعوم من إنترتك سيستمز – دبي، الإمارات العربية المتحدة",
       "n": 52,
       "verdict": "",
       "comment": ""
