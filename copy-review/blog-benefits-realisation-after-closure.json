@@ -654,40 +654,40 @@
     },
     {
       "element": "li",
-      "en": "benefits-realisation",
-      "ar": "benefits-realisation",
+      "en": "Benefits realisation",
+      "ar": "تحقيق الفوائد",
       "n": 80,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "benefit-register",
-      "ar": "benefit-register",
+      "en": "Benefit register",
+      "ar": "سجل الفوائد",
       "n": 81,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "portfolio-governance",
-      "ar": "portfolio-governance",
+      "en": "Portfolio governance",
+      "ar": "حوكمة المحافظ",
       "n": 82,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "project-closure",
-      "ar": "project-closure",
+      "en": "Project closure",
+      "ar": "إغلاق المشروع",
       "n": 83,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "public-sector",
-      "ar": "public-sector",
+      "en": "Public sector",
+      "ar": "القطاع العام",
       "n": 84,
       "verdict": "",
       "comment": ""

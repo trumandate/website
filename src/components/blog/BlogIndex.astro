@@ -55,6 +55,7 @@ import {
   formatReadingTime,
   readingTime,
   type BlogPost,
+  tagLabel,
 } from "../../lib/blog";
 
 interface Props {
@@ -174,7 +175,7 @@ const chevron = lang === "ar" ? "M7 1 2 6.5 7 12" : "M2 1l5 5.5L2 12";
               aria-label={t("blog.tagsLabel")}
             >
               {featured.tags.map((tag) => (
-                <li>{tag}</li>
+                <li>{tagLabel(tag, lang)}</li>
               ))}
             </ul>
 
@@ -248,7 +249,7 @@ const chevron = lang === "ar" ? "M7 1 2 6.5 7 12" : "M2 1l5 5.5L2 12";
                   aria-label={t("blog.tagsLabel")}
                 >
                   {entry.tags.map((tag) => (
-                    <li>{tag}</li>
+                    <li>{tagLabel(tag, lang)}</li>
                   ))}
                 </ul>
               </a>

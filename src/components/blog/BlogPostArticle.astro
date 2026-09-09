@@ -64,6 +64,7 @@ import {
   formatReadingTime,
   readingTime,
   type BlogPost,
+  tagLabel,
 } from "../../lib/blog";
 import tailwindConfig from "../../../tailwind.config.mjs";
 
@@ -330,7 +331,7 @@ const proseVars = {
           aria-labelledby="blog-topics-label"
           class="tag-list mt-3 flex flex-wrap items-center font-mono text-datum font-data tracking-datum text-muted"
         >
-          {post.data.tags.map((tag) => <li>{tag}</li>)}
+          {post.data.tags.map((tag) => <li>{tagLabel(tag, lang)}</li>)}
         </ul>
       </footer>
     </div>

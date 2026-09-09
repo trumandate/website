@@ -616,40 +616,40 @@
     },
     {
       "element": "li",
-      "en": "strategy-execution",
-      "ar": "strategy-execution",
+      "en": "Strategy execution",
+      "ar": "تنفيذ الاستراتيجية",
       "n": 76,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "portfolio-governance",
-      "ar": "portfolio-governance",
+      "en": "Portfolio governance",
+      "ar": "حوكمة المحافظ",
       "n": 77,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "epmo",
-      "ar": "epmo",
+      "en": "EPMO",
+      "ar": "مكتب إدارة المشاريع المؤسسي (EPMO)",
       "n": 78,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "reporting",
-      "ar": "reporting",
+      "en": "Reporting",
+      "ar": "التقارير",
       "n": 79,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "public-sector",
-      "ar": "public-sector",
+      "en": "Public sector",
+      "ar": "القطاع العام",
       "n": 80,
       "verdict": "",
       "comment": ""

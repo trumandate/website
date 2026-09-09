@@ -200,3 +200,40 @@ export function parseFaq(body: string, lang: Language): FaqItem[] | null {
 
   return items.length > 0 ? items : null;
 }
+
+/**
+ * Human labels for the tag slugs.
+ *
+ * The slugs themselves stay English everywhere they are machine-read — the
+ * `tags` frontmatter, the BlogPosting `keywords` in the JSON-LD — because they
+ * are shared identifiers across a translation pair, not display copy. This map
+ * is the display layer, so an Arabic post shows Arabic topic labels without
+ * changing a single slug (Arabic QA sheet, 2026-09-09; owner decision to add a
+ * label map rather than translate the slugs in place).
+ *
+ * Six labels come from the reviewer's own sheet. The four marked below did not
+ * appear in it and are authored here, pending the same review — flagged in
+ * COPY-REVIEW.md rather than passed off as approved.
+ */
+const TAG_LABELS: Record<string, { en: string; ar: string }> = {
+  "benefits-realisation": { en: "Benefits realisation", ar: "تحقيق الفوائد" },
+  "benefit-register": { en: "Benefit register", ar: "سجل الفوائد" },
+  "portfolio-governance": { en: "Portfolio governance", ar: "حوكمة المحافظ" },
+  "strategy-execution": { en: "Strategy execution", ar: "تنفيذ الاستراتيجية" },
+  "strategy-office": { en: "Strategy office", ar: "مكتب الاستراتيجية" },
+  epmo: { en: "EPMO", ar: "مكتب إدارة المشاريع المؤسسي (EPMO)" },
+  // ---- authored here, not yet reviewed ----
+  "project-closure": { en: "Project closure", ar: "إغلاق المشروع" },
+  "public-sector": { en: "Public sector", ar: "القطاع العام" },
+  reporting: { en: "Reporting", ar: "التقارير" },
+  kpi: { en: "KPIs", ar: "مؤشرات الأداء" },
+};
+
+/**
+ * Display label for a tag slug. An unmapped slug falls back to itself rather
+ * than to an empty chip, so adding a tag to a post can never blank a label —
+ * it just shows the slug until someone writes the pair.
+ */
+export function tagLabel(slug: string, lang: Language): string {
+  return TAG_LABELS[slug]?.[lang] ?? slug;
+}

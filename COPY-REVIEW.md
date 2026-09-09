@@ -781,3 +781,37 @@ read as a system notice on the new light card, and is now in the body face.
   reader sees rather than a second, invented one. The entries under it are the
   post's own H2 headings verbatim — nothing is rewritten or shortened for the
   rail, in either language.
+
+## 2026-09-09 — Arabic QA pass: what still needs a native reader
+
+The QA sheet covered 6 pages and 104 live strings, all now applied. Three
+things went in that the reviewer has NOT seen, and one deliberate divergence.
+
+**Authored by us, awaiting review — four tag labels.** The sheet gave Arabic
+for six of the ten tag slugs. These four had no row, so they are our wording:
+
+| slug | English | Arabic (unreviewed) |
+| --- | --- | --- |
+| project-closure | Project closure | إغلاق المشروع |
+| public-sector | Public sector | القطاع العام |
+| reporting | Reporting | التقارير |
+| kpi | KPIs | مؤشرات الأداء |
+
+**Authored by us, awaiting review — the Command Centre escalation card.** Added
+2026-09-02 when the bilingual export found the Arabic board was rendering one
+AI card fewer than the English: تصعيد · نظام ERP الأساسي / حرج / تأخير 34 يوماً
+· تجاوز 18%.
+
+**Brand transliteration.** The sheet used ترو مانديت on the home page and
+ترو ماندات on the other three. Owner decision 2026-09-09: ترو ماندات
+site-wide, with (TruMandate) in brackets on first mention. Home normalised.
+
+**Side effect worth a look.** Giving the tags display labels changed the
+English chips too, from raw slugs ("portfolio-governance") to labels
+("Portfolio governance"). Say the word if the English should keep the slugs.
+
+**Not reviewed at all: the three blog article bodies** (~258 Arabic strings).
+Owner decision 2026-09-09: leave as they are — they were written directly in
+Arabic rather than translated. `copy-review/blog-*.json` is ready whenever a
+reviewer wants them. Same for the site chrome, form fields and Command Centre
+labels (~110 strings) the sheet skipped.

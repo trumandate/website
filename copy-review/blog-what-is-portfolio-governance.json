@@ -600,40 +600,40 @@
     },
     {
       "element": "li",
-      "en": "portfolio-governance",
-      "ar": "portfolio-governance",
+      "en": "Portfolio governance",
+      "ar": "حوكمة المحافظ",
       "n": 74,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "strategy-office",
-      "ar": "strategy-office",
+      "en": "Strategy office",
+      "ar": "مكتب الاستراتيجية",
       "n": 75,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "epmo",
-      "ar": "epmo",
+      "en": "EPMO",
+      "ar": "مكتب إدارة المشاريع المؤسسي (EPMO)",
       "n": 76,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "kpi",
-      "ar": "kpi",
+      "en": "KPIs",
+      "ar": "مؤشرات الأداء",
       "n": 77,
       "verdict": "",
       "comment": ""
     },
     {
       "element": "li",
-      "en": "public-sector",
-      "ar": "public-sector",
+      "en": "Public sector",
+      "ar": "القطاع العام",
       "n": 78,
       "verdict": "",
       "comment": ""
