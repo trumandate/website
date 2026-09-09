@@ -867,17 +867,23 @@ fragment and the proof band's count-up, both of which were width-tuned. `AED`
 and `USD` are both three monospace glyphs, so the swap moved nothing —
 re-measured after the change, zero horizontal overflow at 320px, 390px and
 1440px in both languages, and the count-up's prefix is the same four characters
-it was.
+it was. What that reasoning missed is that holding the glyph count identical
+also held the *magnitudes* identical, which is a different question and the one
+that mattered.
 
 | where | was | now |
 | --- | --- | --- |
-| Home proof band (count-up) | AED 218M | USD 218M |
-| Command Centre, benefits KPI | AED 1.32B | USD 1.32B |
-| Command Centre, budget tile (AR only) | من AED 218M | من USD 218M |
-| Board aria-label, English | AED 1.32B benefits realised | USD 1.32B benefits realised |
-| Board aria-label, Arabic | 1.32 مليار درهم | 1.32 مليار دولار |
-| The record, initiative funding | AED 28M | USD 28M |
-| The record, benefit forecast → actual | AED 50M → 41M | USD 50M → 41M |
+| Home proof band (count-up) | AED 218M | USD 60M |
+| Command Centre, benefits KPI | AED 1.32B | USD 47M |
+| Command Centre, budget tile (AR only) | من AED 218M | من USD 60M |
+| Board aria-label, English | AED 1.32B benefits realised | USD 47M benefits realised |
+| Board aria-label, Arabic | 1.32 مليار درهم | 47 مليون دولار |
+| The record, initiative funding | AED 28M | USD 7.6M |
+| The record, benefit forecast → actual | AED 50M → 41M | USD 14M → 11M |
+
+**The "now" column is the corrected second pass**, after the owner reported the
+dollar figures read as exaggerated. The first pass changed the label and left
+the magnitudes alone; see the correction section at the end of this file.
 
 The one Arabic prose change is درهم → دولار in the board's aria-label. **Flagged
 for the reviewer**: the figure itself (`1.32 مليار`) is unchanged and the
@@ -933,3 +939,58 @@ the UAE and Saudi Arabia" — nor to the footer's "Dubai, UAE". Those state wher
 Intertec sells and where it is, which is a business fact rather than a
 presentation choice, and widening it would assert a market reach this repo
 cannot verify. Say the word and both change in one pass.
+
+---
+
+## 2026-09-09 — correction: the dollar figures were the dirham figures relabelled
+
+**Owner report:** "number in dollar look too much exaggerated everywhere. make
+them believable."
+
+Correct, and the cause was mine. The currency pass earlier the same day changed
+`AED` to `USD` as a token and left every magnitude untouched, so at the 3.6725
+peg each figure grew 3.67× in real terms. A USD 1.32B benefits line is a claim
+about a very large portfolio; AED 1.32B was a claim about a normal one.
+
+### What the figures are now
+
+| where | first pass (wrong) | corrected | basis |
+| --- | --- | --- | --- |
+| Portfolio budget, proof band + AR budget tile | USD 218M | **USD 60M** | AED 218M at the peg is USD 59.4M |
+| Benefits realised, board KPI + both aria-labels | USD 1.32B | **USD 47M** | re-derived, not converted — see below |
+| Initiative funded, the record | USD 28M | **USD 7.6M** | AED 28M at the peg |
+| Benefit forecast → actual, the record | USD 50M → 41M | **USD 14M → 11M** | AED 50M → 41M at the peg |
+
+### Benefits realised is the one figure that was not converted
+
+Do not "fix" it back to USD 359M. AED 1.32B converts to USD 359M, which is six
+times the portfolio's own annual budget, on a board whose period filter reads
+January–December 2026. That was implausible in dirhams as well; converting it
+faithfully would have carried the flaw across rather than removing it. A single
+year's realised benefits should sit near a single year's spend, so the figure
+was re-derived.
+
+The set now reads as one portfolio rather than four unrelated numbers, which is
+what makes a demo board believable more than any single figure being the right
+size:
+
+- USD 60M budget, 71% utilised → USD 42.6M spent in the shown period
+- USD 47M benefits realised → 1.1× that spend, 0.78× the annual budget
+- 142 projects across USD 60M → USD 423K average
+- the record's flagship initiative at USD 7.6M → 12.7% of the portfolio
+- its benefit at USD 11M actual → 1.4× its own cost, and 23% of portfolio benefits
+
+Re-verified after the change: no old figure anywhere in `dist/`, zero
+horizontal overflow in either language, the count-up settles on USD 60M, the
+benefits tile holds `USD 47M ▲ 18%` without crowding its sparkline, and the
+Arabic budget tile still reads `71% من USD 60M` with correct bidi.
+
+### One Arabic string changed again
+
+The board's aria-label now reads **47 مليون دولار** (was 1.32 مليار دولار in the
+first pass, 1.32 مليار درهم originally). Still flagged for the native reviewer,
+and present in `copy-review/`.
+
+**No customer figure changed anywhere**, because there are none — the board and
+the record are invented anonymised data throughout, per the spec's "anonymise
+the data, never the interface" rule. Nothing here is any entity's real budget.

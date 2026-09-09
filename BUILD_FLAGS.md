@@ -772,3 +772,18 @@ Log every such choice under "Decisions taken" below.
   open, unaffected by this pass: the Formspree endpoint, a native-reader Arabic
   pass (now including three new marker strings, flagged in COPY-REVIEW.md),
   `<main>`'s missing `tabindex="-1"`, and the WebKit verification passes.
+- 2026-09-09 (owner: "number in dollar look too much exaggerated everywhere.
+  make them believable"): a correction to the currency entry above, which
+  relabelled AED as USD without rescaling and so inflated every money figure by
+  the 3.6725 peg. Now: portfolio budget USD 60M (from AED 218M), initiative
+  funded USD 7.6M (from AED 28M), benefit forecast → actual USD 14M → 11M (from
+  AED 50M → 41M). Benefits realised is USD 47M and is deliberately NOT a
+  conversion — AED 1.32B converts to USD 359M, six times the portfolio's own
+  annual budget on a board whose period is one year, so it was implausible in
+  dirhams too and was re-derived instead. The set is now internally coherent
+  (71% of USD 60M = USD 42.6M spent, USD 47M realised = 1.1× that; 142 projects
+  = USD 423K average; the USD 7.6M flagship = 12.7% of the portfolio, its USD
+  11M benefit = 1.4× its own cost). Reasoning recorded in
+  src/components/board/copy.ts's header so it is not "corrected" back.
+  COPY-REVIEW.md's first-pass table was fixed in place rather than left
+  standing wrong, with the correction appended below it.

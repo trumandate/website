@@ -201,7 +201,7 @@
     {
       "element": "p",
       "en": "71% used",
-      "ar": "71% من USD 218M",
+      "ar": "71% من USD 60M",
       "n": 24,
       "verdict": "",
       "comment": ""
@@ -240,8 +240,8 @@
     },
     {
       "element": "p",
-      "en": "USD 1.32B ▲ 18%",
-      "ar": "USD 1.32B ▲ 18%",
+      "en": "USD 47M ▲ 18%",
+      "ar": "USD 47M ▲ 18%",
       "n": 29,
       "verdict": "",
       "comment": ""
@@ -312,8 +312,8 @@
     },
     {
       "element": "p",
-      "en": "USD 218M",
-      "ar": "USD 218M",
+      "en": "USD 60M",
+      "ar": "USD 60M",
       "n": 38,
       "verdict": "",
       "comment": ""
