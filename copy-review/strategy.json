@@ -4,7 +4,7 @@
     "ar": "/ar/strategy/"
   },
   "title": "Strategy and KPIs",
-  "generated": "2026-09-09",
+  "generated": "2026-09-10",
   "counts": {
     "en": 59,
     "ar": 59,
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Every office can draw the objective tree. TruMandate makes the KPI the join: a baseline, a target, a named owner and a live actual, wired to the objective above it and the initiatives below it.",
-      "ar": "يمكن لكل جهة بناء شجرة أهداف واضحة، بينما يربط ترو ماندات (TruMandate) مؤشرات الأداء بالأهداف والمبادرات، من خلال تحديد خط الأساس والهدف والمسؤول عن تحقيقه والقيمة الفعلية بشكل مستمر، بما يضمن ارتباط كل مؤشر بالهدف الذي يدعمه والمبادرات التي تسهم في تحقيقه.",
+      "ar": "يمكن لكل جهة بناء شجرة أهداف واضحة، بينما يربط ترو مانديت (TruMandate) مؤشرات الأداء بالأهداف والمبادرات، من خلال تحديد خط الأساس والهدف والمسؤول عن تحقيقه والقيمة الفعلية بشكل مستمر، بما يضمن ارتباط كل مؤشر بالهدف الذي يدعمه والمبادرات التي تسهم في تحقيقه.",
       "n": 14,
       "verdict": "",
       "comment": ""
@@ -281,7 +281,7 @@
     {
       "element": "p",
       "en": "In TruMandate the KPI is the join, not a downstream artefact. Rescope an initiative and the consequence shows at the KPI it feeds, because the link is part of the record.",
-      "ar": "في ترو ماندات (TruMandate)، لا يأتي مؤشر الأداء الرئيسي (KPI) كعنصر منفصل في نهاية العملية، بل يشكل حلقة الوصل بين الأهداف والمبادرات. فعند تغيير نطاق أي مبادرة، يظهر أثر التغيير مباشرةً على مؤشر الأداء المرتبط بها، لأن العلاقة بينهما مدمجة ضمن سجل المؤشر نفسه.",
+      "ar": "في ترو مانديت (TruMandate)، لا يأتي مؤشر الأداء الرئيسي (KPI) كعنصر منفصل في نهاية العملية، بل يشكل حلقة الوصل بين الأهداف والمبادرات. فعند تغيير نطاق أي مبادرة، يظهر أثر التغيير مباشرةً على مؤشر الأداء المرتبط بها، لأن العلاقة بينهما مدمجة ضمن سجل المؤشر نفسه.",
       "n": 34,
       "verdict": "",
       "comment": ""

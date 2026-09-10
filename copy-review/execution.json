@@ -4,7 +4,7 @@
     "ar": "/ar/execution/"
   },
   "title": "Execution and governance",
-  "generated": "2026-09-09",
+  "generated": "2026-09-10",
   "counts": {
     "en": 47,
     "ar": 47,
@@ -121,7 +121,7 @@
     {
       "element": "p",
       "en": "Project tools cannot roll up to a mandate they have never heard of. TruMandate holds every initiative against the objective that funded it, so slip is a subtraction, visible the day it happens.",
-      "ar": "لا يمكن لأدوات إدارة المشاريع ربط نتائجها بتكليف لا تعرفه. ويربط ترو ماندات (TruMandate) كل مبادرة بالهدف الذي موّلها، بحيث يُحتسب أي تأخير كتراجع مباشر في تحقيق الهدف، ويظهر أثره في يوم حدوثه.",
+      "ar": "لا يمكن لأدوات إدارة المشاريع ربط نتائجها بتكليف لا تعرفه. ويربط ترو مانديت (TruMandate) كل مبادرة بالهدف الذي موّلها، بحيث يُحتسب أي تأخير كتراجع مباشر في تحقيق الهدف، ويظهر أثره في يوم حدوثه.",
       "n": 14,
       "verdict": "",
       "comment": ""

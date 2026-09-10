@@ -4,7 +4,7 @@
     "ar": "/ar/blog/who-is-accountable-when-ai-recommends/"
   },
   "title": "Post: who is accountable when an AI recommends",
-  "generated": "2026-09-09",
+  "generated": "2026-09-10",
   "counts": {
     "en": 104,
     "ar": 104,
@@ -673,7 +673,7 @@
     {
       "element": "p",
       "en": "We build TruMandate, a portfolio governance platform for government entities and large enterprises in the UAE and Saudi Arabia. Its AI reads the portfolio overnight and proposes; it holds no write access to the record. Every proposal carries the name of whoever accepted, modified or rejected it, and the moment they did. The argument above is why it was built in that order.",
-      "ar": "نحن نبني ترو ماندات (TruMandate)، منصة حوكمة محافظ لجهات حكومية ومؤسسات كبرى في الإمارات والسعودية. يقرأ الذكاء الاصطناعي فيها المحفظة ليلاً ويقترح، ولا يملك صلاحية الكتابة في السجل. وكل اقتراح يحمل اسم من قبِله أو عدّله أو رفضه، واللحظة التي فعل فيها ذلك. وما سبق هو سبب بنائه بهذا الترتيب.",
+      "ar": "نحن نبني ترو مانديت (TruMandate)، منصة حوكمة محافظ لجهات حكومية ومؤسسات كبرى في الإمارات والسعودية. يقرأ الذكاء الاصطناعي فيها المحفظة ليلاً ويقترح، ولا يملك صلاحية الكتابة في السجل. وكل اقتراح يحمل اسم من قبِله أو عدّله أو رفضه، واللحظة التي فعل فيها ذلك. وما سبق هو سبب بنائه بهذا الترتيب.",
       "n": 83,
       "verdict": "",
       "comment": ""

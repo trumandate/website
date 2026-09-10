@@ -805,6 +805,8 @@ AI card fewer than the English: تصعيد · نظام ERP الأساسي / حر
 **Brand transliteration.** The sheet used ترو مانديت on the home page and
 ترو ماندات on the other three. Owner decision 2026-09-09: ترو ماندات
 site-wide, with (TruMandate) in brackets on first mention. Home normalised.
+**SUPERSEDED 2026-09-10** — the owner reversed this to ترو مانديت site-wide.
+Left here as the record of what was decided on the day; do not act on it.
 
 **Side effect worth a look.** Giving the tags display labels changed the
 English chips too, from raw slugs ("portfolio-governance") to labels
@@ -825,7 +827,8 @@ repo rather than held in a chat summary).
 
 **Arabic in both is newly authored and unreviewed.** It was written directly in
 Arabic rather than translated, mirrors the English section for section, and uses
-the ترو ماندات (TruMandate) spelling settled on 2026-09-09. Both posts and their
+the brand transliteration settled at the time (ترو ماندات, reversed to ترو مانديت
+on 2026-09-10 — see the end of this file). Both posts and their
 FAQ sections are in `copy-review/` for the reviewer.
 
 **Four new tag labels, ours not the reviewer's:**
@@ -994,3 +997,35 @@ and present in `copy-review/`.
 **No customer figure changed anywhere**, because there are none — the board and
 the record are invented anonymised data throughout, per the spec's "anonymise
 the data, never the interface" rule. Nothing here is any entity's real budget.
+
+---
+
+## 2026-09-10 — brand transliteration reversed to ترو مانديت
+
+**Owner instruction:** "ترو مانديت use this one as final everywhere."
+
+This reverses the 2026-09-09 decision recorded earlier in this file, which had
+settled on ترو ماندات. Both forms came from the Arabic BA's own QA sheet, which
+was internally inconsistent: ترو مانديت on the home page, ترو ماندات on the
+other three pages it covered. The difference is the second syllable — مانديت
+follows the English pronunciation (*man-dayt*), ماندات the way "mandate" is
+normally naturalised into Arabic (*man-daat*).
+
+**ترو مانديت is now final site-wide.** Ten occurrences changed across four
+files; zero of the old form remain anywhere in `src/` or in a built page.
+
+| file | occurrences |
+| --- | --- |
+| `src/components/product/copy.ts` (strategy, execution, benefits prose) | 6 |
+| `src/i18n/ui.ts` (home lede, and the meta description that reaches every Arabic page) | 2 |
+| `src/content/blog/ar/who-is-accountable-when-ai-recommends.md` | 1 |
+| `src/content/blog/ar/portfolio-data-ready-for-ai.md` | 1 |
+
+The `(TruMandate)` Latin bracket on first mention is unchanged, and so is
+spec §8: the header, nav, logo and wordmark keep the name in Latin script in
+both languages. The transliteration only ever appears in running Arabic prose.
+
+Three Arabic posts written before the QA sheet — `strategy-execution-gap`,
+`what-is-portfolio-governance`, `benefits-realisation-after-closure` — carry
+neither form; they refer to the product in Latin throughout. Nothing to change
+in them, and worth knowing before someone reads a grep result as an omission.
